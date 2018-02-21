@@ -6,13 +6,26 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 15:04:07 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/21 11:25:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/21 17:14:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 # include <termcap.h>
 # include <term.h>
+
+/* cursor_move_left move the cursor from count line to the left */
+/* using the ansi escape code */
+void	cursor_move_left(int count)
+{
+	char *temp;
+	
+	ft_putstr("\033[");
+	temp = ft_itoa(count);
+	ft_putstr(temp);
+	ft_putstr("D");
+	free(temp);
+}
 
 /* u_readline read STDIN char by char until enter is pressed */
 /* it return a malloced string which must be freed later 	*/
@@ -34,17 +47,9 @@ char	*u_readline(t_cmd_hist *head)
 			{
 				read(0, &c_buf, 1);
 				if (c_buf == 'A')
-				{
-					ft_printf("histo |%s|\n", head->cmd);
-					if (head->oldest != NULL)
-						head = head->oldest;
-				}
+					readline_history_print(&head, head->oldest);
 				if (c_buf == 'B')
-				{
-					ft_printf("histo |%s|\n", head->cmd);
-					if (head->newest != NULL)
-						head = head->newest;
-				}
+					readline_history_print(&head, head->newest);
 			}
 		}
 		else if (c_buf == '\n')
@@ -81,9 +86,10 @@ int		main(void)
 	tcsetattr(0, TCSADRAIN, &term);
 	while (1)
 	{
+		ft_putstr("$> ");
 		head = readline_history_read();
 		line = u_readline(head);
-		ft_printf("|%s|\n", line);
-		free(line);	
+		free(line);
+		ft_putstr("\n");	
 	}
 }
