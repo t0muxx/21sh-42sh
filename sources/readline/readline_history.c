@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/21 17:14:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/21 17:29:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next)
 {
-
 	cursor_move_left(BUFFER_SIZE);
 	ft_putstr("\033[2K");
 	ft_putstr("$> ");
@@ -24,8 +23,10 @@ void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next)
 		*head = next;
 }
 
-/* readline_history_add add command at the end 	*/
-/* of the file .history 						*/ 
+/* 
+** readline_history_add add command at the end
+** of the file .history 						
+*/ 
 t_cmd_hist		*readline_history_read(void)
 {
 	int 		fd;
