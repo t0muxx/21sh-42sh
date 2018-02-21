@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/02/21 10:10:02 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/02/21 11:13:30 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,13 @@ BUILTINS = builtins/
 PARSECFG = parsecfg/
 ENV		 = env/
 READLINE = readline/
+ERROR	 = error/
 
 SRCS = 		$(READLINE)readline.c \
 			$(READLINE)readline_history.c \
-			$(ENV)env_get.c
+			$(READLINE)readline_history_lst.c \
+			$(ENV)env_get.c \
+			$(ERROR)error.c
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))

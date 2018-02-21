@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 15:04:07 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/21 10:08:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/21 11:25:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 /* u_readline read STDIN char by char until enter is pressed */
 /* it return a malloced string which must be freed later 	*/
-char	*u_readline()
+char	*u_readline(t_cmd_hist *head)
 {
 	char	c_buf;
 	char	*buffer;
@@ -35,7 +35,15 @@ char	*u_readline()
 				read(0, &c_buf, 1);
 				if (c_buf == 'A')
 				{
-					ft_printf("UP KEY PRESSED\n");
+					ft_printf("histo |%s|\n", head->cmd);
+					if (head->oldest != NULL)
+						head = head->oldest;
+				}
+				if (c_buf == 'B')
+				{
+					ft_printf("histo |%s|\n", head->cmd);
+					if (head->newest != NULL)
+						head = head->newest;
 				}
 			}
 		}
@@ -61,6 +69,7 @@ int		main(void)
 	struct termios term;
 	char	*term_name;
 	char	*line;
+	t_cmd_hist	*head;
 
 	term_name = env_get_var("TERM", environ);
 	tgetent(NULL, term_name);
@@ -72,7 +81,8 @@ int		main(void)
 	tcsetattr(0, TCSADRAIN, &term);
 	while (1)
 	{
-		line = u_readline();
+		head = readline_history_read();
+		line = u_readline(head);
 		ft_printf("|%s|\n", line);
 		free(line);	
 	}

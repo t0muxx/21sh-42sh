@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 11:02:37 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/19 12:40:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/21 11:18:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
-# include "libft/libft.h"
 # include "get_next_line.h"
-# include "builtin.h"
 # include "error.h"
-# include "env.h"
-# include "ps1.h"
 
 # define PROMPT " minishell:"
 
