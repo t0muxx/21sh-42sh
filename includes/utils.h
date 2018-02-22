@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor.h                                           :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 17:08:16 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 08:40:49 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/02/22 09:41:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CURSOR_H
-# define CURSOR_H
+#ifndef UTILS_H
+# define UTILS_H
 
-void	cursor_move_left(int count);
-void	cursor_move_right(int count);
+#include "libft.h"
 
+void	string_shift_right(char **str, int pos);
 #endif

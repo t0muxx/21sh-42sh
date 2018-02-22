@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/21 17:14:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:04:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "get_next_line.h"
 # include "error.h"
 # include "cursor.h"
+# include "utils.h"
 
 # define BUFFER_SIZE 2048
 # define HISTORY_FILE ".history"
@@ -43,8 +44,8 @@ char	*env_get_var(char *name, char **myenv);
 
 void			readline_history_add(char *cmd);
 t_cmd_hist		*readline_history_read(void);
-void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next);
-
+void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next, int *cnt, char **buffer);
+void			readline_print_prompt();
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 #endif

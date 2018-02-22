@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor.h                                           :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 17:08:16 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 08:40:49 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/02/22 11:29:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CURSOR_H
-# define CURSOR_H
+#include "utils.h"
 
-void	cursor_move_left(int count);
-void	cursor_move_right(int count);
+/*
+** string_shift_right shift a string from pos
+** to the left.
+** like : before : [t][e][s][t]
+** 	   after  : [t][ ][e][s][t]
+*/
 
-#endif
+void	string_shift_right(char **str, int pos)
+{
+	int		i;
+
+	i = (int)ft_strlen(*str);
+	while (str != NULL && i >= pos)
+	{
+		str[0][i + 1] = str[0][i];
+		i--;
+	}
+	str[0][i + 1] = ' ';
+}
