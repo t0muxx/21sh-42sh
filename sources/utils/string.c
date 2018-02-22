@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 11:29:31 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/22 12:32:38 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,17 @@ void	string_shift_right(char **str, int pos)
 		i--;
 	}
 	str[0][i + 1] = ' ';
+}
+
+void	string_delete_char(char **str, int pos)
+{
+	int		i;
+
+	i = (int)ft_strlen(*str);
+	while (str != NULL && pos < i)
+	{
+		str[0][pos] = str[0][pos + 1];
+		pos++;
+	}
+	str[0][pos] = 0;
 }

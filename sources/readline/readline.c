@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 11:38:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:04:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,29 @@ char	*readline(t_cmd_hist *head)
 	ft_bzero(buffer, BUFFER_SIZE);
 	while (read(0, &c_buf, 1) != -1)
 	{
-		if (c_buf == 27)
+		if (c_buf == 127)
+		{
+			if (cnt > 0)
+			{
+				ft_putstr("\033[2K");
+				cursor_move_left(1);
+				ft_putstr("\033[s");
+				cursor_move_left(BUFFER_SIZE);
+				string_delete_char(&buffer, cnt - 1);
+				readline_print_prompt();
+				write(1, buffer, ft_strlen(buffer));
+				ft_putstr("\033[u");
+				cnt--;
+			}
+		}
+		else if (c_buf == 27)
 		{
 			read(0, &c_buf, 1);
+			//ft_printf("1 |%c|\n", c_buf);
 			if (c_buf == '[')
 			{
 				read(0, &c_buf, 1);
+				//ft_printf("2 |%c|\n", c_buf);
 				if (c_buf == 'A')
 					readline_history_print(&head, head->oldest, &cnt, &buffer);
 				if (c_buf == 'B')
@@ -87,11 +104,31 @@ char	*readline(t_cmd_hist *head)
 						cursor_move_left(1);
 					}
 				}
+				if (c_buf == '3')
+				{
+					read(0, &c_buf, 1);
+					//ft_printf("3 |%c|\n", c_buf);
+					if (c_buf == '~')
+					{
+						//ft_printf("4 |%c|\n", c_buf);
+						if (cnt < (int)ft_strlen(buffer))
+						{
+							ft_putstr("\033[2K");
+							ft_putstr("\033[s");
+							cursor_move_left(BUFFER_SIZE);
+							string_delete_char(&buffer, cnt);
+							readline_print_prompt();
+							write(1, buffer, ft_strlen(buffer));
+							ft_putstr("\033[u");
+						}
+					}
+				}
 			}
 		}
 		else if (c_buf == '\n')
 		{
-			readline_history_add(buffer);
+			if (ft_strlen(buffer) > 0)
+				readline_history_add(buffer);
 			break ;
 		}
 		else
