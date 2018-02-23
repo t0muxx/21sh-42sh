@@ -6,23 +6,31 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/23 08:55:25 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/23 16:53:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <termcap.h>
 #include <term.h>
-
+#include "cursor.h"
 /*
  ** cursor_move_left move the cursor from count line to the left
  ** using the ansi escape code
 */
 
-void	cursor_move_left(int count)
+void	cursor_move_left(int count, t_buffer *tbuffer)
 {
 	char *temp;
 
+	if (tbuffer->cnt != 0 && tbuffer->index == 1)
+	{
+		tbuffer->line--;
+		if (tbuffer->line == 1)
+			tbuffer->colnbr -= 3;
+		tbuffer->index = tbuffer->colnbr;
+	}
+	tbuffer->index--;
 	ft_putstr("\033[");
 	temp = ft_itoa(count);
 	ft_putstr(temp);
@@ -35,11 +43,21 @@ void	cursor_move_left(int count)
  ** using the ansi escape code
 */
 
-void	cursor_move_right(int count)
+void	cursor_move_right(int count, t_buffer *tbuffer)
 {
 	
 	char *temp;
 
+	//ft_printf("%d|%d", *index, colnbr);
+	if (tbuffer->index == tbuffer->colnbr)
+	{
+		//ft_printf("?");
+		ft_putstr("\033E");
+		tbuffer->index = 0;
+		tbuffer->line++;
+		if (tbuffer->line == 2)
+			tbuffer->colnbr += 3;
+	}
 	ft_putstr("\033[");
 	temp = ft_itoa(count);
 	ft_putstr(temp);

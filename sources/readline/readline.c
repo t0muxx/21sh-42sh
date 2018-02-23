@@ -6,13 +6,14 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/23 08:55:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/23 16:50:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <termcap.h>
 #include <term.h>
+#include "cursor.h"
 
 void	readline_print_prompt(void)
 {
@@ -26,23 +27,33 @@ void	readline_print_prompt(void)
 ** in order to get a blank space for the char to add (line edition)
 */
 
-void	readline_print_n_buf(int *cnt, char **buffer, char *c_buf)
+void	readline_print_n_buf(t_buffer *tbuffer)
 {
-	if (buffer[0][*cnt] != 0)
+	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
 		cursor_save_pos();
-		string_shift_right(buffer, *cnt);
-		buffer[0][*cnt] = *c_buf;
-		cursor_move_left(BUFFER_SIZE);
+		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
+		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
+		cursor_move_left(BUFFER_SIZE, tbuffer);
 		readline_print_prompt();
-		write(1, buffer[0], ft_strlen(buffer[0]));
+		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		cursor_reload_pos();
-		cursor_move_right(1);
+		cursor_move_right(1, tbuffer);
 	}
 	else
-		write(1, c_buf, 1);
-	buffer[0][*cnt] = *c_buf;
-	(*cnt)++;
+	{
+		tbuffer->index++;
+		if (tbuffer->index == tbuffer->colnbr)
+		{
+			tbuffer->line++;
+			tbuffer->index = 0;
+			if (tbuffer->line == 2)
+				tbuffer->colnbr += 3;
+		}
+		write(1, &(tbuffer->c_buf), 1);
+	}
+	tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
+	tbuffer->cnt++;
 }
 
 /*
@@ -51,94 +62,99 @@ void	readline_print_n_buf(int *cnt, char **buffer, char *c_buf)
 */
 
 char	*readline(t_cmd_hist *head)
-{
-	char	c_buf;
-	char	*buffer;
-	int		cnt;
-	int		colnbr;
-
-	colnbr = tgetnum("co");
-	cnt = 0;
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	ft_bzero(buffer, BUFFER_SIZE);
-	while (read(0, &c_buf, 1) != -1)
 	{
-		if (c_buf == 127)
+	t_buffer	tbuffer;
+	
+	tbuffer.colnbr = tgetnum("co") - 3;
+	tbuffer.cnt = 0;
+	tbuffer.index = 0;
+	tbuffer.line = 1;
+	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
+	while (read(0, &(tbuffer.c_buf), 1) != -1)
+	{
+		if (tbuffer.c_buf == 127)
 		{
-			if (cnt > 0)
+			if (tbuffer.cnt > 0)
 			{
 				ft_putstr("\033[2K");
-				cursor_move_left(1);
+				cursor_move_left(1, &tbuffer);
 				cursor_save_pos();
-				cursor_move_left(BUFFER_SIZE);
-				string_delete_char(&buffer, cnt - 1);
+				cursor_move_left(BUFFER_SIZE, &tbuffer);
+				string_delete_char(&(tbuffer.buffer), tbuffer.cnt - 1);
 				readline_print_prompt();
-				write(1, buffer, ft_strlen(buffer));
+				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 				cursor_reload_pos();
-				cnt--;
+				tbuffer.cnt--;
 			}
 		}
-		else if (c_buf == 27)
+		else if (tbuffer.c_buf == 27)
 		{
-			read(0, &c_buf, 1);
+			read(0, &(tbuffer.c_buf), 1);
 			//ft_printf("1 |%c|\n", c_buf);
-			if (c_buf == '[')
+			if (tbuffer.c_buf == '[')
 			{
-				read(0, &c_buf, 1);
+				read(0, &(tbuffer.c_buf), 1);
 				//ft_printf("2 |%c|\n", c_buf);
-				if (c_buf == 'A')
-					readline_history_print(&head, head->oldest, &cnt, &buffer);
-				if (c_buf == 'B')
-					readline_history_print(&head, head->newest, &cnt, &buffer);
-				if (c_buf == 'C')
+				if (tbuffer.c_buf == 'A')
+					readline_history_print(&head, head->oldest, &(tbuffer.cnt), &(tbuffer.buffer));
+				if (tbuffer.c_buf == 'B')
+					readline_history_print(&head, head->newest, &(tbuffer.cnt), &(tbuffer.buffer));
+				if (tbuffer.c_buf == 'C')
 				{
-					if (cnt < (int)ft_strlen(buffer))
+					/*
+					 * 0 1 2 3 4 5 6 7 8
+					 * 9 1011121314151617
+					 * 1 2 3 4 5 6 7 8 9
+					 * 1 2 3 4 5 6 7 8 9
+					 * 101112131415161718 -> line = 2
+					 * 192021222324252627 -> line = 3
+					 */
+					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 					{
-						cnt++;
-						cursor_move_right(1);
+						tbuffer.cnt++;
+						cursor_move_right(1, &tbuffer);
 					}
 				}
-				if (c_buf == 'D')
+				if (tbuffer.c_buf == 'D')
 				{
-					if (cnt > 0)
+					if (tbuffer.cnt > 0)
 					{
-						cnt--;
-						cursor_move_left(1);
+						tbuffer.cnt--;
+						cursor_move_left(1, &tbuffer);
 					}
 				}
-				if (c_buf == '3')
+				if (tbuffer.c_buf == '3')
 				{
-					read(0, &c_buf, 1);
-					//ft_printf("3 |%c|\n", c_buf);
-					if (c_buf == '~')
+					read(0, &(tbuffer.c_buf), 1);
+					if (tbuffer.c_buf == '~')
 					{
-						//ft_printf("4 |%c|\n", c_buf);
-						if (cnt < (int)ft_strlen(buffer))
+						if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 						{
 							ft_putstr("\033[2K");
-							//ft_putstr("\033[s");
 							cursor_save_pos();
-							cursor_move_left(BUFFER_SIZE);
-							string_delete_char(&buffer, cnt);
+							cursor_move_left(BUFFER_SIZE, &tbuffer);
+							string_delete_char(&(tbuffer.buffer), tbuffer.cnt);
 							readline_print_prompt();
-							write(1, buffer, ft_strlen(buffer));
-							//ft_putstr("\033[u");
+							write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 							cursor_reload_pos();
 						}
 					}
 				}
 			}
 		}
-		else if (c_buf == '\n')
+		else if (tbuffer.c_buf == '\n')
 		{
-			if (ft_strlen(buffer) > 0)
-				readline_history_add(buffer);
+			if (ft_strlen(tbuffer.buffer) > 0)
+				readline_history_add(tbuffer.buffer);
 			break ;
 		}
 		else
-			readline_print_n_buf(&cnt, &buffer, &c_buf);
+			readline_print_n_buf(&tbuffer);
+	
+		ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 	}
-	return (buffer);
+	return (tbuffer.buffer);
 }
 
 int		main(void)

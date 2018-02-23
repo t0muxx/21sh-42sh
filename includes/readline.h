@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/23 08:55:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/23 11:14:52 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include "error.h"
-# include "cursor.h"
 # include "utils.h"
 
 # define BUFFER_SIZE 2048
@@ -50,6 +49,7 @@ typedef struct				s_buffer
 	char	c_buf;
 	int		cnt;
 	int		index;
+	int		line;
 	int		colnbr;
 
 }							t_buffer;
