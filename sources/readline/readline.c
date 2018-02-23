@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 16:33:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/23 08:55:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	readline_print_n_buf(int *cnt, char **buffer, char *c_buf)
 {
 	if (buffer[0][*cnt] != 0)
 	{
-		ft_putstr("\033[s");
+		cursor_save_pos();
 		string_shift_right(buffer, *cnt);
 		buffer[0][*cnt] = *c_buf;
 		cursor_move_left(BUFFER_SIZE);
 		readline_print_prompt();
 		write(1, buffer[0], ft_strlen(buffer[0]));
-		ft_putstr("\033[u");
+		cursor_reload_pos();
 		cursor_move_right(1);
 	}
 	else
@@ -55,7 +55,9 @@ char	*readline(t_cmd_hist *head)
 	char	c_buf;
 	char	*buffer;
 	int		cnt;
+	int		colnbr;
 
+	colnbr = tgetnum("co");
 	cnt = 0;
 	buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(buffer, BUFFER_SIZE);
@@ -67,12 +69,12 @@ char	*readline(t_cmd_hist *head)
 			{
 				ft_putstr("\033[2K");
 				cursor_move_left(1);
-				ft_putstr("\033[s");
+				cursor_save_pos();
 				cursor_move_left(BUFFER_SIZE);
 				string_delete_char(&buffer, cnt - 1);
 				readline_print_prompt();
 				write(1, buffer, ft_strlen(buffer));
-				ft_putstr("\033[u");
+				cursor_reload_pos();
 				cnt--;
 			}
 		}
@@ -114,12 +116,14 @@ char	*readline(t_cmd_hist *head)
 						if (cnt < (int)ft_strlen(buffer))
 						{
 							ft_putstr("\033[2K");
-							ft_putstr("\033[s");
+							//ft_putstr("\033[s");
+							cursor_save_pos();
 							cursor_move_left(BUFFER_SIZE);
 							string_delete_char(&buffer, cnt);
 							readline_print_prompt();
 							write(1, buffer, ft_strlen(buffer));
-							ft_putstr("\033[u");
+							//ft_putstr("\033[u");
+							cursor_reload_pos();
 						}
 					}
 				}

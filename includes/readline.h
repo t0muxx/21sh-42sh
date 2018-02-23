@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 16:33:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/23 08:55:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ typedef struct				s_cmd_hist
 	struct s_cmd_hist		*newest;
 
 }							t_cmd_hist;
+
+typedef struct				s_buffer
+{
+	char	*buffer;
+	char	c_buf;
+	int		cnt;
+	int		index;
+	int		colnbr;
+
+}							t_buffer;
 
 char	*env_get_var(char *name, char **myenv);
 
