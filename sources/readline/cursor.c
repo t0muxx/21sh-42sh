@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/24 15:26:39 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/24 20:00:50 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,50 @@
  ** using the ansi escape code
 */
 
+int	ft_putcc(int c)
+{
+	write(1, &c, 1);
+	return (0);
+}
+
 void	cursor_move_left(int count, t_buffer *tbuffer)
 {
 	char *temp;
 	
-	
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
-	if (tbuffer->cnt != 0 && tbuffer->index == 1)
+
+	if (tbuffer->cnt != 0 && tbuffer->index == 1)	
 	{
 		tbuffer->line--;
 		if (tbuffer->line == 1)
 			tbuffer->colnbr -= 3;
 		tbuffer->index = tbuffer->colnbr;
+		if (tgetflag("bw") == 0)
+		{
+			tbuffer->index--;
+			temp = tgetstr("up", NULL);
+			tputs(temp, 0, ft_putcc);
+			//temp = tgetstr("ch", NULL);
+			//tputs(tgoto(temp, tbuffer->colnbr, 0), 0, ft_putcc);
+			ft_putstr("\033[");
+			temp = ft_itoa(tbuffer->colnbr);
+			ft_putstr(temp);
+			ft_putstr("C");
+			
+		}
 	}
 	tbuffer->index--;
-	ft_putstr("\033[");
-	temp = ft_itoa(count);
-	ft_putstr(temp);
-	ft_putstr("D");
-	free(temp);
+	temp = tgetstr("le", NULL);
+	while (count)
+	{
+		tputs(temp, 0, ft_putcc);
+		count--;
+	}
+	//ft_putstr("\033[");
+	//temp = ft_itoa(count);
+	//ft_putstr(temp);
+	//ft_putstr("D");
+	//free(temp);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/24 15:06:45 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/24 19:18:34 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	*readline(t_cmd_hist *head)
 				}
 				if (tbuffer.c_buf == 'D')
 				{
+					//ft_printf("%d", tbuffer.cnt);
 					if (tbuffer.cnt > 0)
 					{
 						tbuffer.cnt--;
@@ -182,4 +183,6 @@ int		main(void)
 		free(line);
 		ft_putstr("\n");
 	}
+	term.c_lflag = (ICANON | ECHO);
+	tcsetattr(0, TCSADRAIN, &term);
 }
