@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/23 16:53:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/24 15:26:39 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 void	cursor_move_left(int count, t_buffer *tbuffer)
 {
 	char *temp;
-
+	
+	
+	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	if (tbuffer->cnt != 0 && tbuffer->index == 1)
 	{
 		tbuffer->line--;
@@ -51,13 +53,15 @@ void	cursor_move_right(int count, t_buffer *tbuffer)
 	//ft_printf("%d|%d", *index, colnbr);
 	if (tbuffer->index == tbuffer->colnbr)
 	{
-		//ft_printf("?");
+	//	ft_printf("?");
 		ft_putstr("\033E");
 		tbuffer->index = 0;
 		tbuffer->line++;
 		if (tbuffer->line == 2)
 			tbuffer->colnbr += 3;
 	}
+	else
+		tbuffer->index++;
 	ft_putstr("\033[");
 	temp = ft_itoa(count);
 	ft_putstr(temp);

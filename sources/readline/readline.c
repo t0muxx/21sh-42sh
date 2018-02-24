@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/24 10:45:36 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/24 15:06:45 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*readline(t_cmd_hist *head)
 	
 	tbuffer.colnbr = tgetnum("co") - 3;
 	tbuffer.cnt = 0;
-	tbuffer.index = 0;
+	tbuffer.index = 1;
 	tbuffer.line = 1;
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
@@ -152,7 +152,7 @@ char	*readline(t_cmd_hist *head)
 		else
 			readline_print_n_buf(&tbuffer);
 	
-		ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
+	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 	}
 	return (tbuffer.buffer);
 }
@@ -173,7 +173,7 @@ int		main(void)
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSADRAIN, &term);
-	while (1 == 0)
+	while (1)
 	{
 		readline_print_prompt();
 		head = readline_history_read();
@@ -182,5 +182,4 @@ int		main(void)
 		free(line);
 		ft_putstr("\n");
 	}
-	tgetnum("co");
 }
