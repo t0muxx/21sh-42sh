@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/23 16:50:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/24 10:45:36 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ char	*readline(t_cmd_hist *head)
 				read(0, &(tbuffer.c_buf), 1);
 				//ft_printf("2 |%c|\n", c_buf);
 				if (tbuffer.c_buf == 'A')
-					readline_history_print(&head, head->oldest, &(tbuffer.cnt), &(tbuffer.buffer));
+					readline_history_print(&head, head->oldest, &tbuffer);
 				if (tbuffer.c_buf == 'B')
-					readline_history_print(&head, head->newest, &(tbuffer.cnt), &(tbuffer.buffer));
+					readline_history_print(&head, head->newest, &tbuffer);
 				if (tbuffer.c_buf == 'C')
 				{
 					/*
@@ -173,7 +173,7 @@ int		main(void)
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSADRAIN, &term);
-	while (1)
+	while (1 == 0)
 	{
 		readline_print_prompt();
 		head = readline_history_read();
@@ -182,4 +182,5 @@ int		main(void)
 		free(line);
 		ft_putstr("\n");
 	}
+	tgetnum("co");
 }

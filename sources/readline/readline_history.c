@@ -6,11 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 11:37:47 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/24 10:48:29 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "cursor.h"
 
 /*
 ** readline_history_print print the last command based on .history
@@ -19,16 +20,16 @@
 */
 
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next,
-int *cnt, char **buffer)
+t_buffer *tbuffer)
 {
-	cursor_move_left(BUFFER_SIZE);
+	cursor_move_left(BUFFER_SIZE, tbuffer);
 	ft_putstr("\033[2K");
 	readline_print_prompt();
 	if (*head != NULL)
 	{
-		*cnt = ft_strlen((*head)->cmd);
-		ft_bzero(*buffer, BUFFER_SIZE);
-		ft_memcpy(*buffer, (*head)->cmd, ft_strlen((*head)->cmd));
+		tbuffer->cnt = ft_strlen((*head)->cmd);
+		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
+		ft_memcpy(tbuffer->buffer, (*head)->cmd, ft_strlen((*head)->cmd));
 		write(0, (*head)->cmd, ft_strlen((*head)->cmd));
 	}
 	if (next != NULL)
