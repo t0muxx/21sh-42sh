@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/26 17:19:55 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/27 11:20:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ void	readline_print_prompt(void)
 
 void	readline_print_n_buf(t_buffer *tbuffer)
 {
+	char	*temp;
+	int		cnt;
+
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
+
 		cursor_save_pos();
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
-		cursor_move_left(BUFFER_SIZE, tbuffer);
+		temp = tgetstr("nd", NULL);
 		readline_print_prompt();
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		cursor_reload_pos();

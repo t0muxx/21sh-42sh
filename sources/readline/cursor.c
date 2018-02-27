@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/26 17:19:51 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/27 11:20:25 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,28 @@ void	cursor_move_left(int count, t_buffer *tbuffer)
 	if (tbuffer->cnt != 0 && tbuffer->index == 1)	
 	{
 		tbuffer->line--;
-		tbuffer->index = tbuffer->colnbr;
-		if (tgetflag("bw") == 0)
+		tbuffer->index--;
+		temp = tgetstr("up", NULL);
+		tputs(temp, 0, ft_putcc);
+		temp = tgetstr("nd", NULL);
+		while (cnt <= (tbuffer->colnbr + 1))
 		{
-			tbuffer->index--;
-			temp = tgetstr("up", NULL);
 			tputs(temp, 0, ft_putcc);
-			temp = tgetstr("nd", NULL);
-			while (cnt < (tbuffer->colnbr + 2))
-			{
-				tputs(temp, 0, ft_putcc);
-				cnt++;
-			}
+			cnt++;
 		}
 		if (tbuffer->line == 1)
 			tbuffer->colnbr -= 3;
+		tbuffer->index = tbuffer->colnbr;
 	}
-	tbuffer->index--;
-	temp = tgetstr("le", NULL);
-	while (count)
+	else
 	{
-		tputs(temp, 0, ft_putcc);
-		count--;
+		tbuffer->index--;
+		temp = tgetstr("le", NULL);
+		while (count)
+		{
+			tputs(temp, 0, ft_putcc);
+			count--;
+		}
 	}
 }
 
@@ -105,7 +105,7 @@ void	cursor_move_right(int count, t_buffer *tbuffer)
 		}
 		ft_putstr(ret);
 		count--;
-	}*/
+	}2*/
 }
 
 void	cursor_save_pos(void)
