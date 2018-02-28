@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/27 11:20:25 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/28 09:17:22 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 #include <termcap.h>
 #include <term.h>
 #include "cursor.h"
+
+void	cursor_move_left(int count)
+{
+	char *temp;
+
+	temp = tgetstr("le", NULL);
+	while (count)
+	{
+		tputs(temp, 0, ft_putcc);
+		count--;
+	}
+}
+
 /*
  ** cursor_move_left move the cursor from count line to the left
  ** using the ansi escape code
 */
 
-int	ft_putcc(int c)
-{
-	write(1, &c, 1);
-	return (0);
-}
-
-void	cursor_move_left(int count, t_buffer *tbuffer)
+void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	char	*temp;
 	int	cnt;
@@ -51,12 +58,7 @@ void	cursor_move_left(int count, t_buffer *tbuffer)
 	else
 	{
 		tbuffer->index--;
-		temp = tgetstr("le", NULL);
-		while (count)
-		{
-			tputs(temp, 0, ft_putcc);
-			count--;
-		}
+		cursor_move_left(count);
 	}
 }
 
@@ -81,31 +83,15 @@ void	cursor_move_right(int count, t_buffer *tbuffer)
 			tbuffer->colnbr += 3;
 	}
 	else
+	{
 		tbuffer->index++;
-	ft_putstr("\033[");
-	temp = ft_itoa(count);
-	ft_putstr(temp);
-	ft_putstr("C");
-	free(temp);
-	
-	/*char	*ret;
-	char	*ret2;
-
-	if ((ret = tgetstr("nd", NULL)) == NULL)
-	{
-		ft_putstr_fd("Error termcaps\n", 2);
-		return ;
-	}
-	while (count > 0)
-	{
-		if (index == colnbr)
+		temp = tgetstr("nd", NULL);
+		while (count)
 		{
-			ret2 = tgetstr("nw", NULL);
-			ft_putstr(ret2);
+			tputs(temp, 0, ft_putcc);
+			count--;
 		}
-		ft_putstr(ret);
-		count--;
-	}2*/
+	}
 }
 
 void	cursor_save_pos(void)

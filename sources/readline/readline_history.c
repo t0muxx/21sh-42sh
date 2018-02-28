@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/24 19:48:51 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/02/28 09:22:16 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next,
 t_buffer *tbuffer)
 {
-	cursor_move_left(BUFFER_SIZE, tbuffer);
+	cursor_move_left(BUFFER_SIZE);
 	ft_putstr("\033[2K");
 	readline_print_prompt();
 	if (*head != NULL)

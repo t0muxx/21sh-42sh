@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/27 11:20:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/02/28 09:22:14 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,12 @@ void	readline_print_prompt(void)
 
 void	readline_print_n_buf(t_buffer *tbuffer)
 {
-	char	*temp;
-	int		cnt;
-
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
 
 		cursor_save_pos();
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
-		temp = tgetstr("nd", NULL);
 		readline_print_prompt();
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		cursor_reload_pos();
@@ -82,9 +78,9 @@ char	*readline(t_cmd_hist *head)
 			if (tbuffer.cnt > 0)
 			{
 				ft_putstr("\033[2K");
-				cursor_move_left(1, &tbuffer);
+				cursor_move_left(1);
 				cursor_save_pos();
-				cursor_move_left(BUFFER_SIZE, &tbuffer);
+				cursor_move_left(BUFFER_SIZE);
 				string_delete_char(&(tbuffer.buffer), tbuffer.cnt - 1);
 				readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
@@ -126,7 +122,7 @@ char	*readline(t_cmd_hist *head)
 					if (tbuffer.cnt > 0)
 					{
 						tbuffer.cnt--;
-						cursor_move_left(1, &tbuffer);
+						cursor_move_left_upd_tbuffer(1, &tbuffer);
 					}
 				}
 				if (tbuffer.c_buf == '3')
@@ -138,7 +134,7 @@ char	*readline(t_cmd_hist *head)
 						{
 							ft_putstr("\033[2K");
 							cursor_save_pos();
-							cursor_move_left(BUFFER_SIZE, &tbuffer);
+							cursor_move_left(BUFFER_SIZE);
 							string_delete_char(&(tbuffer.buffer), tbuffer.cnt);
 							readline_print_prompt();
 							write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
