@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/28 09:17:22 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/01 11:49:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include <termcap.h>
 #include <term.h>
 #include "cursor.h"
+
+void	cursor_delete_line()
+{
+	char	*temp;
+	
+	temp = tgetstr("dl", NULL);
+	tputs(temp, 0, ft_putcc);
+}
 
 void	cursor_move_left(int count)
 {
@@ -32,33 +40,16 @@ void	cursor_move_left(int count)
  ** using the ansi escape code
 */
 
-void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
-{
-	char	*temp;
-	int	cnt;
 
-	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
-	cnt = 0;
-	if (tbuffer->cnt != 0 && tbuffer->index == 1)	
+void	cursor_move_right(int count)
+{
+	char *temp;
+	
+	temp = tgetstr("nd", NULL);
+	while (count)
 	{
-		tbuffer->line--;
-		tbuffer->index--;
-		temp = tgetstr("up", NULL);
 		tputs(temp, 0, ft_putcc);
-		temp = tgetstr("nd", NULL);
-		while (cnt <= (tbuffer->colnbr + 1))
-		{
-			tputs(temp, 0, ft_putcc);
-			cnt++;
-		}
-		if (tbuffer->line == 1)
-			tbuffer->colnbr -= 3;
-		tbuffer->index = tbuffer->colnbr;
-	}
-	else
-	{
-		tbuffer->index--;
-		cursor_move_left(count);
+		count--;
 	}
 }
 
@@ -67,32 +58,6 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
  ** using the ansi escape code
 */
 
-void	cursor_move_right(int count, t_buffer *tbuffer)
-{
-	
-	char *temp;
-
-	//ft_printf("%d|%d", *index, colnbr);
-	if (tbuffer->index == tbuffer->colnbr)
-	{
-	//	ft_printf("?");
-		ft_putstr("\033E");
-		tbuffer->index = 0;
-		tbuffer->line++;
-		if (tbuffer->line == 2)
-			tbuffer->colnbr += 3;
-	}
-	else
-	{
-		tbuffer->index++;
-		temp = tgetstr("nd", NULL);
-		while (count)
-		{
-			tputs(temp, 0, ft_putcc);
-			count--;
-		}
-	}
-}
 
 void	cursor_save_pos(void)
 {

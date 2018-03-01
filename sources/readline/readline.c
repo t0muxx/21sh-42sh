@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/28 09:22:14 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/01 13:34:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,26 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 
 		cursor_save_pos();
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
+		cursor_move_left(tbuffer->line == 1 ? tbuffer->colnbr + 3 : tbuffer->colnbr);
+		cursor_delete_line();
+		if (tbuffer->line == 1)
+			readline_print_prompt();
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
-		readline_print_prompt();
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		cursor_reload_pos();
-		cursor_move_right(1, tbuffer);
+		cursor_move_right_upd_tbuffer(1, tbuffer);
 	}
 	else
 	{
-		tbuffer->index++;
-		if (tbuffer->index == tbuffer->colnbr)
+		if (tbuffer->index == tbuffer->colnbr + 1)
 		{
 			tbuffer->line++;
-			tbuffer->index = 0;
+			tbuffer->index = 1;
 			if (tbuffer->line == 2)
 				tbuffer->colnbr += 3;
 		}
 		write(1, &(tbuffer->c_buf), 1);
+		tbuffer->index++;
 	}
 	tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
 	tbuffer->cnt++;
@@ -64,7 +67,8 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 char	*readline(t_cmd_hist *head)
 	{
 	t_buffer	tbuffer;
-	
+	char		*temp;
+
 	tbuffer.colnbr = tgetnum("co") - 3;
 	tbuffer.cnt = 0;
 	tbuffer.index = 1;
@@ -77,12 +81,14 @@ char	*readline(t_cmd_hist *head)
 		{
 			if (tbuffer.cnt > 0)
 			{
-				ft_putstr("\033[2K");
-				cursor_move_left(1);
+				temp = tgetstr("dl", NULL);
+				tputs(temp, 0, ft_putcc);
+				cursor_move_left_upd_tbuffer(1, &tbuffer);
 				cursor_save_pos();
-				cursor_move_left(BUFFER_SIZE);
+				cursor_move_left(tbuffer.line == 1 ? tbuffer.colnbr + 3 : tbuffer.colnbr);
 				string_delete_char(&(tbuffer.buffer), tbuffer.cnt - 1);
-				readline_print_prompt();
+				if (tbuffer.line == 1)
+					readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 				cursor_reload_pos();
 				tbuffer.cnt--;
@@ -113,7 +119,7 @@ char	*readline(t_cmd_hist *head)
 					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 					{
 						tbuffer.cnt++;
-						cursor_move_right(1, &tbuffer);
+						cursor_move_right_upd_tbuffer(1, &tbuffer);
 					}
 				}
 				if (tbuffer.c_buf == 'D')
