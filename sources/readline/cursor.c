@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/01 11:49:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/05 11:29:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,28 @@
 #include <term.h>
 #include "cursor.h"
 
-void	cursor_delete_line()
+void	cursor_up_line(int linenbr)
+{
+	char	*temp;
+
+	temp = tgetstr("up", NULL);
+	while (linenbr)
+	{
+		tputs(temp, 0, ft_putcc);
+		linenbr--;
+	}
+}
+
+void	cursor_delete_line(int linenbr)
 {
 	char	*temp;
 	
 	temp = tgetstr("dl", NULL);
-	tputs(temp, 0, ft_putcc);
+	while (linenbr)
+	{
+		tputs(temp, 0, ft_putcc);
+		linenbr--;
+	}
 }
 
 void	cursor_move_left(int count)
@@ -30,7 +46,8 @@ void	cursor_move_left(int count)
 	temp = tgetstr("le", NULL);
 	while (count)
 	{
-		tputs(temp, 0, ft_putcc);
+		ft_putstr(temp);
+		//ft_putstr("\033[1D");
 		count--;
 	}
 }
@@ -68,7 +85,7 @@ void	cursor_save_pos(void)
 		ft_putstr_fd("Error termcaps\n", 2);
 		return ;
 	}
-	ft_putstr(ret);
+	tputs(ret, 0, ft_putcc);
 }
 
 void	cursor_reload_pos(void)
@@ -80,5 +97,5 @@ void	cursor_reload_pos(void)
 		ft_putstr_fd("Error termcaps\n", 2);
 		return ;
 	}
-	ft_putstr(ret);
+	tputs(ret, 0, ft_putcc);
 }

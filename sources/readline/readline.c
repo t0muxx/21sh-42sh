@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 07:58:24 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/01 13:34:12 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/03/05 16:32:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,42 @@ void	readline_print_prompt(void)
 
 void	readline_print_n_buf(t_buffer *tbuffer)
 {
+	char *temp;
+
+	temp = tgetstr("do", NULL);
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
-
 		cursor_save_pos();
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
-		cursor_move_left(tbuffer->line == 1 ? tbuffer->colnbr + 3 : tbuffer->colnbr);
-		cursor_delete_line();
-		if (tbuffer->line == 1)
-			readline_print_prompt();
+		cursor_move_left(BUFFER_SIZE);
+		cursor_delete_line(1);
+		readline_print_prompt();
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		cursor_reload_pos();
-		cursor_move_right_upd_tbuffer(1, tbuffer);
+		cursor_move_right(1);
+		if (tbuffer->index == tbuffer->colnbr - 1)
+		{
+			tbuffer->line++;
+			tbuffer->index = -1;
+			if (tbuffer->line == 2)
+				tbuffer->colnbr += 3;
+			tputs(temp, 0, ft_putcc);
+		}
+		tbuffer->index++;
+	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	}
 	else
 	{
-		if (tbuffer->index == tbuffer->colnbr + 1)
+		write(1, &(tbuffer->c_buf), 1);
+		if (tbuffer->index == tbuffer->colnbr - 1)
 		{
 			tbuffer->line++;
-			tbuffer->index = 1;
+			tbuffer->index = -1;
 			if (tbuffer->line == 2)
 				tbuffer->colnbr += 3;
+			tputs(temp, 0, ft_putcc);
 		}
-		write(1, &(tbuffer->c_buf), 1);
 		tbuffer->index++;
 	}
 	tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
@@ -67,30 +79,32 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 char	*readline(t_cmd_hist *head)
 	{
 	t_buffer	tbuffer;
-	char		*temp;
 
-	tbuffer.colnbr = tgetnum("co") - 3;
 	tbuffer.cnt = 0;
-	tbuffer.index = 1;
+	tbuffer.index = 0;
 	tbuffer.line = 1;
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	while (read(0, &(tbuffer.c_buf), 1) != -1)
 	{
+		if (tbuffer.line == 1)
+			tbuffer.colnbr = tgetnum("co") - 3;
+		else
+			tbuffer.colnbr = tgetnum("co");
 		if (tbuffer.c_buf == 127)
 		{
 			if (tbuffer.cnt > 0)
 			{
-				temp = tgetstr("dl", NULL);
-				tputs(temp, 0, ft_putcc);
+	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 				cursor_move_left_upd_tbuffer(1, &tbuffer);
 				cursor_save_pos();
-				cursor_move_left(tbuffer.line == 1 ? tbuffer.colnbr + 3 : tbuffer.colnbr);
+				cursor_move_left(BUFFER_SIZE);
+				cursor_delete_line(1);
 				string_delete_char(&(tbuffer.buffer), tbuffer.cnt - 1);
-				if (tbuffer.line == 1)
-					readline_print_prompt();
+				readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 				cursor_reload_pos();
+			//	cursor_up_line((ft_strlen(tbuffer.buffer) / tbuffer.colnbr) - 1);
 				tbuffer.cnt--;
 			}
 		}
@@ -111,15 +125,13 @@ char	*readline(t_cmd_hist *head)
 					/*
 					 * 0 1 2 3 4 5 6 7 8
 					 * 9 1011121314151617
-					 * 1 2 3 4 5 6 7 8 9
-					 * 1 2 3 4 5 6 7 8 9
-					 * 101112131415161718 -> line = 2
-					 * 192021222324252627 -> line = 3
+					 * 0 1 2 3 4 5 6 7 8
+					 * 0 1 2 3 4 5 6 7 8
 					 */
 					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 					{
-						tbuffer.cnt++;
 						cursor_move_right_upd_tbuffer(1, &tbuffer);
+						tbuffer.cnt++;
 					}
 				}
 				if (tbuffer.c_buf == 'D')
@@ -127,8 +139,8 @@ char	*readline(t_cmd_hist *head)
 					//ft_printf("%d", tbuffer.cnt);
 					if (tbuffer.cnt > 0)
 					{
-						tbuffer.cnt--;
 						cursor_move_left_upd_tbuffer(1, &tbuffer);
+						tbuffer.cnt--;
 					}
 				}
 				if (tbuffer.c_buf == '3')
