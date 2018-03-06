@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/05 16:33:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/06 09:15:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 {
 	char *temp;
 
-	temp = tgetstr("do", NULL);
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
 		cursor_save_pos();
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		cursor_move_left(BUFFER_SIZE);
-		cursor_delete_line(1);
+		//cursor_delete_line(1);
 		readline_print_prompt();
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
@@ -49,7 +48,6 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 			tbuffer->index = -1;
 			if (tbuffer->line == 2)
 				tbuffer->colnbr += 3;
-			tputs(temp, 0, ft_putcc);
 		}
 		tbuffer->index++;
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);

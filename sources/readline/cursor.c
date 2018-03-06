@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/05 11:29:04 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/06 09:15:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cursor_delete_line(int linenbr)
 {
 	char	*temp;
 	
-	temp = tgetstr("dl", NULL);
+	temp = tgetstr("ce", NULL);
 	while (linenbr)
 	{
 		tputs(temp, 0, ft_putcc);
