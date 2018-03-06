@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/06 09:15:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/06 16:17:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,39 @@ void	readline_print_prompt(void)
 void	readline_print_n_buf(t_buffer *tbuffer)
 {
 	char *temp;
+	int		cur_index;
+	int		cur_cnt;
 
+	cur_index = 0;
+	cur_cnt = 0;
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
-		cursor_save_pos();
+		//cursor_save_pos();
+		cur_cnt = tbuffer->cnt;
+		cur_index = tbuffer->index;
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
-		cursor_move_left(BUFFER_SIZE);
+		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
 		//cursor_delete_line(1);
+		tbuffer->cnt = (int)ft_strlen(tbuffer->buffer);
+		if (tbuffer->line == 1)
+			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 3 + 1));
+		else
+			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 1));
+		ft_printf("\n\n%d-%d-%d\n\n", tbuffer->index, tbuffer->cnt, tbuffer->colnbr);
 		readline_print_prompt();
-		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
+		tbuffer->buffer[cur_cnt] = tbuffer->c_buf;
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
-		cursor_reload_pos();
-		cursor_move_right(1);
-		if (tbuffer->index == tbuffer->colnbr - 1)
-		{
-			tbuffer->line++;
-			tbuffer->index = -1;
-			if (tbuffer->line == 2)
-				tbuffer->colnbr += 3;
-		}
-		tbuffer->index++;
+		//ft_printf("cnt = %d, index = %d, stlen = %d", tbuffer->cnt, tbuffer->index, (int)ft_strlen(tbuffer->buffer));
+		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer) - cur_cnt), tbuffer);
+		cursor_move_right_upd_tbuffer(1, tbuffer);
+		//cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
+		//cursor_move_right_upd_tbuffer(cur_cnt + 3, tbuffer);
+		//cursor_reload_pos();
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	}
 	else
 	{
+		temp = tgetstr("sf", NULL);
 		write(1, &(tbuffer->c_buf), 1);
 		if (tbuffer->index == tbuffer->colnbr - 1)
 		{
@@ -64,9 +73,9 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 			tputs(temp, 0, ft_putcc);
 		}
 		tbuffer->index++;
+		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
+		tbuffer->cnt++;
 	}
-	tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
-	tbuffer->cnt++;
 }
 
 /*
@@ -129,7 +138,6 @@ char	*readline(t_cmd_hist *head)
 					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 					{
 						cursor_move_right_upd_tbuffer(1, &tbuffer);
-						tbuffer.cnt++;
 					}
 				}
 				if (tbuffer.c_buf == 'D')
@@ -138,7 +146,6 @@ char	*readline(t_cmd_hist *head)
 					if (tbuffer.cnt > 0)
 					{
 						cursor_move_left_upd_tbuffer(1, &tbuffer);
-						tbuffer.cnt--;
 					}
 				}
 				if (tbuffer.c_buf == '3')
