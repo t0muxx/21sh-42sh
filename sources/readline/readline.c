@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/06 16:17:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/08 15:07:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,24 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 	cur_cnt = 0;
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
-		//cursor_save_pos();
 		cur_cnt = tbuffer->cnt;
 		cur_index = tbuffer->index;
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
-		//cursor_delete_line(1);
 		tbuffer->cnt = (int)ft_strlen(tbuffer->buffer);
 		if (tbuffer->line == 1)
 			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 3 + 1));
 		else
 			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 1));
-		ft_printf("\n\n%d-%d-%d\n\n", tbuffer->index, tbuffer->cnt, tbuffer->colnbr);
 		readline_print_prompt();
 		tbuffer->buffer[cur_cnt] = tbuffer->c_buf;
 		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
 		//ft_printf("cnt = %d, index = %d, stlen = %d", tbuffer->cnt, tbuffer->index, (int)ft_strlen(tbuffer->buffer));
 		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer) - cur_cnt), tbuffer);
-		cursor_move_right_upd_tbuffer(1, tbuffer);
-		//cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
-		//cursor_move_right_upd_tbuffer(cur_cnt + 3, tbuffer);
-		//cursor_reload_pos();
+		cursor_move_right(1);
+		tbuffer->cnt++;
+		tbuffer->index++;
+		//cursor_move_right_upd_tbuffer(1, tbuffer);
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	}
 	else
@@ -86,6 +83,9 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 char	*readline(t_cmd_hist *head)
 	{
 	t_buffer	tbuffer;
+	int			cur_cnt;
+	int			cur_index;
+	char		*temp;
 
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
@@ -103,14 +103,26 @@ char	*readline(t_cmd_hist *head)
 			if (tbuffer.cnt > 0)
 			{
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
-				cursor_move_left_upd_tbuffer(1, &tbuffer);
-				cursor_save_pos();
-				cursor_move_left(BUFFER_SIZE);
-				cursor_delete_line(1);
-				string_delete_char(&(tbuffer.buffer), tbuffer.cnt - 1);
+				//cursor_move_left_upd_tbuffer(1, &tbuffer);
+				//cursor_save_pos();
+				//cursor_move_left(BUFFER_SIZE);
+				//cursor_delete_line(1);
+				cur_cnt = 0;
+				cur_index = 0;
+				temp = tgetstr("ce", NULL);
+				cur_cnt = tbuffer.cnt;
+				cur_index = tbuffer.index;
+				cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
+				string_delete_char(&(tbuffer.buffer), cur_cnt - 1);
+				tbuffer.cnt = (int)ft_strlen(tbuffer.buffer);
+				if (tbuffer.line == 1)
+					tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 3 + 1));
+				else
+					tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 1));
+				tputs(temp, 0, ft_putcc);
 				readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
-				cursor_reload_pos();
+		//ft_printf("cnt = %d, index = %d, stlen = %d", tbuffer->cnt, tbuffer->index, (int)ft_strlen(tbuffer->buffer));
 			//	cursor_up_line((ft_strlen(tbuffer.buffer) / tbuffer.colnbr) - 1);
 				tbuffer.cnt--;
 			}
@@ -169,7 +181,7 @@ char	*readline(t_cmd_hist *head)
 		}
 		else if (tbuffer.c_buf == '\n')
 		{
-			if (ft_strlen(tbuffer.buffer) > 0)
+		if (ft_strlen(tbuffer.buffer) > 0)
 				readline_history_add(tbuffer.buffer);
 			break ;
 		}
