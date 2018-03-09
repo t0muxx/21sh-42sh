@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/08 15:07:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/09 10:40:19 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,9 @@ char	*readline(t_cmd_hist *head)
 			if (tbuffer.cnt > 0)
 			{
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
-				//cursor_move_left_upd_tbuffer(1, &tbuffer);
-				//cursor_save_pos();
-				//cursor_move_left(BUFFER_SIZE);
-				//cursor_delete_line(1);
 				cur_cnt = 0;
 				cur_index = 0;
-				temp = tgetstr("ce", NULL);
+				temp = tgetstr("cd", NULL);
 				cur_cnt = tbuffer.cnt;
 				cur_index = tbuffer.index;
 				cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
@@ -122,9 +118,10 @@ char	*readline(t_cmd_hist *head)
 				tputs(temp, 0, ft_putcc);
 				readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
-		//ft_printf("cnt = %d, index = %d, stlen = %d", tbuffer->cnt, tbuffer->index, (int)ft_strlen(tbuffer->buffer));
+		//ft_printf("cnt = %d stlen = %d", cur_cnt, (int)ft_strlen(tbuffer.buffer));
+				cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer.buffer) + 1) - cur_cnt, &tbuffer);
+				//cursor_move_left_upd_tbuffer(1, &tbuffer);
 			//	cursor_up_line((ft_strlen(tbuffer.buffer) / tbuffer.colnbr) - 1);
-				tbuffer.cnt--;
 			}
 		}
 		else if (tbuffer.c_buf == 27)
@@ -148,17 +145,13 @@ char	*readline(t_cmd_hist *head)
 					 * 0 1 2 3 4 5 6 7 8
 					 */
 					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
-					{
 						cursor_move_right_upd_tbuffer(1, &tbuffer);
-					}
 				}
 				if (tbuffer.c_buf == 'D')
 				{
 					//ft_printf("%d", tbuffer.cnt);
 					if (tbuffer.cnt > 0)
-					{
 						cursor_move_left_upd_tbuffer(1, &tbuffer);
-					}
 				}
 				if (tbuffer.c_buf == '3')
 				{
@@ -167,13 +160,27 @@ char	*readline(t_cmd_hist *head)
 					{
 						if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
 						{
-							ft_putstr("\033[2K");
-							cursor_save_pos();
-							cursor_move_left(BUFFER_SIZE);
+							//ft_putstr("\033[2K");
+							//cursor_save_pos();
+							//cursor_move_left(BUFFER_SIZE);
+						//	ft_printf("\nkefiekofekofeofkeof\n");
+							cur_cnt = 0;
+							cur_index = 0;
+							temp = tgetstr("cd", NULL);
+							cur_cnt = tbuffer.cnt;
+							cur_index = tbuffer.index;
 							string_delete_char(&(tbuffer.buffer), tbuffer.cnt);
+							cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
+							tbuffer.cnt = (int)ft_strlen(tbuffer.buffer);
+							if (tbuffer.line == 1)
+								tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 3 + 1));
+							else
+								tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 1));
+							tputs(temp, 0, ft_putcc);
 							readline_print_prompt();
 							write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
-							cursor_reload_pos();
+							cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer.buffer)) - cur_cnt, &tbuffer);
+						//	cursor_reload_pos();
 						}
 					}
 				}
