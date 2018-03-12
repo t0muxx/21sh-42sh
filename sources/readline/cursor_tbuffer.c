@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/09 11:41:06 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:00:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
-	char	*temp;
 	int		lastcol;
 
 	lastcol = 0;
@@ -28,8 +27,7 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 		{
 	//	ft_printf("\n\n\n\n??f.e.fpflefpelfpelpfelpefl");
 			tbuffer->line--;
-			temp = tgetstr("up", NULL);
-			tputs(temp, 0, ft_putcc);
+			tputs(tbuffer->termcap->up, 0, ft_putcc);
 			cursor_move_right(tbuffer->colnbr + 1);
 			if (tbuffer->line == 1)
 				tbuffer->colnbr -= 3;
@@ -39,8 +37,7 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 		else
 		{
 			tbuffer->index--;
-			temp = tgetstr("le", NULL);
-			tputs(temp, 0, ft_putcc);
+			tputs(tbuffer->termcap->le, 0, ft_putcc);
 		}
 		tbuffer->cnt--;
 		count--;
@@ -51,15 +48,13 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	
-	char *temp;
-
 	//ft_printf("\n\n%d|%d\n\n", tbuffer->index, tbuffer->colnbr);
 	while (count && tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 	{
 		if (tbuffer->index == tbuffer->colnbr - 1)
 		{
-			temp = tgetstr("sf", NULL);
-			tputs(temp, 0, ft_putcc);
+		//	temp = tgetstr("sf", NULL);
+			tputs(tbuffer->termcap->sf, 0, ft_putcc);
 			tbuffer->index = 0;
 			tbuffer->line++;
 			if (tbuffer->line == 2)
@@ -68,8 +63,8 @@ void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 		else
 		{
 			tbuffer->index++;
-			temp = tgetstr("nd", NULL);
-			tputs(temp, 0, ft_putcc);
+			//temp = tgetstr("nd", NULL);
+			tputs(tbuffer->termcap->nd, 0, ft_putcc);
 		}
 		count--;
 		tbuffer->cnt++;

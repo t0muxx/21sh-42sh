@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/03/01 09:50:08 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/03/12 10:43:13 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)readline_history_lst.c \
 			$(READLINE)cursor.c \
 			$(READLINE)cursor_tbuffer.c \
+			$(READLINE)term.c \
 			$(ENV)env_get.c \
 			$(ERROR)error.c \
 			$(UTILS)string.c

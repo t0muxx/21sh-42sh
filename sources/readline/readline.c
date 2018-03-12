@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/09 11:41:05 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:00:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,29 @@ void	readline_print_prompt(void)
 ** in order to get a blank space for the char to add (line edition)
 */
 
+void	print_upd_tbuffer(t_buffer *tbuffer)
+{
+	int i;
+
+	i = 0;
+	while (tbuffer->buffer[i])
+	{
+		write(1, &(tbuffer->buffer[i]), 1);
+		i++;
+		if (tbuffer->index == tbuffer->colnbr - 1)
+		{
+			tbuffer->line++;
+			tbuffer->index = -1;
+			if (tbuffer->line == 2)
+				tbuffer->colnbr += 3;
+		}
+		tbuffer->index++;
+		tbuffer->cnt++;
+	}
+}
+
 void	readline_print_n_buf(t_buffer *tbuffer)
 {
-	char *temp;
 	int		cur_index;
 	int		cur_cnt;
 
@@ -41,25 +61,20 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 		cur_index = tbuffer->index;
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
-		tbuffer->cnt = (int)ft_strlen(tbuffer->buffer);
-		if (tbuffer->line == 1)
-			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 3 + 1));
-		else
-			tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 1));
-		readline_print_prompt();
 		tbuffer->buffer[cur_cnt] = tbuffer->c_buf;
-		write(1, tbuffer->buffer, ft_strlen(tbuffer->buffer));
+		readline_print_prompt();
+		tbuffer->cnt = 0;
+		tbuffer->index = 0;
+		print_upd_tbuffer(tbuffer);
+		tbuffer->index = (tbuffer->cnt % (tbuffer->colnbr + 1));
+		cur_cnt++;
 		//ft_printf("cnt = %d, index = %d, stlen = %d", tbuffer->cnt, tbuffer->index, (int)ft_strlen(tbuffer->buffer));
 		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer) - cur_cnt), tbuffer);
-		cursor_move_right(1);
-		tbuffer->cnt++;
-		tbuffer->index++;
 		//cursor_move_right_upd_tbuffer(1, tbuffer);
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	}
 	else
 	{
-		temp = tgetstr("sf", NULL);
 		write(1, &(tbuffer->c_buf), 1);
 		if (tbuffer->index == tbuffer->colnbr - 1)
 		{
@@ -67,7 +82,7 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 			tbuffer->index = -1;
 			if (tbuffer->line == 2)
 				tbuffer->colnbr += 3;
-			tputs(temp, 0, ft_putcc);
+			tputs(tbuffer->termcap->sf, 0, ft_putcc);
 		}
 		tbuffer->index++;
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
@@ -80,18 +95,18 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 ** it return a malloced string which must be freed later
 */
 
-char	*readline(t_cmd_hist *head)
+char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	{
 	t_buffer	tbuffer;
 	int			cur_cnt;
 	int			cur_index;
-	char		*temp;
 
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
 	tbuffer.line = 1;
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
+	tbuffer.termcap = cur_termcap;
 	while (read(0, &(tbuffer.c_buf), 1) != -1)
 	{
 		if (tbuffer.line == 1)
@@ -105,7 +120,6 @@ char	*readline(t_cmd_hist *head)
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 				cur_cnt = 0;
 				cur_index = 0;
-				temp = tgetstr("cd", NULL);
 				cur_cnt = tbuffer.cnt;
 				cur_index = tbuffer.index;
 				cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
@@ -115,7 +129,7 @@ char	*readline(t_cmd_hist *head)
 					tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 3 + 1));
 				else
 					tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 1));
-				tputs(temp, 0, ft_putcc);
+				tputs(tbuffer.termcap->cd, 0, ft_putcc);
 				readline_print_prompt();
 				write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 		//ft_printf("cnt = %d stlen = %d", cur_cnt, (int)ft_strlen(tbuffer.buffer));
@@ -166,7 +180,7 @@ char	*readline(t_cmd_hist *head)
 						//	ft_printf("\nkefiekofekofeofkeof\n");
 							cur_cnt = 0;
 							cur_index = 0;
-							temp = tgetstr("cd", NULL);
+							//temp = tgetstr("cd", NULL);
 							cur_cnt = tbuffer.cnt;
 							cur_index = tbuffer.index;
 							string_delete_char(&(tbuffer.buffer), tbuffer.cnt);
@@ -176,7 +190,7 @@ char	*readline(t_cmd_hist *head)
 								tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 3 + 1));
 							else
 								tbuffer.index = (tbuffer.cnt % (tbuffer.colnbr + 1));
-							tputs(temp, 0, ft_putcc);
+							tputs(tbuffer.termcap->cd, 0, ft_putcc);
 							readline_print_prompt();
 							write(1, tbuffer.buffer, ft_strlen(tbuffer.buffer));
 							cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer.buffer)) - cur_cnt, &tbuffer);
@@ -200,31 +214,21 @@ char	*readline(t_cmd_hist *head)
 	return (tbuffer.buffer);
 }
 
+
 int		main(void)
 {
-	extern char		**environ;
-	struct termios	term;
-	char			*term_name;
+	t_term_cap		*cur_termcap;
 	char			*line;
 	t_cmd_hist		*head;
-
-	term_name = env_get_var("TERM", environ);
-	tgetent(NULL, term_name);
-	tcgetattr(0, &term);
-	term.c_lflag &= ~(ICANON);
-	term.c_lflag &= ~(ECHO);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSADRAIN, &term);
+	
+	cur_termcap = term_init();
 	while (1)
 	{
 		readline_print_prompt();
 		head = readline_history_read();
-		line = readline(head);
+		line = readline(head, cur_termcap);
 		ft_printf("\n|%s|\n", line);
-		free(line);
+		//free(line);
 		ft_putstr("\n");
 	}
-	term.c_lflag = (ICANON | ECHO);
-	tcsetattr(0, TCSADRAIN, &term);
 }

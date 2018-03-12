@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/24 10:46:20 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/12 10:38:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,35 @@ typedef struct				s_cmd_hist
 
 }							t_cmd_hist;
 
+typedef struct				s_term_cap
+{
+	char	*up;
+	char	*ce;
+	char	*le;
+	char	*nd;
+	char	*sc;
+	char	*rc;
+	char	*sf;
+	int		co;
+	char	*cd;
+
+}							t_term_cap;
+
 typedef struct				s_buffer
 {
-	char	*buffer;
-	char	c_buf;
-	int		cnt;
-	int		index;
-	int		line;
-	int		colnbr;
+	char		*buffer;
+	char		c_buf;
+	int			cnt;
+	int			index;
+	int			line;
+	int			colnbr;
+	t_term_cap 	*termcap;
 
 }							t_buffer;
 
 char	*env_get_var(char *name, char **myenv);
 
+char			*readline(t_cmd_hist *head, t_term_cap *cur_termcap);
 t_cmd_hist		*readline_history_read(void);
 void			readline_history_add(char *cmd);
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next, t_buffer *tbuffer);
@@ -63,4 +79,8 @@ void			readline_print_prompt();
 
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
+
+t_term_cap		*term_init_cap();
+t_term_cap 		*term_init();
+void			term_close();
 #endif
