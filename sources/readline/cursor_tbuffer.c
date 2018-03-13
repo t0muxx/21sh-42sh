@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/12 17:00:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/13 09:08:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	int		lastcol;
+	int		prompt_len;
 
 	lastcol = 0;
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
+	prompt_len = readline_print_prompt(FALSE);
 	while (count > 0 && tbuffer->cnt > -3)
 	{
 		if (tbuffer->line != 1 && tbuffer->cnt != 1 && tbuffer->index == 0)	
@@ -30,7 +32,7 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 			tputs(tbuffer->termcap->up, 0, ft_putcc);
 			cursor_move_right(tbuffer->colnbr + 1);
 			if (tbuffer->line == 1)
-				tbuffer->colnbr -= 3;
+				tbuffer->colnbr -= prompt_len;
 			tbuffer->index = tbuffer->colnbr;
 			tbuffer->index--;
 		}
@@ -47,8 +49,10 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 
 void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 {
-	
+	int		prompt_len;
+
 	//ft_printf("\n\n%d|%d\n\n", tbuffer->index, tbuffer->colnbr);
+	prompt_len = readline_print_prompt(FALSE);
 	while (count && tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 	{
 		if (tbuffer->index == tbuffer->colnbr - 1)
@@ -58,7 +62,7 @@ void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 			tbuffer->index = 0;
 			tbuffer->line++;
 			if (tbuffer->line == 2)
-				tbuffer->colnbr += 3;
+				tbuffer->colnbr += prompt_len;
 		}
 		else
 		{
