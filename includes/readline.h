@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/13 09:04:10 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 10:35:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_cmd_hist		*readline_history_read(void);
 void			readline_history_add(char *cmd);
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next, t_buffer *tbuffer);
 int				readline_print_prompt(int print);
+void			readline_print_upd_tbuffer(t_buffer *tbuffer);
+void			readline_print_n_buf(t_buffer *tbuffer);
 
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);

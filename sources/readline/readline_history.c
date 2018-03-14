@@ -6,13 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/13 09:46:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 10:04:38 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include "cursor.h"
-
+#include <term.h>
 /*
 ** readline_history_print print the last command based on .history
 ** it update cnt and buffer in order to get execute it if the user
@@ -22,15 +22,16 @@
 void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next,
 t_buffer *tbuffer)
 {
-	cursor_move_left(BUFFER_SIZE);
-	ft_putstr("\033[2K");
-	readline_print_prompt();
+	cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
+	tputs(tbuffer->termcap->cd, 0, ft_putcc);
+	readline_print_prompt(TRUE);
+	tbuffer->cnt = 0;
+	tbuffer->index = 0;
 	if (*head != NULL)
 	{
-		tbuffer->cnt = ft_strlen((*head)->cmd);
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 		ft_memcpy(tbuffer->buffer, (*head)->cmd, ft_strlen((*head)->cmd));
-		write(0, (*head)->cmd, ft_strlen((*head)->cmd));
+		readline_print_upd_tbuffer(tbuffer);
 	}
 	if (next != NULL)
 		*head = next;
