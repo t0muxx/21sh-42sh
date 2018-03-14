@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 16:13:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 16:50:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,16 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 							cursor_move_right_upd_tbuffer(tbuffer.line == 1 ? tbuffer.colnbr + 3 : tbuffer.colnbr, &tbuffer);
 						else
 							cursor_move_right_upd_tbuffer((int) ft_strlen(tbuffer.buffer), &tbuffer);
+					}
+					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'D')
+					{
+						cursor_move_left_next_word(&tbuffer);
+						ft_bzero(buf, 4);	
+					}
+					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'C')
+					{
+						cursor_move_right_next_word(&tbuffer);
+						ft_bzero(buf, 4);	
 					}
 				}
 				if (tbuffer.c_buf == 'A')

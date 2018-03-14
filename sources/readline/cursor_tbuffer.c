@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 16:19:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 17:04:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,40 @@ void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 		count--;
 		tbuffer->cnt++;
 	}
+}
+
+void	cursor_move_left_next_word(t_buffer *tbuffer)
+{
+	int i;
+
+	i = tbuffer->cnt - 1;
+	while (i >= 0)
+	{
+		if (tbuffer->buffer[i] == ' ')
+		{
+			while (tbuffer->buffer[i] == ' ')
+				i--;
+			cursor_move_left_upd_tbuffer(tbuffer->cnt - i - 1, tbuffer);
+			break ;
+		}
+		i--;	
+	}	
+}
+
+void	cursor_move_right_next_word(t_buffer *tbuffer)
+{
+	int i;
+
+	i = tbuffer->cnt;
+	while (i < (int) ft_strlen(tbuffer->buffer))
+	{
+		if (tbuffer->buffer[i] == ' ')
+		{
+			while (tbuffer->buffer[i] == ' ')
+				i++;
+			cursor_move_right_upd_tbuffer(i - tbuffer->cnt, tbuffer);
+			break ;
+		}
+		i++;	
+	}	
 }
