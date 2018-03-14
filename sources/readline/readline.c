@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 17:43:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 21:25:32 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	{
 	t_buffer	tbuffer;
 	int			cur_cnt;
-	int			prompt_len;
 	char		buf[4];
 
 	tbuffer.cnt = 0;
@@ -60,7 +59,6 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	ft_bzero(buf, 4);
 	tbuffer.termcap = cur_termcap;
-	prompt_len = readline_print_prompt(FALSE);
 	while (read(0, &(tbuffer.c_buf), 1) != -1)
 	{
 		if (tbuffer.line == 1)
