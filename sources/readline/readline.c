@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 11:49:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 16:13:42 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	t_buffer	tbuffer;
 	int			cur_cnt;
 	int			prompt_len;
+	char		buf[4];
 
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
 	tbuffer.line = 1;
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
+	ft_bzero(buf, 4);
 	tbuffer.termcap = cur_termcap;
 	prompt_len = readline_print_prompt(FALSE);
 	while (read(0, &(tbuffer.c_buf), 1) != -1)
@@ -90,9 +92,32 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 		else if (tbuffer.c_buf == 27)
 		{
 			read(0, &(tbuffer.c_buf), 1);
+			//ft_putchar(tbuffer.c_buf);
 			if (tbuffer.c_buf == '[')
 			{
 				read(0, &(tbuffer.c_buf), 1);
+				//ft_putchar(tbuffer.c_buf);
+				if (tbuffer.c_buf == '1')
+				{
+					read(0, buf, 3);
+					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'A')
+					{
+						if (tbuffer.line > 1)
+						{
+							if (tbuffer.cnt < tbuffer.colnbr)
+								cursor_move_left_upd_tbuffer(tbuffer.cnt, &tbuffer);
+							else
+								cursor_move_left_upd_tbuffer(tbuffer.colnbr, &tbuffer);
+						}						
+					}
+					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'B')
+					{
+						if (tbuffer.cnt + tbuffer.colnbr < (int)ft_strlen(tbuffer.buffer))
+							cursor_move_right_upd_tbuffer(tbuffer.line == 1 ? tbuffer.colnbr + 3 : tbuffer.colnbr, &tbuffer);
+						else
+							cursor_move_right_upd_tbuffer((int) ft_strlen(tbuffer.buffer), &tbuffer);
+					}
+				}
 				if (tbuffer.c_buf == 'A')
 					readline_history_print(&head, head->oldest, &tbuffer);
 				if (tbuffer.c_buf == 'B')
