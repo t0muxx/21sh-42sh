@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 17:43:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/14 21:23:44 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@
 
 void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
-	int		lastcol;
 	int		prompt_len;
 
-	lastcol = 0;
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	prompt_len = readline_print_prompt(FALSE);
 	while (count > 0 && tbuffer->cnt > -3)
