@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/12 11:04:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:52:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <termcap.h>
 #include <term.h>
 
-t_term_cap	*term_init_cap()
+t_term_cap	*term_init_cap(void)
 {
 	t_term_cap *termcap;
 
 	if (!(termcap = malloc(sizeof(*termcap))))
-			error_malloc_err();
+		error_malloc_err();
 	if ((termcap->up = tgetstr("up", NULL)) == NULL)
 		ft_printf("[ERR] 'up' capability may not work in this terminal\n");
 	if ((termcap->ce = tgetstr("ce", NULL)) == NULL)
@@ -38,17 +38,21 @@ t_term_cap	*term_init_cap()
 		ft_printf("[ERR] 'co' capability may not work in this terminal\n");
 	if ((termcap->cd = tgetstr("cd", NULL)) == NULL)
 		ft_printf("[ERR] 'cd' capability may not work in this terminal\n");
+	if ((termcap->so = tgetstr("so", NULL)) == NULL)
+		ft_printf("[ERR] 'so' capability may not work in this terminal\n");
+	if ((termcap->se = tgetstr("se", NULL)) == NULL)
+		ft_printf("[ERR] 'se' capability may not work in this terminal\n");
 	return (termcap);
 }
 
-t_term_cap *term_init()
+t_term_cap	*term_init(void)
 {
 	t_term_cap		*termcap;
 	struct termios	term;
 	char			*term_name;
 	extern char		**environ;
 
-	termcap = NULL;	
+	termcap = NULL;
 	term_name = env_get_var("TERM", environ);
 	tgetent(NULL, term_name);
 	tcgetattr(0, &term);
@@ -58,15 +62,15 @@ t_term_cap *term_init()
 	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSADRAIN, &term);
 	termcap = term_init_cap();
-	return (termcap);	
+	return (termcap);
 }
 
-void	term_close()
+void		term_close(void)
 {
 	struct termios	term;
 	char			*term_name;
 	extern char		**environ;
-	
+
 	term_name = env_get_var("TERM", environ);
 	tgetent(NULL, term_name);
 	tcgetattr(0, &term);

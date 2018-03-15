@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 21:23:44 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/15 10:11:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	int		prompt_len;
 
-	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 	prompt_len = readline_print_prompt(FALSE);
 	while (count > 0 && tbuffer->cnt > -3)
 	{
-		if (tbuffer->line != 1 && tbuffer->cnt != 1 && tbuffer->index == 0)	
+		if (tbuffer->line != 1 && tbuffer->cnt != 1 && tbuffer->index == 0)
 		{
-	//	ft_printf("\n\n\n\n??f.e.fpflefpelfpelpfelpefl");
 			tbuffer->line--;
 			tputs(tbuffer->termcap->up, 0, ft_putcc);
 			cursor_move_right(tbuffer->colnbr + 1);
@@ -42,20 +40,17 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 		tbuffer->cnt--;
 		count--;
 	}
-//	ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer->cnt, tbuffer->index, tbuffer->line, tbuffer->colnbr);
 }
 
 void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	int		prompt_len;
 
-	//ft_printf("\n\n%d|%d\n\n", tbuffer->index, tbuffer->colnbr);
 	prompt_len = readline_print_prompt(FALSE);
 	while (count && tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 	{
 		if (tbuffer->index == tbuffer->colnbr - 1)
 		{
-		//	temp = tgetstr("sf", NULL);
 			tputs(tbuffer->termcap->sf, 0, ft_putcc);
 			tbuffer->index = 0;
 			tbuffer->line++;
@@ -65,7 +60,6 @@ void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 		else
 		{
 			tbuffer->index++;
-			//temp = tgetstr("nd", NULL);
 			tputs(tbuffer->termcap->nd, 0, ft_putcc);
 		}
 		count--;
@@ -87,8 +81,8 @@ void	cursor_move_left_next_word(t_buffer *tbuffer)
 			cursor_move_left_upd_tbuffer(tbuffer->cnt - i - 1, tbuffer);
 			break ;
 		}
-		i--;	
-	}	
+		i--;
+	}
 }
 
 void	cursor_move_right_next_word(t_buffer *tbuffer)
@@ -96,7 +90,7 @@ void	cursor_move_right_next_word(t_buffer *tbuffer)
 	int i;
 
 	i = tbuffer->cnt;
-	while (i < (int) ft_strlen(tbuffer->buffer))
+	while (i < (int)ft_strlen(tbuffer->buffer))
 	{
 		if (tbuffer->buffer[i] == ' ')
 		{
@@ -105,6 +99,6 @@ void	cursor_move_right_next_word(t_buffer *tbuffer)
 			cursor_move_right_upd_tbuffer(i - tbuffer->cnt, tbuffer);
 			break ;
 		}
-		i++;	
-	}	
+		i++;
+	}
 }

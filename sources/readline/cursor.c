@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/08 11:45:43 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:10:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 #include <termcap.h>
 #include <term.h>
 #include "cursor.h"
+#include "readline.h"
 
-void	cursor_up_line(int linenbr)
+void	cursor_reset_line(t_buffer *tbuffer)
 {
-	char	*temp;
+	int	cur_cnt;
 
-	temp = tgetstr("up", NULL);
-	while (linenbr)
-	{
-		tputs(temp, 0, ft_putcc);
-		linenbr--;
-	}
+	cur_cnt = tbuffer->cnt;
+	cursor_move_left_upd_tbuffer(cur_cnt, tbuffer);
+	tputs(tbuffer->termcap->cd, 0, ft_putcc);
+	tbuffer->cnt = 0;
+	readline_print_upd_tbuffer(tbuffer);
+	cursor_move_left_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - cur_cnt, tbuffer);
 }
 
 void	cursor_delete_line(int linenbr)
 {
 	char	*temp;
-	
+
 	temp = tgetstr("ce", NULL);
 	while (linenbr)
 	{
@@ -47,7 +48,6 @@ void	cursor_move_left(int count)
 	while (count)
 	{
 		ft_putstr(temp);
-		//ft_putstr("\033[1D");
 		count--;
 	}
 }
@@ -57,11 +57,10 @@ void	cursor_move_left(int count)
  ** using the ansi escape code
 */
 
-
 void	cursor_move_right(int count)
 {
 	char *temp;
-	
+
 	temp = tgetstr("nd", NULL);
 	while (count)
 	{
@@ -74,7 +73,6 @@ void	cursor_move_right(int count)
  ** cursor_move_right move the cursor from count line to the right
  ** using the ansi escape code
 */
-
 
 void	cursor_save_pos(void)
 {

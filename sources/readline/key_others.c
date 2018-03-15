@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 09:54:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:32:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,54 @@
 #include "cursor.h"
 #include <term.h>
 
-
-void	key_do_shift_arrow(t_buffer *tbuffer)
+void	key_select_buffer(t_buffer *tbuffer)
 {
-	char	buf[4];
+	char	buf[3];
+	int		cur_cnt;
+	char	cur_char;
 
-	ft_bzero(buf, 4);
-	if (tbuffer->c_buf == '1')
+	ft_bzero(buf, 3);
+	cur_cnt = 0;
+	if (tbuffer->c_buf == 27)
 	{
 		read(0, buf, 3);
-		if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'A')
+		if (buf[0] == '[' && buf[1] == 'D')
 		{
-				if (tbuffer->cnt < tbuffer->colnbr)
-					cursor_move_left_upd_tbuffer(tbuffer->cnt, tbuffer);
-				else
-					cursor_move_left_upd_tbuffer(tbuffer->colnbr, tbuffer);
+			if (tbuffer->cnt > 0)
+			{
+				cur_char = tbuffer->buffer[tbuffer->cnt - 1];
+				cursor_move_left_upd_tbuffer(1, tbuffer);
+				tputs(tbuffer->termcap->so, 0, ft_putcc);
+				write(1, &cur_char, 1);
+				tbuffer->cnt++;
+				tbuffer->index++;
+				cursor_move_left_upd_tbuffer(1, tbuffer);
+				tputs(tbuffer->termcap->se, 0, ft_putcc);
+			}
 		}
-		if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'B')
+		if (buf[0] == '[' && buf[1] == 'C')
 		{
-			if (tbuffer->cnt + tbuffer->colnbr < (int)ft_strlen(tbuffer->buffer))
-				cursor_move_right_upd_tbuffer(tbuffer->line == 1 ? tbuffer->colnbr + 3 : tbuffer->colnbr, tbuffer);
-			else
-				cursor_move_right_upd_tbuffer((int) ft_strlen(tbuffer->buffer), tbuffer);
+			if (tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
+			{
+				cur_char = tbuffer->buffer[tbuffer->cnt - 1];
+				tputs(tbuffer->termcap->so, 0, ft_putcc);
+				write(1, &cur_char, 1);
+				tbuffer->cnt++;
+				tbuffer->index++;
+				tputs(tbuffer->termcap->se, 0, ft_putcc);
+			}
 		}
-		if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'D')
-				cursor_move_left_next_word(tbuffer);
-		if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'C')
-				cursor_move_right_next_word(tbuffer);
-		}
+	}
 }
 
 void	key_group(t_buffer *tbuffer, t_cmd_hist *head)
 {
-	read(0, &(tbuffer->c_buf), 1);
+	read(0, &tbuffer->c_buf, 1);
+	key_select_buffer(tbuffer);
 	if (tbuffer->c_buf == '[')
 	{
 		read(0, &(tbuffer->c_buf), 1);
-		key_do_shift_arrow(tbuffer);	
+		key_do_shift_arrow(tbuffer);
 		key_do_arrow(tbuffer, head);
 		key_do_home_end(tbuffer);
 		key_do_del(tbuffer);
@@ -63,7 +74,6 @@ void	key_do_backspace(t_buffer *tbuffer)
 
 	if (tbuffer->cnt > 0)
 	{
-	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 		cur_cnt = 0;
 		cur_cnt = tbuffer->cnt;
 		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
@@ -74,10 +84,9 @@ void	key_do_backspace(t_buffer *tbuffer)
 		tbuffer->index = 0;
 		readline_print_upd_tbuffer(tbuffer);
 		cur_cnt--;
-		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer)) - cur_cnt, tbuffer);
-		//cursor_move_left_upd_tbuffer(1, &tbuffer);
-		//	cursor_up_line((ft_strlen(tbuffer.buffer) / tbuffer.colnbr) - 1);
-		}
+		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer))
+		- cur_cnt, tbuffer);
+	}
 }
 
 void	key_do_home_end(t_buffer *tbuffer)
@@ -89,7 +98,8 @@ void	key_do_home_end(t_buffer *tbuffer)
 		tbuffer->index = 0;
 	}
 	if (tbuffer->c_buf == 'F')
-		cursor_move_right_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - tbuffer->cnt, tbuffer);
+		cursor_move_right_upd_tbuffer(
+		(int)ft_strlen(tbuffer->buffer) - tbuffer->cnt, tbuffer);
 }
 
 void	key_do_del(t_buffer *tbuffer)
@@ -112,7 +122,8 @@ void	key_do_del(t_buffer *tbuffer)
 				tbuffer->cnt = 0;
 				tbuffer->index = 0;
 				readline_print_upd_tbuffer(tbuffer);
-				cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer)) - cur_cnt, tbuffer);
+				cursor_move_left_upd_tbuffer((
+				(int)ft_strlen(tbuffer->buffer)) - cur_cnt, tbuffer);
 			}
 		}
 	}

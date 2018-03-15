@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 09:54:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:20:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 ** 7 8 9 10111213141516
 ** 17181920212223242526
 **
-** In all function we check if we are in line 1 
+** In all function we check if we are in line 1
 ** if yes we need to take in count the prompt len.
 ********************************************************************************
 ********************************************************************************
@@ -61,7 +61,7 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 			key_group(tbuffer, head);
 		else if (tbuffer->c_buf == '\n')
 		{
-		if (ft_strlen(tbuffer->buffer) > 0)
+			if (ft_strlen(tbuffer->buffer) > 0)
 				readline_history_add(tbuffer->buffer);
 			break ;
 		}
@@ -82,27 +82,24 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	tbuffer.termcap = cur_termcap;
 	prompt_len = readline_print_prompt(FALSE);
-	readline_main_loop(&tbuffer, head);	
-	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
+	readline_main_loop(&tbuffer, head);
 	return (tbuffer.buffer);
 }
-
 
 int		main(void)
 {
 	t_term_cap		*cur_termcap;
 	char			*line;
 	t_cmd_hist		*head;
-//	char			temp;
-	
+
 	cur_termcap = term_init();
 	while (1)
 	{
+	//	tputs(cur_termcap->so, 0, ft_putcc);
 		readline_print_prompt(TRUE);
+	//	tputs(cur_termcap->se, 0, ft_putcc);
 		head = readline_history_read();
 		line = readline(head, cur_termcap);
-		//read(0, &temp, 1);
-		//ft_printf("%c\n", temp);
 		ft_printf("\n|%s|\n", line);
 		ft_putstr("\n");
 	}

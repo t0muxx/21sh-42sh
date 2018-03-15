@@ -6,13 +6,14 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/14 10:04:38 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 10:13:43 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include "cursor.h"
 #include <term.h>
+
 /*
 ** readline_history_print print the last command based on .history
 ** it update cnt and buffer in order to get execute it if the user

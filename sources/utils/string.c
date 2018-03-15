@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/28 09:07:52 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/15 10:14:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	string_delete_char(char **str, int pos)
 	str[0][pos] = 0;
 }
 
-int	ft_putcc(int c)
+int		ft_putcc(int c)
 {
 	write(1, &c, 1);
 	return (0);
