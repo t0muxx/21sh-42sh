@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 16:32:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:37:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	key_select_buffer(t_buffer *tbuffer)
 				tbuffer->index++;
 				cursor_move_left_upd_tbuffer(1, tbuffer);
 				tputs(tbuffer->termcap->se, 0, ft_putcc);
+
 			}
 		}
 		if (buf[0] == '[' && buf[1] == 'C')
