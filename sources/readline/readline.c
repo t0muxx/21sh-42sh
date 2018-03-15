@@ -6,11 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2018/03/15 09:54:42 by tmaraval         ###   ########.fr       */
-=======
-/*   Updated: 2018/03/14 21:25:32 by tomlulu          ###   ########.fr       */
->>>>>>> 5f9d7e85d32fe09377cc593c6836074af9433ed0
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +73,7 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 {
 	t_buffer	tbuffer;
-<<<<<<< HEAD
 	int			prompt_len;
-=======
-	int			cur_cnt;
-	char		buf[4];
->>>>>>> 5f9d7e85d32fe09377cc593c6836074af9433ed0
 
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
@@ -90,131 +81,8 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	tbuffer.termcap = cur_termcap;
-<<<<<<< HEAD
 	prompt_len = readline_print_prompt(FALSE);
 	readline_main_loop(&tbuffer, head);	
-=======
-	while (read(0, &(tbuffer.c_buf), 1) != -1)
-	{
-		if (tbuffer.line == 1)
-			tbuffer.colnbr = tgetnum("co") - 3;
-		else
-			tbuffer.colnbr = tgetnum("co");
-		if (tbuffer.c_buf == 127)
-		{
-			if (tbuffer.cnt > 0)
-			{
-	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
-				cur_cnt = 0;
-				cur_cnt = tbuffer.cnt;
-				cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
-				string_delete_char(&(tbuffer.buffer), cur_cnt - 1);
-				tputs(tbuffer.termcap->cd, 0, ft_putcc);
-				readline_print_prompt(TRUE);
-				tbuffer.cnt = 0;
-				tbuffer.index = 0;
-				readline_print_upd_tbuffer(&tbuffer);
-				cur_cnt--;
-				cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer.buffer)) - cur_cnt, &tbuffer);
-				//cursor_move_left_upd_tbuffer(1, &tbuffer);
-			//	cursor_up_line((ft_strlen(tbuffer.buffer) / tbuffer.colnbr) - 1);
-			}
-		}
-		// touche home [H
-		// touch end [F
-		else if (tbuffer.c_buf == 27)
-		{
-			read(0, &(tbuffer.c_buf), 1);
-			//ft_putchar(tbuffer.c_buf);
-			if (tbuffer.c_buf == '[')
-			{
-				read(0, &(tbuffer.c_buf), 1);
-				//ft_putchar(tbuffer.c_buf);
-				if (tbuffer.c_buf == '1')
-				{
-					read(0, buf, 3);
-					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'A')
-					{
-						if (tbuffer.line > 1)
-						{
-							if (tbuffer.cnt < tbuffer.colnbr)
-								cursor_move_left_upd_tbuffer(tbuffer.cnt, &tbuffer);
-							else
-								cursor_move_left_upd_tbuffer(tbuffer.colnbr, &tbuffer);
-						}						
-					}
-					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'B')
-					{
-						if (tbuffer.cnt + tbuffer.colnbr < (int)ft_strlen(tbuffer.buffer))
-							cursor_move_right_upd_tbuffer(tbuffer.line == 1 ? tbuffer.colnbr + 3 : tbuffer.colnbr, &tbuffer);
-						else
-							cursor_move_right_upd_tbuffer((int) ft_strlen(tbuffer.buffer), &tbuffer);
-					}
-					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'D')
-					{
-						cursor_move_left_next_word(&tbuffer);
-						ft_bzero(buf, 4);	
-					}
-					if (buf[0] == ';' && buf[1] == '2' && buf[2] == 'C')
-					{
-						cursor_move_right_next_word(&tbuffer);
-						ft_bzero(buf, 4);	
-					}
-				}
-				if (tbuffer.c_buf == 'A')
-					readline_history_print(&head, head->oldest, &tbuffer);
-				if (tbuffer.c_buf == 'B')
-					readline_history_print(&head, head->newest, &tbuffer);
-				if (tbuffer.c_buf == 'C')
-				{
-					if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
-						cursor_move_right_upd_tbuffer(1, &tbuffer);
-				}
-				if (tbuffer.c_buf == 'D')
-				{
-					if (tbuffer.cnt > 0)
-						cursor_move_left_upd_tbuffer(1, &tbuffer);
-				}
-				if (tbuffer.c_buf == 'H')
-				{
-					cursor_move_left_upd_tbuffer(tbuffer.cnt, &tbuffer);
-					tbuffer.cnt = 0;
-					tbuffer.index = 0;
-				}
-				if (tbuffer.c_buf == 'F')
-					cursor_move_right_upd_tbuffer((int)ft_strlen(tbuffer.buffer) - tbuffer.cnt, &tbuffer);
-				if (tbuffer.c_buf == '3')
-				{
-					read(0, &(tbuffer.c_buf), 1);
-					if (tbuffer.c_buf == '~')
-					{
-						if (tbuffer.cnt < (int)ft_strlen(tbuffer.buffer))
-						{
-							cur_cnt = 0;
-							cur_cnt = tbuffer.cnt;
-							string_delete_char(&(tbuffer.buffer), tbuffer.cnt);
-							cursor_move_left_upd_tbuffer(BUFFER_SIZE, &tbuffer);
-							tputs(tbuffer.termcap->cd, 0, ft_putcc);
-							readline_print_prompt(TRUE);
-							tbuffer.cnt = 0;
-							tbuffer.index = 0;
-							readline_print_upd_tbuffer(&tbuffer);
-							cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer.buffer)) - cur_cnt, &tbuffer);
-						}
-					}
-				}
-			}
-		}
-		else if (tbuffer.c_buf == '\n')
-		{
-		if (ft_strlen(tbuffer.buffer) > 0)
-				readline_history_add(tbuffer.buffer);
-			break ;
-		}
-		else
-			readline_print_n_buf(&tbuffer);
-	
->>>>>>> 5f9d7e85d32fe09377cc593c6836074af9433ed0
 	//ft_printf("\n|cnt = %d index = %d line = %d colnbr = %d|\n", tbuffer.cnt, tbuffer.index, tbuffer.line, tbuffer.colnbr);
 	return (tbuffer.buffer);
 }
