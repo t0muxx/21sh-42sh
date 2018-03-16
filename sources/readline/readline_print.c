@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 10:18:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 16:15:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/16 09:22:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 	int		cur_cnt;
 
 	cur_cnt = 0;
-	cursor_reset_line(tbuffer);
 	if (tbuffer->buffer[tbuffer->cnt] != 0)
 	{
 		cur_cnt = tbuffer->cnt;

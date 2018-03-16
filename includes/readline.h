@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 17:26:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/16 09:28:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,14 @@ typedef struct	s_term_cap
 typedef struct	s_buffer
 {
 	char		*buffer;
+	char		cutbuffer[BUFFER_SIZE];
 	char		c_buf;
 	int			cnt;
 	int			index;
 	int			line;
 	int			colnbr;
-	int			cutlen;
+	int			cutstart;
+	int			cutend;
 	t_term_cap	*termcap;
 
 }				t_buffer;

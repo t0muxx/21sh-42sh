@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 17:25:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/16 10:48:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	key_select_buffer(t_buffer *tbuffer)
 		read(0, buf, 3);
 		if (buf[0] == '[' && buf[1] == 'D')
 		{
+			if (tbuffer->cutend == 0)
+				tbuffer->cutend = tbuffer->cnt;
 			if (tbuffer->cnt > 0)
 			{
 				cur_char = tbuffer->buffer[tbuffer->cnt - 1];
@@ -37,19 +39,23 @@ void	key_select_buffer(t_buffer *tbuffer)
 				tbuffer->index++;
 				cursor_move_left_upd_tbuffer(1, tbuffer);
 				tputs(tbuffer->termcap->se, 0, ft_putcc);
+				tbuffer->cutstart = tbuffer->cnt;
 
 			}
 		}
 		if (buf[0] == '[' && buf[1] == 'C')
 		{
+			if (tbuffer->cutstart == 0 && tbuffer->cutend == 0)
+				tbuffer->cutstart = tbuffer->cnt;
 			if (tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 			{
-				cur_char = tbuffer->buffer[tbuffer->cnt - 1];
+				cur_char = tbuffer->buffer[tbuffer->cnt];
 				tputs(tbuffer->termcap->so, 0, ft_putcc);
 				write(1, &cur_char, 1);
 				tbuffer->cnt++;
 				tbuffer->index++;
 				tputs(tbuffer->termcap->se, 0, ft_putcc);
+				tbuffer->cutend = tbuffer->cnt;
 			}
 		}
 	}
@@ -57,7 +63,11 @@ void	key_select_buffer(t_buffer *tbuffer)
 
 void	key_group(t_buffer *tbuffer, t_cmd_hist *head)
 {
+	int i;
+
+	i = 0;
 	read(0, &tbuffer->c_buf, 1);
+//	ft_printf("%d\n", tbuffer->c_buf);
 	key_select_buffer(tbuffer);
 	if (tbuffer->c_buf == '[')
 	{

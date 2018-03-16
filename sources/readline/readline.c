@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 14:20:37 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/16 15:09:40 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@
 
 void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 {
+	int i;
+	int j;
+
 	while (read(0, &(tbuffer->c_buf), 1) != -1)
 	{
+	//	ft_printf("%d\n", tbuffer->c_buf);
+		i = 0;
 		if (tbuffer->line == 1)
 			tbuffer->colnbr = tgetnum("co") - 3;
 		else
@@ -59,6 +64,48 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 			key_do_backspace(tbuffer);
 		else if (tbuffer->c_buf == 27)
 			key_group(tbuffer, head);
+		else if (tbuffer->c_buf == 24)
+		{
+			//ft_printf("start : %d end : %d\n\n", tbuffer->cutstart, tbuffer->cutend);
+			ft_memcpy(tbuffer->cutbuffer, tbuffer->buffer + tbuffer->cutstart, tbuffer->cutend - tbuffer->cutstart); 
+			while (i < (tbuffer->cutend - tbuffer->cutstart))
+			{
+				string_delete_char(&tbuffer->buffer, tbuffer->cutstart);
+				i++;
+			}
+			//ft_printf("+++%s\n", tbuffer->cutbuffer);
+			cursor_reset_line(tbuffer);
+		}
+		else if (tbuffer->c_buf == 11)
+		{
+			//ft_printf("start : %d end : %d\n\n", tbuffer->cutstart, tbuffer->cutend);
+			ft_memcpy(tbuffer->cutbuffer, tbuffer->buffer + tbuffer->cutstart, tbuffer->cutend - tbuffer->cutstart); 
+			//ft_printf("+++%s\n", tbuffer->cutbuffer);
+			cursor_reset_line(tbuffer);
+		}
+		else if (tbuffer->c_buf == 16)
+		{
+			if (tbuffer->cnt == (int)ft_strlen(tbuffer->buffer))
+			{
+				ft_strcat(tbuffer->buffer, tbuffer->cutbuffer);
+			}
+			else
+			{
+				j = tbuffer->cnt;
+				while (tbuffer->cutbuffer[i])
+				{
+					string_shift_right(&tbuffer->buffer, j);
+					tbuffer->buffer[j] = tbuffer->cutbuffer[i];
+					j++;
+					i++;
+				}
+				cursor_move_right_upd_tbuffer(j, tbuffer);
+			}
+				cursor_reset_line(tbuffer);
+				ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
+				tbuffer->cutstart = 0;
+				tbuffer->cutend = 0;
+		}
 		else if (tbuffer->c_buf == '\n')
 		{
 			if (ft_strlen(tbuffer->buffer) > 0)
@@ -78,8 +125,11 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
 	tbuffer.line = 1;
+	tbuffer.cutstart = 0;
+	tbuffer.cutend = 0;
 	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
+	ft_bzero(tbuffer.cutbuffer, BUFFER_SIZE);
 	tbuffer.termcap = cur_termcap;
 	prompt_len = readline_print_prompt(FALSE);
 	readline_main_loop(&tbuffer, head);
