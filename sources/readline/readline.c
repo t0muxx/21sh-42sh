@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/16 15:09:40 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/22 17:28:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <term.h>
 #include "cursor.h"
 #include "key.h"
+#include "lexer.h"
 
 /*
 *******************************************************************************
@@ -141,15 +142,17 @@ int		main(void)
 	t_term_cap		*cur_termcap;
 	char			*line;
 	t_cmd_hist		*head;
+	t_token			*root_token;
 
+	root_token = NULL;
 	cur_termcap = term_init();
 	while (1)
 	{
-	//	tputs(cur_termcap->so, 0, ft_putcc);
 		readline_print_prompt(TRUE);
-	//	tputs(cur_termcap->se, 0, ft_putcc);
 		head = readline_history_read();
 		line = readline(head, cur_termcap);
+		lexer_do(&root_token, line);
+		lexer_print_token(root_token);
 		ft_printf("\n|%s|\n", line);
 		ft_putstr("\n");
 	}

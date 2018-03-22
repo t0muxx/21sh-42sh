@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/03/15 10:05:23 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/03/22 17:19:25 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ ENV		 = env/
 READLINE = readline/
 ERROR	 = error/
 UTILS	 = utils/
+LEXER	 = lexer/
 
 SRCS = 		$(READLINE)readline.c \
 			$(READLINE)readline_print.c \
@@ -39,6 +40,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)cursor.c \
 			$(READLINE)cursor_tbuffer.c \
 			$(READLINE)term.c \
+			$(LEXER)lexer.c \
 			$(ENV)env_get.c \
 			$(ERROR)error.c \
 			$(UTILS)string.c

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/22 15:54:37 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/22 17:39:47 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	lexer_print_token(t_token *token)
 {
 	while (token)
 	{
-		ft_printf("data -> |%s| type -> |%c|\n", token->data, token->type);
+		if (token->type < 0)
+			ft_printf("\n\ndata -> |%s| type -> |%d|\n", token->data, token->type);
+		else
+			ft_printf("\n\ndata -> |%s| type -> |%c|\n", token->data, token->type);
 		token = token->next;
 	}
 }
@@ -42,7 +45,7 @@ t_token *lexer_token_create(int size)
 	return (new);
 }
 
-int lexer_do(t_token *root_tok, char *line)
+int lexer_do(t_token **root_tok, char *line)
 {
 	int l_line;
 	int	i;
@@ -55,7 +58,7 @@ int lexer_do(t_token *root_tok, char *line)
 	i = 0;
 	l_line = (int)ft_strlen(line);
 	tok = lexer_token_create(l_line);
-	root_tok = tok;
+	*root_tok = tok;
 	if (line == 0)
 		return (0);
 	if (line == NULL)
@@ -136,7 +139,13 @@ int lexer_do(t_token *root_tok, char *line)
 			else
 			{
 				tok->data[j++] = line[i++];
-			   	tok->type = C_WORD;	
+			   	tok->type = C_WORD;
+				if (ft_isalpha(line[i]) == 0)
+				{
+					tok->next = lexer_token_create(l_line - i);
+					tok = tok->next;
+					j = 0;
+				}	
 			}
 		}
 		if (state == STATE_IN_QUOTE)
@@ -144,6 +153,7 @@ int lexer_do(t_token *root_tok, char *line)
 			tok->data[j++] = line[i++];
 			if (line[i] == C_SIMPLEQUOTE)
 			{
+				tok->data[j++] = line[i++];
 				state = STATE_NORMAL;
 				tok->next = lexer_token_create(l_line - i);
 				tok = tok->next;
@@ -155,6 +165,8 @@ int lexer_do(t_token *root_tok, char *line)
 			tok->data[j++] = line[i++];
 			if (line[i] == C_DOUBLEQUOTE)
 			{
+				tok->data[j++] = line[i++];
+				state = STATE_NORMAL;
 				state = STATE_NORMAL;
 				tok->next = lexer_token_create(l_line - i);
 				tok = tok->next;

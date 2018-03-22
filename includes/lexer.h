@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 10:43:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/22 15:55:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/22 17:37:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ enum e_token_type
 	C_PIPE = '|',
 	C_ISLESS = '<',
 	C_ISGREATER = '>',
-	C_NUMBER,
-	C_WORD,
+	C_NUMBER = -3,
+	C_WORD = -2,
 	C_SIMPLEQUOTE = '\'',
 	C_DOUBLEQUOTE = '\"',
 	C_WHITESPACE = ' ',
@@ -45,8 +45,8 @@ typedef struct 	s_token
 
 }				t_token;
 
-void	lexer_print_token(t_token *token)
-void	lexer_token_init(t_token **tok, int size)
-t_token *lexer_token_create(int size)
-int lexer_do(t_token *root_tok, char *line)
+void	lexer_print_token(t_token *token);
+void	lexer_token_init(t_token **tok, int size);
+t_token *lexer_token_create(int size);
+int lexer_do(t_token **root_tok, char *line);
 #endif
