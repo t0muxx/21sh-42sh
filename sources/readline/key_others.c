@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/16 10:48:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/23 08:48:56 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 void	key_select_buffer(t_buffer *tbuffer)
 {
 	char	buf[3];
-	int		cur_cnt;
 	char	cur_char;
 
 	ft_bzero(buf, 3);
-	cur_cnt = 0;
 	if (tbuffer->c_buf == 27)
 	{
 		read(0, buf, 3);
@@ -63,9 +61,6 @@ void	key_select_buffer(t_buffer *tbuffer)
 
 void	key_group(t_buffer *tbuffer, t_cmd_hist *head)
 {
-	int i;
-
-	i = 0;
 	read(0, &tbuffer->c_buf, 1);
 //	ft_printf("%d\n", tbuffer->c_buf);
 	key_select_buffer(tbuffer);

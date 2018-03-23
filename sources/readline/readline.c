@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/22 17:28:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/23 09:14:22 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 {
 	t_buffer	tbuffer;
-	int			prompt_len;
 
 	tbuffer.cnt = 0;
 	tbuffer.index = 0;
@@ -132,7 +131,6 @@ char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer.cutbuffer, BUFFER_SIZE);
 	tbuffer.termcap = cur_termcap;
-	prompt_len = readline_print_prompt(FALSE);
 	readline_main_loop(&tbuffer, head);
 	return (tbuffer.buffer);
 }
