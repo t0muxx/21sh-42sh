@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 10:43:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/22 17:37:04 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/27 15:11:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ enum e_token_type
 	C_SEMILICON = ';',
 	C_PIPE = '|',
 	C_ISLESS = '<',
+	C_DLESS = 9996,
+	C_DGREAT = 9997,
+	C_LESSAND = 9998,
+	C_GREATAND = 9999,
 	C_ISGREATER = '>',
 	C_NUMBER = -3,
 	C_WORD = -2,
@@ -26,6 +30,7 @@ enum e_token_type
 	C_WHITESPACE = ' ',
 	C_AMPERSAND = '&',
 	C_ESCAPESEQ = '\\',
+	C_EOL = '\n',
 	C_INIT = -1,
 };
 

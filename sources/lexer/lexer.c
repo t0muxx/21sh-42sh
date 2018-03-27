@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/26 08:49:58 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/27 15:17:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	lexer_print_token(t_token *token)
 	{
 		if (token->type < 0)
 			ft_printf("\n\ndata -> |%s| type -> |%d|\n", token->data, token->type);
+		else if (token->type == C_DLESS)
+			ft_printf("\n\ndata -> |%s| type -> |<<|\n", token->data);
+		else if (token->type == C_DGREAT)
+			ft_printf("\n\ndata -> |%s| type -> |>>|\n", token->data);
+		else if (token->type == C_LESSAND)
+			ft_printf("\n\ndata -> |%s| type -> |<&|\n", token->data);
+		else if (token->type == C_GREATAND)
+			ft_printf("\n\ndata -> |%s| type -> |>&|\n", token->data);
 		else
 			ft_printf("\n\ndata -> |%s| type -> |%c|\n", token->data, token->type);
 		token = token->next;
@@ -87,7 +95,18 @@ int lexer_do(t_token **root_tok, char *line)
 			else if (line[i] == C_ISLESS)
 			{
 				tok->data[j] = line[i++];
-				tok->type = C_ISLESS;
+				if (line[i] == C_ISLESS)
+				{
+					tok->data[++j] = line[i++];
+					tok->type = C_DLESS;
+				}
+				else if (line[i] == C_AMPERSAND)
+				{
+					tok->data[++j] = line[i++];
+					tok->type = C_LESSAND;
+				}
+				else
+					tok->type = C_ISLESS;
 				tok->next = lexer_token_create(l_line - i);
 				tok = tok->next;
 				j = 0;
@@ -95,7 +114,18 @@ int lexer_do(t_token **root_tok, char *line)
 			else if (line[i] == C_ISGREATER)
 			{
 				tok->data[j] = line[i++];
-				tok->type = C_ISGREATER;
+				if (line[i] == C_ISGREATER)
+				{
+					tok->data[++j] = line[i++];
+					tok->type = C_DGREAT;
+				}
+				else if (line[i] == C_AMPERSAND)
+				{
+					tok->data[++j] = line[i++];
+					tok->type = C_GREATAND;
+				}
+				else
+					tok->type = C_ISGREATER;
 				tok->next = lexer_token_create(l_line - i);
 				tok = tok->next;
 				j = 0;
@@ -133,6 +163,14 @@ int lexer_do(t_token **root_tok, char *line)
 				tok->data[j] = line[++i];
 				tok->type = C_WORD;
 				tok->next = lexer_token_create(l_line - i);
+				tok = tok->next;
+				j = 0;
+			}
+			else if (line[i] == C_EOL)
+			{
+				tok->data[j] = line[i++];
+				tok->type = C_EOL;
+				tok->next = lexer_token_create(l_line -i);
 				tok = tok->next;
 				j = 0;
 			}
