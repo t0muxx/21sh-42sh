@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 14:57:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 17:02:30 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	key_do_backspace(t_buffer *tbuffer)
 	{
 		if (tbuffer->index > 0)
 		{
-			cur_pos = 0;
+			cur_pos = tbuffer->index;
 			cur_cnt = 0;
 			cur_cnt = tbuffer->cnt;
 			cursor_move_left_upd_tbuffer(tbuffer->index + 2, tbuffer);
@@ -117,6 +117,7 @@ void	key_do_backspace(t_buffer *tbuffer)
 				tbuffer->cnt++;
 				tbuffer->index++;
 			}
+			cursor_move_left_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - cur_cnt + 1, tbuffer);
 		}
 	}
 	else
