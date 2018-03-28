@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/03/22 17:19:25 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/03/28 09:09:53 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,11 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)cursor.c \
 			$(READLINE)cursor_tbuffer.c \
 			$(READLINE)term.c \
+			$(READLINE)cut_paste.c \
 			$(LEXER)lexer.c \
 			$(ENV)env_get.c \
 			$(ERROR)error.c \
-			$(UTILS)string.c
+			$(UTILS)string.c 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))

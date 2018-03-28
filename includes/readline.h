@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 08:04:43 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 09:07:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@
 ** [new]->[new -1]->[etc..]->NULL
 ** next = oldest and prev = newest
 */
+
+enum e_readline_state
+{
+	READ_IN_QUOTE,
+	READ_IN_DQUOTE,
+	READ_NORMAL,
+};
 
 typedef struct	s_cmd_hist
 {
@@ -85,11 +92,16 @@ void			readline_history_print(t_cmd_hist **head,
 int				readline_print_prompt(int print);
 void			readline_print_upd_tbuffer(t_buffer *tbuffer);
 void			readline_print_n_buf(t_buffer *tbuffer);
+void			readline_print_cutbuffer(t_buffer *tbuffer);
 
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 
 t_term_cap		*term_init_cap();
+void			term_get_colnbr(t_buffer *tbuffer);
 t_term_cap		*term_init();
 void			term_close();
+
+void			cut_paste_do_cut(t_buffer *tbuffer);
+void			cut_paste_do_paste(t_buffer *tbuffer);
 #endif

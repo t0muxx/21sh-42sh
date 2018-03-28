@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 10:18:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/16 09:22:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 09:04:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,29 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 		tbuffer->buffer[tbuffer->cnt] = tbuffer->c_buf;
 		readline_print_char_upd_tbuffer(tbuffer, tbuffer->c_buf);
 	}
+}
+
+void	readline_print_cutbuffer(t_buffer *tbuffer)
+{
+	int j;
+	int i;
+
+	i = 0;
+	j = 0;
+	if (tbuffer->cnt == (int)ft_strlen(tbuffer->buffer))
+		ft_strcat(tbuffer->buffer, tbuffer->cutbuffer);
+	else
+	{
+		j = tbuffer->cnt;
+		while (tbuffer->cutbuffer[i])
+		{
+			string_shift_right(&tbuffer->buffer, j);
+			tbuffer->buffer[j++] = tbuffer->cutbuffer[i++];
+		}
+			cursor_move_right_upd_tbuffer(j, tbuffer);
+	}
+	cursor_reset_line(tbuffer);
+	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
+	tbuffer->cutstart = 0;
+	tbuffer->cutend = 0;
 }
