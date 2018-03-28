@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 09:20:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 08:03:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 14:14:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,15 @@ void	key_do_arrow(t_buffer *tbuffer, t_cmd_hist **head)
 	}
 	if (tbuffer->c_buf == 'D')
 	{
-		if (tbuffer->cnt > 0)
-			cursor_move_left_upd_tbuffer(1, tbuffer);
+		if (tbuffer->state == READ_NORMAL)
+		{
+			if (tbuffer->cnt > 0)
+				cursor_move_left_upd_tbuffer(1, tbuffer);
+		}
+		else
+		{
+			if (tbuffer->index > 0)
+				cursor_move_left_upd_tbuffer(1, tbuffer);
+		}
 	}
 }

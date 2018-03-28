@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:21:31 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 14:57:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,50 @@ void	key_group(t_buffer *tbuffer, t_cmd_hist **head)
 void	key_do_backspace(t_buffer *tbuffer)
 {
 	int cur_cnt;
+	int cur_pos;
 
-	if (tbuffer->cnt > 0)
+	if (tbuffer->state == READ_NORMAL || tbuffer->line == 1)
 	{
-		cur_cnt = 0;
-		cur_cnt = tbuffer->cnt;
-		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
-		string_delete_char(&(tbuffer->buffer), cur_cnt - 1);
-		tputs(tbuffer->termcap->cd, 0, ft_putcc);
-		readline_print_prompt(tbuffer, TRUE);
-		tbuffer->cnt = 0;
-		tbuffer->index = 0;
-		readline_print_upd_tbuffer(tbuffer);
-		cur_cnt--;
-		cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer))
-		- cur_cnt, tbuffer);
+		if (tbuffer->cnt > 0)
+		{
+			cur_cnt = 0;
+			cur_cnt = tbuffer->cnt;
+			cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
+			string_delete_char(&(tbuffer->buffer), cur_cnt - 1);
+			tputs(tbuffer->termcap->cd, 0, ft_putcc);
+			readline_print_prompt(tbuffer, TRUE);
+			tbuffer->cnt = 0;
+			tbuffer->index = 0;
+			readline_print_upd_tbuffer(tbuffer);
+			cur_cnt--;
+			cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer))
+			- cur_cnt, tbuffer);
+		}
+	//	write(1, "\n\n\n\n++++++++++++++++koekeofoekfoekfoekfokfeokfoekfoekf\n\n", 25);
 	}
+	else if (tbuffer->state != READ_NORMAL)
+	{
+		if (tbuffer->index > 0)
+		{
+			cur_pos = 0;
+			cur_cnt = 0;
+			cur_cnt = tbuffer->cnt;
+			cursor_move_left_upd_tbuffer(tbuffer->index + 2, tbuffer);
+			string_delete_char(&(tbuffer->buffer), cur_cnt - 1);
+			tputs(tbuffer->termcap->cd, 0, ft_putcc);
+			readline_print_prompt(tbuffer, TRUE);
+			tbuffer->index = 0;
+			tbuffer->cnt += 2;
+			while (tbuffer->buffer[tbuffer->cnt] != '\n' && tbuffer->buffer[tbuffer->cnt] != '\0')
+			{
+				write(1, &(tbuffer->buffer[tbuffer->cnt]), 1);
+				tbuffer->cnt++;
+				tbuffer->index++;
+			}
+		}
+	}
+	else
+		;
 }
 
 void	key_do_home_end(t_buffer *tbuffer)
