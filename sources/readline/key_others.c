@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/23 08:48:56 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/28 08:04:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	key_select_buffer(t_buffer *tbuffer)
 	}
 }
 
-void	key_group(t_buffer *tbuffer, t_cmd_hist *head)
+void	key_group(t_buffer *tbuffer, t_cmd_hist **head)
 {
 	read(0, &tbuffer->c_buf, 1);
 //	ft_printf("%d\n", tbuffer->c_buf);

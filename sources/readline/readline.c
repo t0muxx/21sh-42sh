@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/23 09:14:22 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/03/28 08:04:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 ** it return a malloced string which must be freed later
 */
 
-void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
+void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist **head)
 {
 	int i;
 	int j;
@@ -118,7 +118,7 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
 	}
 }
 
-char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
+char	*readline(t_cmd_hist **head, t_term_cap *cur_termcap)
 {
 	t_buffer	tbuffer;
 
@@ -148,7 +148,7 @@ int		main(void)
 	{
 		readline_print_prompt(TRUE);
 		head = readline_history_read();
-		line = readline(head, cur_termcap);
+		line = readline(&head, cur_termcap);
 		lexer_do(&root_token, line);
 		lexer_print_token(root_token);
 		ft_printf("\n|%s|\n", line);

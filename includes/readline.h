@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/16 09:28:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 08:04:43 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct	s_buffer
 
 char			*env_get_var(char *name, char **myenv);
 
-char			*readline(t_cmd_hist *head, t_term_cap *cur_termcap);
+char			*readline(t_cmd_hist **head, t_term_cap *cur_termcap);
 t_cmd_hist		*readline_history_read(void);
 void			readline_history_add(char *cmd);
 void			readline_history_print(t_cmd_hist **head,

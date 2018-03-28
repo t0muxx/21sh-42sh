@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 09:20:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 16:16:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 08:03:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	key_do_shift_arrow(t_buffer *tbuffer)
 	}
 }
 
-void	key_do_arrow(t_buffer *tbuffer, t_cmd_hist *head)
+void	key_do_arrow(t_buffer *tbuffer, t_cmd_hist **head)
 {
 	cursor_reset_line(tbuffer);
 	if (tbuffer->c_buf == 'A')
-		readline_history_print(&head, head->oldest, tbuffer);
+		readline_history_print(head, (*head)->oldest, tbuffer);
 	if (tbuffer->c_buf == 'B')
-		readline_history_print(&head, head->newest, tbuffer);
+		readline_history_print(head, (*head)->newest, tbuffer);
 	if (tbuffer->c_buf == 'C')
 	{
 		if (tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
