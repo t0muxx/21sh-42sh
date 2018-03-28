@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 10:18:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 09:04:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:26:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,20 @@
 #include <term.h>
 #include <cursor.h>
 
-int		readline_print_prompt(int print)
+int		readline_print_prompt(t_buffer *tbuffer, int print)
 {
 	char *prompt;
 
 	prompt = "$> ";
-	if (print == TRUE)
+	if (print == TRUE && tbuffer->state == READ_NORMAL)
 		ft_putstr(prompt);
+	else if (print == TRUE && tbuffer->state != READ_NORMAL)
+	{
+		ft_putstr("> ");
+		term_get_colnbr(tbuffer);
+	}
+	else
+		;
 	return ((int)ft_strlen(prompt));
 }
 
@@ -69,7 +76,7 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
 		cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
 		tbuffer->buffer[cur_cnt] = tbuffer->c_buf;
-		readline_print_prompt(TRUE);
+		readline_print_prompt(tbuffer, TRUE);
 		tbuffer->cnt = 0;
 		tbuffer->index = 0;
 		readline_print_upd_tbuffer(tbuffer);

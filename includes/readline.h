@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 09:07:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:19:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct	s_buffer
 	int			colnbr;
 	int			cutstart;
 	int			cutend;
+	int			state;
 	t_term_cap	*termcap;
 
 }				t_buffer;
@@ -89,7 +90,7 @@ t_cmd_hist		*readline_history_read(void);
 void			readline_history_add(char *cmd);
 void			readline_history_print(t_cmd_hist **head,
 										t_cmd_hist *next, t_buffer *tbuffer);
-int				readline_print_prompt(int print);
+int				readline_print_prompt(t_buffer *tbuffer, int print);
 void			readline_print_upd_tbuffer(t_buffer *tbuffer);
 void			readline_print_n_buf(t_buffer *tbuffer);
 void			readline_print_cutbuffer(t_buffer *tbuffer);

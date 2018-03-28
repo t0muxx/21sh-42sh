@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 08:10:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:23:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_buffer *tbuffer)
 {
 	cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
 	tputs(tbuffer->termcap->cd, 0, ft_putcc);
-	readline_print_prompt(TRUE);
+	readline_print_prompt(tbuffer, TRUE);
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
 	if (*head != NULL)

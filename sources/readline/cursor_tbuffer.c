@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:47:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 10:11:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:21:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cursor_move_left_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	int		prompt_len;
 
-	prompt_len = readline_print_prompt(FALSE);
+	prompt_len = readline_print_prompt(tbuffer, FALSE);
 	while (count > 0 && tbuffer->cnt > -3)
 	{
 		if (tbuffer->line != 1 && tbuffer->cnt != 1 && tbuffer->index == 0)
@@ -46,7 +46,7 @@ void	cursor_move_right_upd_tbuffer(int count, t_buffer *tbuffer)
 {
 	int		prompt_len;
 
-	prompt_len = readline_print_prompt(FALSE);
+	prompt_len = readline_print_prompt(tbuffer, FALSE);
 	while (count && tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 	{
 		if (tbuffer->index == tbuffer->colnbr - 1)

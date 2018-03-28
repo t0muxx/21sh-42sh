@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 09:17:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:22:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,34 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist **head)
 			cut_paste_do_paste(tbuffer);
 		else if (tbuffer->c_buf == 16)
 			readline_print_cutbuffer(tbuffer);
-		else if (tbuffer->c_buf == '\n')
+		else if (tbuffer->c_buf == '\n' && tbuffer->state == READ_NORMAL)
 		{
 			if (ft_strlen(tbuffer->buffer) > 0)
 				readline_history_add(tbuffer->buffer);
 			break ;
 		}
+		else if (tbuffer->c_buf == '\n')
+		{
+				
+		}
 		else
+		{
+			if (tbuffer->c_buf == '\"')
+			{
+				if (tbuffer->state == READ_NORMAL)
+					tbuffer->state = READ_IN_DQUOTE;
+				else
+					tbuffer->state = READ_NORMAL;
+			}
+			if (tbuffer->c_buf == '\'')
+			{
+				if (tbuffer->state == READ_NORMAL)
+					tbuffer->state = READ_IN_QUOTE;
+				else
+					tbuffer->state = READ_NORMAL;
+			}
 			readline_print_n_buf(tbuffer);
+		}
 	}
 }
 
@@ -87,6 +107,8 @@ char	*readline(t_cmd_hist **head, t_term_cap *cur_termcap)
 	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer.cutbuffer, BUFFER_SIZE);
 	tbuffer.termcap = cur_termcap;
+	tbuffer.state = READ_NORMAL;
+	readline_print_prompt(&tbuffer, TRUE);
 	readline_main_loop(&tbuffer, head);
 	return (tbuffer.buffer);
 }
@@ -102,7 +124,6 @@ int		main(void)
 	cur_termcap = term_init();
 	while (1)
 	{	
-		readline_print_prompt(TRUE);
 		head = readline_history_read();
 		line = readline(&head, cur_termcap);
 		lexer_do(&root_token, line);
