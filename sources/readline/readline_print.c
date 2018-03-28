@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 10:18:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:26:29 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 11:02:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		readline_print_prompt(t_buffer *tbuffer, int print)
 	char *prompt;
 
 	prompt = "$> ";
-	if (print == TRUE && tbuffer->state == READ_NORMAL)
+	if (print == TRUE && (tbuffer->state == READ_NORMAL || tbuffer->line == 1))
 		ft_putstr(prompt);
 	else if (print == TRUE && tbuffer->state != READ_NORMAL)
 	{

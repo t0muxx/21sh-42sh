@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:22:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 11:04:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist **head)
 		}
 		else if (tbuffer->c_buf == '\n')
 		{
-				
+			tbuffer->buffer[tbuffer->cnt++] = '\n';
+			tbuffer->line++;
+			tbuffer->index = 0;
+			tputs(tbuffer->termcap->sf, 0, ft_putcc);
+			readline_print_prompt(tbuffer, TRUE);	
 		}
 		else
 		{

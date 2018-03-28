@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 08:50:58 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:51:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void		term_get_colnbr(t_buffer *tbuffer)
 {
 	if (tbuffer->line == 1)
 		tbuffer->colnbr = tgetnum("co") - 3;
-	else
+	else if (tbuffer->state == READ_NORMAL)
 		tbuffer->colnbr = tgetnum("co");
+	else 
+		tbuffer->colnbr = tgetnum("co") - 2;
 }
 
 t_term_cap	*term_init_cap(void)

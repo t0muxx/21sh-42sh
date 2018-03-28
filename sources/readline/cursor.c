@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:19:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:59:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ void	cursor_reset_line(t_buffer *tbuffer)
 {
 	int	cur_cnt;
 
-	cur_cnt = tbuffer->cnt;
-	cursor_move_left_upd_tbuffer(cur_cnt, tbuffer);
-	tputs(tbuffer->termcap->cd, 0, ft_putcc);
-	tbuffer->cnt = 0;
-	readline_print_upd_tbuffer(tbuffer);
-	cursor_move_left_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - cur_cnt, tbuffer);
-	tbuffer->cutstart = 0;
-	tbuffer->cutend = 0;
+	if (tbuffer->state == READ_NORMAL)
+	{
+		cur_cnt = tbuffer->cnt;
+		cursor_move_left_upd_tbuffer(cur_cnt, tbuffer);
+		tputs(tbuffer->termcap->cd, 0, ft_putcc);
+		tbuffer->cnt = 0;
+		readline_print_upd_tbuffer(tbuffer);
+		cursor_move_left_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - cur_cnt, tbuffer);
+		tbuffer->cutstart = 0;
+		tbuffer->cutend = 0;
+	}
 }
 
 void	cursor_delete_line(int linenbr)
