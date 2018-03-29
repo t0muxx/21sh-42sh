@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 10:18:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 11:02:04 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/29 09:27:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	readline_print_n_buf(t_buffer *tbuffer)
 	int		cur_cnt;
 
 	cur_cnt = 0;
-	if (tbuffer->buffer[tbuffer->cnt] != 0)
+	if (tbuffer->buffer[tbuffer->cnt] != 0 && tbuffer->state == READ_NORMAL)
 	{
 		cur_cnt = tbuffer->cnt;
 		string_shift_right(&(tbuffer->buffer), tbuffer->cnt);
