@@ -6,11 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/03/29 11:51:45 by tmaraval         ###   ########.fr       */
-=======
-/*   Updated: 2018/03/28 11:04:35 by tmaraval         ###   ########.fr       */
->>>>>>> parent of 2972295... reworked backspace and left arrow to mactch if state quote
+/*   Updated: 2018/03/29 11:58:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

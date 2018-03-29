@@ -6,11 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/03/29 11:51:43 by tmaraval         ###   ########.fr       */
-=======
-/*   Updated: 2018/03/28 14:57:14 by tmaraval         ###   ########.fr       */
->>>>>>> parent of 2972295... reworked backspace and left arrow to mactch if state quote
+/*   Updated: 2018/03/29 11:59:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +77,7 @@ void	key_group(t_buffer *tbuffer, t_cmd_hist **head)
 void	key_do_backspace(t_buffer *tbuffer)
 {
 	int cur_cnt;
+	int cur_pos;
 
 		if (tbuffer->cnt > 0)
 		{
@@ -97,10 +94,7 @@ void	key_do_backspace(t_buffer *tbuffer)
 			cursor_move_left_upd_tbuffer(((int)ft_strlen(tbuffer->buffer))
 			- cur_cnt, tbuffer);
 		}
-<<<<<<< HEAD
-=======
 	//	write(1, "\n\n\n\n++++++++++++++++koekeofoekfoekfoekfokfeokfoekfoekf\n\n", 25);
-	}
 	else if (tbuffer->state != READ_NORMAL)
 	{
 		if (tbuffer->index > 0)
@@ -120,11 +114,10 @@ void	key_do_backspace(t_buffer *tbuffer)
 				tbuffer->cnt++;
 				tbuffer->index++;
 			}
-		}
+			}
 	}
 	else
 		;
->>>>>>> parent of 2972295... reworked backspace and left arrow to mactch if state quote
 }
 
 void	key_do_home_end(t_buffer *tbuffer)
