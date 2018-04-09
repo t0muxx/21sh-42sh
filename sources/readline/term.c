@@ -6,13 +6,23 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 13:52:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/05 15:19:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <termcap.h>
 #include <term.h>
+
+void		term_get_colnbr(t_buffer *tbuffer)
+{
+	if (tbuffer->line == 1)
+		tbuffer->colnbr = tgetnum("co") - 3;
+	else if (tbuffer->state == READ_NORMAL)
+		tbuffer->colnbr = tgetnum("co");
+	else 
+		tbuffer->colnbr = tgetnum("co") - 2;
+}
 
 t_term_cap	*term_init_cap(void)
 {
@@ -25,7 +35,10 @@ t_term_cap	*term_init_cap(void)
 	if ((termcap->ce = tgetstr("ce", NULL)) == NULL)
 		ft_printf("[ERR] 'ce' capability may not work in this terminal\n");
 	if ((termcap->le = tgetstr("le", NULL)) == NULL)
+	{
 		ft_printf("[ERR] 'le' capability may not work in this terminal\n");
+		termcap->le = "\0";
+	}
 	if ((termcap->nd = tgetstr("nd", NULL)) == NULL)
 		ft_printf("[ERR] 'nd' capability may not work in this terminal\n");
 	if ((termcap->sc = tgetstr("sc", NULL)) == NULL)

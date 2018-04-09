@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/23 09:14:22 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/04/09 10:46:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 ** it is reseted whenever we go down a line ex (with 10 colunm) :
 **
 ** $ >   0 1 2 3 4 5 6
+** > 0 1 2 3 4 5 6 7 8
 ** 0 1 2 3 4 5 6 7 8 9
 ** 0 1 2 3 4 5 6 7 8 9
 **
@@ -43,115 +44,90 @@
 ********************************************************************************
 */
 
-/*
-**  u_readline read STDIN char by char until enter is pressed
-** it return a malloced string which must be freed later
-*/
-
-void	readline_main_loop(t_buffer *tbuffer, t_cmd_hist *head)
+void	*readline_get_func_array()
 {
-	int i;
-	int j;
-
-	while (read(0, &(tbuffer->c_buf), 1) != -1)
-	{
-	//	ft_printf("%d\n", tbuffer->c_buf);
-		i = 0;
-		if (tbuffer->line == 1)
-			tbuffer->colnbr = tgetnum("co") - 3;
-		else
-			tbuffer->colnbr = tgetnum("co");
-		if (tbuffer->c_buf == 127)
-			key_do_backspace(tbuffer);
-		else if (tbuffer->c_buf == 27)
-			key_group(tbuffer, head);
-		else if (tbuffer->c_buf == 24)
-		{
-			//ft_printf("start : %d end : %d\n\n", tbuffer->cutstart, tbuffer->cutend);
-			ft_memcpy(tbuffer->cutbuffer, tbuffer->buffer + tbuffer->cutstart, tbuffer->cutend - tbuffer->cutstart); 
-			while (i < (tbuffer->cutend - tbuffer->cutstart))
-			{
-				string_delete_char(&tbuffer->buffer, tbuffer->cutstart);
-				i++;
-			}
-			//ft_printf("+++%s\n", tbuffer->cutbuffer);
-			cursor_reset_line(tbuffer);
-		}
-		else if (tbuffer->c_buf == 11)
-		{
-			//ft_printf("start : %d end : %d\n\n", tbuffer->cutstart, tbuffer->cutend);
-			ft_memcpy(tbuffer->cutbuffer, tbuffer->buffer + tbuffer->cutstart, tbuffer->cutend - tbuffer->cutstart); 
-			//ft_printf("+++%s\n", tbuffer->cutbuffer);
-			cursor_reset_line(tbuffer);
-		}
-		else if (tbuffer->c_buf == 16)
-		{
-			if (tbuffer->cnt == (int)ft_strlen(tbuffer->buffer))
-			{
-				ft_strcat(tbuffer->buffer, tbuffer->cutbuffer);
-			}
-			else
-			{
-				j = tbuffer->cnt;
-				while (tbuffer->cutbuffer[i])
-				{
-					string_shift_right(&tbuffer->buffer, j);
-					tbuffer->buffer[j] = tbuffer->cutbuffer[i];
-					j++;
-					i++;
-				}
-				cursor_move_right_upd_tbuffer(j, tbuffer);
-			}
-				cursor_reset_line(tbuffer);
-				ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
-				tbuffer->cutstart = 0;
-				tbuffer->cutend = 0;
-		}
-		else if (tbuffer->c_buf == '\n')
-		{
-			if (ft_strlen(tbuffer->buffer) > 0)
-				readline_history_add(tbuffer->buffer);
-			break ;
-		}
-		else
-			readline_print_n_buf(tbuffer);
-	}
+	void (**fptr)(t_buffer *, char *);
+	
+	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 18);
+	fptr[0] = input_arrow_left;
+	fptr[1] = input_arrow_right;
+	fptr[2] = insert_char;
+	fptr[3] = input_arrow_up;
+	fptr[4] = input_arrow_down;
+	fptr[5] = input_backspace;
+	fptr[6] = input_delete;
+	fptr[7] = input_home;
+	fptr[8] = input_end;
+	fptr[9] = input_arrow_shift_updown;
+	fptr[10] = input_shift_right_left;
+	fptr[11] = input_select_left;
+	fptr[12] = input_select_right;
+	fptr[13] = input_paste;
+	fptr[14] = input_cut;
+	fptr[15] = input_copy;
+	fptr[16] = input_enter;
+	fptr[17] = NULL;
+	return (fptr);
 }
 
-char	*readline(t_cmd_hist *head, t_term_cap *cur_termcap)
+char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 {
-	t_buffer	tbuffer;
+	char		*read_buf;
+	void		(**fptr)(t_buffer *, char *);
+	int			i;
 
-	tbuffer.cnt = 0;
-	tbuffer.index = 0;
-	tbuffer.line = 1;
-	tbuffer.cutstart = 0;
-	tbuffer.cutend = 0;
-	tbuffer.buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	ft_bzero(tbuffer.buffer, BUFFER_SIZE);
-	ft_bzero(tbuffer.cutbuffer, BUFFER_SIZE);
-	tbuffer.termcap = cur_termcap;
-	readline_main_loop(&tbuffer, head);
-	return (tbuffer.buffer);
+	i = 0;
+	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);	
+	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
+	fptr = readline_get_func_array();
+	*head = history_read();
+	tbuffer->head_hist = head;
+	prompt_print(tbuffer);
+	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
+	{
+		i = 0;
+		read(0, read_buf, MAX_KEYCODE_SIZE);
+		while (fptr[i])
+		{
+			(fptr[i])(tbuffer, read_buf);
+			i++;
+		}
+		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
+	}
+	free(fptr);
+	return (tbuffer->buffer);
+}
+
+void	tbuffer_init(t_buffer *tbuffer)
+{
+	t_term_cap		*cur_termcap;
+	
+	cur_termcap = term_init();
+	tbuffer->cnt = 0;
+	tbuffer->index = 0;
+	tbuffer->line = 1;
+	tbuffer->cutstart = 0;
+	tbuffer->cutend = 0;
+	tbuffer->state = READ_NORMAL;
+	tbuffer->colnbr = tgetnum("co");
+	tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
+	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
+	tbuffer->termcap = cur_termcap;
 }
 
 int		main(void)
 {
-	t_term_cap		*cur_termcap;
 	char			*line;
 	t_cmd_hist		*head;
-	t_token			*root_token;
+	t_buffer		tbuffer;
 
-	root_token = NULL;
-	cur_termcap = term_init();
+	tbuffer_init(&tbuffer);
 	while (1)
-	{
-		readline_print_prompt(TRUE);
-		head = readline_history_read();
-		line = readline(head, cur_termcap);
-		lexer_do(&root_token, line);
-		lexer_print_token(root_token);
-		ft_printf("\n|%s|\n", line);
+	{	
+		line = readline(&tbuffer, &head);
 		ft_putstr("\n");
+		//tbuffer.state = READ_IN_QUOTE;
+		// go lexer parse etc..
 	}
 }

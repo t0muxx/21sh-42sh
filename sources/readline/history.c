@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/15 10:13:43 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/30 11:16:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,24 @@
 ** press enter
 */
 
-void			readline_history_print(t_cmd_hist **head, t_cmd_hist *next,
-t_buffer *tbuffer)
+void			history_print(t_buffer *tbuffer, t_cmd_hist **next)
 {
-	cursor_move_left_upd_tbuffer(BUFFER_SIZE, tbuffer);
-	tputs(tbuffer->termcap->cd, 0, ft_putcc);
-	readline_print_prompt(TRUE);
+	t_cmd_hist **head;
+
+	head = tbuffer->head_hist;
+	line_go_begin(tbuffer);
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
-	if (*head != NULL)
+	tputs(tbuffer->termcap->cd, 0, ft_putcc);
+	prompt_print(tbuffer);
+	if ((*head)!= NULL)
 	{
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 		ft_memcpy(tbuffer->buffer, (*head)->cmd, ft_strlen((*head)->cmd));
-		readline_print_upd_tbuffer(tbuffer);
+		insert_tbuffer(tbuffer);
 	}
-	if (next != NULL)
-		*head = next;
+	if (*next != NULL)
+		tbuffer->head_hist = next;
 }
 
 /*
@@ -44,7 +46,7 @@ t_buffer *tbuffer)
 ** the linkedt list with history
 */
 
-t_cmd_hist		*readline_history_read_line(int fd)
+t_cmd_hist		*history_read_line(int fd)
 {
 	t_cmd_hist	*head;
 	t_cmd_hist	*new;
@@ -65,7 +67,7 @@ t_cmd_hist		*readline_history_read_line(int fd)
 ** of the file .history
 */
 
-t_cmd_hist		*readline_history_read(void)
+t_cmd_hist		*history_read(void)
 {
 	int			fd;
 	t_cmd_hist	*head;
@@ -87,12 +89,12 @@ t_cmd_hist		*readline_history_read(void)
 		close(fd);
 		return (NULL);
 	}
-	head = readline_history_read_line(fd);
+	head = history_read_line(fd);
 	close(fd);
 	return (head);
 }
 
-void			readline_history_add(char *cmd)
+void			history_add(char *cmd)
 {
 	int	fd;
 
