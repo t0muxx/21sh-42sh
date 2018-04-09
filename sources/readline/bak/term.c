@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/05 15:19:07 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/28 10:51:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ t_term_cap	*term_init_cap(void)
 	if ((termcap->ce = tgetstr("ce", NULL)) == NULL)
 		ft_printf("[ERR] 'ce' capability may not work in this terminal\n");
 	if ((termcap->le = tgetstr("le", NULL)) == NULL)
-	{
 		ft_printf("[ERR] 'le' capability may not work in this terminal\n");
-		termcap->le = "\0";
-	}
 	if ((termcap->nd = tgetstr("nd", NULL)) == NULL)
 		ft_printf("[ERR] 'nd' capability may not work in this terminal\n");
 	if ((termcap->sc = tgetstr("sc", NULL)) == NULL)

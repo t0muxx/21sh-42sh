@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:19:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/05 11:37:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,27 @@
 # include "get_next_line.h"
 # include "error.h"
 # include "utils.h"
+# include <term.h>
 
 # define BUFFER_SIZE 2048
+# define MAX_KEYCODE_SIZE 6
 # define HISTORY_FILE ".history"
-# define ERASE_LINE "\033[2K"
-# define SAVE_CURSOR "\033[s"
-# define LOAD_CURSOR "\033[u"
+# define FT_KEY_UP "\033[A"
+# define FT_KEY_DOWN "\033[B"
+# define FT_KEY_LEFT "\033[D"
+# define FT_KEY_RIGHT "\033[C"
+# define FT_KEY_DEL "\033[3~"
+# define FT_KEY_HOME "\033[H"
+# define FT_KEY_END "\033[F"
+# define FT_KEY_SHIFT_UP "\033[1;2A"
+# define FT_KEY_SHIFT_DOWN "\033[1;2B"
+# define FT_KEY_SHIFT_LEFT "\033[1;2D"
+# define FT_KEY_SHIFT_RIGHT "\033[1;2C"
+# define FT_KEY_ALT_RIGHT "\033\033[C"
+# define FT_KEY_ALT_LEFT "\033\033[D"
+# define FT_KEY_CTRL_X "^X"
+# define FT_KEY_CTRL_K "^K"
+# define FT_KEY_CTRL_P "^P"
 
 /*
 ** The double linked list for history
@@ -39,8 +54,10 @@
 enum e_readline_state
 {
 	READ_IN_QUOTE,
-	READ_IN_DQUOTE,
 	READ_NORMAL,
+	READ_ERROR,
+	READ_PROCESS,
+
 };
 
 typedef struct	s_cmd_hist
@@ -76,33 +93,57 @@ typedef struct	s_buffer
 	int			index;
 	int			line;
 	int			colnbr;
+	int			prompt_len;
 	int			cutstart;
 	int			cutend;
+	int			curs_pos;
 	int			state;
 	t_term_cap	*termcap;
+	t_cmd_hist	**head_hist;
 
 }				t_buffer;
 
-char			*env_get_var(char *name, char **myenv);
-
-char			*readline(t_cmd_hist **head, t_term_cap *cur_termcap);
-t_cmd_hist		*readline_history_read(void);
-void			readline_history_add(char *cmd);
-void			readline_history_print(t_cmd_hist **head,
-										t_cmd_hist *next, t_buffer *tbuffer);
-int				readline_print_prompt(t_buffer *tbuffer, int print);
-void			readline_print_upd_tbuffer(t_buffer *tbuffer);
-void			readline_print_n_buf(t_buffer *tbuffer);
-void			readline_print_cutbuffer(t_buffer *tbuffer);
-
+void			input_arrow_left(t_buffer *tbuffer, char *read_buf);
+void			input_arrow_right(t_buffer *tbuffer, char *read_buf);
+void			input_arrow_up(t_buffer *tbuffer, char *read_buf);
+void			input_arrow_down(t_buffer *tbuffer, char *read_buf);
+void			input_backspace(t_buffer *tbuffer, char *read_buf);
+void			input_delete(t_buffer *tbuffer, char *read_buf);
+void			input_home(t_buffer *tbuffer, char *read_buf);
+void			input_end(t_buffer *tbuffer, char *read_buf);
+void			input_arrow_shift_updown(t_buffer *tbuffer, char *read_buf);
+void			input_shift_right_left(t_buffer *tbuffer, char *read_buf);
+void			input_select_right(t_buffer *tbuffer, char *read_buf);
+void			input_select_left(t_buffer *tbuffer, char *read_buf);
+void			input_cut(t_buffer *tbuffer, char *read_buf);
+void			input_paste(t_buffer *tbuffer, char *read_buf);
+void			input_copy(t_buffer *tbuffer, char *read_buf);
+void			input_enter(t_buffer *tbuffer, char *read_buf);
+void			line_go_down(t_buffer *tbuffer, int cnt);
+void			insert_char(t_buffer *tbuffer, char *read_buf);
+void			insert_tbuffer(t_buffer *tbuffer);
+void			prompt_print(t_buffer *tbuffer);
+void			line_go_begin(t_buffer *tbuffer);
+void			line_go_end(t_buffer *tbuffer);
+void			line_reset(t_buffer *tbuffer);
+void			cursor_move_left(t_buffer *tbuffer, int cnt);
+void			cursor_save_pos(t_buffer *tbuffer);
+void			cursor_reload_pos(t_buffer *tbuffer);
+void			cursor_move_right(t_buffer *tbuffer, int cnt);
+void			cursor_move_left_next_word(t_buffer *tbuffer);
+void			cursor_move_right_next_word(t_buffer *tbuffer);
+t_cmd_hist		*history_read(void);
+void			history_print(t_buffer *tbuffer, t_cmd_hist **next);
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
+
+char			*env_get_var(char *name, char **myenv);
+
+char			*readline(t_buffer *tbuffer, t_cmd_hist **head);
 
 t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);
 t_term_cap		*term_init();
 void			term_close();
 
-void			cut_paste_do_cut(t_buffer *tbuffer);
-void			cut_paste_do_paste(t_buffer *tbuffer);
 #endif

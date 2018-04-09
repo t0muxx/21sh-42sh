@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/03/28 09:17:20 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/04/04 08:55:21 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,16 +32,17 @@ UTILS	 = utils/
 LEXER	 = lexer/
 
 SRCS = 		$(READLINE)readline.c \
-			$(READLINE)readline_print.c \
-			$(READLINE)readline_history.c \
-			$(READLINE)readline_history_lst.c \
-			$(READLINE)key_others.c \
-			$(READLINE)key.c \
-			$(READLINE)cursor.c \
-			$(READLINE)cursor_tbuffer.c \
+			$(READLINE)input_arrow.c \
+			$(READLINE)insert.c \
 			$(READLINE)term.c \
-			$(READLINE)cut_paste.c \
-			$(LEXER)lexer.c \
+			$(READLINE)line.c \
+			$(READLINE)prompt.c \
+			$(READLINE)cursor.c \
+			$(READLINE)cursor_pos.c \
+			$(READLINE)history.c \
+			$(READLINE)history_lst.c \
+			$(READLINE)input_key.c \
+			$(READLINE)cutpaste.c \
 			$(ENV)env_get.c \
 			$(ERROR)error.c \
 			$(UTILS)string.c 

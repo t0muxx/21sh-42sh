@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 08:39:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 17:02:30 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/03/29 13:12:19 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	key_select_buffer(t_buffer *tbuffer)
 	if (tbuffer->c_buf == 27)
 	{
 		read(0, buf, 3);
-		if (buf[0] == '[' && buf[1] == 'D')
+		if (buf[0] == '[' && buf[1] == 'D' && (tbuffer->state == READ_NORMAL || tbuffer->line == 1))
 		{
 			if (tbuffer->cutend == 0)
 				tbuffer->cutend = tbuffer->cnt;
@@ -41,7 +41,7 @@ void	key_select_buffer(t_buffer *tbuffer)
 
 			}
 		}
-		if (buf[0] == '[' && buf[1] == 'C')
+		if (buf[0] == '[' && buf[1] == 'C' && (tbuffer->state == READ_NORMAL || tbuffer->line == 1))
 		{
 			if (tbuffer->cutstart == 0 && tbuffer->cutend == 0)
 				tbuffer->cutstart = tbuffer->cnt;
@@ -126,7 +126,7 @@ void	key_do_backspace(t_buffer *tbuffer)
 
 void	key_do_home_end(t_buffer *tbuffer)
 {
-	if (tbuffer->c_buf == 'H')
+	if (tbuffer->c_buf == 'H' && tbuffer->state == READ_NORMAL)
 	{
 		cursor_move_left_upd_tbuffer(tbuffer->cnt, tbuffer);
 		tbuffer->cnt = 0;
@@ -144,7 +144,7 @@ void	key_do_del(t_buffer *tbuffer)
 	if (tbuffer->c_buf == '3')
 	{
 		read(0, &(tbuffer->c_buf), 1);
-		if (tbuffer->c_buf == '~')
+		if (tbuffer->c_buf == '~' && tbuffer->state == READ_NORMAL)
 		{
 			if (tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 			{

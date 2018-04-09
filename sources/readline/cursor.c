@@ -5,100 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 08:17:44 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/28 10:59:32 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/03/29 18:35:06 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/04/04 10:44:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <termcap.h>
-#include <term.h>
-#include "cursor.h"
 #include "readline.h"
 
-void	cursor_reset_line(t_buffer *tbuffer)
+void	cursor_move_left(t_buffer *tbuffer, int cnt)
 {
-	int	cur_cnt;
-
 	if (tbuffer->state == READ_NORMAL)
 	{
-		cur_cnt = tbuffer->cnt;
-		cursor_move_left_upd_tbuffer(cur_cnt, tbuffer);
-		tputs(tbuffer->termcap->cd, 0, ft_putcc);
-		tbuffer->cnt = 0;
-		readline_print_upd_tbuffer(tbuffer);
-		cursor_move_left_upd_tbuffer((int)ft_strlen(tbuffer->buffer) - cur_cnt, tbuffer);
-		tbuffer->cutstart = 0;
-		tbuffer->cutend = 0;
+		while (cnt > 0 && tbuffer->cnt > 0)
+		{
+			if (tbuffer->line > 1 && tbuffer->index == 0)
+			{
+				tputs(tbuffer->termcap->up, 0, ft_putcc);
+				tbuffer->line--;
+				if (tbuffer->line == 1)
+					tbuffer->prompt_len = 3;
+				tbuffer->cnt--;
+				line_go_end(tbuffer);
+				tbuffer->index = tbuffer->colnbr - tbuffer->prompt_len - 1;
+			}
+			else
+			{
+				tputs(tbuffer->termcap->le, 0, ft_putcc);
+				tbuffer->index--;
+				tbuffer->cnt--;
+			}
+			cnt--;
+		}
 	}
 }
 
-void	cursor_delete_line(int linenbr)
+void	cursor_move_right(t_buffer *tbuffer, int cnt)
 {
-	char	*temp;
-
-	temp = tgetstr("ce", NULL);
-	while (linenbr)
+	if (tbuffer->state == READ_NORMAL)
 	{
-		tputs(temp, 0, ft_putcc);
-		linenbr--;
+		while (cnt > 0 && tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
+		{
+			if (tbuffer->index + tbuffer->prompt_len == tbuffer->colnbr - 1)
+			{
+				line_go_down(tbuffer, 1);
+				tbuffer->cnt++;
+			}
+			else
+			{
+				tputs(tbuffer->termcap->nd, 0, ft_putcc);
+				tbuffer->cnt++;
+				tbuffer->index++;
+			}
+			cnt--;
+		}
 	}
 }
 
-void	cursor_move_left(int count)
+void	cursor_move_left_next_word(t_buffer *tbuffer)
 {
-	char *temp;
+	int i;
 
-	temp = tgetstr("le", NULL);
-	while (count)
+	i = tbuffer->cnt - 1;
+	while (i >= 0)
 	{
-		ft_putstr(temp);
-		count--;
+		if (tbuffer->buffer[i] == ' ')
+		{
+			while (tbuffer->buffer[i] == ' ')
+				i--;
+			cursor_move_left(tbuffer, tbuffer->cnt - i - 1);
+			break ;
+		}
+		i--;
 	}
 }
 
-/*
- ** cursor_move_left move the cursor from count line to the left
- ** using the ansi escape code
-*/
-
-void	cursor_move_right(int count)
+void	cursor_move_right_next_word(t_buffer *tbuffer)
 {
-	char *temp;
+	int i;
 
-	temp = tgetstr("nd", NULL);
-	while (count)
+	i = tbuffer->cnt;
+	while (i < (int)ft_strlen(tbuffer->buffer))
 	{
-		tputs(temp, 0, ft_putcc);
-		count--;
+		if (tbuffer->buffer[i] == ' ')
+		{
+			while (tbuffer->buffer[i] == ' ')
+				i++;
+			cursor_move_right(tbuffer, i - tbuffer->cnt);
+			break ;
+		}
+		i++;
 	}
-}
-
-/*
- ** cursor_move_right move the cursor from count line to the right
- ** using the ansi escape code
-*/
-
-void	cursor_save_pos(void)
-{
-	char	*ret;
-
-	if ((ret = tgetstr("sc", NULL)) == NULL)
-	{
-		ft_putstr_fd("Error termcaps\n", 2);
-		return ;
-	}
-	tputs(ret, 0, ft_putcc);
-}
-
-void	cursor_reload_pos(void)
-{
-	char	*ret;
-
-	if ((ret = tgetstr("rc", NULL)) == NULL)
-	{
-		ft_putstr_fd("Error termcaps\n", 2);
-		return ;
-	}
-	tputs(ret, 0, ft_putcc);
 }
