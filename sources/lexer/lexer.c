@@ -3,214 +3,139 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/27 15:17:36 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
+/*   Updated: 2018/03/31 04:51:41 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "lexer.h"
-#include "error.h"
+#include "../../includes/lexer.h"
+#include "../../includes/ext_fun_type.h"
+#include <stdio.h>
 
-void	lexer_print_token(t_token *token)
+t_tkn		*tkn_init(int len)
 {
-	while (token)
+	t_tkn	*tkn;
+
+	tkn = NULL;
+	if (len == 0)
+		return (NULL);
+	if (!(tkn = (t_tkn*)malloc(sizeof(t_tkn)))
+			|| !(tkn->data = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	tkn->data[len] = '\0';
+	tkn->type = CHR_NULL;
+	tkn->next = NULL;
+	return (tkn);
+}
+
+static void	print_tkn_struct(t_tkn *tkn)
+{
+	tkn = tkn->next;
+	while (tkn)
 	{
-		if (token->type < 0)
-			ft_printf("\n\ndata -> |%s| type -> |%d|\n", token->data, token->type);
-		else if (token->type == C_DLESS)
-			ft_printf("\n\ndata -> |%s| type -> |<<|\n", token->data);
-		else if (token->type == C_DGREAT)
-			ft_printf("\n\ndata -> |%s| type -> |>>|\n", token->data);
-		else if (token->type == C_LESSAND)
-			ft_printf("\n\ndata -> |%s| type -> |<&|\n", token->data);
-		else if (token->type == C_GREATAND)
-			ft_printf("\n\ndata -> |%s| type -> |>&|\n", token->data);
-		else
-			ft_printf("\n\ndata -> |%s| type -> |%c|\n", token->data, token->type);
-		token = token->next;
+		ft_putendl(tkn->data);
+		tkn = tkn->next;
 	}
 }
 
-void	lexer_token_init(t_token **tok, int size)
+static void	state_idle(t_tkn **head, char **str, t_tkn_state *state)
 {
-	if(!((*tok)->data = (char *)malloc(sizeof(char) * (size + 1))))
-		error_malloc_err();
-	ft_bzero((*tok)->data, size + 1);
-	(*tok)->type = C_INIT;
-	(*tok)->next = NULL;
-}
+	int		i;
+	char	*line;
 
-t_token *lexer_token_create(int size)
-{
-	t_token *new;
-
-	if (!(new = (t_token *)malloc(sizeof(t_token))))
-			error_malloc_err();
-	lexer_token_init(&new, size);
-	return (new);
-}
-
-int lexer_do(t_token **root_tok, char *line)
-{
-	int l_line;
-	int	i;
-	int state;
-	int j;
-
-	j = 0;
-	t_token *tok;
-	state = STATE_NORMAL;
+	line = *str;
 	i = 0;
-	l_line = (int)ft_strlen(line);
-	tok = lexer_token_create(l_line);
-	*root_tok = tok;
-	if (line == 0)
-		return (0);
-	if (line == NULL)
-		return (-1);
-
-	while (line[i] != '\0')
+	while (tkn_fun[i].type)
 	{
-		if (state == STATE_NORMAL)
+		if (!tkn_fun[i + 1].type)
 		{
-			if (line[i] == C_SEMILICON)
-			{
-				tok->data[j] = line[i++];
-				tok->type = C_SEMILICON;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_PIPE)
-			{
-				tok->data[j] = line[i++];
-				tok->type = C_PIPE;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_ISLESS)
-			{
-				tok->data[j] = line[i++];
-				if (line[i] == C_ISLESS)
-				{
-					tok->data[++j] = line[i++];
-					tok->type = C_DLESS;
-				}
-				else if (line[i] == C_AMPERSAND)
-				{
-					tok->data[++j] = line[i++];
-					tok->type = C_LESSAND;
-				}
-				else
-					tok->type = C_ISLESS;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_ISGREATER)
-			{
-				tok->data[j] = line[i++];
-				if (line[i] == C_ISGREATER)
-				{
-					tok->data[++j] = line[i++];
-					tok->type = C_DGREAT;
-				}
-				else if (line[i] == C_AMPERSAND)
-				{
-					tok->data[++j] = line[i++];
-					tok->type = C_GREATAND;
-				}
-				else
-					tok->type = C_ISGREATER;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_SIMPLEQUOTE)
-			{
-				tok->data[j++] = line[i++];
-				tok->type = C_SIMPLEQUOTE;
-				state = STATE_IN_QUOTE;
-			}
-			else if (line[i] == C_DOUBLEQUOTE)
-			{
-				tok->data[j++] = line[i++];
-				tok->type = C_DOUBLEQUOTE;
-				state = STATE_IN_DQUOTE;
-			}
-			else if (line[i] == C_WHITESPACE)
-			{
-				tok->data[j] = line[i++];
-				tok->type = C_WHITESPACE;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_AMPERSAND)
-			{
-				tok->data[j] = line[i++];
-				tok->type = C_AMPERSAND;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_ESCAPESEQ)
-			{
-				tok->data[j] = line[++i];
-				tok->type = C_WORD;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-			else if (line[i] == C_EOL)
-			{
-				tok->data[j] = line[i++];
-				tok->type = C_EOL;
-				tok->next = lexer_token_create(l_line -i);
-				tok = tok->next;
-				j = 0;
-			}
-			else
-			{
-				tok->data[j++] = line[i++];
-			   	tok->type = C_WORD;
-				if (ft_isalpha(line[i]) == 0)
-				{
-					tok->next = lexer_token_create(l_line - i);
-					tok = tok->next;
-					j = 0;
-				}	
-			}
+			tkn_push_back(head, tkn_word(&line));
+			break;
 		}
-		if (state == STATE_IN_QUOTE)
+		else if (tkn_fun[i].type == *line)
 		{
-			tok->data[j++] = line[i++];
-			if (line[i] == C_SIMPLEQUOTE)
-			{
-				tok->data[j++] = line[i++];
-				state = STATE_NORMAL;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
+			if (*line == CHR_DQUOTE)
+				*state = STATE_DQUOTED;
+			else if (*line == CHR_QUOTE)
+				*state = STATE_QUOTED;
+			tkn_push_back(head, tkn_fun[i].fun(&line));
+			break;
 		}
-		if (state == STATE_IN_DQUOTE)
-		{
-			tok->data[j++] = line[i++];
-			if (line[i] == C_DOUBLEQUOTE)
-			{
-				tok->data[j++] = line[i++];
-				state = STATE_NORMAL;
-				state = STATE_NORMAL;
-				tok->next = lexer_token_create(l_line - i);
-				tok = tok->next;
-				j = 0;
-			}
-		}
+		i++;
 	}
-	return (1);
+	*str = line;
+}
+
+static void	state_quoted(t_tkn **head, char **str, t_tkn_state *state)
+{
+	char	*line;
+	int		len;
+	t_tkn	*tkn;
+
+	line = *str;
+	len = 0;
+	while (line[len] != '\0' && line[len] != CHR_QUOTE)
+		len++;
+	tkn = tkn_init(len);
+	tkn->data = ft_strncpy(tkn->data, line, len);
+	tkn->type = CHR_WORD;
+	tkn_push_back(head, tkn);
+	line += len;
+	if (*line == CHR_QUOTE)
+		tkn_push_back(head, tkn_quote(&line));
+	*state = STATE_IDLE;
+	*str = line;
+}
+
+static void	state_dquoted(t_tkn **head, char **str, t_tkn_state *state)
+{
+	char	*line;
+	int		len;
+	t_tkn	*tkn;
+
+	line = *str;
+	len = 0;
+	while (line[len] != '\0' && line[len] != CHR_DQUOTE)
+		len++;
+	tkn = tkn_init(len);
+	tkn->data = ft_strncpy(tkn->data, line, len);
+	tkn->type = CHR_WORD;
+	tkn_push_back(head, tkn);
+	line += len;
+	if (*line == CHR_DQUOTE)
+		tkn_push_back(head, tkn_dquote(&line));
+	*state = STATE_IDLE;
+	*str = line;
+}
+
+static void	lex(char **str)
+{
+	int		i;
+	t_tkn	*tkn;
+	char	*line;
+	t_tkn_state	state;
+
+	line = ft_strdup(*str);
+	tkn = tkn_init(1);
+	state = STATE_IDLE;
+	while (*line != '\0')
+	{
+		i = 0;
+		if (state == STATE_IDLE)
+			state_idle(&tkn, &line, &state);
+		else if (state == STATE_DQUOTED)
+			state_dquoted(&tkn, &line, &state);
+		else if (state == STATE_QUOTED)
+			state_quoted(&tkn, &line, &state);
+	}
+	print_tkn_struct(tkn);
+}
+
+int			main(int argc, char **argv)
+{
+	(void)argc;
+	lex(&argv[1]);
+	return (0);
 }
