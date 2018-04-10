@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 08:52:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/30 16:46:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:21:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ void	cursor_reload_pos(t_buffer *tbuffer)
 			cursor_move_right(tbuffer, 1);
 			tbuffer->curs_pos--;
 		}
-		//cursor_move_right(tbuffer, tbuffer->curs_pos - tbuffer->cnt);
 	}
 }

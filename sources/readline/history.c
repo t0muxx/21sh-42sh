@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/30 11:16:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:21:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			history_print(t_buffer *tbuffer, t_cmd_hist **next)
 	tbuffer->index = 0;
 	tputs(tbuffer->termcap->cd, 0, ft_putcc);
 	prompt_print(tbuffer);
-	if ((*head)!= NULL)
+	if ((*head) != NULL)
 	{
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 		ft_memcpy(tbuffer->buffer, (*head)->cmd, ft_strlen((*head)->cmd));

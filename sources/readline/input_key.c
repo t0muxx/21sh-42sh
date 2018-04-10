@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:28:09 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/04 10:58:38 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:26:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	input_backspace(t_buffer *tbuffer, char *read_buf)
 		prompt_print(tbuffer);
 		insert_tbuffer(tbuffer);
 		cursor_reload_pos(tbuffer);
-	}	
+	}
 }
 
 void	input_delete(t_buffer *tbuffer, char *read_buf)
@@ -66,21 +66,23 @@ void	input_end(t_buffer *tbuffer, char *read_buf)
 	if (ft_memcmp(read_buf, FT_KEY_END, ft_strlen(FT_KEY_END)) == 0)
 	{
 		line_reset(tbuffer);
-		cursor_move_right(tbuffer, (int)ft_strlen(tbuffer->buffer) - tbuffer->cnt);
+		cursor_move_right(tbuffer,
+		(int)ft_strlen(tbuffer->buffer) - tbuffer->cnt);
 	}
 }
 
 void	input_shift_right_left(t_buffer *tbuffer, char *read_buf)
 {
-	if (ft_memcmp(read_buf, FT_KEY_SHIFT_LEFT, ft_strlen(FT_KEY_SHIFT_LEFT)) == 0)
+	if (ft_memcmp(read_buf, FT_KEY_SHIFT_LEFT,
+	ft_strlen(FT_KEY_SHIFT_LEFT)) == 0)
 	{
 		line_reset(tbuffer);
 		cursor_move_left_next_word(tbuffer);
 	}
-	if (ft_memcmp(read_buf, FT_KEY_SHIFT_RIGHT, ft_strlen(FT_KEY_SHIFT_RIGHT)) == 0)
+	if (ft_memcmp(read_buf, FT_KEY_SHIFT_RIGHT,
+	ft_strlen(FT_KEY_SHIFT_RIGHT)) == 0)
 	{
 		line_reset(tbuffer);
 		cursor_move_right_next_word(tbuffer);
 	}
-
-}	
+}

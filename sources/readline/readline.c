@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/09 10:46:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:27:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@
 ********************************************************************************
 */
 
-void	*readline_get_func_array()
+void	*readline_get_func_array(void)
 {
 	void (**fptr)(t_buffer *, char *);
-	
+
 	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 18);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
@@ -77,7 +77,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	int			i;
 
 	i = 0;
-	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);	
+	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
 	*head = history_read();
@@ -101,7 +101,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 void	tbuffer_init(t_buffer *tbuffer)
 {
 	t_term_cap		*cur_termcap;
-	
+
 	cur_termcap = term_init();
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
@@ -124,10 +124,8 @@ int		main(void)
 
 	tbuffer_init(&tbuffer);
 	while (1)
-	{	
+	{
 		line = readline(&tbuffer, &head);
 		ft_putstr("\n");
-		//tbuffer.state = READ_IN_QUOTE;
-		// go lexer parse etc..
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:45:57 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/05 14:44:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:26:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	insert_tbuffer(t_buffer *tbuffer)
 
 void	insert_char(t_buffer *tbuffer, char *read_buf)
 {
-	if (ft_strlen(read_buf) == 1 && read_buf[0] != 127 && read_buf[0] > 24 && read_buf[0] != '\n')
+	if (ft_strlen(read_buf) == 1 && read_buf[0] != 127
+	&& read_buf[0] > 24 && read_buf[0] != '\n')
 	{
 		if (tbuffer->buffer[tbuffer->cnt] == 0)
 		{
-			tbuffer->buffer[tbuffer->cnt] = read_buf[0];
-			tbuffer->cnt++;
+			tbuffer->buffer[tbuffer->cnt++] = read_buf[0];
 			tbuffer->index++;
 			write(1, read_buf, 1);
 			if (tbuffer->index + tbuffer->prompt_len == tbuffer->colnbr)
@@ -59,8 +59,5 @@ void	insert_char(t_buffer *tbuffer, char *read_buf)
 void	input_enter(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == '\n')
-	{
-		//ft_printf("\n\ngergrgrg\n");
 		tbuffer->state = READ_PROCESS;
-	}
 }

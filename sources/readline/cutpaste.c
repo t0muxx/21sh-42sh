@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/04 16:00:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:25:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	input_select_left(t_buffer *tbuffer, char *read_buf)
 			tbuffer->index++;
 			cursor_move_left(tbuffer, 1);
 			tputs(tbuffer->termcap->se, 0, ft_putcc);
-			tbuffer->cutstart = tbuffer->cnt;			
+			tbuffer->cutstart = tbuffer->cnt;
 		}
 	}
 }
@@ -38,7 +38,7 @@ void	input_select_left(t_buffer *tbuffer, char *read_buf)
 void	input_select_right(t_buffer *tbuffer, char *read_buf)
 {
 	char cur_char;
-	
+
 	if (ft_memcmp(read_buf, FT_KEY_ALT_RIGHT, ft_strlen(FT_KEY_ALT_RIGHT)) == 0)
 	{
 		if (tbuffer->cutend == tbuffer->cnt)
@@ -89,8 +89,9 @@ void	input_paste(t_buffer *tbuffer, char *read_buf)
 	if (read_buf[0] == 16)
 	{
 		while (i++ < (int)ft_strlen(tbuffer->cutbuffer) - 1)
-				string_shift_right(&tbuffer->buffer, i + tbuffer->cnt);
-		ft_memcpy(tbuffer->buffer, tbuffer->cutbuffer + tbuffer->cnt, ft_strlen(tbuffer->cutbuffer));
+			string_shift_right(&tbuffer->buffer, i + tbuffer->cnt);
+		ft_memcpy(tbuffer->buffer,
+		tbuffer->cutbuffer + tbuffer->cnt, ft_strlen(tbuffer->cutbuffer));
 		line_reset(tbuffer);
 	}
 }
