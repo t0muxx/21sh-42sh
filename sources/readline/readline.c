@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/10 10:27:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/10 15:46:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	fptr = readline_get_func_array();
 	*head = history_read();
 	tbuffer->head_hist = head;
+	sig_intercept(tbuffer);
 	prompt_print(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
