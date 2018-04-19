@@ -6,12 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/17 19:18:58 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/19 11:09:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <termcap.h>
+#include <sys/ioctl.h>
 #include <term.h>
 #include "cursor.h"
 #include "key.h"
@@ -75,6 +76,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	char		*read_buf;
 	void		(**fptr)(t_buffer *, char *);
 	int			i;
+	struct winsize w;
 
 	i = 0;
 	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);
@@ -82,11 +84,13 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	fptr = readline_get_func_array();
 	*head = history_read();
 	tbuffer->head_hist = head;
+	ft_printf("|%d|\n", tbuffer->colnbr);
 	prompt_print(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
 		i = 0;
-		tbuffer->colnbr = tgetnum("co");
+		ioctl(0, TIOCGWINSZ, &w);
+		tbuffer->colnbr = w.ws_col;
 		read(0, read_buf, MAX_KEYCODE_SIZE);
 		while (fptr[i])
 		{
@@ -109,6 +113,7 @@ void	tbuffer_init(t_buffer *tbuffer)
 	tbuffer->index = 0;
 	tbuffer->line = 1;
 	tbuffer->cutstart = 0;
+	tbuffer->colnbr = tgetnum("co");
 	tbuffer->cutend = 0;
 	tbuffer->state = READ_NORMAL;
 	tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE);
@@ -128,6 +133,8 @@ int		main(void)
 	{
 		line = readline(&tbuffer, &head);
 		ft_putstr("\n");
+		if (ft_strcmp("exit", line) == 0)
+			exit(0);
 		tbuffer_init(&tbuffer);
 	}
 }

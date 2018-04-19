@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/05 11:37:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/19 11:12:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct	s_buffer
 
 }				t_buffer;
 
+void			sig_intercept(t_buffer *tbuffer);
+
 void			input_arrow_left(t_buffer *tbuffer, char *read_buf);
 void			input_arrow_right(t_buffer *tbuffer, char *read_buf);
 void			input_arrow_up(t_buffer *tbuffer, char *read_buf);
@@ -140,6 +142,7 @@ void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 char			*env_get_var(char *name, char **myenv);
 
 char			*readline(t_buffer *tbuffer, t_cmd_hist **head);
+void			tbuffer_init(t_buffer *tbuffer);
 
 t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);

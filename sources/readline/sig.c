@@ -6,22 +6,33 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/17 19:18:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/19 11:12:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <signal.h>
+#include <sys/ioctl.h>
 
 static	t_buffer tbuffer2;
 
 void	sig_handler(int sigid, siginfo_t *siginfo, void *context)
 {
+	struct winsize w;
+	
+	ioctl(0, TIOCGWINSZ, &w);
 	if (sigid == SIGINT)
-		exit(0);
+	{
+		cursor_move_right(&tbuffer2, (int)ft_strlen(tbuffer2.buffer));
+		ft_putstr("\n");
+		tbuffer_init(&tbuffer2);
+		prompt_print(&tbuffer2);
+	}	
 	if (sigid == SIGWINCH)
 	{
+		tbuffer2.colnbr = w.ws_col;
 		line_reset(&tbuffer2);	
+		//ft_printf("|%d|\n", tbuffer2.colnbr);
 	}	
 	if (siginfo)
 		;
