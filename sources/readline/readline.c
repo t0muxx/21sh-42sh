@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/19 11:09:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/23 10:30:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "cursor.h"
 #include "key.h"
 #include "lexer.h"
+#include "env.h"
+#include "builtin.h"
 
 /*
 *******************************************************************************
@@ -124,17 +126,19 @@ void	tbuffer_init(t_buffer *tbuffer)
 
 int		main(void)
 {
-	char			*line;
+	char			*line[2];
 	t_cmd_hist		*head;
 	t_buffer		tbuffer;
+	char			**env;
 
+	env = env_create_copy();
 	tbuffer_init(&tbuffer);
 	while (1)
 	{
-		line = readline(&tbuffer, &head);
+		line[0] = readline(&tbuffer, &head);
+		line[1] = 0;
 		ft_putstr("\n");
-		if (ft_strcmp("exit", line) == 0)
-			exit(0);
+		builtin_check_builtin(line, &env);
 		tbuffer_init(&tbuffer);
 	}
 }
