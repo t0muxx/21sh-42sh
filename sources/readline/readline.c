@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 10:30:06 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:21:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	fptr = readline_get_func_array();
 	*head = history_read();
 	tbuffer->head_hist = head;
-	ft_printf("|%d|\n", tbuffer->colnbr);
 	prompt_print(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
@@ -106,11 +105,11 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	return (tbuffer->buffer);
 }
 
-void	tbuffer_init(t_buffer *tbuffer)
+void	tbuffer_init(t_buffer *tbuffer, char **env)
 {
 	t_term_cap		*cur_termcap;
 
-	cur_termcap = term_init();
+	cur_termcap = term_init(env);
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
 	tbuffer->line = 1;
@@ -132,13 +131,13 @@ int		main(void)
 	char			**env;
 
 	env = env_create_copy();
-	tbuffer_init(&tbuffer);
+	tbuffer_init(&tbuffer, env);
 	while (1)
 	{
 		line[0] = readline(&tbuffer, &head);
 		line[1] = 0;
 		ft_putstr("\n");
 		builtin_check_builtin(line, &env);
-		tbuffer_init(&tbuffer);
+		tbuffer_init(&tbuffer, env);
 	}
 }

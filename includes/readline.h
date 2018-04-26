@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/19 11:12:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:21:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,11 @@ void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 char			*env_get_var(char *name, char **myenv);
 
 char			*readline(t_buffer *tbuffer, t_cmd_hist **head);
-void			tbuffer_init(t_buffer *tbuffer);
+void			tbuffer_init(t_buffer *tbuffer, char **env);
 
 t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);
-t_term_cap		*term_init();
+t_term_cap		*term_init(char **env);
 void			term_close();
 
 #endif

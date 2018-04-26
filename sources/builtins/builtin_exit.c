@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/26 12:16:57 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/01/25 13:50:48 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/02/06 12:40:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-# include "libft.h"
-# define PATH_ADD_SLASH 1
-# define PATH_REM_SLASH 2
+int		builtin_exit(char **cmd, char ***myenv)
+{
+	int		i;
 
-void	string_delete_char(char **str, int pos);
-void	string_shift_right(char **str, int pos);
-int		ft_putcc(int c);
-#endif
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i == 1)
+	{
+		utils_free_2darray((void **)*myenv);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		exit(ft_atoi(cmd[1]));
+	return (0);
+}
