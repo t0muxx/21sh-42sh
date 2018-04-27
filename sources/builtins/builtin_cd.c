@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/26 16:23:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:41:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,32 @@ int		cd_parse_opt(char **cmd)
 	int ret;
 
 	ret = 0;
-	j = 0;
 	i = 1;
 	while (cmd[i])
 	{
+		j = 0;
 		if (cmd[i][0] != '-')
-			return (0);
+			return (ret);
 		else
 		{
 			j++;
-			if (cmd[i][j] == 'P')
+			while (cmd[i][j])
 			{
-				ret = 1;
+				if (cmd[i][j] == 'P')
+				{
+					ret = 1;
+				}
+				else if (cmd[i][j] == 'L')
+					ret = 2;
+				else
+				{
+					write(2, "cd: -", 5);
+					write(2, &cmd[i][j], 1);
+					write(2, " invalid option\n", 15);
+					error_print_usage("cd: usage: cd [-L|-P] [dir]\n");
+					return (-1);
+				}
 				j++;
-			}
-			else if (cmd[i][j] == 'L')
-			{
-				ret = 2;
-				j++;
-			}
-			else
-			{
-				ft_putstr("error\n");
-				return (-1);
 			}
 		}
 		i++;
@@ -52,5 +55,10 @@ int		cd_parse_opt(char **cmd)
 
 int		builtin_cd(char **cmd, char ***myenv)
 {
+	return (0);
+}
 
+int		main(int argc, char **argv)
+{
+	printf("%d\n", cd_parse_opt(argv + 1));
 }
