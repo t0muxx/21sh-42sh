@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:38:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/02 13:44:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 15:15:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 void	error_malloc_err(void);
 void	error_print(int errnbr, char *func, char *arg);
+void	error_invalid_opt(char *opt);
 void	error_print_usage(char *usage);
 void	error_fork_err(void);
 

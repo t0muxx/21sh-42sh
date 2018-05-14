@@ -6,11 +6,20 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:35:26 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/02 13:43:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 15:12:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	error_invalid_opt(char *opt)
+{
+	char *str;
+
+	str = ": invalid option\n";
+	write(2, opt, ft_strlen(opt));
+	write(2, str, ft_strlen(str));
+}
 
 void	error_fork_err(void)
 {

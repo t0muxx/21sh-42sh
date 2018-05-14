@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 10:48:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 16:48:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 # define BUILTINNBR 6
 
-# define CD_DDASH 	1
 # define CD_L		2
 # define CD_P		3
 # define CD_OPTERR  -1
 # define CD_NOOPT	0
-# define CD_HOME	4
 
 typedef struct	s_builtin
 {
@@ -28,12 +26,6 @@ typedef struct	s_builtin
 	int		(*addr)(char **, char ***);
 
 }				t_builtin;
-
-typedef struct	s_cd_opt
-{
-	int p;
-	int l;
-}				t_cd_opt;
 
 void			builtin_get_builtin(t_builtin *builtin);
 int				builtin_check_builtin(char **cmd, char ***myenv);
@@ -52,4 +44,7 @@ int				builtin_unsetenv(char **cmd, char ***myenv);
 
 int				builtin_exit(char **cmd, char ***myenv);
 
+int				cd_parse_opt(char **cmd, char ***env);
+int				cd_check_opt(char *opt);
+int				cd_skip_opt(char **cmd);
 #endif

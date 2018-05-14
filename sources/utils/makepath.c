@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/26 15:13:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 17:35:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ void	make_path_manage_last_slash(char **path, int flg)
 	}
 }
 
+char	*make_path_dotdot(char **curpath, char **dir)
+{
+	char *tmp;
+
+	if (ft_strcmp(*dir, "../") == 0 || ft_strcmp(*dir, "..") == 0)
+	{
+		make_path_manage_last_slash(curpath, PATH_REM_SLASH);
+		curpath[0][make_path_find_last_slash(*curpath)] = '\0';
+		return (*curpath);
+	}
+	make_path_manage_last_slash(curpath, PATH_REM_SLASH);
+	curpath[0][make_path_find_last_slash(*curpath)] = '\0';
+	make_path_manage_last_slash(curpath, PATH_ADD_SLASH);
+	tmp = *curpath;
+	*curpath = ft_strjoin(*curpath, dir[0] + 3);
+	return (*curpath);
+}
+
 char	*make_path(char *curpath, char *dir)
 {
 	char *tmp;
@@ -65,21 +83,8 @@ char	*make_path(char *curpath, char *dir)
 		curpath = ft_strjoin(curpath, dir + 2);
 		return (curpath);
 	}
-	if (ft_strcmp(dir, "../") == 0 || ft_strcmp(dir, "..") == 0)
-	{
-		make_path_manage_last_slash(&curpath, PATH_REM_SLASH);
-		curpath[make_path_find_last_slash(curpath)] = '\0';
-		return (curpath);
-	}
 	if (ft_strncmp(dir, "../", 3) == 0)
-	{
-		make_path_manage_last_slash(&curpath, PATH_REM_SLASH);
-		curpath[make_path_find_last_slash(curpath)] = '\0';
-		make_path_manage_last_slash(&curpath, PATH_ADD_SLASH);
-		tmp = curpath;
-		curpath = ft_strjoin(curpath, dir + 3);
-		return (curpath);
-	}
+		return (make_path_dotdot(&curpath, &dir));
 	if (dir[0] == '/')
 		return (dir);
 	make_path_manage_last_slash(&curpath, PATH_ADD_SLASH);
