@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/04/10 14:34:54 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/04/23 09:48:47 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,20 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)input_key.c \
 			$(READLINE)cutpaste.c \
 			$(READLINE)sig.c \
-			$(ENV)env_get.c \
+			$(ENV)env.c \
+			$(ENV)env_modify.c \
+			$(BUILTINS)builtin_echo.c \
+			$(BUILTINS)builtin_env.c \
+			$(BUILTINS)builtin_env_utils.c \
+			$(BUILTINS)builtin_exit.c \
+			$(BUILTINS)builtin_setenv.c \
+			$(BUILTINS)builtin_unsetenv.c \
 			$(ERROR)error.c \
-			$(UTILS)string.c 
+			$(UTILS)string.c \
+			$(UTILS)utils.c \
+			$(UTILS)utils_array.c \
+		   	builtin.c \
+			path.c
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/27 10:41:10 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 10:06:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int		cd_parse_opt(char **cmd)
 				{
 					write(2, "cd: -", 5);
 					write(2, &cmd[i][j], 1);
-					write(2, " invalid option\n", 15);
-					error_print_usage("cd: usage: cd [-L|-P] [dir]\n");
+					write(2, " invalid option\n", 16);
+					error_print_usage("cd [-L|-P] [dir]\n");
 					return (-1);
 				}
 				j++;

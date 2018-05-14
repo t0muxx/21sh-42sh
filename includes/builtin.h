@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 09:19:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 10:24:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,6 @@ int				builtin_check_builtin(char **cmd, char ***myenv);
 int				builtin_all(char **cmd, int nbr, char **myenv);
 
 int				builtin_echo(char **cmd, char ***myenv);
-
-int				builtin_cd_parse_opt(char *cmd, t_cd_opt *opt);
-int				builtin_cd_home(char **myenv, char *pwd);
-int				builtin_cd_dir(char *path, int print_dir);
-int				builtin_cd_managechdir(char *pwd, char *path, t_cd_opt *opt,
-	char **myenv);
-int				builtin_cd_createpath(char *pwd, char *path, t_cd_opt *opt,
-	char **myenv);
-int				builtin_cd(char **cmd, char ***myenv);
-int				builtin_cd_cdpath(char *pwd, char *path, char **myenv);
-int				builtin_cd_dooldpwd(char *pwd, t_cd_opt *opt, char **myenv);
 
 int				builtin_env(char **cmd, char ***myenv);
 int				builtin_env_do(char **cmd, int *i);
