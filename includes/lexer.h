@@ -5,13 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
 /*   Created: 2018/03/27 19:33:40 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 04:25:44 by cormarti         ###   ########.fr       */
-=======
+/*   Updated: 2018/05/11 23:43:33 by cormarti         ###   ########.fr       */
 /*   Created: 2018/03/22 10:43:50 by tmaraval          #+#    #+#             */
 /*   Updated: 2018/03/27 17:38:26 by tmaraval         ###   ########.fr       */
->>>>>>> de94e38ae82ae9eebac4cfcefaa10d044ccfb368
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +55,10 @@ enum e_tkn_type
 	CHR_ASTERISK = '*',
 	CHR_NULL = 0,
 	CHR_WORD = 1,
+	CHR_NAME = 2,
+	CHR_ASSIGNMENT_WORD = 3,
+	CHR_NEWLINE = 4,
+	CHR_IO_NUMBER = 5,
 };
 
 enum e_tkn_state
@@ -114,5 +115,6 @@ t_tkn	*tkn_eol(char **str);
 t_tkn	*tkn_word(char **str);
 void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
+t_tkn	*lex(char **str);
 
 #endif

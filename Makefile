@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/04/04 08:55:21 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/05/11 18:10:29 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = 		21sh
 
 #FLAG AND COMPILATOR#
 CC =		gcc
-CFLAGS = 	-Wall -Werror -Wextra -g
+CFLAGS = 	-g3
 
 #PATH#
 OBJ_PATH =  obj
@@ -30,22 +30,36 @@ READLINE = readline/
 ERROR	 = error/
 UTILS	 = utils/
 LEXER	 = lexer/
+PARSER	 = parser/
 
-SRCS = 		$(READLINE)readline.c \
-			$(READLINE)input_arrow.c \
-			$(READLINE)insert.c \
-			$(READLINE)term.c \
-			$(READLINE)line.c \
-			$(READLINE)prompt.c \
-			$(READLINE)cursor.c \
-			$(READLINE)cursor_pos.c \
-			$(READLINE)history.c \
-			$(READLINE)history_lst.c \
-			$(READLINE)input_key.c \
-			$(READLINE)cutpaste.c \
-			$(ENV)env_get.c \
-			$(ERROR)error.c \
-			$(UTILS)string.c 
+SRCS = 		$(LEXER)ampersand.c \
+			$(LEXER)asterisk.c \
+			$(LEXER)bang.c \
+			$(LEXER)brace.c \
+			$(LEXER)bracket.c \
+			$(LEXER)dash.c \
+			$(LEXER)dollar.c \
+			$(LEXER)eol.c \
+			$(LEXER)escape.c \
+			$(LEXER)great.c \
+			$(LEXER)hashtag.c \
+			$(LEXER)less.c \
+			$(LEXER)lexer.c \
+			$(LEXER)list.c \
+			$(LEXER)pipe.c \
+			$(LEXER)quote.c \
+			$(LEXER)semi.c \
+			$(LEXER)space.c \
+			$(LEXER)word.c \
+			$(PARSER)and_or.c \
+			$(PARSER)cmd.c \
+			$(PARSER)command.c \
+			$(PARSER)complete_cmd.c \
+			$(PARSER)io.c \
+			$(PARSER)list.c \
+			$(PARSER)pipeline.c \
+			$(PARSER)separator.c \
+			../main.c \
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
@@ -54,7 +68,7 @@ all: printmess $(NAME)
 
 $(NAME): $(OBJ)
 	@(cd libft ; make; make clean)
-	@gcc $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a -ltermcap -o $(NAME)
+	@gcc $(CFLAGS) -o $(NAME) -I$(INC_PATH) $(OBJ) libft/libft.a -ltermcap
 	@echo "\033[92m21sh created\033[0m"
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
