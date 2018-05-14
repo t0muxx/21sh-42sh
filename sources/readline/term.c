@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/10 10:28:30 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:21:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@ t_term_cap	*term_init_cap(void)
 	return (termcap);
 }
 
-t_term_cap	*term_init(void)
+t_term_cap	*term_init(char **env)
 {
 	t_term_cap		*termcap;
 	struct termios	term;
 	char			*term_name;
-	extern char		**environ;
 
 	termcap = NULL;
-	term_name = env_get_var("TERM", environ);
+	term_name = env_get_var("TERM", env);
+	if (term_name == NULL)
+		term_name = ft_strdup("xterm-256color");
 	tgetent(NULL, term_name);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ICANON);

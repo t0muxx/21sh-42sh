@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/26 12:16:57 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/04/23 08:55:11 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/04/23 08:57:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef ENV_H
+# define ENV_H 
 
-# include "libft.h"
-# define PATH_ADD_SLASH 1
-# define PATH_REM_SLASH 2
+char	**env_create_copy(void);
+char	**env_create(void);
+void	env_print(char **myenv);
+char	*env_get_var(char *name, char **myenv);
+int		env_until_equal(char *var);
+int		env_delete_var(char *name, char ***myenv);
+char	**env_add_var(char *name, char *value, char **myenv);
+int		env_update_var(char *name, char *value, char **myenv);
 
-void	string_delete_char(char **str, int pos);
-void	string_shift_right(char **str, int pos);
-int		ft_putcc(int c);
 #endif
