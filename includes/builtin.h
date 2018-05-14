@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 10:24:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 10:48:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define BUILTIN_H
 
 # define BUILTINNBR 6
+
+# define CD_DDASH 	1
+# define CD_L		2
+# define CD_P		3
+# define CD_OPTERR  -1
+# define CD_NOOPT	0
+# define CD_HOME	4
 
 typedef struct	s_builtin
 {

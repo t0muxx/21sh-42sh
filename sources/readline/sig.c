@@ -6,13 +6,14 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/19 13:40:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 11:39:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <signal.h>
 #include <sys/ioctl.h>
+#include "env.h"
 
 static	t_buffer g_tbuffer2;
 
@@ -25,7 +26,7 @@ void	sig_handler(int sigid, siginfo_t *siginfo, void *context)
 	{
 		cursor_move_right(&g_tbuffer2, (int)ft_strlen(g_tbuffer2.buffer));
 		ft_putstr("\n");
-		tbuffer_init(&g_tbuffer2);
+		tbuffer_init(&g_tbuffer2, env_create_copy());
 		prompt_print(&g_tbuffer2);
 	}
 	if (sigid == SIGWINCH)
