@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/04/23 09:48:47 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/05/14 12:51:24 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,27 @@ SRCS = 		$(READLINE)readline.c \
 			$(UTILS)string.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
+			$(LEXER)ampersand.c \
+			$(LEXER)asterisk.c \
+			$(LEXER)bang.c \
+			$(LEXER)brace.c \
+			$(LEXER)bracket.c \
+			$(LEXER)dash.c \
+			$(LEXER)dollar.c \
+			$(LEXER)eol.c \
+			$(LEXER)escape.c \
+			$(LEXER)great.c \
+			$(LEXER)hashtag.c \
+			$(LEXER)less.c \
+			$(LEXER)lexer.c \
+			$(LEXER)list.c \
+			$(LEXER)pipe.c \
+			$(LEXER)quote.c \
+			$(LEXER)semi.c \
+			$(LEXER)space.c \
+			$(LEXER)word.c \
 		   	builtin.c \
-			path.c
+			path.c \
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))

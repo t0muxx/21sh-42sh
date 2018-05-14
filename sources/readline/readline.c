@@ -6,19 +6,22 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 12:00:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 12:52:35 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "readline.h"
 #include <termcap.h>
 #include <sys/ioctl.h>
 #include <term.h>
 #include "cursor.h"
 #include "key.h"
-#include "lexer.h"
 #include "env.h"
 #include "builtin.h"
+#include "ext_fun_type.h"
+#include "parser.h"
+
 
 /*
 *******************************************************************************
@@ -129,15 +132,17 @@ int		main(void)
 	t_cmd_hist		*head;
 	t_buffer		tbuffer;
 	char			**env;
+	t_tkn			*tkn;
 
 	env = env_create_copy();
 	tbuffer_init(&tbuffer, env);
-	while (1)
+	while (420)
 	{
 		line[0] = readline(&tbuffer, &head);
 		line[1] = 0;
 		ft_putstr("\n");
 		builtin_check_builtin(line, &env);
 		tbuffer_init(&tbuffer, env);
+		tkn = lex(&line[0]);
 	}
 }
