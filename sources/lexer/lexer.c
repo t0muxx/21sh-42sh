@@ -5,13 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 04:51:41 by cormarti         ###   ########.fr       */
-=======
+/*   Updated: 2018/04/10 10:34:17 by tmaraval         ###   ########.fr       */
 /*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
 /*   Updated: 2018/03/27 17:38:27 by tmaraval         ###   ########.fr       */
->>>>>>> de94e38ae82ae9eebac4cfcefaa10d044ccfb368
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +97,6 @@ static void	state_dquoted(t_tkn **head, char **str, t_tkn_state *state)
 	int		len;
 	t_tkn	*tkn;
 
-<<<<<<< HEAD
 	line = *str;
 	len = 0;
 	while (line[len] != '\0' && line[len] != CHR_DQUOTE)
@@ -127,7 +123,6 @@ static void	lex(char **str)
 	tkn = tkn_init(1);
 	state = STATE_IDLE;
 	while (*line != '\0')
-=======
 	j = 0;
 	t_token *tok;
 	state = STATE_NORMAL;
@@ -140,7 +135,6 @@ static void	lex(char **str)
 	if (line == NULL)
 		return (-1);
 	while (line[i] != '\0')
->>>>>>> de94e38ae82ae9eebac4cfcefaa10d044ccfb368
 	{
 		i = 0;
 		if (state == STATE_IDLE)

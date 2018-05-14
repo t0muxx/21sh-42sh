@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/05/14 11:32:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 11:35:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		cd_parse_check_opt(char *opt)
 {
-	if (
+	if (tgetetete
 }
 
 int		cd_parse_opt(char **cmd, char ***env)
