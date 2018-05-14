@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/25 13:21:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 11:52:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	*head = history_read();
 	tbuffer->head_hist = head;
 	prompt_print(tbuffer);
+	sig_intercept(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
 		i = 0;
@@ -99,7 +100,6 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 			i++;
 		}
 		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
-		sig_intercept(tbuffer);
 	}
 	free(fptr);
 	return (tbuffer->buffer);
