@@ -6,11 +6,12 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:50:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/06 12:40:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/14 14:29:47 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "readline.h"
 
 int		builtin_exit(char **cmd, char ***myenv)
 {
@@ -22,6 +23,7 @@ int		builtin_exit(char **cmd, char ***myenv)
 	if (i == 1)
 	{
 		utils_free_2darray((void **)*myenv);
+		term_close();
 		exit(EXIT_SUCCESS);
 	}
 	else
