@@ -6,15 +6,18 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2018/05/11 18:14:20 by cormarti         ###   ########.fr       */
+=======
 /*   Updated: 2018/04/10 10:34:17 by tmaraval         ###   ########.fr       */
 /*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
 /*   Updated: 2018/03/27 17:38:27 by tmaraval         ###   ########.fr       */
+>>>>>>> 42e6bf664a5763b9946a4a47d1cfeaaf1c0749d3
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
-#include "../../includes/ext_fun_type.h"
-#include <stdio.h>
+#include <unistd.h>
 
 t_tkn		*tkn_init(int len)
 {
@@ -112,7 +115,7 @@ static void	state_dquoted(t_tkn **head, char **str, t_tkn_state *state)
 	*str = line;
 }
 
-static void	lex(char **str)
+t_tkn		*lex(char **str)
 {
 	int		i;
 	t_tkn	*tkn;
@@ -122,18 +125,17 @@ static void	lex(char **str)
 	line = ft_strdup(*str);
 	tkn = tkn_init(1);
 	state = STATE_IDLE;
+<<<<<<< HEAD
+	//while (*line != '\0')
+=======
 	while (*line != '\0')
 	j = 0;
 	t_token *tok;
 	state = STATE_NORMAL;
+>>>>>>> 42e6bf664a5763b9946a4a47d1cfeaaf1c0749d3
 	i = 0;
-	l_line = (int)ft_strlen(line);
-	tok = lexer_token_create(l_line);
-	*root_tok = tok;
-	if (line == 0)
-		return (0);
-	if (line == NULL)
-		return (-1);
+	if (line == 0 || line == NULL)
+		return (NULL);
 	while (line[i] != '\0')
 	{
 		i = 0;
@@ -144,12 +146,6 @@ static void	lex(char **str)
 		else if (state == STATE_QUOTED)
 			state_quoted(&tkn, &line, &state);
 	}
-	print_tkn_struct(tkn);
-}
-
-int			main(int argc, char **argv)
-{
-	(void)argc;
-	lex(&argv[1]);
-	return (0);
+	//print_tkn_struct(tkn);
+	return (tkn);
 }
