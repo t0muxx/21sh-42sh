@@ -6,13 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/05/11 18:14:20 by cormarti         ###   ########.fr       */
-=======
-/*   Updated: 2018/04/10 10:34:17 by tmaraval         ###   ########.fr       */
-/*   Created: 2018/03/22 10:43:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/27 17:38:27 by tmaraval         ###   ########.fr       */
->>>>>>> 42e6bf664a5763b9946a4a47d1cfeaaf1c0749d3
+/*   Updated: 2018/05/14 18:06:24 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +26,7 @@ t_tkn		*tkn_init(int len)
 	tkn->data[len] = '\0';
 	tkn->type = CHR_NULL;
 	tkn->next = NULL;
+	tkn->prev = NULL;
 	return (tkn);
 }
 
@@ -40,7 +35,10 @@ static void	print_tkn_struct(t_tkn *tkn)
 	tkn = tkn->next;
 	while (tkn)
 	{
-		ft_putendl(tkn->data);
+		ft_putstr(tkn->data);
+		ft_putstr(" -> ");
+		ft_putnbr(tkn->type);
+		ft_putstr("\n");
 		tkn = tkn->next;
 	}
 }
@@ -125,14 +123,6 @@ t_tkn		*lex(char **str)
 	line = ft_strdup(*str);
 	tkn = tkn_init(1);
 	state = STATE_IDLE;
-<<<<<<< HEAD
-	//while (*line != '\0')
-=======
-	while (*line != '\0')
-	j = 0;
-	t_token *tok;
-	state = STATE_NORMAL;
->>>>>>> 42e6bf664a5763b9946a4a47d1cfeaaf1c0749d3
 	i = 0;
 	if (line == 0 || line == NULL)
 		return (NULL);
@@ -146,6 +136,6 @@ t_tkn		*lex(char **str)
 		else if (state == STATE_QUOTED)
 			state_quoted(&tkn, &line, &state);
 	}
-	//print_tkn_struct(tkn);
+	print_tkn_struct(tkn);
 	return (tkn);
 }
