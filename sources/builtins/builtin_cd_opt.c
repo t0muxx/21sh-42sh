@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/05/14 16:47:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/15 11:25:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		cd_check_opt(char *opt)
 	return (ret);
 }
 
-int		cd_parse_opt(char **cmd, char ***env)
+int		cd_parse_opt(char **cmd)
 {
 	int i;
 	int ret;
@@ -74,11 +74,5 @@ int		cd_parse_opt(char **cmd, char ***env)
 			break;
 		i++;
 	}
-	printf("|dir = %s|\n", cmd[cd_skip_opt(cmd)]);
 	return (ret);
-}
-
-int		main(int argc, char **argv)
-{
-	printf("%d\n", cd_parse_opt(argv + 1, NULL));
 }
