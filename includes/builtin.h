@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/15 11:26:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:18:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int				builtin_unsetenv(char **cmd, char ***myenv);
 
 int				builtin_exit(char **cmd, char ***myenv);
 
+int		builtin_cd(char **cmd, char ***env);
 int				cd_parse_opt(char **cmd);
 int				cd_check_opt(char *opt);
 int				cd_skip_opt(char **cmd);

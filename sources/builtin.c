@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 09:50:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/15 15:15:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	builtin_get_builtin(t_builtin *builtin)
 	builtin[0].name = "echo";
 	builtin[0].addr = &builtin_echo;
 	builtin[1].name = "cd";
-	builtin[1].addr = &builtin_exit;
+	builtin[1].addr = &builtin_cd;
 	builtin[2].name = "setenv";
 	builtin[2].addr = &builtin_setenv;
 	builtin[3].name = "unsetenv";

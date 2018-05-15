@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 17:35:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/15 16:32:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*make_path(char *curpath, char *dir)
 		curpath = ft_strjoin(curpath, dir + 2);
 		return (curpath);
 	}
-	if (ft_strncmp(dir, "../", 3) == 0)
+	if (ft_strncmp(dir, "../", 2) == 0)
 		return (make_path_dotdot(&curpath, &dir));
 	if (dir[0] == '/')
 		return (dir);

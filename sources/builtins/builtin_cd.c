@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/15 12:00:40 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:18:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int		cd_change_dir(char *dir, char ***env, int opt)
 	}
 	else
 	{
+		if (!ft_strcmp("-", dir))
+		{
+			dir = oldpwd;
+			oldpwd = pwd;
+		}
 		if (dir[0] != '/')
 			dir = make_path(pwd, dir);
 		if (cd_err_chdir(dir) == -1)
