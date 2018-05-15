@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 04:25:03 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/14 17:07:07 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ struct s_tkn_fun	tkn_fun[] =
 	{CHR_GREAT, &tkn_great},
 	{CHR_LESS, &tkn_less},
 	{CHR_WORD, &tkn_word},
-	{CHR_EOL, &tkn_eol},
-	0
+//	{CHR_NEWLINE, &tkn_newline},
 };
 
 #endif

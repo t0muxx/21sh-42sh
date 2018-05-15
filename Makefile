@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/05/14 12:51:24 by cormarti         ###   ########.fr        #
+#    Updated: 2018/05/14 19:11:08 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ READLINE = readline/
 ERROR	 = error/
 UTILS	 = utils/
 LEXER	 = lexer/
+PARSER   = parser/
 
 SRCS = 		$(READLINE)readline.c \
 			$(READLINE)input_arrow.c \
@@ -75,6 +76,14 @@ SRCS = 		$(READLINE)readline.c \
 			$(LEXER)semi.c \
 			$(LEXER)space.c \
 			$(LEXER)word.c \
+			$(PARSER)and_or.c \
+			$(PARSER)cmd.c \
+			$(PARSER)command.c \
+			$(PARSER)complete_cmd.c \
+			$(PARSER)io.c \
+			$(PARSER)list.c \
+			$(PARSER)pipeline.c \
+			$(PARSER)separator.c \
 		   	builtin.c \
 			path.c \
 

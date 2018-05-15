@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 12:52:35 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/14 19:07:57 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,9 @@ int		main(void)
 		builtin_check_builtin(line, &env);
 		tbuffer_init(&tbuffer, env);
 		tkn = lex(&line[0]);
+		if (is_complete_cmd(tkn))
+			ft_putendl("correct syntax");
+		else
+			ft_putstr("syntax error");
 	}
 }
