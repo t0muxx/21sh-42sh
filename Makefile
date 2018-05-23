@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/05/14 19:11:08 by cormarti         ###   ########.fr        #
+#    Updated: 2018/05/15 16:13:28 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(PARSER)list.c \
 			$(PARSER)pipeline.c \
 			$(PARSER)separator.c \
+			$(PARSER)parser.c \
 		   	builtin.c \
 			path.c \
 

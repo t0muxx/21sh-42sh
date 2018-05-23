@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 01:55:42 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 02:09:01 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:20:24 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ t_tkn	*tkn_and(char **str)
 	char	*line;
 
 	line = *str;
-	if (*(line + 1) == CHR_AND)
+	if (*(line + 1) == '&')
 		tkn = tkn_and_if(&line);
 	else
 	{
 		line = *str;
 		tkn = tkn_init(1);
-		tkn->data[0] = CHR_AND;
+		tkn->data[0] = '&';
 		tkn->type = CHR_AND;
 		line++;
 	}

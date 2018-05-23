@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 19:33:40 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/11 23:43:33 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/17 21:31:05 by cormarti         ###   ########.fr       */
 /*   Created: 2018/03/22 10:43:50 by tmaraval          #+#    #+#             */
 /*   Updated: 2018/03/27 17:38:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
@@ -22,43 +22,41 @@
 
 enum e_tkn_type
 {
-	CHR_LESS = '<',
-	CHR_DLESS = 999,
-	CHR_DLESSDASH = 998,
-	CHR_GREAT = '>',
-	CHR_DGREAT = 997,
-	CHR_LBRACKET = '(',
-	CHR_RBRACKET = ')',
-	CHR_LBRACE = '{',
-	CHR_RBRACE = '}',
-	CHR_HASHTAG = '#',
-	CHR_BANG = '!',
-	CHR_LESSAND = 996,
-	CHR_GREATAND = 995,
-	CHR_SEMI = ';',
-	CHR_DSEMI = 994,
-	CHR_LESSGREAT = 993,
-	CHR_CLOBBER = 992,
-	CHR_OR_IF = 991,
-	CHR_AND_IF = 990,
-	CHR_PIPE = '|',
-	CHR_QUOTE = '\'',
-	CHR_DQUOTE = '"',
-	CHR_WSPACE = ' ',
-	CHR_BQUOTE = '`',
-	CHR_AND = '&',
-	CHR_DASH = '-',
-	CHR_ESCAPE = '\\',
-	CHR_EOL = '\n',
-	CHR_DOLLAR = '$',
-	CHR_HTAB = '\t',
-	CHR_ASTERISK = '*',
-	CHR_NULL = 0,
-	CHR_WORD = 1,
-	CHR_NAME = 2,
-	CHR_ASSIGNMENT_WORD = 3,
-	CHR_NEWLINE = 4,
-	CHR_IO_NUMBER = 5,
+	CHR_GREAT,
+	CHR_CLOBBER,
+	CHR_LESS,
+	CHR_LESSAND,
+	CHR_DGREAT,
+	CHR_GREATAND,
+	CHR_LESSGREAT,
+	CHR_IO_NUMBER,
+	CHR_DASH,
+	CHR_DLESS,
+	CHR_DLESSDASH,
+	CHR_LBRACKET,
+	CHR_RBRACKET,
+	CHR_LBRACE,
+	CHR_RBRACE,
+	CHR_HASHTAG,
+	CHR_BANG,
+	CHR_SEMI,
+	CHR_DSEMI,
+	CHR_PIPE,
+	CHR_OR_IF,
+	CHR_AND_IF,
+	CHR_QUOTE,
+	CHR_DQUOTE,
+	CHR_WSPACE,
+	CHR_BQUOTE,
+	CHR_AND,
+	CHR_ESCAPE,
+	CHR_NEWLINE,
+	CHR_WORD,
+	CHR_DOLLAR,
+	CHR_HTAB,
+	CHR_ASTERISK,
+	CHR_ASSIGNMENT_WORD,
+	CHR_NULL,
 };
 
 enum e_tkn_state
@@ -81,6 +79,7 @@ struct	s_tkn
 	char		*data;
 	enum e_tkn_type	type;
 	t_tkn		*next;
+	t_tkn		*prev;
 };
 
 struct	s_tkn_fun
@@ -116,5 +115,6 @@ t_tkn	*tkn_word(char **str);
 void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
 t_tkn	*lex(char **str);
+t_tkn	*tkn_newline(char **str);
 
 #endif

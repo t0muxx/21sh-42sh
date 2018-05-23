@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 02:41:50 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 02:42:35 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:22:17 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_tkn	*tkn_dollar(char **str)
 
 	line = *str;
 	tkn = tkn_init(1);
-	tkn->data[0] = CHR_DOLLAR;
+	tkn->data[0] = '$';
 	tkn->type = CHR_DOLLAR;
 	line++;
 	*str = line;

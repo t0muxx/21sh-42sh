@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 01:50:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 02:04:50 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:21:35 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_tkn	*tkn_bquote(char **str)
 
 	line = *str;
 	tkn = tkn_init(1);
-	tkn->data[0] = CHR_BQUOTE;
+	tkn->data[0] = '`';
 	tkn->type = CHR_BQUOTE;
 	line++;
 	*str = line;
@@ -33,7 +33,7 @@ t_tkn	*tkn_dquote(char **str)
 
 	line = *str;
 	tkn = tkn_init(1);
-	tkn->data[0] = CHR_DQUOTE;
+	tkn->data[0] = '"';
 	tkn->type = CHR_DQUOTE;
 	line++;
 	*str = line;
@@ -47,7 +47,7 @@ t_tkn	*tkn_quote(char **str)
 
 	line = *str;
 	tkn = tkn_init(1);
-	tkn->data[0] = CHR_QUOTE;
+	tkn->data[0] = '\'';
 	tkn->type = CHR_QUOTE;
 	line++;
 	*str = line;

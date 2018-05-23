@@ -6,13 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 06:03:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/04/17 07:31:38 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 18:35:54 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+int		parse(t_tkn *tkn);
 int		is_complete_cmd(t_tkn *tkn);
 int		is_and_or(t_tkn **tkn);
 int		is_newline_list(t_tkn **tkn);
@@ -32,5 +33,6 @@ int		is_pipeline(t_tkn **tkn);
 int		is_separator_op(t_tkn **tkn);
 int		is_separator(t_tkn **tkn);
 int		is_filename(t_tkn **tkn);
+
 
 #endif

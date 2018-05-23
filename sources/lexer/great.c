@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 03:59:29 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 02:05:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:16:15 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ t_tkn			*tkn_great(char **str)
 	char	*line;
 
 	line = *str;
-	if (*(line + 1) == CHR_GREAT)
+	if (*(line + 1) == '>')
 		tkn = tkn_dgreat(&line);
-	else if (*(line + 1) == CHR_AND)
+	else if (*(line + 1) == '&')
 		tkn = tkn_greatand(&line);
-	else if (*(line + 1) == CHR_PIPE)
+	else if (*(line + 1) == '|')
 		tkn = tkn_clobber(&line);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/14 18:06:24 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/17 22:09:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_tkn		*tkn_init(int len)
 static void	print_tkn_struct(t_tkn *tkn)
 {
 	tkn = tkn->next;
-	while (tkn)
+	while (tkn->next)
 	{
 		ft_putstr(tkn->data);
 		ft_putstr(" -> ");
@@ -41,6 +41,11 @@ static void	print_tkn_struct(t_tkn *tkn)
 		ft_putstr("\n");
 		tkn = tkn->next;
 	}
+		ft_putstr(tkn->data);
+		ft_putstr(" -> ");
+		ft_putnbr(tkn->type);
+		ft_putstr("\n");
+		
 }
 
 static void	state_idle(t_tkn **head, char **str, t_tkn_state *state)
@@ -59,9 +64,9 @@ static void	state_idle(t_tkn **head, char **str, t_tkn_state *state)
 		}
 		else if (tkn_fun[i].type == *line)
 		{
-			if (*line == CHR_DQUOTE)
+			if (*line == '"')
 				*state = STATE_DQUOTED;
-			else if (*line == CHR_QUOTE)
+			else if (*line == '\'')
 				*state = STATE_QUOTED;
 			tkn_push_back(head, tkn_fun[i].fun(&line));
 			break;
@@ -79,14 +84,14 @@ static void	state_quoted(t_tkn **head, char **str, t_tkn_state *state)
 
 	line = *str;
 	len = 0;
-	while (line[len] != '\0' && line[len] != CHR_QUOTE)
+	while (line[len] != '\0' && line[len] != '\'')
 		len++;
 	tkn = tkn_init(len);
 	tkn->data = ft_strncpy(tkn->data, line, len);
 	tkn->type = CHR_WORD;
 	tkn_push_back(head, tkn);
 	line += len;
-	if (*line == CHR_QUOTE)
+	if (*line == '\'')
 		tkn_push_back(head, tkn_quote(&line));
 	*state = STATE_IDLE;
 	*str = line;
@@ -100,22 +105,36 @@ static void	state_dquoted(t_tkn **head, char **str, t_tkn_state *state)
 
 	line = *str;
 	len = 0;
-	while (line[len] != '\0' && line[len] != CHR_DQUOTE)
+	while (line[len] != '\0' && line[len] != '"')
 		len++;
 	tkn = tkn_init(len);
 	tkn->data = ft_strncpy(tkn->data, line, len);
 	tkn->type = CHR_WORD;
 	tkn_push_back(head, tkn);
 	line += len;
-	if (*line == CHR_DQUOTE)
+	if (*line == '"')
 		tkn_push_back(head, tkn_dquote(&line));
 	*state = STATE_IDLE;
 	*str = line;
 }
 
+static t_tkn *tkn_init_nl(void)
+{
+	t_tkn	*tkn;
+
+	tkn = NULL;
+	if (!(tkn = (t_tkn*)malloc(sizeof(t_tkn)))
+			|| !(tkn->data = (char*)malloc(sizeof(char) * (1))))
+		return (NULL);
+	tkn->data[0] = '\n';
+	tkn->type = CHR_NEWLINE;
+	tkn->next = NULL;
+	tkn->prev = NULL;
+	return (tkn);
+}
+
 t_tkn		*lex(char **str)
 {
-	int		i;
 	t_tkn	*tkn;
 	char	*line;
 	t_tkn_state	state;
@@ -123,19 +142,20 @@ t_tkn		*lex(char **str)
 	line = ft_strdup(*str);
 	tkn = tkn_init(1);
 	state = STATE_IDLE;
-	i = 0;
 	if (line == 0 || line == NULL)
 		return (NULL);
-	while (line[i] != '\0')
+	while (line[0] != '\0')
 	{
-		i = 0;
 		if (state == STATE_IDLE)
+		{
 			state_idle(&tkn, &line, &state);
+		}
 		else if (state == STATE_DQUOTED)
 			state_dquoted(&tkn, &line, &state);
 		else if (state == STATE_QUOTED)
 			state_quoted(&tkn, &line, &state);
 	}
+	tkn_push_back(&tkn, tkn_init_nl());
 	print_tkn_struct(tkn);
 	return (tkn);
 }

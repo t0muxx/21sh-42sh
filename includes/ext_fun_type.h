@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/14 17:07:07 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 18:34:53 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,27 @@
 
 struct s_tkn_fun	tkn_fun[] =
 {
-	{CHR_ASTERISK, &tkn_asterisk},	
-	{CHR_DOLLAR, &tkn_dollar},
-	{CHR_HTAB, &tkn_htab},
-	{CHR_DASH, &tkn_dash},
-	{CHR_ESCAPE, &tkn_escape},
-	{CHR_PIPE, &tkn_pipe},
-	{CHR_AND, &tkn_and},
-	{CHR_BQUOTE, &tkn_bquote},
-	{CHR_DQUOTE, &tkn_dquote},
-	{CHR_QUOTE, &tkn_quote},
-	{CHR_SEMI, &tkn_semi},
-	{CHR_BANG, &tkn_bang},
-	{CHR_HASHTAG, &tkn_hashtag},
-	{CHR_LBRACE, &tkn_lbrace},
-	{CHR_RBRACE, &tkn_rbrace},
-	{CHR_LBRACKET, &tkn_lbracket},
-	{CHR_RBRACKET, &tkn_rbracket},
-	{CHR_WSPACE, &tkn_wspace},
-	{CHR_GREAT, &tkn_great},
-	{CHR_LESS, &tkn_less},
-	{CHR_WORD, &tkn_word},
-//	{CHR_NEWLINE, &tkn_newline},
+	{'*', &tkn_asterisk},
+	{'$', &tkn_dollar},
+	{'\t', &tkn_htab},
+	{'-', &tkn_dash},
+	{'\\', &tkn_escape},
+	{'|', &tkn_pipe},
+	{'&', &tkn_and},
+	{'`', &tkn_bquote},
+	{'"', &tkn_dquote},
+	{'\'', &tkn_quote},
+	{';', &tkn_semi},
+	{'!', &tkn_bang},
+	{'#', &tkn_hashtag},
+	{'{', &tkn_lbrace},
+	{'}', &tkn_rbrace},
+	{'(', &tkn_lbracket},
+	{')', &tkn_rbracket},
+	{'>', &tkn_great},
+	{'<', &tkn_less},
+	{' ', &tkn_wspace},
+	{'\n', &tkn_newline},
 };
 
 #endif

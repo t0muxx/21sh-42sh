@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 01:10:07 by cormarti          #+#    #+#             */
-/*   Updated: 2018/03/31 01:28:27 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/15 17:22:55 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ t_tkn			*tkn_semi(char **str)
 	char	*line;
 
 	line = *str;
-	if (*(line + 1) == CHR_SEMI)
+	if (*(line + 1) == ';')
 		tkn = tkn_is_dsemi(&line);
 	else
 	{
 		tkn = tkn_init(1);
-		tkn->data[0] = CHR_SEMI;
+		tkn->data[0] = ';';
 		tkn->type = CHR_SEMI;
 		line++;
 	}
