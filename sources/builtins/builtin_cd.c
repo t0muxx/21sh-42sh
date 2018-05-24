@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/17 19:21:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/22 10:43:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,13 @@ int		cd_change_dir(char *dir, char ***env, int opt)
 	pwd = NULL;
 	if ((oldpwd = env_get_var("PWD", *env)) == NULL)
 		oldpwd = ft_strdup("");
-	ft_printf("oldpwd == %s\n", oldpwd);
 	if (opt == CD_P)
 	{
 		if (cd_err_chdir(dir) == -1)
 			return (-1);
 //		ft_printf("oldpwd == %s\n", oldpwd);
 		if ((env_update_var("OLDPWD", oldpwd, *env)) == 0)
-		{
-			ft_printf("oldpwd == %s\n", oldpwd);
 			*env = env_add_var("OLDPWD", oldpwd, *env);
-		}
 		pwd = getcwd(pwd, PATH_MAX);
 		env_update_var("PWD", pwd, *env);
 	}
@@ -63,10 +59,12 @@ int		cd_change_dir(char *dir, char ***env, int opt)
 				return (-1);
 			}
 			ft_printf("%s\n", dir);
-			oldpwd = pwd;
 		}
 		if (dir[0] != '/')
-			dir = make_path(oldpwd, dir);
+		{
+			pwd = ft_strdup(oldpwd);
+			dir = make_path(pwd, dir);
+		}
 		if (cd_err_chdir(dir) == -1)
 			return (-1);
 		if (env_update_var("OLDPWD", oldpwd, *env) == 0)
