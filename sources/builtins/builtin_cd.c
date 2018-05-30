@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/22 10:43:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/30 19:07:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,57 @@ int		cd_err_chdir(char *dir)
 	return (0);
 }
 
+int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env)
+{
+	if (cd_err_chdir(dir) == -1)
+	{
+		free(oldpwd);
+		return (-1);
+	}
+//	ft_printf("oldpwd == %s\n", oldpwd);
+	if ((env_update_var("OLDPWD", oldpwd, *env)) == 0)
+		*env = env_add_var("OLDPWD", oldpwd, *env);
+	pwd = getcwd(pwd, PATH_MAX);
+	env_update_var("PWD", pwd, *env);
+	return (0);
+}
+
+int		cd_change_dir_dash(char *oldpwd, char *dir, char ***env)
+{
+	if (!ft_strcmp("-", dir))
+	{
+		if ((dir = env_get_var("OLDPWD", *env)) == NULL)
+		{
+			free(oldpwd);
+			free(dir);
+			error_print(10, "cd", "");
+			return (-1);
+		}
+		ft_printf("%s\n", dir);
+	}
+	return (0);
+}
+
+int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env)
+{
+	if (dir[0] != '/')
+	{
+		*pwd = ft_strdup(oldpwd);
+		dir = make_path(*pwd, dir);
+	}
+	if (cd_err_chdir(dir) == -1)
+	{
+		free(oldpwd);
+		return (-1);
+	}
+	if (env_update_var("OLDPWD", oldpwd, *env) == 0)
+		*env = env_add_var("OLDPWD", oldpwd, *env);
+	if (env_update_var("PWD", dir, *env) == 0)
+		*env = env_add_var("PWD", dir, *env);
+	free(dir);
+	return (0);
+}
+
 int		cd_change_dir(char *dir, char ***env, int opt)
 {
 	char *oldpwd;
@@ -41,37 +92,18 @@ int		cd_change_dir(char *dir, char ***env, int opt)
 		oldpwd = ft_strdup("");
 	if (opt == CD_P)
 	{
-		if (cd_err_chdir(dir) == -1)
+		if (cd_change_dir_p(oldpwd, pwd, dir, env) == -1)
 			return (-1);
-//		ft_printf("oldpwd == %s\n", oldpwd);
-		if ((env_update_var("OLDPWD", oldpwd, *env)) == 0)
-			*env = env_add_var("OLDPWD", oldpwd, *env);
-		pwd = getcwd(pwd, PATH_MAX);
-		env_update_var("PWD", pwd, *env);
 	}
 	else
 	{
-		if (!ft_strcmp("-", dir))
-		{
-			if ((dir = env_get_var("OLDPWD", *env)) == NULL)
-			{
-				error_print(10, "cd", "");
-				return (-1);
-			}
-			ft_printf("%s\n", dir);
-		}
-		if (dir[0] != '/')
-		{
-			pwd = ft_strdup(oldpwd);
-			dir = make_path(pwd, dir);
-		}
-		if (cd_err_chdir(dir) == -1)
+		if (cd_change_dir_dash(oldpwd, dir, env) == -1)
 			return (-1);
-		if (env_update_var("OLDPWD", oldpwd, *env) == 0)
-			*env = env_add_var("OLDPWD", oldpwd, *env);
-		if (env_update_var("PWD", dir, *env) == 0)
-			*env = env_add_var("PWD", dir, *env);
+		if (cd_change_dir_gen(oldpwd, &pwd, dir, env) == -1)
+			return (-1);
 	}
+	free(oldpwd);
+	free(pwd);
 	return (0);
 }
 
@@ -93,18 +125,25 @@ char		*cd_manage_cdpath(char *dir, char ***env)
 		{
 			tmp = ft_strjoin("./", dir);
 			if (access(tmp, F_OK) != -1)
-				break;
+			{	
+			//	utils_free_2darray((void **)cdpath);
+				return (tmp);
+			}
 			free(tmp);
 		}
 		else
 		{
 			tmp = make_path(cdpath[i], dir);
 			if (access(tmp, F_OK) != -1)
-				break;
-			free(tmp);
+			{
+				ft_printf("%s\n", tmp);
+				utils_free_2darray((void **)cdpath);
+				return (tmp);	
+			}
 		}
+		i++;
 	}
-	utils_free_2darray((void **)cdpath);
+	//utils_free_2darray((void **)cdpath);
 	return (NULL);
 }
 
