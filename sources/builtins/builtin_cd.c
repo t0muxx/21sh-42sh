@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/31 14:12:31 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:47:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "env.h"
 #include "utils.h"
 
-
-int		cd_change_dir(char *dir, char ***env, int opt)
+int			cd_change_dir(char *dir, char ***env, int opt)
 {
 	char *oldpwd;
 	char *pwd;
@@ -42,10 +41,35 @@ int		cd_change_dir(char *dir, char ***env, int opt)
 	return (0);
 }
 
+char		*cd_manage_cdpath_do(char *cdpath, char *dir)
+{
+	char *tmp;
+
+	if (ft_strlen(cdpath) == 0 || cdpath == NULL)
+	{
+		tmp = ft_strjoin("./", dir);
+		if (access(tmp, F_OK) != -1)
+		{
+			return (tmp);
+		}
+	}
+	else
+	{
+		tmp = make_path(cdpath, dir);
+		if (access(tmp, F_OK) != -1)
+		{
+			ft_printf("%s\n", tmp);
+			return (tmp);
+		}
+	}
+	free(tmp);
+	return (NULL);
+}
+
 char		*cd_manage_cdpath(char *dir, char ***env)
 {
-	char 	*tmp;
-	char 	**cdpath;
+	char	*tmp;
+	char	**cdpath;
 	int		i;
 
 	i = 0;
@@ -56,33 +80,18 @@ char		*cd_manage_cdpath(char *dir, char ***env)
 	free(tmp);
 	while (cdpath[i])
 	{
-		if (ft_strlen(cdpath[i]) == 0 || cdpath == NULL)
+		if ((tmp = cd_manage_cdpath_do(cdpath[i], dir)) != NULL)
 		{
-			tmp = ft_strjoin("./", dir);
-			if (access(tmp, F_OK) != -1)
-			{	
-				utils_free_2darray((void **)cdpath);
-				return (tmp);
-			}
+			utils_free_2darray((void **)cdpath);
+			return (tmp);
 		}
-		else
-		{
-			tmp = make_path(cdpath[i], dir);
-			if (access(tmp, F_OK) != -1)
-			{
-				ft_printf("%s\n", tmp);
-				utils_free_2darray((void **)cdpath);
-				return (tmp);	
-			}
-		}
-		free(tmp);
 		i++;
 	}
 	utils_free_2darray((void **)cdpath);
 	return (NULL);
 }
 
-int		cd_manage_home(char ***env, int opt)
+int			cd_manage_home(char ***env, int opt)
 {
 	char *tmp;
 
@@ -97,18 +106,18 @@ int		cd_manage_home(char ***env, int opt)
 	return (0);
 }
 
-int		builtin_cd(char **cmd, char ***env)
+int			builtin_cd(char **cmd, char ***env)
 {
-	int opt;
-	char *dir;
-	char *tmp;
+	int		opt;
+	char	*dir;
+	char	*tmp;
 
 	opt = cd_parse_opt(cmd);
 	dir = cmd[cd_skip_opt(cmd)];
 	if (dir == NULL || ft_strlen(dir) == 0)
 	{
 		if (cd_manage_home(env, opt) == -1)
-				return (-1);
+			return (-1);
 		else
 			return (0);
 	}
@@ -125,4 +134,3 @@ int		builtin_cd(char **cmd, char ***env)
 	cd_change_dir(dir, env, opt);
 	return (0);
 }
-

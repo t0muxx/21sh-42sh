@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/30 18:48:47 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:53:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ char	*make_path_dotdot(char **curpath, char **dir)
 	return (*curpath);
 }
 
+char	*make_path_dotslash(char **curpath, char **tmp, char *dir)
+{
+	make_path_manage_last_slash(curpath, PATH_ADD_SLASH);
+	*tmp = *curpath;
+	*curpath = ft_strjoin(*curpath, dir + 2);
+	free(*tmp);
+	return (*curpath);
+}
+
 char	*make_path(char *path, char *dir)
 {
 	char *tmp;
@@ -80,13 +89,7 @@ char	*make_path(char *path, char *dir)
 		|| ft_strlen(dir) == 0)
 		return (curpath);
 	if (ft_strncmp(dir, "./", 2) == 0)
-	{
-		make_path_manage_last_slash(&curpath, PATH_ADD_SLASH);
-		tmp = curpath;
-		curpath = ft_strjoin(curpath, dir + 2);
-		free(tmp); 
-		return (curpath);
-	}
+		return (make_path_dotslash(&curpath, &tmp, dir));
 	if (ft_strncmp(dir, "../", 2) == 0)
 		return (make_path_dotdot(&curpath, &dir));
 	if (dir[0] == '/')
@@ -99,7 +102,7 @@ char	*make_path(char *path, char *dir)
 	tmp = curpath;
 	curpath = ft_strjoin(curpath, dir);
 	free(tmp);
-	return (curpath);	
+	return (curpath);
 }
 
 /*int		main(int argc, char **argv)
@@ -113,4 +116,3 @@ char	*make_path(char *path, char *dir)
 	free(path);
 	return (0);
 }*/
-

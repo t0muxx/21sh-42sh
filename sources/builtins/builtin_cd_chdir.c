@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/31 14:12:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:44:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int		cd_err_chdir(char *dir)
 		if (access(dir, F_OK) == -1)
 			error_print(EXISTERR, "cd", dir);
 		else if (access(dir, X_OK) == -1)
-	        error_print(PERMERR, "cd", dir);
+			error_print(PERMERR, "cd", dir);
 		else
 			error_print(UNDEFINEDERR, "cd", dir);
-			return (-1);
+		return (-1);
 	}
 	return (0);
 }
@@ -55,7 +55,6 @@ int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
 		{
 			free(oldpwd);
-			//free(dir);
 			error_print(10, "cd", "");
 			return (-1);
 		}
@@ -84,4 +83,3 @@ int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env)
 	free(dir);
 	return (0);
 }
-
