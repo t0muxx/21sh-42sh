@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/01 01:58:07 by cormarti         ###   ########.fr        #
+#    Updated: 2018/06/01 20:26:43 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,9 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)sig.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
+			$(BUILTINS)builtin_cd.c \
+			$(BUILTINS)builtin_cd_chdir.c \
+			$(BUILTINS)builtin_cd_opt.c \
 			$(BUILTINS)builtin_echo.c \
 			$(BUILTINS)builtin_env.c \
 			$(BUILTINS)builtin_env_utils.c \
@@ -55,6 +58,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(BUILTINS)builtin_unsetenv.c \
 			$(ERROR)error.c \
 			$(UTILS)string.c \
+			$(UTILS)makepath.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
 			$(LEXER)init.c \
