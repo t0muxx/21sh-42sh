@@ -6,14 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/15 18:34:53 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:24:43 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXT_FUN_TKN_H
-# define EXT_FUN_TKN_H
+#ifndef EXT_FUN_TYPE_H
+# define EXT_FUN_TYPE_H
 
-#include "lexer.h"
+# include "lexer.h"
 
 struct s_tkn_fun	tkn_fun[] =
 {

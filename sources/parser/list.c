@@ -5,23 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 04:23:56 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/28 17:26:39 by cormarti         ###   ########.fr       */
+/*   Created: 2018/04/17 04:31:24 by cormarti          #+#    #+#             */
+/*   Updated: 2018/05/14 19:12:25 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
+#include "../../includes/parser.h"
 
-void	tkn_push_back(t_tkn **head, t_tkn *new)
+int		is_list(t_tkn **tkn)
 {
-	t_tkn	*tkn;
-
-	if (new == NULL)
-		return ;
-	tkn = *head;
-	while (tkn->next)
-		tkn = tkn->next;
-	tkn->next = new;
-	tkn->next->prev = tkn;
-	tkn->next->next = NULL;
+	if (is_and_or(tkn))
+	{
+		if (is_separator_op(tkn))
+		{
+			if (is_list(tkn))
+				return (1);
+			else
+				return (0);
+		}
+		return (1);
+	}
+	else
+		return (0);
 }

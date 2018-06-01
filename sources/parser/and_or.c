@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   and_or.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 04:23:56 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/28 17:26:39 by cormarti         ###   ########.fr       */
+/*   Created: 2018/04/17 04:47:40 by cormarti          #+#    #+#             */
+/*   Updated: 2018/04/17 07:11:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
+#include "../../includes/parser.h"
 
-void	tkn_push_back(t_tkn **head, t_tkn *new)
+int		is_and_or(t_tkn **tkn)
 {
-	t_tkn	*tkn;
-
-	if (new == NULL)
-		return ;
-	tkn = *head;
-	while (tkn->next)
-		tkn = tkn->next;
-	tkn->next = new;
-	tkn->next->prev = tkn;
-	tkn->next->next = NULL;
+	if (is_pipeline(tkn))
+		return (1);
+	else
+		return (0);
 }

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   complete_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 04:23:56 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/28 17:26:39 by cormarti         ###   ########.fr       */
+/*   Created: 2018/04/17 04:09:27 by cormarti          #+#    #+#             */
+/*   Updated: 2018/05/15 16:08:28 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
+#include "../../includes/parser.h"
 
-void	tkn_push_back(t_tkn **head, t_tkn *new)
+int		is_complete_cmd(t_tkn *tkn)
 {
-	t_tkn	*tkn;
-
-	if (new == NULL)
-		return ;
-	tkn = *head;
-	while (tkn->next)
-		tkn = tkn->next;
-	tkn->next = new;
-	tkn->next->prev = tkn;
-	tkn->next->next = NULL;
+	ft_putendl("------- START PARSING ------");
+	if (is_list(&tkn))
+	{
+		return (is_separator(&tkn) ? 1 : 1);
+	}
+	else
+		return (0);
 }

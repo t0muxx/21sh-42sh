@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 06:03:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/15 18:35:54 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:04:24 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ int		is_pipeline(t_tkn **tkn);
 int		is_separator_op(t_tkn **tkn);
 int		is_separator(t_tkn **tkn);
 int		is_filename(t_tkn **tkn);
-
 
 #endif

@@ -5,10 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/27 19:33:40 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/17 21:31:05 by cormarti         ###   ########.fr       */
-/*   Created: 2018/03/22 10:43:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/27 17:38:26 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
+/*   Updated: 2018/06/01 02:19:43 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +18,7 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-enum e_tkn_type
+enum	e_tkn_type
 {
 	CHR_GREAT,
 	CHR_CLOBBER,
@@ -59,7 +57,7 @@ enum e_tkn_type
 	CHR_NULL,
 };
 
-enum e_tkn_state
+enum	e_tkn_state
 {
 	STATE_QUOTED,
 	STATE_DQUOTED,
@@ -69,23 +67,24 @@ enum e_tkn_state
 	STATE_IDLE,
 };
 
+typedef enum e_tkn_type		t_tkn_type;
 typedef enum e_tkn_state	t_tkn_state;
 typedef struct s_tkn		t_tkn;
 typedef struct s_fun_tkn	t_fun_tkn;
-typedef t_tkn *(*type_fun)(char**);
+typedef t_tkn *(*t_type_fun)(char**);
 
 struct	s_tkn
 {
 	char		*data;
-	enum e_tkn_type	type;
+	t_tkn_type	type;
 	t_tkn		*next;
 	t_tkn		*prev;
 };
 
 struct	s_tkn_fun
 {
-	enum e_tkn_type	type;
-	type_fun		fun;
+	t_tkn_type		type;
+	t_type_fun		fun;
 };
 
 extern struct s_tkn_fun		tkn_fun[];
@@ -116,5 +115,6 @@ void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
 t_tkn	*lex(char **str);
 t_tkn	*tkn_newline(char **str);
+t_tkn	*tkn_init_nl(void);
 
 #endif

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   astree.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 04:23:56 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/28 17:26:39 by cormarti         ###   ########.fr       */
+/*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
+/*   Updated: 2018/06/01 02:28:26 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#ifndef ASTREE_H
+# define ASTREE_H
 
-void	tkn_push_back(t_tkn **head, t_tkn *new)
+typedef enum e_nodetype		t_nodetype;
+typedef struct s_astree		t_astree;
+
+enum	e_nodetype
 {
-	t_tkn	*tkn;
+	NT_PIPE,
+	NT_SEMI,
+	NT_CMD,
+	NT_AND,
+	NT_OR_IF,
+	NT_AND_IF,
+};
 
-	if (new == NULL)
-		return ;
-	tkn = *head;
-	while (tkn->next)
-		tkn = tkn->next;
-	tkn->next = new;
-	tkn->next->prev = tkn;
-	tkn->next->next = NULL;
-}
+struct	s_astree
+{
+	t_nodetype	type;
+	t_tkn		**arg;
+	t_astree	*left;
+	t_astree	*right;
+};
+
+void		ast_debug(t_astree *astree);
+t_astree	*ast_build(t_tkn *tkn);
+
+#endif

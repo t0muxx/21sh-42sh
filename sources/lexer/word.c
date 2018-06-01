@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/17 22:48:27 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:01:11 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,9 @@ t_tkn		*tkn_word(char **str)
 		if (line[i] == '\\' && !is_esc)
 			is_esc = 1;
 		else
-		{
-			is_esc = 0;
-			len++;
-		}
+			is_esc = (len++) ? 0 : 0;
 		i++;
 	}
-	ft_putnbr(len);
 	tkn = tkn_init(len);
 	tkn->data = esc_strncpy(tkn->data, line, len);
 	tkn->type = CHR_WORD;
