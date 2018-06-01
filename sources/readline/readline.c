@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/28 19:07:23 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/01 20:46:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	}
 	free(fptr);
+	free(read_buf);
 	return (tbuffer->buffer);
 }
 
