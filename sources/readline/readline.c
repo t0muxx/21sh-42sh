@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/17 17:31:39 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/05/28 19:07:23 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "builtin.h"
 #include "ext_fun_type.h"
 #include "parser.h"
+#include "astree.h"
 
 
 /*
@@ -133,6 +134,7 @@ int		main(void)
 	t_buffer		tbuffer;
 	char			**env;
 	t_tkn			*tkn;
+	t_astree		*astree;
 
 	env = env_create_copy();
 	tbuffer_init(&tbuffer, env);
@@ -145,6 +147,13 @@ int		main(void)
 		tbuffer_init(&tbuffer, env);
 		tkn = lex(&line[0]);
 		if (parse(tkn))
-			ft_putendl("correct syntax");
+		{
+			while (tkn->next)
+				tkn = tkn->next;
+			astree = ast_build(tkn);
+			ast_debug(astree);
+		}
+
+			
 	}
 }
