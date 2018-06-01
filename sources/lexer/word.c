@@ -6,7 +6,11 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/06/01 02:01:11 by cormarti         ###   ########.fr       */
+=======
+/*   Updated: 2018/05/14 18:20:10 by cormarti         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +59,20 @@ static int	is_word_type(int c)
 	return (1);
 }
 
+static int	strdigit(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 t_tkn		*tkn_word(char **str)
 {
 	t_tkn	*tkn;
@@ -77,8 +95,13 @@ t_tkn		*tkn_word(char **str)
 	}
 	tkn = tkn_init(len);
 	tkn->data = esc_strncpy(tkn->data, line, len);
-	tkn->type = CHR_WORD;
 	line += i;
 	*str = line;
+	if (*str[0] == CHR_GREAT && strdigit(tkn->data))
+		tkn->type = CHR_IO_NUMBER;
+	else if (ft_strchr(tkn->data, '='))
+		tkn->type = CHR_ASSIGNMENT_WORD;
+	else
+		tkn->type = CHR_WORD;
 	return (tkn);
 }
