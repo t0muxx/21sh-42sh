@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/05/15 11:25:58 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:43:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		cd_parse_opt(char **cmd)
 		if (ret == CD_OPTERR)
 			return (-1);
 		if (!ft_strcmp(cmd[i], "--"))
-			break;
+			break ;
 		i++;
 	}
 	return (ret);
