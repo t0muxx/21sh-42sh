@@ -6,11 +6,24 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 07:36:24 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/02/14 10:59:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/02 15:43:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "readline.h"
+
+void	utils_free_cmd_hist(t_cmd_hist **head)
+{
+	t_cmd_hist *curr;
+
+	while ((curr = *head) != NULL)
+	{
+		*head = (*head)->oldest;
+		free(curr->cmd);
+		free(curr);
+	}
+}
 
 void	utils_free_2darray(void **array)
 {
@@ -25,21 +38,21 @@ void	utils_free_2darray(void **array)
 	free(array);
 }
 
-void	utils_delete_in_2darray(char **tab, int index)
+void	utils_delete_in_2darray(char **tabb, int index)
 {
 	int		tabnbr;
 	char	*temp;
 
 	tabnbr = 0;
-	while (tab[tabnbr])
+	while (tabb[tabnbr])
 		tabnbr++;
-	temp = tab[index];
+	temp = tabb[index];
 	while (index + 1 < tabnbr)
 	{
-		tab[index] = tab[index + 1];
+		tabb[index] = tabb[index + 1];
 		index++;
 	}
-	tab[index] = 0;
+	tabb[index] = 0;
 	free(temp);
 }
 

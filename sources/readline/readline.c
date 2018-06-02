@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/01 20:46:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/02 15:47:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 #include "ext_fun_type.h"
 #include "parser.h"
 #include "astree.h"
-
-
+#include "utils.h"
 /*
 *******************************************************************************
 ********************************************************************************
@@ -107,6 +106,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	}
 	free(fptr);
 	free(read_buf);
+	utils_free_cmd_hist(head);
 	return (tbuffer->buffer);
 }
 
@@ -154,7 +154,5 @@ int		main(void)
 			astree = ast_build(tkn);
 			ast_debug(astree);
 		}
-
-			
 	}
 }
