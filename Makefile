@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/01 20:26:43 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/06/02 04:15:44 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ ERROR	 = error/
 UTILS	 = utils/
 LEXER	 = lexer/
 PARSER   = parser/
+EXEC	 = exec/
 
 SRCS = 		$(READLINE)readline.c \
 			$(READLINE)input_arrow.c \
@@ -67,7 +68,6 @@ SRCS = 		$(READLINE)readline.c \
 			$(LEXER)bang.c \
 			$(LEXER)brace.c \
 			$(LEXER)bracket.c \
-			$(LEXER)dash.c \
 			$(LEXER)dollar.c \
 			$(LEXER)eol.c \
 			$(LEXER)escape.c \
@@ -91,6 +91,11 @@ SRCS = 		$(READLINE)readline.c \
 			$(PARSER)separator.c \
 			$(PARSER)parser.c \
 			$(PARSER)astree.c \
+			$(EXEC)redirection.c \
+			$(EXEC)and_if.c \
+			$(EXEC)node.c \
+			$(EXEC)exec.c \
+			$(EXEC)cmd.c \
 		   	builtin.c \
 			path.c \
 
