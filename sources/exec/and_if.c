@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/02 05:16:42 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:08:20 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,11 @@
 #include "../../includes/exec.h"
 #include "../../includes/ext_node_fun.h"
 
-int		node_and_if(t_astree *astree, char **env)
+int		node_and_if(t_astree *astree, char **env, int last_exec)
 {
-	ft_putendl("in and_if");
+	(void)last_exec;
 	if (astree->left->type == NT_CMD)
-	{
-		exec_cmd(astree->left, env);
-		ft_putstr("yo");
-		return (1);
-	}
+		return (fork_and_exec(astree->left, env) ? 1 : 0);
 	else
-	{
-		ft_putendl("not last node");
-		if (exec_cmd(astree->left->right, env))
-			return (1);
-		else
-		{
-			ft_putstr(astree->left->right->arg[0]->data);
-			ft_putendl(" failed to execute, exit");
-			return (0);
-		}
-	}
+		return (fork_and_exec(astree->left->right, env) ? 1 : 0);
 }

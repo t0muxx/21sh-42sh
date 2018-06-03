@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/02 04:18:06 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:09:35 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../includes/exec.h"
 #include "../../includes/ext_node_fun.h"
 
-int		node_and(t_astree *astree, char **env)
+int		node_and(t_astree *astree, char **env, int last_exec)
 {
 	return (0);
 }
