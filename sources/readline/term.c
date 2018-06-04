@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/25 13:21:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/01 20:45:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_term_cap	*term_init(char **env)
 	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSADRAIN, &term);
 	termcap = term_init_cap();
+	free(term_name);
 	return (termcap);
 }
 
@@ -87,4 +88,5 @@ void		term_close(void)
 	tcgetattr(0, &term);
 	term.c_lflag = (ICANON | ECHO);
 	tcsetattr(0, TCSADRAIN, &term);
+	free(term_name);
 }

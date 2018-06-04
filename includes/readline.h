@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/25 13:21:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/02 15:47:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include "error.h"
-# include "utils.h"
 # include <term.h>
 
 # define BUFFER_SIZE 2048
