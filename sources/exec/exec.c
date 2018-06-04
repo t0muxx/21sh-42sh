@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 14:09:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/04 18:03:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,12 @@ int		child_process(t_astree *astree, char **env)
 	int		status;
 	int		i;
 	int		last_exec;
+	t_exec exec;
 
+	exec.stdinput = -1;
+	exec.stdoutput = -1;
+	exec.stderror = -1;
+	exec.executed = 0;
 	i = 0;
 	last_exec = 0;
 	if ((pid = fork()) == -1)
@@ -74,11 +79,11 @@ int		child_process(t_astree *astree, char **env)
 			exec_cmd(astree, env);
 		else
 		{
-			last_exec = exec_node(astree, env);
+			last_exec = exec_node(astree, env, &exec);
 			while (node_fun[i].type)
 			{
 				if (node_fun[i].type == astree->type)
-					node_fun[i].fun(astree->right, env, last_exec);
+					node_fun[i].fun(astree->right, env, last_exec, &exec);
 				i++;
 			}
 		}

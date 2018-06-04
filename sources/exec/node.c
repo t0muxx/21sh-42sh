@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/03 21:10:38 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/04 19:35:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,25 @@ int		node_ret(t_astree *astree)
 		return (1);
 }
 
-int				exec_node(t_astree *astree, char **env)
+int				exec_node(t_astree *astree, char **env, t_exec *exec)
 {
 	int		i;
 	int		last_exec;
 
 	i = 0;
 	last_exec = 1;
+	ft_printf("?????????\n");
 	if (astree->left->type != NT_CMD)
 	{
-		last_exec = exec_node(astree->left, env);
+		exec->parent = astree->right->type;
+		last_exec = exec_node(astree->left, env, exec);
 	}
-	while (node_fun[i].type)
+	// while (node_fun[i].type) ne parcourt pas...
+	while (i < 1)
 	{
+		ft_printf("test\n");
 		if (node_fun[i].type == astree->type)
-			return (node_fun[i].fun(astree, env, last_exec));
+			return (node_fun[i].fun(astree, env, last_exec, exec));
 		i++;
 	}
 	return (0);

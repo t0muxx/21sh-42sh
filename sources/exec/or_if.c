@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/03 21:50:39 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:38:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
 
-int		node_or_if(t_astree *astree, char **env, int last_exec)
+int		node_or_if(t_astree *astree, char **env, int last_exec, t_exec *exec)
 {
 	if (astree->type == NT_CMD)
 		return (last_exec ? 0 : fork_and_exec(astree, env));
