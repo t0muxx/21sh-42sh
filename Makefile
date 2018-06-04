@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/02 04:15:44 by cormarti         ###   ########.fr        #
+#    Updated: 2018/06/04 14:10:40 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
 all: printmess $(NAME)
 
 $(NAME): $(OBJ)
-	@(cd libft ; make; make clean)
+	@+$(MAKE) -C libft/
 	@gcc $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a -ltermcap -o $(NAME)
 	@echo "\033[92m21sh created\033[0m"
 
@@ -126,6 +126,6 @@ fclean: clean
 re: fclean all
 
 printmess:
-	@echo "\033[92mCompilation de minishell...\033[0m"
+	@echo "\033[92mCompilation de 21sh...\033[0m"
 
 .PHONY: all clean fclean re
