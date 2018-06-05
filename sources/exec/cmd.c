@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 19:35:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/05 11:12:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ char	**lst_arr(t_tkn **tkn, char **env)
 	while (tkn[i] && tkn[i]->data)
 	{
 		if (i == 0)
-		{
 			args[i] = path_find_in_path(tkn[i]->data, env);
-			ft_printf("args[i] = |%s|\n", args[i]);
-		}
 		else
 		{
 			if (!ft_strcmp(tkn[i]->data, "\n"))

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 18:27:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/05 12:00:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_exec
 	int stdoutput;
 	int stderror;
 	int executed;
+	int	nodenbr;
+	int nodeact;
 	t_nodetype parent;
 
 }				t_exec;

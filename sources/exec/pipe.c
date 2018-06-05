@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 19:35:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:45:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,61 +21,21 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 	int	pipefd[2];
 	int	pipefd2[2];
 	pid_t pid;
+	pid_t pid2;
 	char	**cmd;
 
-	ft_printf("Pipe detected\n");
-	if (pipe(pipefd) == -1)
+/*	if (exec->parent == -9999)
 	{
-		ft_printf("error during pipe\n");
-		return (-1);
-	}
-	if (astree->left->type == NT_CMD)
-	{
-		cmd = lst_arr(astree->left->arg, env);
-		dup2(pipefd[1], STDOUT_FILENO);
-		if ((pid = fork()) == -1)
-		{
-			ft_printf("Error during fork\n");
-			return (-1);
-		}
-		if (pid == 0)
-		{
-			//close(pipefd[0]);
-			ft_printf("executing cmd |%s|\n", cmd[0]);
-			execve(cmd[0], cmd, env);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			wait(NULL);
-			if (exec->parent == NT_PIPE)
-			{
-				if (pipe(pipefd2) == -1)
-				{
-					ft_printf("error during pipe\n");
-					return (-1);
-				}
-				ft_printf("Parent node == PIPE\n");
-				dup2(pipefd2[1], 0);
-				exec->stdinput = pipefd[0];
-			}
-			utils_free_2darray((void **)cmd);
-			dup2(pipefd[0], STDIN_FILENO);
-			cmd = lst_arr(astree->right->arg, env);
-			ft_printf("executing cmd |%s|\n", cmd[0]);
-			execve(cmd[0], cmd, env);
-			return (0);
-		}
+		cmd = lst_arr(astree->right->arg, env);
+		ft_printf("last node cmd = |%s|\n", cmd[0]);
 	}
 	else
-	{
-		if (exec->stdinput != -1)
-		{
-			dup2(exec->stdinput, 1);
-			utils_free_2darray((void **)cmd);
-			cmd = lst_arr(astree->right->arg, env);
-			execve(cmd[0], cmd, env);
-		}
-	}
+	{*/
+		cmd = lst_arr(astree->left->arg, env);
+		ft_printf("node cmd = |%s|\n", cmd[0]);
+		cmd = lst_arr(astree->right->arg, env);
+		ft_printf("node cmd = |%s|\n", cmd[0]);
+		exit(EXIT_SUCCESS);
+	//}
 	return (0);
 }
