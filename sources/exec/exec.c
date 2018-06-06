@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/05 15:44:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/06 14:59:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,12 @@ int		child_process(t_astree *astree, char **env)
 	int		i;
 	int		last_exec;
 	t_exec exec;
-	t_astree *cpy;
+	//t_astree *cpy;
 
-	exec.stdinput = -1;
-	exec.stdoutput = -1;
-	exec.stderror = -1;
-	exec.executed = 0;
-	exec.nodenbr = 0;
-	exec.nodeact = 0;
 	i = 0;
 	last_exec = 0;
 
-	cpy = astree;
-	while (cpy != NULL)
-	{
-		exec.nodenbr++;
-		cpy = cpy->left;
-	}
 //	ft_printf("node nbr = %d\n", exec.nodenbr);
-	exec.nodeact = exec.nodenbr;
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
@@ -91,6 +78,7 @@ int		child_process(t_astree *astree, char **env)
 			exec_cmd(astree, env);
 		else
 		{
+			astree->is_root_node = 1;
 			last_exec = exec_node(astree, env, &exec);
 			char **cmd = lst_arr(astree->arg, env);
 			printf("here = |%s|\n", cmd[0]);
