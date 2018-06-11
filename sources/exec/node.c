@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/06 12:45:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/11 16:44:52 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 			return (node_fun[i].fun(astree, env, last_exec, exec));
 		i++;
 	}
+	exit(1);
 	return (0);
 }
