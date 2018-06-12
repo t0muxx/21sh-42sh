@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/11 16:41:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:38:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../includes/exec.h"
 #include "../../includes/ext_node_fun.h"
 #include "utils.h"
+#include <fcntl.h>
 
 int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 {
@@ -88,6 +89,10 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 			dprintf(2, "Il ya un pipe avant\n");
 			printf("pipefd[0] = %d\n", exec->oldfds[0]);
 			printf("pipefd[1] = %d\n", exec->oldfds[1]);
+			if (fcntl(exec->oldfds[0], F_GETFD) == -1)
+			{
+				perror("fcntl");
+			}
 			dup2(exec->oldfds[0], 0);
 			close(exec->oldfds[0]);
 			close(exec->oldfds[1]);
@@ -101,31 +106,12 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 		}
 		cmd = lst_arr(astree->right->arg, env);
 		dprintf(2, "Executing cmd = |%s|\n", cmd[0]);
-		if (astree->left->type == NT_PIPE)
-		{
-			int i = 0;
-			char c = 0;
-				close(exec->oldfds[1]);
-				close(newfds[1]);
-			while (i < 50)
-			{
-				printf("i");
-				read(exec->oldfds[0], &c, 1);
-				printf("%c", c);
-				i++;
-			}
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
 		if (execve(cmd[0], cmd, env) == -1)
 		{
 			dprintf(2, "ERROR : Executing cmd = |%s|\n", cmd[0]);
 			perror("execve");
 			exit(EXIT_FAILURE);
 		}
-		}
-		utils_free_2darray((void **)cmd);
 	}
 	else
 	{
@@ -139,7 +125,7 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 			printf("pipefd[1] = %d\n", exec->oldfds[1]);
 		}
 	}
-//	close(exec->oldfds[0]);
-//	close(exec->oldfds[1]);
+	close(exec->oldfds[0]);
+	close(exec->oldfds[1]);
 	return (0);
 }
