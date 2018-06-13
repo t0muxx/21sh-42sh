@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/04 14:10:40 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/06/13 14:08:55 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,8 +91,10 @@ SRCS = 		$(READLINE)readline.c \
 			$(PARSER)separator.c \
 			$(PARSER)parser.c \
 			$(PARSER)astree.c \
+			$(EXEC)dless_redir.c \
 			$(EXEC)redirection.c \
 			$(EXEC)and_if.c \
+			$(EXEC)or_if.c \
 			$(EXEC)node.c \
 			$(EXEC)exec.c \
 			$(EXEC)cmd.c \
