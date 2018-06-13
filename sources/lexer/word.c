@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/01 20:25:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/13 16:57:22 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_tkn		*tkn_word(char **str)
 	tkn->data = esc_strncpy(tkn->data, line, len);
 	line += i;
 	*str = line;
-	if (*str[0] == CHR_GREAT && strdigit(tkn->data))
+	if (*str[0] && *str[0] == CHR_GREAT && strdigit(tkn->data))
 		tkn->type = CHR_IO_NUMBER;
 	else if (ft_strchr(tkn->data, '='))
 		tkn->type = CHR_ASSIGNMENT_WORD;
