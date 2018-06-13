@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 16:36:12 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/13 18:09:28 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	dless_redir(t_tkn *tkn)
 		nb++;
 	line = NULL;
 	filename = ft_strjoin("/tmp/heredoc", ft_itoa(nb));
+//	term_close();
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 		ft_putendl("fail to open here");
-	term_close();
 	while (1)
 	{
 		ft_putstr("> ");
