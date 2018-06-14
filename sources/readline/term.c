@@ -6,13 +6,15 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/25 13:21:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/14 15:34:43 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include <termcap.h>
 #include <term.h>
+
+struct termios term;
 
 void		term_get_colnbr(t_buffer *tbuffer)
 {
@@ -58,7 +60,6 @@ t_term_cap	*term_init_cap(void)
 t_term_cap	*term_init(char **env)
 {
 	t_term_cap		*termcap;
-	struct termios	term;
 	char			*term_name;
 
 	termcap = NULL;
@@ -76,15 +77,9 @@ t_term_cap	*term_init(char **env)
 	return (termcap);
 }
 
-void		term_close(void)
+void		term_close(char **env)
 {
-	struct termios	term;
-	char			*term_name;
-	extern char		**environ;
-
-	term_name = env_get_var("TERM", environ);
-	tgetent(NULL, term_name);
 	tcgetattr(0, &term);
 	term.c_lflag = (ICANON | ECHO);
-	tcsetattr(0, TCSADRAIN, &term);
+	tcsetattr(0, TCSANOW, &term);
 }

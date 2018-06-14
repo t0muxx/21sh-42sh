@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 15:05:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/14 15:26:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,137 +55,62 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 	int status;
 
 	dprintf(2, "############# APPEL NODE PIPE ###########\n");
-	if (astree->is_root_node != 1 || astree->left->type != NT_PIPE)
+	if (astree->left->type == NT_CMD)
 	{
-		ft_printf("not a root node\n");
-		if (pipe(newfds) != 0)
+		if (pipe(newfds) == -1)
 		{
-			ft_printf("Error during pipe\n");
+			perror("pipe");
 			return (-1);
 		}
-		dprintf(2, "newfds : \n");
-		fd_status(newfds);
-	}
-	if (astree->left->left == NULL && astree->left->type == NT_CMD)
-	{
-		dprintf(2, "############# APPEL POUR ASTREE->LEFT ###########\n");
-	//	fd_status(newfds);
 		if ((pid = fork()) == -1)
 		{
-			ft_printf("Error during fork\n");
+			perror("fork");
 			return (-1);
 		}
 		else if (pid == 0)
 		{
-			dprintf(2, "#### CHILD FOR ASTREE->LEFT ####\n");
-			if (astree->right->type == NT_CMD)
-			{
-				dprintf(2, "On a un pipe qui suit\n");
-				dprintf(2, "On link newfds[1] a stdout et on close le reste\n");
-				close(newfds[0]);
-				dup2(newfds[1], STDOUT_FILENO);
-				close(newfds[1]);
-				fd_status(newfds);
-			}
+			close(newfds[0]);
+			dup2(newfds[1], 1);
+			close(newfds[1]);
 			cmd = lst_arr(astree->left->arg, env);
-			dprintf(2, "Executing cmd = |%s|\n", cmd[0]);
-			if ((execve(cmd[0], cmd, env)) == -1)
-			{
-				dprintf(2, "ERROR : Executing cmd = |%s|\n", cmd[0]);
-				perror("execve");
-			}
-			dprintf(2, "#### END CHILD ASTREE->LEFT ####\n");
-			utils_free_2darray((void **)cmd);
+			dprintf(2, "executing |%s|\n", cmd[0]);
+			execve(cmd[0], cmd, env);
 		}
 		else
 		{
-			dprintf(2, "Parent in astree->left\n");
-			//waitpid(pid, &status, 0);
-			if (astree->right->type == NT_CMD)
-			{
-				dprintf(2, "pipe following\n");
-				dprintf(2, "exec->oldfds = newfds\n");
-				fd_status(newfds);
-				exec->oldfds[0] = newfds[0];
-				exec->oldfds[1] = newfds[1];
-			//	printf("pipefd[0] = %d\n", exec->oldfds[0]);
-			//	printf("pipefd[1] = %d\n", exec->oldfds[1]);
-			}
+			/* on a forcement une commande qui suit */
+			close(newfds[1]);
+			exec->oldfds[0] = newfds[0];
+			exec->oldfds[1] = newfds[1];
 		}
 	}
-	dprintf(2, "############# APPEL POUR ASTREE->RIGHT ###########\n");
-	pipe(newfds);
-	dprintf(2, "creation du newfds\n");
-	fd_status(newfds);
-	dprintf(2, "oldfds : \n");
-	fd_status(exec->oldfds);
-	//printf("newfdspipe[0] astree->right = %d\n", newfds[0]);
-	//printf("newfdspipe[1] astree->right = %d\n", newfds[1]);
-	close(exec->oldfds[1]);
+	if (pipe(newfds) == -1)
+	{
+		perror("pipe");
+		return (-1);
+	}
 	if ((pid2 = fork()) == -1)
 	{
-		ft_printf("Error during fork\n");
+		perror("pipe");
 		return (-1);
 	}
 	else if (pid2 == 0)
 	{
-		dprintf(2, "#### CHILD FOR ASTREE->RIGHT ####\n");
-		if (astree->left->type == NT_CMD || astree->left->type == NT_PIPE)
-		{
-			dprintf(2, "Il ya un pipe avant\n");
-			fd_status(exec->oldfds);
-			dprintf(2, "On link oldfds[0] a stdin et on close le reste\n");
-			//printf("pipefd[0] = %d\n", exec->oldfds[0]);
-			//printf("pipefd[1] = %d\n", exec->oldfds[1]);
-			close(exec->oldfds[1]);
-			dup2(exec->oldfds[0], 0);
-			close(exec->oldfds[0]);
-			fd_status(exec->oldfds);
-		}
-		if (astree->is_root_node == 0)
-		{
-			dprintf(2, "Not Root node !\nOn pipe stdout dans newfds[1]\n");
-			close(newfds[0]);
-			dup2(newfds[1], 1);
-			close(newfds[1]);
-			//fd_status(newfds);
-		}
+		/*on a une commande qui precede*/
+		/*exec->oldfds[1] a deja ete clos */
+		dup2(exec->oldfds[0], 0);
+		close(exec->oldfds[0]);
 		cmd = lst_arr(astree->right->arg, env);
-		dprintf(2, "Executing cmd = |%s|\n", cmd[0]);
-		if (execve(cmd[0], cmd, env) == -1)
-		{
-			dprintf(2, "ERROR : Executing cmd = |%s|\n", cmd[0]);
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
-		dprintf(2, "#### END CHILD ASTREE->LEFT ####\n");
+		dprintf(2, "executing |%s|\n", cmd[0]);
+		execve(cmd[0], cmd, env);
 	}
 	else
 	{
-		dprintf(2, "Parent astree->right\n");
+		close(newfds[0]);
+		close(newfds[1]);
+		//wait(NULL);
 		close(exec->oldfds[0]);
-		close(exec->oldfds[1]);
-		fd_status(exec->oldfds);
-		if (astree->is_root_node == 0)
-		{
-			//fd_status(exec->oldfds);
-			dprintf(2, "Il reste des pipes\n");
-			//printf("pipefd[0] = %d\n", exec->oldfds[0]);
-			//printf("pipefd[1] = %d\n", exec->oldfds[1]);
-			//fd_status(exec->oldfds);
-			exec->oldfds[0] = newfds[0];
-			exec->oldfds[1] = newfds[1];
-			//printf("pipefd[0] = %d\n", exec->oldfds[0]);
-			//printf("pipefd[1] = %d\n", exec->oldfds[1]);
-		}
-		else
-		{
-			//waitpid(pid2, &status, 0);
-			wait(NULL);
-			dprintf(2, "on close oldfds\n");
-		}
+		waitpid(pid2, &status, 0);
 	}
-//	close(exec->oldfds[0]);
-//	close(exec->oldfds[1]);
 	return (0);
 }
