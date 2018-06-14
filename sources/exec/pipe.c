@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/14 15:26:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/14 15:50:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 		close(newfds[0]);
 		close(newfds[1]);
 		//wait(NULL);
-		close(exec->oldfds[0]);
+		//close(exec->oldfds[0]);
+		//close(exec->oldfds[1]);
 		waitpid(pid2, &status, 0);
 	}
 	return (0);
