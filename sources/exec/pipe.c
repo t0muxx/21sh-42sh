@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 11:31:25 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/18 15:32:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 			perror("pipe");
 			return (-1);
 		}
+		if ((cmd = lst_arr(astree->left->arg, env)) == NULL)
+			close(newfds[1]);
 		if ((pid = fork()) == -1)
 		{
 			perror("fork");
@@ -74,7 +76,6 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 			close(newfds[0]);
 			dup2(newfds[1], 1);
 			close(newfds[1]);
-			cmd = lst_arr(astree->left->arg, env);
 			dprintf(2, "executing |%s|\n", cmd[0]);
 			execve(cmd[0], cmd, env);
 		}
@@ -90,6 +91,24 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 	{
 		perror("pipe");
 		return (-1);
+	}
+	if ((cmd = lst_arr(astree->right->arg, env)) == NULL)
+	{
+		if (astree->is_root_node == 1)
+		{
+			close(newfds[0]);
+			close(newfds[1]);
+			close(exec->oldfds[0]);
+			close(exec->oldfds[1]);
+			return (-1);
+		}
+		else
+		{
+			close(newfds[1]);
+			exec->oldfds[0] = newfds[0];
+			exec->oldfds[1] = newfds[1];
+			return (-1);	
+		}
 	}
 	if ((pid2 = fork()) == -1)
 	{
@@ -108,7 +127,6 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 			dup2(newfds[1], 1);
 			close(newfds[1]);
 		}
-		cmd = lst_arr(astree->right->arg, env);
 		dprintf(2, "executing |%s|\n", cmd[0]);
 		execve(cmd[0], cmd, env);
 	}
