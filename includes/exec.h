@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 12:00:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 13:33:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct	s_node_type
 
 extern t_node_type	node_fun[]; 
 
+int		is_redir(t_tkn_type type);
 int		node_ret(t_astree *astree);
 int		exit_status(int status);
 int		fork_and_exec(t_astree *astree, char **env);
@@ -32,8 +33,10 @@ int		node_and(t_astree *astree, char **env, int last_exec);
 int		node_pipe(t_astree *astree, char **env, int last_exec);
 int		node_semi(t_astree *astree, char **env, int last_exec);
 int		node_and_if(t_astree *astree, char **env, int last_exec);
-int		is_redirected(t_tkn **tkn);
+void	redirect_cmd(t_tkn **tkn);
+void	dless_redir(t_tkn *tkn);
 int		exec_cmd(t_astree *astree, char **env);
+void	greatand_redir(t_tkn *tkn);
 int		tkn_arr_len(t_tkn **tkn);
 char	**lst_arr(t_tkn **tkn);
 int		exec_node(t_astree *astree, char **env);
