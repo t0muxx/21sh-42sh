@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:05:20 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 19:40:54 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 13:32:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
 
-static void	less_and_redir(t_tkn *tkn)
+/*void	less_and_redir(t_tkn *tkn)
 {
 	int		fd;
 	int		from;
@@ -44,21 +44,23 @@ static void	less_and_redir(t_tkn *tkn)
 	else
 		ft_putendl("ERROR");
 	close(fd);
-}
+}*/
 	
-static void	great_and_redir(t_tkn *tkn)
+void	greatand_redir(t_tkn *tkn)
 {
 	int		fd;
-	int		from;
+	int		word;
 
+	word = 0;
+	fd = STDOUT_FILENO;
+		ft_putendl("is digit");
 	if (strdigit(tkn->next->data))
 	{
-		fd = ft_atoi(tkn->next->data);
+		ft_putendl("is digit");
+		word = ft_atoi(tkn->next->data);
 		if (tkn->prev->type == CHR_IO_NUMBER)
-			from = ft_atoi(tkn->prev->data);
-		else
-			from = STDOUT_FILENO;
-		if (dup2(fd, from) == -1)
+			fd = ft_atoi(tkn->prev->data);
+		if (dup2(fd, word) == -1)
 		{
 			ft_putstr("-bash: ");
 			ft_putnbr(fd);
@@ -69,8 +71,6 @@ static void	great_and_redir(t_tkn *tkn)
 	{
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
-		else
-			fd = STDOUT_FILENO;
 		close (fd);
 	}
 	else
