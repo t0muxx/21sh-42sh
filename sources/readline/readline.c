@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/14 15:35:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 18:32:21 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ int		main(void)
 		{
 			while (tkn->next)
 				tkn = tkn->next;
+			tkn = tkn->prev; // dont forget to free last node
+			tkn->next = NULL;
 			astree = ast_build(tkn);
 		//	ast_debug(astree);
 			term_close();
 			child_process(astree, env);
 			tbuffer_init(&tbuffer, env);
 		}
-
-
 	}
 }

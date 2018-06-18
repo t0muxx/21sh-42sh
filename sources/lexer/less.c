@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 23:21:08 by cormarti          #+#    #+#             */
-/*   Updated: 2018/05/15 18:04:00 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 17:19:52 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static t_tkn	*tkn_is_dless(char **str)
 	t_tkn	*tkn;
 	char	*line;
 
-	ft_putendl("in dless");
 	line = *str;
 	tkn = tkn_init(2);
 	tkn->type = CHR_DLESS;
@@ -75,7 +74,6 @@ t_tkn			*tkn_less(char **str)
 	char	*line;
 
 	line = *str;
-	ft_putendl("in less");
 	if (*(line + 1) == '<')
 	{
 		if (*(line + 2) == '-')

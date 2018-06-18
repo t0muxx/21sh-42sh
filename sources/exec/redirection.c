@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 15:08:16 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 18:32:16 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	redirect_cmd(t_tkn **tkn)
 	int		i;
 
 	i = 0;
-	while (tkn[i])
+	while (tkn[i] != NULL)
 	{
 		if (tkn[i]->type == CHR_LESS)
 			less_redir(tkn[i++]);
@@ -91,6 +91,8 @@ void	redirect_cmd(t_tkn **tkn)
 			dgreat_redir(tkn[i++]);
 		else if (tkn[i]->type == CHR_DLESS)
 			dless_redir(tkn[i++]);
+		if (!tkn[i])
+			break ;
 		i++;
 	}
 }
