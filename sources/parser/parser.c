@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/02 04:13:53 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/13 16:48:53 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int				parse(t_tkn *tkn)
 		{
 			if (!valid_tkn_type(tkn))
 			{
+				ft_putnbr(tkn->type);
 				ft_putstr("Syntax error : unexpected token ");
 				ft_putendl(tkn->next->data);
 				return (0);

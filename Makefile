@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/18 12:04:22 by cormarti         ###   ########.fr        #
+#    Updated: 2018/06/18 15:17:46 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(LEXER)great.c \
 			$(LEXER)hashtag.c \
 			$(LEXER)less.c \
+			$(LEXER)dash.c \
 			$(LEXER)lexer.c \
 			$(LEXER)list.c \
 			$(LEXER)pipe.c \

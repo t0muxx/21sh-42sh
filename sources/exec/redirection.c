@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 13:32:13 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 15:08:16 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ static void	great_redir(t_tkn *tkn)
 	int		fd;
 	int		from;
 
-	if (tkn->type == CHR_GREATAND)
-		fd = tkn->next->type == CHR_DASH ? -1 : ft_atoi(tkn->next->data);
-	else if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_TRUNC, 
+	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_TRUNC, 
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
 		ft_putstr("fail to open ");
@@ -41,14 +39,8 @@ static void	great_redir(t_tkn *tkn)
 	}
 	from = (tkn->prev->type == CHR_IO_NUMBER) ? 
 		ft_atoi(tkn->prev->data) : STDOUT_FILENO;
-	if (fd == -1)
-		close(from);
-	else if (dup2(fd, from) == -1)
-	{
-		ft_putstr("-bash: ");
-		ft_putnbr(fd);
-		ft_putendl(": Bad file descriptor");
-	}
+	if (dup2(fd, from) == -1)
+		ft_putendl("fail to dup2");
 	close(fd);
 }
 

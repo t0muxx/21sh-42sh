@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 13:46:56 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 16:37:10 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,20 @@ void	dless_redir(t_tkn *tkn)
 	char	*filename;
 
 	if (!nb)
-		nb = 0;
+		nb = 1;
 	else
 		nb++;
 	line = NULL;
 	filename = ft_strjoin("/tmp/heredoc", ft_itoa(nb));
-//	term_close();
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 		ft_putendl("fail to open here");
 	while (1)
 	{
-		ft_putstr("> ");
+		ft_putstr("2> ");
 		if (get_next_line(0, &line) == 1 && line && line[0] != '\0')
 		{
-			if (ft_strcmp(line, tkn->data) == 0)
+			if (ft_strcmp(line, tkn->next->data) == 0)
 				break ;
 			else
 			{

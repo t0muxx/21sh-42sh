@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/02 01:16:41 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 15:18:16 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,12 @@ t_tkn	*tkn_less(char **str);
 t_tkn	*tkn_great(char **str);
 t_tkn	*tkn_eol(char **str);
 t_tkn	*tkn_word(char **str);
+int		strdigit(char *str);
 void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
 t_tkn	*lex(char **str);
 t_tkn	*tkn_newline(char **str);
 t_tkn	*tkn_init_nl(void);
+t_tkn	*tkn_dash(char **str);
 
 #endif

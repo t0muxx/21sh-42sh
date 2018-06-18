@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:05:20 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 13:32:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 16:06:54 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ void	greatand_redir(t_tkn *tkn)
 
 	word = 0;
 	fd = STDOUT_FILENO;
-		ft_putendl("is digit");
 	if (strdigit(tkn->next->data))
 	{
-		ft_putendl("is digit");
 		word = ft_atoi(tkn->next->data);
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
@@ -66,6 +64,7 @@ void	greatand_redir(t_tkn *tkn)
 			ft_putnbr(fd);
 			ft_putendl(": Bad file descriptor");
 		}
+		//close(fd);
 	}
 	else if (tkn->next->type == CHR_DASH)
 	{
@@ -75,5 +74,4 @@ void	greatand_redir(t_tkn *tkn)
 	}
 	else
 		ft_putendl("ERROR");
-	close(fd);
 }
