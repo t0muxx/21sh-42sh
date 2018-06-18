@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 13:58:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/05 11:12:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		tkn_arr_len(t_tkn **tkn)
 	return (i);
 }
 
-char	**lst_arr(t_tkn **tkn)
+char	**lst_arr(t_tkn **tkn, char **env)
 {
 	char	**args;
 	int		i;
@@ -37,11 +37,15 @@ char	**lst_arr(t_tkn **tkn)
 	i = 0;
 	while (tkn[i] && tkn[i]->data)
 	{
-		if (!ft_strcmp(tkn[i]->data, "\n"))
-			args[i] = 0;
+		if (i == 0)
+			args[i] = path_find_in_path(tkn[i]->data, env);
 		else
-			args[i] = strdup(tkn[i]->data);
-
+		{
+			if (!ft_strcmp(tkn[i]->data, "\n"))
+				args[i] = 0;
+			else
+				args[i] = strdup(tkn[i]->data);
+		}
 		i++;
 	}
 	return (args);
@@ -61,7 +65,7 @@ int		exec_cmd(t_astree *astree, char **env)
 		//	redirect_cmd(astree->arg);
 	}
 	ft_putendl("copy tkn data to str array");
-	args = lst_arr(astree->arg);
+	args = lst_arr(astree->arg, env);
 	tmp = args[0];
 	args[0] = path_find_in_path(args[0], env);
 	free(tmp);
