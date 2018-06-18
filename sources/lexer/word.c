@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 16:57:22 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/13 19:04:11 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_word_type(int c)
 	return (1);
 }
 
-static int	strdigit(char *str)
+int		strdigit(char *str)
 {
 	int		i;
 
@@ -67,6 +67,18 @@ static int	strdigit(char *str)
 		i++;
 	}
 	return (1);
+}
+
+static int	is_redir_chr(char *str)
+{
+	if (str[0] == '>'
+		|| str[0] == CHR_LESS
+		|| str[0] == CHR_DLESS
+		|| str[0] == CHR_DGREAT
+		|| str[0] == CHR_GREATAND
+		|| str[0] == CHR_LESSAND)
+		return (1);
+	return (0);
 }
 
 t_tkn		*tkn_word(char **str)
@@ -93,7 +105,7 @@ t_tkn		*tkn_word(char **str)
 	tkn->data = esc_strncpy(tkn->data, line, len);
 	line += i;
 	*str = line;
-	if (*str[0] && *str[0] == CHR_GREAT && strdigit(tkn->data))
+	if (is_redir_chr(*str) && strdigit(tkn->data))
 		tkn->type = CHR_IO_NUMBER;
 	else if (ft_strchr(tkn->data, '='))
 		tkn->type = CHR_ASSIGNMENT_WORD;
