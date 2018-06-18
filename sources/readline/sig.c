@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 12:00:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 13:39:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sig_handler(int sigid, siginfo_t *siginfo, void *context)
 	{
 		cursor_move_right(&g_tbuffer2, (int)ft_strlen(g_tbuffer2.buffer));
 		ft_putstr("\n");
-		tbuffer_init(&g_tbuffer2, env_create_copy());
+	//	tbuffer_init(&g_tbuffer2, env_create_copy());
 		prompt_print(&g_tbuffer2);
 	}
 	if (sigid == SIGWINCH)
