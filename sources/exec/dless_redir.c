@@ -6,14 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 18:09:28 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/18 13:46:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/astree.h"
-#include "../../includes/exec.h"
-#include "../../includes/get_next_line.h"
+#include "lexer.h"
+#include "astree.h"
+#include "exec.h"
+#include "get_next_line.h"
 #include <fcntl.h>
 
 void	dless_redir(t_tkn *tkn)
