@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/14 15:34:43 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 11:32:45 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ t_term_cap	*term_init(char **env)
 void		term_close(char **env)
 {
 	tcgetattr(0, &term);
-	term.c_lflag = (ICANON | ECHO);
-	tcsetattr(0, TCSANOW, &term);
+	term.c_lflag |= (ICANON | ECHO | ECHOCTL | ISIG);
+	tcsetattr(0, 0, &term);
 }

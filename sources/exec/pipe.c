@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/14 15:50:06 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 11:31:25 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../../includes/ext_node_fun.h"
 #include "utils.h"
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	fd_status(int pipefd[2])
 {
@@ -100,18 +102,33 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 		/*exec->oldfds[1] a deja ete clos */
 		dup2(exec->oldfds[0], 0);
 		close(exec->oldfds[0]);
+		if (astree->is_root_node == 0)
+		{
+			close(newfds[0]);
+			dup2(newfds[1], 1);
+			close(newfds[1]);
+		}
 		cmd = lst_arr(astree->right->arg, env);
 		dprintf(2, "executing |%s|\n", cmd[0]);
 		execve(cmd[0], cmd, env);
 	}
 	else
 	{
-		close(newfds[0]);
-		close(newfds[1]);
-		//wait(NULL);
-		//close(exec->oldfds[0]);
-		//close(exec->oldfds[1]);
-		waitpid(pid2, &status, 0);
+		if (astree->is_root_node == 0)
+		{
+			close(newfds[1]);
+			exec->oldfds[0] = newfds[0];
+			exec->oldfds[1] = newfds[1];
+			
+		}
+		else
+		{
+			close(newfds[0]);
+			close(newfds[1]);
+			waitpid(pid2, &status, 0);
+			close(exec->oldfds[0]);
+			close(exec->oldfds[1]);
+		}
 	}
 	return (0);
 }
