@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/01 02:28:26 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/06 14:04:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct	s_astree
 	t_tkn		**arg;
 	t_astree	*left;
 	t_astree	*right;
+	int			is_root_node;
 };
 
 void		ast_debug(t_astree *astree);

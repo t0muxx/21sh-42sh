@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/02 15:47:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 14:11:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,5 @@ t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);
 t_term_cap		*term_init(char **env);
 void			term_close();
-
+int		ft_putcc(int c);
 #endif
