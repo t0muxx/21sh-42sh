@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 14:47:47 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/19 14:49:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	**lst_arr(t_tkn **tkn, char **env)
 		{
 			if ((args[i] = path_find_in_path(tkn[i]->data, env)) == NULL)
 			{
-				error_print(CMDNOTFOUND, tkn[0]->data, "");
-				utils_free_2darray((void **)args);
-			   	return (NULL);	
+				args[i] = ft_strdup(tkn[i]->data);
+				args[i + 1] = 0;
+			   	return (args);	
 			}
 		}
 		else
@@ -73,11 +73,12 @@ int		exec_cmd(t_astree *astree, char **env)
 		return (0);	
 		//	redirect_cmd(astree->arg);
 	}
-	ft_putendl("copy tkn data to str array");
-	if ((args = lst_arr(astree->arg, env)) == NULL)
-		return (-1);
-	ft_putstr("execute cmd: ");
-	ft_putendl(args[0]);
+//	ft_putendl("copy tkn data to str array");
+	args = lst_arr(astree->arg, env);
+//	ft_putstr("execute cmd: ");
+//	ft_putendl(args[0]);
 	execve(args[0], args, env);
+	error_print(CMDNOTFOUND, args[0], "");
+	exit(EXIT_FAILURE);
 	return (1);
 }

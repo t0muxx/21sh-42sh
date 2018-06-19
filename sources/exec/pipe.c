@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/19 10:57:00 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/19 16:28:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,45 @@ void	fd_status(int pipefd[2])
 
 }
 
-int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
+int		dup2_routine(int fd_dup, int io, int fd_close)
 {
-	int	newfds[2];
+	close(fd_close);
+	if (dup2(fd_dup, io) == -1)
+		ft_putendl_fd("dup2 : failed to dup\n", 2);
+	close(fd_dup);
+	return (0);
+}
+
+int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
+{
+	int newfds[2];
+	int status;
 	pid_t pid;
 	pid_t pid2;
-	char	**cmd;
-	int status;
+	int i;
 
-	dprintf(2, "############# APPEL NODE PIPE ###########\n");
-	if (astree->left->type == NT_CMD)
+	i = 0;
+	if (astree->left->type != NT_PIPE)
 	{
+		exec->nodenbr++;
 		if (pipe(newfds) == -1)
 		{
-			perror("pipe");
+			ft_putendl_fd("pipe : failed to pipe", 2);
 			return (-1);
 		}
 		if ((pid = fork()) == -1)
 		{
-			perror("fork");
+			ft_putendl_fd("fork : failed to fork", 2);
 			return (-1);
 		}
 		else if (pid == 0)
 		{
-			close(newfds[0]);
-			dup2(newfds[1], 1);
-			close(newfds[1]);
-			cmd = lst_arr(astree->left->arg, env);
-			dprintf(2, "executing |%s|\n", cmd[0]);
-			execve(cmd[0], cmd, env);
-			exit(EXIT_FAILURE);
+			exec->pids[exec->nodenbr] = getpid();
+			dup2_routine(newfds[1], 1, newfds[0]);
+			exec_cmd(astree->left, env);
 		}
 		else
 		{
-			/* on a forcement une commande qui suit */
 			close(newfds[1]);
 			exec->oldfds[0] = newfds[0];
 			exec->oldfds[1] = newfds[1];
@@ -89,49 +94,53 @@ int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
 	}
 	if (pipe(newfds) == -1)
 	{
-		perror("pipe");
+		ft_putendl_fd("pipe : failed to pipe", 2);
 		return (-1);
 	}
+	exec->nodenbr++;
 	if ((pid2 = fork()) == -1)
 	{
-		perror("pipe");
+		ft_putendl_fd("fork : failed to fork", 2);
 		return (-1);
 	}
 	else if (pid2 == 0)
 	{
-		/*on a une commande qui precede*/
-		/*exec->oldfds[1] a deja ete clos */
-		dup2(exec->oldfds[0], 0);
-		close(exec->oldfds[0]);
-		cmd = lst_arr(astree->right->arg, env);
+		exec->pids[exec->nodenbr] = getpid();
+		dup2_routine(exec->oldfds[0], 0, exec->oldfds[1]);
 		if (astree->is_root_node == 0)
-		{
-			close(newfds[0]);
-			dup2(newfds[1], 1);
-			close(newfds[1]);
-		}
-		dprintf(2, "executing |%s|\n", cmd[0]);
-		execve(cmd[0], cmd, env);
-		exit(EXIT_FAILURE);
+			dup2_routine(newfds[1], 1, newfds[0]);
+		exec_cmd(astree->right, env);
 	}
 	else
 	{
 		if (astree->is_root_node == 0)
 		{
 			close(newfds[1]);
-			exec->last_pid = pid2;
 			exec->oldfds[0] = newfds[0];
 			exec->oldfds[1] = newfds[1];
-			
 		}
 		else
 		{
 			close(newfds[0]);
 			close(newfds[1]);
 			waitpid(pid2, &status, 0);
+			if (WEXITSTATUS(status) == EXIT_FAILURE)
+			{
+				close(exec->oldfds[0]);
+				close(exec->oldfds[1]);
+				wait(NULL);
+			}
 			close(exec->oldfds[0]);
 			close(exec->oldfds[1]);
+				
 		}
 	}
+	
+	return (0);
+}
+
+int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
+{
+	pipe_routine(astree, env, exec);
 	return (0);
 }
