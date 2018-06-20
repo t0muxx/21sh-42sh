@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/11 16:45:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/20 14:58:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		child_process(t_astree *astree, char **env)
 	last_exec = 0;
 
 //	ft_printf("node nbr = %d\n", exec.nodenbr);
+	exec.process_pid = NULL;
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
@@ -80,14 +81,13 @@ int		child_process(t_astree *astree, char **env)
 		{
 			astree->is_root_node = 1;
 			last_exec = exec_node(astree, env, &exec);
-	/*		while (i < 1)
+			while (i < 1)
 			{
 				if (node_fun[i].type == astree->type)
 					node_fun[i].fun(astree->right, env, last_exec, &exec);
 				i++;
-			}*/
+			}
 		}
-		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{

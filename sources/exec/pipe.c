@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 10:44:03 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:01:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 {
 	int newfds[2];
 	int status;
+	int status2;
 	pid_t pid;
 	pid_t pid2;
-	int i;
-
-	i = 0;
+	t_process *new;
+	
 	if (astree->left->type != NT_PIPE)
 	{
 		if (pipe(newfds) == -1)
@@ -94,19 +94,21 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 		}
 		else if (pid == 0)
 		{
-			setpgid(0, exec->pgid);
-			dprintf(2, "Child left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+	//		dprintf(2, "Child left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
 			dup2_routine(newfds[1], 1, newfds[0]);
 			exec_cmd(astree->left, env);
 		}
 		else
 		{
 	//		setpgid(pid, exec->pgid);
-			dprintf(2, "Pere left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+	//		dprintf(2, "Pere left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+			new = t_process_new(pid);
+			t_process_add(&(exec->process_pid), new);
 			close(newfds[1]);
 			cpy_fd_routine(exec->oldfds, newfds);
 		}
 	}
+	//dprintf(2, "pid = %d|\n", exec->process_pid->pid);
 	if (pipe(newfds) == -1)
 	{
 		ft_putendl_fd("pipe : failed to pipe", 2);
@@ -119,8 +121,10 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 	}
 	else if (pid2 == 0)
 	{
-		setpgid(0, exec->pgid);
-		dprintf(2, "fils right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+	//	setpgid(0, exec->pgid);
+	//	dprintf(2, "fils right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		new = t_process_new(getpid());
+		t_process_add(&(exec->process_pid), new);	
 		dup2_routine(exec->oldfds[0], 0, exec->oldfds[1]);
 		if (astree->is_root_node == 0)
 			dup2_routine(newfds[1], 1, newfds[0]);
@@ -128,8 +132,9 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 	}
 	else
 	{
-	//	setpgid(pid, exec->pgid);
-		dprintf(2, "Pere right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+	//	dprintf(2, "Pere right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		new = t_process_new(pid2);
+		t_process_add(&(exec->process_pid), new);
 		if (astree->is_root_node == 0)
 		{
 			close(newfds[1]);
@@ -144,13 +149,20 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 				{
 					close(exec->oldfds[0]);
 					close(exec->oldfds[1]);
-					waitpid(-1, &status, WNOHANG);
+					while (exec->process_pid != NULL)
+					{
+				//		dprintf(2, "kill %d\n", exec->process_pid->pid);
+					//	waitpid(exec->process_pid->pid, &status2, 0);
+						kill(exec->process_pid, SIGTERM);
+						exec->process_pid = exec->process_pid->next;
+					}
+				//	dprintf(2, "fini de wait\n");
+					exit(EXIT_FAILURE);
 				}
 			}
 			close_routine(exec->oldfds);
 		}
 	}
-	
 	return (0);
 }
 

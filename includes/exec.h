@@ -6,21 +6,27 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 10:06:02 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/20 13:58:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-typedef struct s_node_type	t_node_type;
+#include "t_process.h"
+#include "parser.h"
+#include "lexer.h"
+#include "astree.h"
 
+typedef struct s_node_type	t_node_type;
 
 typedef struct s_exec
 {
 	int	oldfds[2];
 	t_nodetype parent;
 	pid_t	pgid;
+	t_process	*first_pid;
+	t_process	*process_pid;
 
 }				t_exec;
 
