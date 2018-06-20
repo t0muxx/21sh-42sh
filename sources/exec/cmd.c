@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 18:24:36 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/20 14:07:41 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int		tkn_arr_len(t_tkn **tkn)
 		if (is_redir(tkn[i]->type))
 			i++;
 		else if (ft_strcmp(tkn[i]->data, "\n") != 0
-			&& tkn[i]->type != CHR_IO_NUMBER)
+			&& tkn[i]->type != CHR_IO_NUMBER
+			&& tkn[i]->type != CHR_DQUOTE
+			&& tkn[i]->type != CHR_QUOTE)
 			len++;
 		i++;
 	}
@@ -50,7 +52,9 @@ char	**lst_arr(t_tkn **tkn)
 	{
 		if (is_redir(tkn[i]->type))
 			i++;
-		else if (tkn[i]->type != CHR_IO_NUMBER)
+		else if (tkn[i]->type != CHR_IO_NUMBER
+				&& tkn[i]->type != CHR_DQUOTE
+				&& tkn[i]->type != CHR_QUOTE)
 		{
 			args[len] = strdup(tkn[i]->data);
 			len++;

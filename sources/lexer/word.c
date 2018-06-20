@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/13 19:04:11 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/20 12:19:35 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,7 @@ int		strdigit(char *str)
 static int	is_redir_chr(char *str)
 {
 	if (str[0] == '>'
-		|| str[0] == CHR_LESS
-		|| str[0] == CHR_DLESS
-		|| str[0] == CHR_DGREAT
-		|| str[0] == CHR_GREATAND
-		|| str[0] == CHR_LESSAND)
+		|| str[0] == '<')
 		return (1);
 	return (0);
 }

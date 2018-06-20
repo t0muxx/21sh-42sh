@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 18:32:16 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/20 12:02:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		is_redir(t_tkn_type type)
 		|| type == CHR_DGREAT
 		|| type == CHR_LESS
 		|| type == CHR_DLESS
+		|| type == CHR_LESSAND
 		|| type == CHR_GREATAND)
 		return (1);
 	return (0);
@@ -91,6 +92,8 @@ void	redirect_cmd(t_tkn **tkn)
 			dgreat_redir(tkn[i++]);
 		else if (tkn[i]->type == CHR_DLESS)
 			dless_redir(tkn[i++]);
+		else if (tkn[i]->type == CHR_LESSAND)
+			lessand_redir(tkn[i++]);
 		if (!tkn[i])
 			break ;
 		i++;

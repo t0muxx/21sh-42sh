@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 13:33:34 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/20 12:03:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,6 @@ char	**lst_arr(t_tkn **tkn);
 int		exec_node(t_astree *astree, char **env);
 int		child_process(t_astree *astree, char **env);
 char	*path_find_in_path(char *name, char **myenv);
+void	lessand_redir(t_tkn *tkn);
+
 #endif
