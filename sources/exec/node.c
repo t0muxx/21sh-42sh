@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/19 16:21:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/20 10:25:36 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 
 	i = 0;
 	last_exec = 1;
-	exec->nodenbr = 0;
+	dprintf(2, "exec_node pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
 	if (astree->left->type != NT_CMD)
 	{
 	//	exec->nodeact--;
