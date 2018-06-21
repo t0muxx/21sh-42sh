@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 17:01:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/21 10:38:47 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 	else if (pid2 == 0)
 	{
 	//	setpgid(0, exec->pgid);
-	//	dprintf(2, "fils right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+//		dprintf(2, "fils right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
 		new = t_process_new(getpid());
 		t_process_add(&(exec->process_pid), new);	
 		dup2_routine(exec->oldfds[0], 0, exec->oldfds[1]);
@@ -151,12 +151,12 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 					close(exec->oldfds[1]);
 					while (exec->process_pid != NULL)
 					{
-				//		dprintf(2, "kill %d\n", exec->process_pid->pid);
-					//	waitpid(exec->process_pid->pid, &status2, 0);
+						dprintf(2, "kill %d\n", exec->process_pid->pid);
 						kill(exec->process_pid, SIGTERM);
+						read(0, NULL, 1);
 						exec->process_pid = exec->process_pid->next;
 					}
-				//	dprintf(2, "fini de wait\n");
+					dprintf(2, "fini de wait\n");
 					exit(EXIT_FAILURE);
 				}
 			}
