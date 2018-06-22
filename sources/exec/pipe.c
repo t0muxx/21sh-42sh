@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 11:31:25 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/22 23:13:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	fd_status(int pipefd[2])
 
 }
 
-int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
+int		node_pipe(t_astree *astree, char **env, t_exec *exec)
 {
 	int	newfds[2];
 	pid_t pid;
