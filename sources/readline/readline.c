@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:10:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 16:16:25 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,5 @@ int		main(void)
 			child_process(astree, env);
 			tbuffer_init(&tbuffer, env);
 		}
-
-
 	}
 }
