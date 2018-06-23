@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/21 10:29:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 14:41:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ int		child_process(t_astree *astree, char **env)
 	}
 	else if (pid == 0)
 	{
+	//	dprintf(2, "fils child_process pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (astree->type == NT_CMD)
 			exec_cmd(astree, env);
 		else
@@ -91,6 +94,10 @@ int		child_process(t_astree *astree, char **env)
 	}
 	else if (pid > 0)
 	{
+	//	dprintf(2, "pid = %d|\n", pid);
+	//	dprintf(2, "Pere child process pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		printf("Hey finished\n");
 		t_process_free(exec.process_pid);

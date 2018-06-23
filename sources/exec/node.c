@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 17:01:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 14:00:38 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 		last_exec = exec_node(astree->left, env, exec);
 	}
 	// while (node_fun[i].type)// ne parcourt pas...
+	if (last_exec == -1)
+		dprintf(2, "-1 returned\n");
 	while (i < 1)
 	{
 		if (node_fun[i].type == astree->type)

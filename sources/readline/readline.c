@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/14 15:35:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:10:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*readline_get_func_array(void)
 {
 	void (**fptr)(t_buffer *, char *);
 
-	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 18);
+	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 19);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
 	fptr[2] = insert_char;
@@ -75,7 +75,8 @@ void	*readline_get_func_array(void)
 	fptr[14] = input_cut;
 	fptr[15] = input_copy;
 	fptr[16] = input_enter;
-	fptr[17] = NULL;
+	fptr[17] = input_ctrl_d;
+	fptr[18] = NULL;
 	return (fptr);
 }
 
