@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/18 17:59:57 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 19:26:21 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	dless_redir(t_tkn *tkn)
 	int		fd;
 	char	*filename;
 
-	ft_putendl("in dless_redir");
 	if (!nb)
 		nb = 1;
 	else
@@ -35,7 +34,7 @@ void	dless_redir(t_tkn *tkn)
 		ft_putendl("fail to open here");
 	while (1)
 	{
-		ft_putstr("2> ");
+		ft_putstr("> ");
 		if (get_next_line(0, &line) == 1 && line && line[0] != '\0')
 		{
 			if (ft_strcmp(line, tkn->next->data) == 0)
@@ -53,7 +52,6 @@ void	dless_redir(t_tkn *tkn)
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	if (!tkn->next->next || tkn->next->next->type != CHR_DLESS)
 	{
-		ft_putendl("in dup condition");
 		if (dup2(fd, STDIN_FILENO) == -1)
 			ft_putendl("fail dup2");
 	}

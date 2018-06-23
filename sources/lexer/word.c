@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/01 20:25:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 17:05:59 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_word_type(int c)
 	return (1);
 }
 
-static int	strdigit(char *str)
+int		strdigit(char *str)
 {
 	int		i;
 

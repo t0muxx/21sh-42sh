@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:51:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:01:46 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,59 @@
 
 int		tkn_arr_len(t_tkn **tkn)
 {
-	int		i;
+	int		len;
+	t_tkn	*tmp;
 
-	i = 0;
-	while (tkn[i])
-		i++;
-	return (i);
+	tmp = *tkn;
+	len = 0;
+	while (tmp && tmp->type != CHR_NEWLINE)
+	{
+		if (is_redir(tmp->type))
+			tmp = tmp->next;
+		else if (tmp->type != CHR_IO_NUMBER
+				&& tmp->type != CHR_DQUOTE
+				&& tmp->type != CHR_QUOTE)
+			len++;
+		tmp = tmp->next;
+	}
+	return (len);
 }
 
 char	**lst_arr(t_tkn **tkn, char **env)
 {
 	char	**args;
-	int		i;
+	int		len;
+	t_tkn	*tmp;
 
+	tmp = *tkn;
 	args = NULL;
-	i = tkn_arr_len(tkn);;
-	if (!(args = (char**)malloc(sizeof(char*) * (i + 1))))
+	len = tkn_arr_len(tkn);
+	if (!(args = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
-	args[i] = NULL;
-	i = 0;
-	while (tkn[i] && tkn[i]->data)
+	args[len] = NULL;
+	len = 0;
+	if ((args[len] = path_find_in_path(tmp->data, env)) == NULL)
 	{
-		if (i == 0)
+		args[len++] = ft_strdup(tmp->data);
+		args[len] = 0;
+		return (args);
+	}
+	len++;
+	tmp = tmp->next;
+	while (tmp && tmp->data && tmp->type != CHR_NEWLINE)
+	{
+		if (is_redir(tmp->type))
+			tmp = tmp->next;
+		else if (tmp->type != CHR_IO_NUMBER
+			&& tmp->type != CHR_DQUOTE
+			&& tmp->type != CHR_QUOTE)
 		{
-			if ((args[i] = path_find_in_path(tkn[i]->data, env)) == NULL)
-			{
-				args[i] = ft_strdup(tkn[i]->data);
-				args[i + 1] = 0;
-			   	return (args);	
-			}
+			args[len] = ft_strdup(tmp->data);
+			len++;
 		}
-		else
-		{
-			if (!ft_strcmp(tkn[i]->data, "\n"))
-				args[i] = 0;
-			else
-				args[i] = strdup(tkn[i]->data);
-		}
-		i++;
+		if (!tmp)
+			break ;
+		tmp = tmp->next;
 	}
 	return (args);
 }
@@ -63,20 +78,20 @@ char	**lst_arr(t_tkn **tkn, char **env)
 int		exec_cmd(t_astree *astree, char **env)
 {
 	char	**args;
-//	char	*tmp;
+	char	*cmd_path;
+	//	char	*tmp;
 	int		i;
 
 	i = 0;
-/*	if (is_redirected(astree->arg))
-	{
-		ft_putendl("is redirected, exit now");
-		return (0);	
-		//	redirect_cmd(astree->arg);
-	}
-//	ft_putendl("copy tkn data to str array");*/
+	ft_putendl("in exec cmd");
+	ft_putendl(astree->arg[0]->data);
+	ft_putnbr(astree->arg[0]->type);
+	if (ft_strcmp(astree->arg[0]->data, "") == 0)
+		ft_putendl("newline match");
+	ft_putendl("in exec cmd");
 	args = lst_arr(astree->arg, env);
-//	ft_putstr("execute cmd: ");
-//	ft_putendl(args[0]);
+	ft_putendl(args[0]);
+	redirect_cmd(astree->arg);
 	execve(args[0], args, env);
 	error_print(CMDNOTFOUND, args[0], "");
 	exit(EXIT_FAILURE);

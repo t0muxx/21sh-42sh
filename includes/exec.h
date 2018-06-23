@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:46:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 17:03:36 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ struct	s_node_type
 
 extern t_node_type	node_fun[]; 
 
+void	greatand_redir(t_tkn *tkn);
+void	lessand_redir(t_tkn *tkn);
+void	dless_redir(t_tkn *tkn);
+int		is_redir(t_tkn_type type);
+void	redirect_cmd(t_tkn **tkn);
 int		node_ret(t_astree *astree);
 int		exit_status(int status);
 int		fork_and_exec(t_astree *astree, char **env);

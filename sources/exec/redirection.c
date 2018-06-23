@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 12:02:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 19:26:43 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,26 @@ static void	dgreat_redir(t_tkn *tkn)
 void	redirect_cmd(t_tkn **tkn)
 {
 	int		i;
+	t_tkn	*tmp;
 
+	tmp = *tkn;
 	i = 0;
-	while (tkn[i] != NULL)
+	while (tmp != NULL)
 	{
-		if (tkn[i]->type == CHR_LESS)
-			less_redir(tkn[i++]);
-		else if (tkn[i]->type == CHR_GREAT)
-			great_redir(tkn[i++]);
-		else if (tkn[i]->type == CHR_GREATAND)
-			greatand_redir(tkn[i++]);
-		else if (tkn[i]->type == CHR_DGREAT)
-			dgreat_redir(tkn[i++]);
-		else if (tkn[i]->type == CHR_DLESS)
-			dless_redir(tkn[i++]);
-		else if (tkn[i]->type == CHR_LESSAND)
-			lessand_redir(tkn[i++]);
-		if (!tkn[i])
+		if (tmp->type == CHR_LESS)
+			less_redir(tmp);
+		else if (tmp->type == CHR_GREAT)
+			great_redir(tmp);
+		else if (tmp->type == CHR_GREATAND)
+			greatand_redir(tmp);
+		else if (tmp->type == CHR_DGREAT)
+			dgreat_redir(tmp);
+		else if (tmp->type == CHR_DLESS)
+			dless_redir(tmp);
+		else if (tmp->type == CHR_LESSAND)
+			lessand_redir(tmp);
+		if (!tmp->next)
 			break ;
-		i++;
+		tmp = tmp->next;
 	}
 }
