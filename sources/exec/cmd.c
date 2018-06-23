@@ -6,13 +6,15 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 03:16:51 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:33:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
+#include "error.h"
+#include "utils.h"
 
 int		tkn_arr_len(t_tkn **tkn)
 {
@@ -38,7 +40,14 @@ char	**lst_arr(t_tkn **tkn, char **env)
 	while (tkn[i] && tkn[i]->data)
 	{
 		if (i == 0)
-			args[i] = path_find_in_path(tkn[i]->data, env);
+		{
+			if ((args[i] = path_find_in_path(tkn[i]->data, env)) == NULL)
+			{
+				args[i] = ft_strdup(tkn[i]->data);
+				args[i + 1] = 0;
+			   	return (args);	
+			}
+		}
 		else
 		{
 			if (!ft_strcmp(tkn[i]->data, "\n"))
@@ -64,12 +73,12 @@ int		exec_cmd(t_astree *astree, char **env)
 		return (0);	
 		//	redirect_cmd(astree->arg);
 	}
-	ft_putendl("copy tkn data to str array");*/
+//	ft_putendl("copy tkn data to str array");*/
 	args = lst_arr(astree->arg, env);
-//	tmp = args[0];
-//	args[0] = path_find_in_path(args[0], env);
-//	free(tmp);
-	ft_putendl(args[0]);
+//	ft_putstr("execute cmd: ");
+//	ft_putendl(args[0]);
 	execve(args[0], args, env);
+	error_print(CMDNOTFOUND, args[0], "");
+	exit(EXIT_FAILURE);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:38:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 15:15:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/18 14:44:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define PERMERR	  2
 # define EXISTERR	  3
 # define HOMEERR	  4
+# define CMDNOTFOUND  5
 # define TOMANYARG	  6
 # define ALNUMERR	  7
 # define TOOFEWARG	  8

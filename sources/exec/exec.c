@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 03:23:47 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:34:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		child_process(t_astree *astree, char **env)
 	last_exec = 0;
 
 //	ft_printf("node nbr = %d\n", exec.nodenbr);
+	exec.process_pid = NULL;
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
@@ -75,26 +76,33 @@ int		child_process(t_astree *astree, char **env)
 	}
 	else if (pid == 0)
 	{
+	//	dprintf(2, "fils child_process pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (astree->type == NT_CMD)
 			exec_cmd(astree, env);
 		else
 		{
 			astree->is_root_node = 1;
 			last_exec = exec_node(astree, env, &exec);
-	/*		while (i < 1)
+			while (i < 1)
 			{
 				if (node_fun[i].type == astree->type)
 					node_fun[i].fun(astree->right, env, last_exec, &exec);
 				i++;
-			}*/
+			}
 		}
-		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{
+	//	dprintf(2, "pid = %d|\n", pid);
+	//	dprintf(2, "Pere child process pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		exit_status(status);
 		printf("Hey finished\n");
+		t_process_free(exec.process_pid);
 	}
 	return (0);
 }

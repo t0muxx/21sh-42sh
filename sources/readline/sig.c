@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/14 12:00:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:02:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static	t_buffer g_tbuffer2;
 
-void	sig_handler(int sigid, siginfo_t *siginfo, void *context)
+void	sig_handler(int sigid)
 {
 	struct winsize w;
 	
@@ -35,22 +35,18 @@ void	sig_handler(int sigid, siginfo_t *siginfo, void *context)
 		g_tbuffer2.colnbr = w.ws_col;
 		line_reset(&g_tbuffer2);
 	}
-	if (siginfo)
-		;
-	if (context)
-		;
+	if (sigid == SIGQUIT)
+	{
+		exit(EXIT_SUCCESS);
+	}
 }
 
 void	sig_intercept(t_buffer *tbuffer)
 {
-	struct sigaction sa;
 
 	g_tbuffer2 = *tbuffer;
-	ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_sigaction = sig_handler;
-	sa.sa_flags = 0;
-	sigemptyset(&(sa.sa_mask));
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGWINCH, &sa, NULL);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGWINCH, sig_handler);
 	*tbuffer = g_tbuffer2;
 }

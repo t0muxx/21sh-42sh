@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/18 14:11:10 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:13:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define FT_KEY_CTRL_X "^X"
 # define FT_KEY_CTRL_K "^K"
 # define FT_KEY_CTRL_P "^P"
+# define FT_KEY_CTRL_D "^D"
 
 /*
 ** The double linked list for history
@@ -121,6 +122,7 @@ void			input_paste(t_buffer *tbuffer, char *read_buf);
 void			input_copy(t_buffer *tbuffer, char *read_buf);
 void			input_enter(t_buffer *tbuffer, char *read_buf);
 void			line_go_down(t_buffer *tbuffer, int cnt);
+void			input_ctrl_d(t_buffer *tbuffer, char *read_buf);
 void			insert_char(t_buffer *tbuffer, char *read_buf);
 void			insert_tbuffer(t_buffer *tbuffer);
 void			prompt_print(t_buffer *tbuffer);
