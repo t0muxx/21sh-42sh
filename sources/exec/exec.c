@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 17:50:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:49:57 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int     exit_status(int status)
 		else
 			return (0);
 	}
-	/*
+/*
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 11)

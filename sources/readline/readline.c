@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 16:16:25 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:45:32 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,14 @@ int		main(void)
 		if (parse(tkn))
 		{
 			while (tkn->next)
+			{
+				if (tkn->next->type == CHR_NEWLINE)
+					break ;
 				tkn = tkn->next;
+			}
+			tkn->next = NULL;
 			astree = ast_build(tkn);
-		//	ast_debug(astree);
+			//ast_debug(astree);
 			term_close();
 			child_process(astree, env);
 			tbuffer_init(&tbuffer, env);

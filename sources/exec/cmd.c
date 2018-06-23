@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 20:01:46 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:57:37 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ char	**lst_arr(t_tkn **tkn, char **env)
 		return (NULL);
 	args[len] = NULL;
 	len = 0;
-	if ((args[len] = path_find_in_path(tmp->data, env)) == NULL)
-	{
-		args[len++] = ft_strdup(tmp->data);
-		args[len] = 0;
-		return (args);
-	}
-	len++;
-	tmp = tmp->next;
 	while (tmp && tmp->data && tmp->type != CHR_NEWLINE)
 	{
 		if (is_redir(tmp->type))
@@ -79,20 +71,13 @@ int		exec_cmd(t_astree *astree, char **env)
 {
 	char	**args;
 	char	*cmd_path;
-	//	char	*tmp;
 	int		i;
 
 	i = 0;
-	ft_putendl("in exec cmd");
-	ft_putendl(astree->arg[0]->data);
-	ft_putnbr(astree->arg[0]->type);
-	if (ft_strcmp(astree->arg[0]->data, "") == 0)
-		ft_putendl("newline match");
-	ft_putendl("in exec cmd");
 	args = lst_arr(astree->arg, env);
-	ft_putendl(args[0]);
+	cmd_path = path_find_in_path(args[0], env);
 	redirect_cmd(astree->arg);
-	execve(args[0], args, env);
+	execve(cmd_path, args, env);
 	error_print(CMDNOTFOUND, args[0], "");
 	exit(EXIT_FAILURE);
 	return (1);

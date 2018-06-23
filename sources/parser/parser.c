@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/20 14:10:05 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:42:47 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,6 @@ int				parse(t_tkn *tkn)
 	int		parse_err;
 
 	parse_err = 0;
-	tkn = tkn->next;
-	free(tkn->prev->data);
-	free(tkn->prev);
-	tkn->prev = NULL;
 	while (tkn->next)
 	{
 		if (tkn->type == CHR_DQUOTE)
@@ -149,5 +145,8 @@ int				parse(t_tkn *tkn)
 		else
 			tkn = tkn->next;
 	}
+//	tkn->prev->next = NULL;
+//	free(tkn->data);
+//	free(tkn);
 	return (1);
 }
