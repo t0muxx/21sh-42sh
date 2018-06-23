@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:54:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 16:01:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int		child_process(t_astree *astree, char **env)
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		exit_status(status);
-		printf("\n");
+		if (exit_status(status) == SIGINT)
+			ft_printf("\n");
 		t_process_free(exec.process_pid);
 	}
 	return (0);
