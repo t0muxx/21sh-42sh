@@ -6,13 +6,15 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:34:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:43:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
+
+/* voir ce quon fait pour ca pose probleme pour ctrl+d*/
 
 int     exit_status(int status)
 {
@@ -85,10 +87,10 @@ int		child_process(t_astree *astree, char **env)
 		{
 			astree->is_root_node = 1;
 			last_exec = exec_node(astree, env, &exec);
-			while (i < 1)
+			while (i < 4)
 			{
 				if (node_fun[i].type == astree->type)
-					node_fun[i].fun(astree->right, env, last_exec, &exec);
+					node_fun[i].fun(astree->right, env, &exec);
 				i++;
 			}
 		}
@@ -101,7 +103,7 @@ int		child_process(t_astree *astree, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		exit_status(status);
-		printf("Hey finished\n");
+		printf("\n");
 		t_process_free(exec.process_pid);
 	}
 	return (0);

@@ -6,11 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:28:09 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/10 10:26:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:44:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "utils.h"
 
 void	input_backspace(t_buffer *tbuffer, char *read_buf)
 {

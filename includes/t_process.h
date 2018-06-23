@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 13:12:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/20 13:16:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:47:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct s_process
 
 t_process		*t_process_new(pid_t pid);
 void		t_process_add(t_process **last, t_process *new);
-
+void			t_process_free(t_process *list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:36:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:41:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 	return (0);
 }
 
-int		node_pipe(t_astree *astree, char **env, int last_exec, t_exec *exec)
+int		node_pipe(t_astree *astree, char **env, t_exec *exec)
 {
 	pipe_routine(astree, env, exec);
 	return (0);

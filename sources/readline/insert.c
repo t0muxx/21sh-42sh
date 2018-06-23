@@ -6,11 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:45:57 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/19 11:07:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:44:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "utils.h"
 
 void	insert_tbuffer(t_buffer *tbuffer)
 {

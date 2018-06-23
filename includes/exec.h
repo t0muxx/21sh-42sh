@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:32:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:46:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_exec
 	int	oldfds[2];
 	t_nodetype parent;
 	pid_t	pgid;
+	int		last_exec;
 	t_process	*first_pid;
 	t_process	*process_pid;
 
@@ -55,4 +56,5 @@ char	**lst_arr(t_tkn **tkn, char **env);
 int		exec_node(t_astree *astree, char **env, t_exec *exec);
 int		child_process(t_astree *astree, char **env);
 char	*path_find_in_path(char *name, char **myenv);
+int		check_exec_exception(t_exec *exec);
 #endif
