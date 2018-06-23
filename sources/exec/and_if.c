@@ -6,20 +6,20 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/04 18:32:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 03:12:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
-#include "../../includes/ext_node_fun.h"
 
-int		node_and_if(t_astree *astree, char **env, int last_exec, t_exec *exec)
+int		node_and_if(t_astree *astree, char **env, t_exec *exec)
 {
-	(void)last_exec;
 	if (astree->left->type == NT_CMD)
-		return (fork_and_exec(astree->left, env) ? 1 : 0);
+		exec->last_exec = fork_and_exec(astree->left, env);
+	if (!exec->last_exec || check_exec_exception(exec))
+		return (0);
 	else
-		return (fork_and_exec(astree->left->right, env) ? 1 : 0);
+		return (fork_and_exec(astree->right, env));
 }

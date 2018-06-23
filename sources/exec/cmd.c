@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/05 11:12:10 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 03:16:51 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,21 @@ char	**lst_arr(t_tkn **tkn, char **env)
 int		exec_cmd(t_astree *astree, char **env)
 {
 	char	**args;
-	char	*tmp;
+//	char	*tmp;
 	int		i;
 
 	i = 0;
-	if (is_redirected(astree->arg))
+/*	if (is_redirected(astree->arg))
 	{
 		ft_putendl("is redirected, exit now");
 		return (0);	
 		//	redirect_cmd(astree->arg);
 	}
-	ft_putendl("copy tkn data to str array");
+	ft_putendl("copy tkn data to str array");*/
 	args = lst_arr(astree->arg, env);
-	tmp = args[0];
-	args[0] = path_find_in_path(args[0], env);
-	free(tmp);
-	ft_putstr("execute cmd: ");
+//	tmp = args[0];
+//	args[0] = path_find_in_path(args[0], env);
+//	free(tmp);
 	ft_putendl(args[0]);
 	execve(args[0], args, env);
 	return (1);

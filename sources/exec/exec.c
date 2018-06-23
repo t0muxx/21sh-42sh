@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/11 16:45:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 03:23:47 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int     exit_status(int status)
 	}
 	else if (WIFSIGNALED(status))
 	{
-		ft_putendl("process terminated due to a signal");
+		if (WTERMSIG(status) == 11)
+			ft_putendl("no such file or directory");
 		return (0);
 	}
 	return (0);
@@ -92,6 +93,7 @@ int		child_process(t_astree *astree, char **env)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
+		exit_status(status);
 		printf("Hey finished\n");
 	}
 	return (0);

@@ -6,13 +6,19 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/11 16:44:52 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 03:17:04 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/astree.h"
-#include "../../includes/exec.h"
+#include "lexer.h"
+#include "astree.h"
+#include "exec.h"
+#include "ext_node_fun.h"
+
+int		check_exec_exception(t_exec *exec)
+{
+	return (exec->parent == NT_PIPE ? 1 : 0);
+}
 
 int		node_ret(t_astree *astree)
 {
@@ -29,7 +35,6 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 	int		last_exec;
 
 	i = 0;
-	last_exec = 1;
 	if (astree->left->type != NT_CMD)
 	{
 	//	exec->nodeact--;
@@ -37,14 +42,12 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 			exec->parent = astree->type;
 		if (astree->right == NULL)
 			exec->parent = -9999;
-		last_exec = exec_node(astree->left, env, exec);
+		exec->last_exec = exec_node(astree->left, env, exec);
 	}
-	// while (node_fun[i].type)// ne parcourt pas...
-	while (i < 1)
+	while (node_fun[i].type)
 	{
-		ft_printf("astree->type = %d\n", astree->type);
 		if (node_fun[i].type == astree->type)
-			return (node_fun[i].fun(astree, env, last_exec, exec));
+			return (node_fun[i].fun(astree, env, exec));
 		i++;
 	}
 	exit(1);

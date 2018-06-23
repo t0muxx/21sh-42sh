@@ -6,14 +6,13 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/22 23:13:56 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/23 01:32:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
-#include "../../includes/ext_node_fun.h"
 #include "utils.h"
 #include <fcntl.h>
 #include <sys/types.h>

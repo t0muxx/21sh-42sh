@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/06 14:04:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 01:38:43 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct s_astree		t_astree;
 
 enum	e_nodetype
 {
-	NT_PIPE,
+	NT_PIPE = 1,
 	NT_SEMI,
 	NT_CMD,
 	NT_AND,
