@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:43:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:54:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@ int     exit_status(int status)
 		else
 			return (0);
 	}
+	/*
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 11)
 			ft_putendl("no such file or directory");
 		return (0);
+	} */
+	// Mieux vaut renvoyer le numero du signal , en plus le sig 11 c'est pour segfault ? ducoup pk no no such file or dir
+	else if (WIFSIGNALED(status))
+	{
+		return (WTERMSIG(status));
 	}
 	return (0);
 }

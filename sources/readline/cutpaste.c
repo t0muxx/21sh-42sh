@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:45:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/23 15:56:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1)
 	{
-		free(tbuffer->buffer);
-		term_close();
+	//	free(tbuffer->buffer);
+	//	term_close();
 		exit(EXIT_SUCCESS);
 	}
 }
