@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/23 15:31:53 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/06/23 17:56:42 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(LEXER)init.c \
 			$(LEXER)ampersand.c \
 			$(LEXER)asterisk.c \
+			$(LEXER)dash.c \
 			$(LEXER)bang.c \
 			$(LEXER)brace.c \
 			$(LEXER)bracket.c \
@@ -88,6 +89,8 @@ SRCS = 		$(READLINE)readline.c \
 			$(PARSER)parser.c \
 			$(PARSER)astree.c \
 			$(EXEC)redirection.c \
+			$(EXEC)dless_redir.c \
+			$(EXEC)aggregators.c \
 			$(EXEC)and_if.c \
 			$(EXEC)or_if.c \
 			$(EXEC)semi.c \

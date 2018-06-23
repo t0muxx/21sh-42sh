@@ -6,12 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/02 04:13:53 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/20 14:10:05 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/parser.h"
+#include "lexer.h"
+#include "parser.h"
 
 enum e_tkn_type		type[][8] =
 {
@@ -40,7 +40,7 @@ enum e_tkn_type		type[][8] =
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
-	{ CHR_NULL },
+	{ CHR_NULL }, // WSPACE
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
@@ -77,30 +77,77 @@ static int		valid_tkn_type(t_tkn *tkn)
 	return (0);
 }
 
+static int		parse_quote(t_tkn *tkn)
+{
+	int		parse_err;
+
+	parse_err = 0;
+	if (!tkn->next || tkn->next->type != CHR_WORD
+		|| !tkn->next->next || tkn->next->next->type != CHR_QUOTE)
+	{
+		parse_err = 1;
+		ft_putendl("Syntax error : unexpected token newline");
+	}
+	return (parse_err);
+}
+
+static int		parse_dquote(t_tkn *tkn)
+{
+	int		parse_err;
+
+	parse_err = 0;
+	if (!tkn->next || tkn->next->type != CHR_WORD
+		|| !tkn->next->next || tkn->next->next->type != CHR_DQUOTE)
+	{
+		parse_err = 1;
+		ft_putendl("Syntax error : unexpected token newline");
+	}
+	return (parse_err);
+}
+
+static int	parse_idle(t_tkn *tkn)
+{
+	int		parse_err;
+
+	parse_err = 0;
+	if (!valid_tkn_type(tkn))
+	{
+		parse_err = 1;
+		ft_putnbr(tkn->type);
+		ft_putstr("Syntax error : unexpected token ");
+		ft_putendl(tkn->next->data);
+	}
+	return (parse_err);		
+}
+
 int				parse(t_tkn *tkn)
 {
-	int		i;
+	int		parse_err;
 
-	i = 0;
+	parse_err = 0;
 	tkn = tkn->next;
 	free(tkn->prev->data);
 	free(tkn->prev);
 	tkn->prev = NULL;
 	while (tkn->next)
 	{
-		if (tkn->type == CHR_WORD || tkn->type == CHR_ASSIGNMENT_WORD)
-			tkn = tkn->next;
-		else
+		if (tkn->type == CHR_DQUOTE)
 		{
-			if (!valid_tkn_type(tkn))
-			{
-				ft_putstr("Syntax error : unexpected token ");
-				ft_putendl(tkn->next->data);
-				return (0);
-			}
-			else
-				tkn = tkn->next;
+			if ((parse_err = parse_dquote(tkn)) != 1)
+				tkn = tkn->next->next;
 		}
+		else if (tkn->type == CHR_QUOTE)
+		{
+			if ((parse_err = parse_quote(tkn)) != 1)
+				tkn = tkn->next->next;
+		}
+		else if (tkn->type != CHR_WORD
+				&& tkn->type != CHR_ASSIGNMENT_WORD)
+			parse_err = parse_idle(tkn);
+		if (parse_err)
+			return (0);
+		else
+			tkn = tkn->next;
 	}
 	return (1);
 }
