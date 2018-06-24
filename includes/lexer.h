@@ -6,12 +6,13 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 17:58:13 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/24 18:31:14 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+# define TKN_FUN_NBR 19
 
 # include <stdio.h>
 # include <unistd.h>

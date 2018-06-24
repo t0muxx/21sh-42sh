@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 20:57:37 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/24 18:54:13 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,14 @@ int		exec_cmd(t_astree *astree, char **env)
 	int		i;
 
 	i = 0;
-	args = lst_arr(astree->arg, env);
-	cmd_path = path_find_in_path(args[0], env);
-	redirect_cmd(astree->arg);
-	execve(cmd_path, args, env);
-	error_print(CMDNOTFOUND, args[0], "");
-	exit(EXIT_FAILURE);
+	if (astree)
+	{
+		args = lst_arr(astree->arg, env);
+		cmd_path = path_find_in_path(args[0], env);
+		redirect_cmd(astree->arg);
+		execve(cmd_path, args, env);
+		error_print(CMDNOTFOUND, args[0], "");
+		exit(EXIT_FAILURE);
+	}
 	return (1);
 }

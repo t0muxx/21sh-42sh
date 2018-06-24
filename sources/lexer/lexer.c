@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 20:37:20 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/24 18:38:08 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 	i = 0;
 	while (tkn_fun[i].type)
 	{
-		if (!tkn_fun[i + 1].type)
+	//	printf("i = %d\n", i);
+		if (i > TKN_FUN_NBR)
 		{
 			tkn_push_back(head, tkn_word(&line));
 			break ;
