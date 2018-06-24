@@ -6,13 +6,19 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 01:48:49 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/24 12:02:41 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
+
+/* a la ligne check_exec_exception(exec)
+ * on peut peut-etre simplifier ? pk appeler une autre fonction
+ * qui check si le parent est un pipe et si oui return 1 
+ * pour retourner 0 sur node_or_if ?????
+ */
 
 int		node_or_if(t_astree *astree, char **env, t_exec *exec)
 {

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 20:45:32 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/24 12:23:10 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int		main(void)
 			}
 			tkn->next = NULL;
 			astree = ast_build(tkn);
-			//ast_debug(astree);
+		//	ast_debug(astree);
 			term_close();
 			child_process(astree, env);
 			tbuffer_init(&tbuffer, env);

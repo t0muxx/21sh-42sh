@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 15:41:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/24 11:53:27 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,13 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 	pid_t pid;
 	pid_t pid2;
 	t_process *new;
-	
+	t_astree *cmd;
+
 	if (astree->left->type != NT_PIPE)
 	{
+		cmd = astree->left;
+		if (astree->left->type == NT_OR_IF || astree->left->type == NT_AND_IF)
+			cmd = astree->left->right;
 		if (pipe(newfds) == -1)
 		{
 			ft_putendl_fd("pipe : failed to pipe", 2);
@@ -96,7 +100,7 @@ int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
 		{
 	//		dprintf(2, "Child left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
 			dup2_routine(newfds[1], 1, newfds[0]);
-			exec_cmd(astree->left, env);
+			exec_cmd(cmd, env);
 		}
 		else
 		{
