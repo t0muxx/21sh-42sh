@@ -6,11 +6,26 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/02/22 08:05:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/24 12:44:35 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+
+void		history_lst_free(t_cmd_hist *head)
+{
+	t_cmd_hist *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->oldest;
+		free(tmp->cmd);
+		free(tmp);
+		tmp = NULL;
+	}
+	head = NULL;
+}
 
 void		history_lst_add(t_cmd_hist **head, t_cmd_hist *new)
 {

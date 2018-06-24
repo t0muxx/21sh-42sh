@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:13:04 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/24 12:44:57 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,12 @@ t_cmd_hist		*history_read(void);
 void			history_print(t_buffer *tbuffer, t_cmd_hist **next);
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
+void			history_add(char *cmd);
+void		history_lst_free(t_cmd_hist *head);
 
 char			*env_get_var(char *name, char **myenv);
 
-char			*readline(t_buffer *tbuffer, t_cmd_hist **head);
+char			*readline(t_buffer *tbuffer);
 void			tbuffer_init(t_buffer *tbuffer, char **env);
 
 t_term_cap		*term_init_cap();

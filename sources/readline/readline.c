@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/24 12:23:10 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/24 12:56:55 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	*readline_get_func_array(void)
 	return (fptr);
 }
 
-char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
+char	*readline(t_buffer *tbuffer)
 {
 	char		*read_buf;
 	void		(**fptr)(t_buffer *, char *);
@@ -91,8 +91,6 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
-	*head = history_read();
-	tbuffer->head_hist = head;
 	prompt_print(tbuffer);
 	sig_intercept(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
@@ -109,6 +107,7 @@ char	*readline(t_buffer *tbuffer, t_cmd_hist **head)
 		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	}
 	free(fptr);
+	free(read_buf);
 	return (tbuffer->buffer);
 }
 
@@ -140,14 +139,16 @@ int		main(void)
 	t_astree		*astree;
 
 	env = env_create_copy();
-	tbuffer_init(&tbuffer, env);
 	while (420)
 	{
-		line[0] = readline(&tbuffer, &head);
+		tbuffer_init(&tbuffer, env);
+		head = history_read();
+		tbuffer.head_hist = &head;
+		line[0] = readline(&tbuffer);
 		line[1] = 0;
+		history_add(line[0]);	
 		ft_putstr("\n");
 		builtin_check_builtin(line, &env);
-		tbuffer_init(&tbuffer, env);
 		tkn = lex(&line[0]);
 		if (parse(tkn))
 		{
@@ -161,8 +162,10 @@ int		main(void)
 			astree = ast_build(tkn);
 		//	ast_debug(astree);
 			term_close();
+			free(tbuffer.termcap);
 			child_process(astree, env);
-			tbuffer_init(&tbuffer, env);
 		}
+		history_lst_free(head);
+		free(line[0]);
 	}
 }
