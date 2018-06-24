@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:45:57 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:44:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/24 13:00:17 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	insert_tbuffer(t_buffer *tbuffer)
 {
-	int i;
-
-	i = 0;
 	while (tbuffer->buffer[tbuffer->cnt])
 	{
 		write(1, &tbuffer->buffer[tbuffer->cnt], 1);
