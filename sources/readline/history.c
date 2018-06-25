@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/10 10:21:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/25 17:30:17 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 void			history_print(t_buffer *tbuffer, t_cmd_hist **next)
 {
 	t_cmd_hist **head;
-
+	char *cmd;
+	
 	head = tbuffer->head_hist;
 	line_go_begin(tbuffer);
 	tbuffer->cnt = 0;
@@ -33,8 +34,10 @@ void			history_print(t_buffer *tbuffer, t_cmd_hist **next)
 	if ((*head) != NULL)
 	{
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
-		ft_memcpy(tbuffer->buffer, (*head)->cmd, ft_strlen((*head)->cmd));
+		cmd = ft_strdup((*head)->cmd);
+		ft_memcpy(tbuffer->buffer, cmd, ft_strlen(cmd));
 		insert_tbuffer(tbuffer);
+		free(cmd);
 	}
 	if (*next != NULL)
 		tbuffer->head_hist = next;
