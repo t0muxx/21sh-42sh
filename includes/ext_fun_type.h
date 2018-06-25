@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 19:08:46 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 13:39:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct s_tkn_fun	tkn_fun[] =
 	{'<', &tkn_less},
 	{' ', &tkn_wspace},
 	{'\n', &tkn_newline},
+	{0},
 };
 
 #endif
