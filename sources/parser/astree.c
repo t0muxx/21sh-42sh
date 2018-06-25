@@ -6,15 +6,15 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 20:08:22 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 01:48:59 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/parser.h"
-#include "../../includes/astree.h"
+#include "lexer.h"
+#include "parser.h"
+#include "astree.h"
 
-void				ast_debug(t_astree *astree)
+/*void				ast_debug(t_astree *astree)
 {
 	int		i;
 
@@ -70,7 +70,7 @@ void				ast_debug(t_astree *astree)
 		}
 		astree = astree->left;
 	}
-}
+}*/
 
 static void			lst_cut_tkn(t_tkn **head)
 {
@@ -104,21 +104,27 @@ static t_nodetype	node_type(t_tkn_type tkn_type)
 	return (type);
 }
 
-static t_tkn		**dup_arg(t_tkn *token, int arg_len)
+static t_tkn		*dup_arg(t_tkn *token, int arg_len)
 {
-	t_tkn	**arg;
+	t_tkn	*arg;
 	int		i;
 
 	i = 0;
-	if ((arg = (t_tkn**)malloc(sizeof(t_tkn*) * (arg_len + 1))) == NULL)
+	if (!token)
 		return (NULL);
+	if ((arg = (t_tkn*)malloc(sizeof(t_tkn) * (arg_len + 1))) == NULL)
+		return (NULL);
+	arg = token;
+	arg->prev = NULL;
 	while (token && node_type(token->type) == NT_CMD)
 	{
-		arg[i] = token;
-		i++;
+		if (arg->next)
+			arg = arg->next;
 		token = token->next;
 	}
-	arg[i] = NULL;
+	arg->next = NULL;
+	while (arg->prev)
+		arg = arg->prev;
 	return (arg);
 }
 

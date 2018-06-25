@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 19:26:43 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 01:51:59 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	great_redir(t_tkn *tkn)
 static void	less_redir(t_tkn *tkn)
 {
 	int		fd;
-		
+
 	if ((fd = open(tkn->data, O_RDONLY, 
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
@@ -75,12 +75,12 @@ static void	dgreat_redir(t_tkn *tkn)
 	close(fd);
 }
 
-void	redirect_cmd(t_tkn **tkn)
+void	redirect_cmd(t_tkn *tkn)
 {
 	int		i;
 	t_tkn	*tmp;
 
-	tmp = *tkn;
+	tmp = tkn;
 	i = 0;
 	while (tmp != NULL)
 	{

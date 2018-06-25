@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 20:57:37 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 01:54:01 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include "error.h"
 #include "utils.h"
 
-int		tkn_arr_len(t_tkn **tkn)
+int		tkn_arr_len(t_tkn *tkn)
 {
 	int		len;
 	t_tkn	*tmp;
 
-	tmp = *tkn;
+	tmp = tkn;
 	len = 0;
 	while (tmp && tmp->type != CHR_NEWLINE)
 	{
@@ -36,13 +36,13 @@ int		tkn_arr_len(t_tkn **tkn)
 	return (len);
 }
 
-char	**lst_arr(t_tkn **tkn, char **env)
+char	**lst_arr(t_tkn *tkn, char **env)
 {
 	char	**args;
 	int		len;
 	t_tkn	*tmp;
 
-	tmp = *tkn;
+	tmp = tkn;
 	args = NULL;
 	len = tkn_arr_len(tkn);
 	if (!(args = (char**)malloc(sizeof(char*) * (len + 1))))
@@ -56,10 +56,7 @@ char	**lst_arr(t_tkn **tkn, char **env)
 		else if (tmp->type != CHR_IO_NUMBER
 			&& tmp->type != CHR_DQUOTE
 			&& tmp->type != CHR_QUOTE)
-		{
-			args[len] = ft_strdup(tmp->data);
-			len++;
-		}
+			args[len++] = ft_strdup(tmp->data);
 		if (!tmp)
 			break ;
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 17:03:36 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 01:43:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	greatand_redir(t_tkn *tkn);
 void	lessand_redir(t_tkn *tkn);
 void	dless_redir(t_tkn *tkn);
 int		is_redir(t_tkn_type type);
-void	redirect_cmd(t_tkn **tkn);
+void	redirect_cmd(t_tkn *tkn);
 int		node_ret(t_astree *astree);
 int		exit_status(int status);
 int		fork_and_exec(t_astree *astree, char **env);
@@ -56,8 +56,8 @@ int		node_semi(t_astree *astree, char **env, t_exec *exec);
 int		node_and_if(t_astree *astree, char **env, t_exec *exec);
 int		is_redirected(t_tkn **tkn);
 int		exec_cmd(t_astree *astree, char **env);
-int		tkn_arr_len(t_tkn **tkn);
-char	**lst_arr(t_tkn **tkn, char **env);
+int		tkn_arr_len(t_tkn *tkn);
+char	**lst_arr(t_tkn *tkn, char **env);
 int		exec_node(t_astree *astree, char **env, t_exec *exec);
 int		child_process(t_astree *astree, char **env);
 char	*path_find_in_path(char *name, char **myenv);
