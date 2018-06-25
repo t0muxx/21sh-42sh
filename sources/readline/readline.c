@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/25 03:04:49 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 09:47:45 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,12 @@ int		main(void)
 			term_close();
 			free(tbuffer.termcap);
 			child_process(astree, env);
+			free_astree(astree);
 		}
 		free_tkn_lst(tkn);
-		free_env(env);
 		history_lst_free(head);
 		free(line[0]);
 	}
+	free_astree(astree);
+	free_env(env);
 }

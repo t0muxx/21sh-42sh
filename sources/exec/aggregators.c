@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:05:20 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/20 12:13:51 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 10:52:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include "astree.h"
 #include "exec.h"
 
-void	lessand_redir(t_tkn *tkn)
+void		lessand_redir(t_tkn *tkn)
 {
 	int		fd;
 	int		word;
 
 	word = 0;
-ft_putnbr(tkn->prev->type);
 	fd = STDIN_FILENO;
 	if (strdigit(tkn->next->data))
 	{
@@ -33,19 +32,18 @@ ft_putnbr(tkn->prev->type);
 			ft_putnbr(fd);
 			ft_putendl(": Bad file descriptor");
 		}
-		//close(fd);
 	}
 	else if (tkn->next->type == CHR_DASH)
 	{
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
-		close (fd);
+		close(fd);
 	}
 	else
 		ft_putendl("ERROR");
 }
-	
-void	greatand_redir(t_tkn *tkn)
+
+void		greatand_redir(t_tkn *tkn)
 {
 	int		fd;
 	int		word;
@@ -63,13 +61,12 @@ void	greatand_redir(t_tkn *tkn)
 			ft_putnbr(fd);
 			ft_putendl(": Bad file descriptor");
 		}
-		//close(fd);
 	}
 	else if (tkn->next->type == CHR_DASH)
 	{
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
-		close (fd);
+		close(fd);
 	}
 	else
 		ft_putendl("ERROR");

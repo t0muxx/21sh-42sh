@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/24 12:07:39 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/25 10:42:16 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 /* voir ce quon fait pour ca pose probleme pour ctrl+d*/
 
-int     exit_status(int status)
+int		exit_status(int status)
 {
 	if (WIFEXITED(status))
 	{

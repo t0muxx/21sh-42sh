@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 20:42:47 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 10:35:12 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum e_tkn_type		type[][8] =
 	{ CHR_NULL }
 };
 
-static int		valid_tkn_type(t_tkn *tkn)
+static int			valid_tkn_type(t_tkn *tkn)
 {
 	int		i;
 
@@ -77,7 +77,7 @@ static int		valid_tkn_type(t_tkn *tkn)
 	return (0);
 }
 
-static int		parse_quote(t_tkn *tkn)
+static int			parse_quote(t_tkn *tkn)
 {
 	int		parse_err;
 
@@ -91,7 +91,7 @@ static int		parse_quote(t_tkn *tkn)
 	return (parse_err);
 }
 
-static int		parse_dquote(t_tkn *tkn)
+static int			parse_dquote(t_tkn *tkn)
 {
 	int		parse_err;
 
@@ -105,7 +105,7 @@ static int		parse_dquote(t_tkn *tkn)
 	return (parse_err);
 }
 
-static int	parse_idle(t_tkn *tkn)
+static int			parse_idle(t_tkn *tkn)
 {
 	int		parse_err;
 
@@ -117,10 +117,10 @@ static int	parse_idle(t_tkn *tkn)
 		ft_putstr("Syntax error : unexpected token ");
 		ft_putendl(tkn->next->data);
 	}
-	return (parse_err);		
+	return (parse_err);
 }
 
-int				parse(t_tkn *tkn)
+int					parse(t_tkn *tkn)
 {
 	int		parse_err;
 
@@ -145,8 +145,5 @@ int				parse(t_tkn *tkn)
 		else
 			tkn = tkn->next;
 	}
-//	tkn->prev->next = NULL;
-//	free(tkn->data);
-//	free(tkn);
 	return (1);
 }

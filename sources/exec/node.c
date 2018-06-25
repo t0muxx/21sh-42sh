@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/24 12:22:28 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/25 11:24:22 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int		check_exec_exception(t_exec *exec)
 int		node_ret(t_astree *astree)
 {
 	if (astree->type == NT_AND_IF
-		|| astree->type == NT_PIPE)	
+		|| astree->type == NT_PIPE)
 		return (0);
 	else
 		return (1);
 }
 
-int				exec_node(t_astree *astree, char **env, t_exec *exec)
+int		exec_node(t_astree *astree, char **env, t_exec *exec)
 {
 	int		i;
 	int		last_exec;
@@ -43,7 +43,8 @@ int				exec_node(t_astree *astree, char **env, t_exec *exec)
 	}
 	if (astree->left->type == NT_OR_IF && last_exec == 0 && exec->last_exec > 0)
 		exit(EXIT_SUCCESS);
-	if (astree->left->type == NT_AND_IF && last_exec == 0 && exec->last_exec == 0)
+	if (astree->left->type == NT_AND_IF && last_exec == 0
+		&& exec->last_exec == 0)
 		exit(EXIT_SUCCESS);
 	while (i < 4)
 	{

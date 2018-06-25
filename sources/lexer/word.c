@@ -6,13 +6,13 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 17:05:59 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 11:00:52 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 
-static char	*esc_strncpy(char *dst, char *src, int len)
+static char			*esc_strncpy(char *dst, char *src, int len)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ static char	*esc_strncpy(char *dst, char *src, int len)
 	return (dst);
 }
 
-static int	is_word_type(int c)
+static int			is_word_type(int c)
 {
 	int		i;
 
@@ -55,7 +55,7 @@ static int	is_word_type(int c)
 	return (1);
 }
 
-int		strdigit(char *str)
+int					strdigit(char *str)
 {
 	int		i;
 
@@ -69,7 +69,17 @@ int		strdigit(char *str)
 	return (1);
 }
 
-t_tkn		*tkn_word(char **str)
+static t_tkn_type	extra_tkn_type(t_tkn *tkn, char **str)
+{
+	if (*str[0] == CHR_GREAT && strdigit(tkn->data))
+		return (CHR_IO_NUMBER);
+	else if (ft_strchr(tkn->data, '='))
+		return (CHR_ASSIGNMENT_WORD);
+	else
+		return (CHR_WORD);
+}
+
+t_tkn				*tkn_word(char **str)
 {
 	t_tkn	*tkn;
 	int		len;
@@ -93,11 +103,6 @@ t_tkn		*tkn_word(char **str)
 	tkn->data = esc_strncpy(tkn->data, line, len);
 	line += i;
 	*str = line;
-	if (*str[0] == CHR_GREAT && strdigit(tkn->data))
-		tkn->type = CHR_IO_NUMBER;
-	else if (ft_strchr(tkn->data, '='))
-		tkn->type = CHR_ASSIGNMENT_WORD;
-	else
-		tkn->type = CHR_WORD;
+	tkn->type = extra_tkn_type(tkn, str);
 	return (tkn);
 }
