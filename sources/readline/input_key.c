@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:28:09 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:44:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/06/25 13:44:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,20 @@ void	input_backspace(t_buffer *tbuffer, char *read_buf)
 {
 	if (ft_strlen(read_buf) == 1 && read_buf[0] == 127)
 	{
-		line_reset(tbuffer);
-		string_delete_char(&(tbuffer->buffer), tbuffer->cnt - 1);
-		cursor_move_left(tbuffer, 1);
-		cursor_save_pos(tbuffer);
-		line_go_begin(tbuffer);
-		tbuffer->cnt = 0;
-		tbuffer->index = 0;
-		tputs(tbuffer->termcap->cd, 0, ft_putcc);
-		prompt_print(tbuffer);
-		insert_tbuffer(tbuffer);
-		cursor_reload_pos(tbuffer);
+		if (tbuffer->cnt != 0)
+		{
+			line_reset(tbuffer);
+			string_delete_char(&(tbuffer->buffer), tbuffer->cnt - 1);
+			cursor_move_left(tbuffer, 1);
+			cursor_save_pos(tbuffer);
+			line_go_begin(tbuffer);
+			tbuffer->cnt = 0;
+			tbuffer->index = 0;
+			tputs(tbuffer->termcap->cd, 0, ft_putcc);
+			prompt_print(tbuffer);
+			insert_tbuffer(tbuffer);
+			cursor_reload_pos(tbuffer);
+		}
 	}
 }
 
