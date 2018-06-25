@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/24 11:53:27 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/06/25 18:25:37 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,101 +71,108 @@ int		cpy_fd_routine(int dest[2], int src[2])
 	return (0);
 }
 
-int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
+int		pipe_err_pipe(void)
 {
-	int newfds[2];
-	int status;
-	int status2;
-	pid_t pid;
-	pid_t pid2;
-	t_process *new;
-	t_astree *cmd;
+	ft_putendl_fd("pipe : failed to pipe", 2);
+	return (-1);
 
+}
+
+int		pipe_err_fork(void)
+{
+	ft_putendl_fd("fork : failed to fork", 2);
+	return (-1);
+}
+
+int		pipe_routine_astree_left(t_astree *astree, char **env, t_exec *exec, t_process *new)
+{
+	t_astree *cmd;
+	pid_t pid;
+	
 	if (astree->left->type != NT_PIPE)
 	{
 		cmd = astree->left;
 		if (astree->left->type == NT_OR_IF || astree->left->type == NT_AND_IF)
 			cmd = astree->left->right;
-		if (pipe(newfds) == -1)
-		{
-			ft_putendl_fd("pipe : failed to pipe", 2);
-			return (-1);
-		}
+		if (pipe(exec->newfds) == -1)
+			return (pipe_err_pipe());
 		if ((pid = fork()) == -1)
-		{
-			ft_putendl_fd("fork : failed to fork", 2);
-			return (-1);
-		}
+			return (pipe_err_fork());
 		else if (pid == 0)
 		{
-	//		dprintf(2, "Child left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
-			dup2_routine(newfds[1], 1, newfds[0]);
+			dup2_routine(exec->newfds[1], 1, exec->newfds[0]);
 			exec_cmd(cmd, env);
 		}
 		else
 		{
-	//		dprintf(2, "Pere left pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
 			new = t_process_new(pid);
 			t_process_add(&(exec->process_pid), new);
-			close(newfds[1]);
-			cpy_fd_routine(exec->oldfds, newfds);
+			close(exec->newfds[1]);
+			cpy_fd_routine(exec->oldfds, exec->newfds);
 		}
 	}
-	if (pipe(newfds) == -1)
+}
+
+
+void		pipe_wait_err(int status, t_exec *exec)
+{
+	int status2;
+	
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
 	{
-		ft_putendl_fd("pipe : failed to pipe", 2);
-		return (-1);
+		close(exec->oldfds[0]);
+		close(exec->oldfds[1]);
+		while (exec->process_pid->next != NULL)
+		{
+			kill((pid_t)exec->process_pid, SIGKILL);
+			exec->process_pid = exec->process_pid->next;
+		}
+		waitpid((exec->process_pid->pid), &status2, 0);
+		exit(EXIT_FAILURE);
 	}
-	if ((pid2 = fork()) == -1)
+}
+
+void		pipe_routine_astree_right_pere(t_astree *astree, char **env, t_exec *exec, t_process *new)
+{
+	int status;
+	
+	new = t_process_new(exec->pid);
+	t_process_add(&(exec->process_pid), new);
+	if (astree->is_root_node == 0)
 	{
-		ft_putendl_fd("fork : failed to fork", 2);
-		return (-1);
+		close(exec->newfds[1]);
+		cpy_fd_routine(exec->oldfds, exec->newfds);
 	}
-	else if (pid2 == 0)
+	else
 	{
-	//	dprintf(2, "fils right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
+		close_routine(exec->newfds);
+		while (waitpid(-1, &status, 0) > 0)
+			pipe_wait_err(status, exec);
+		close_routine(exec->oldfds);
+	}
+}
+
+int		pipe_routine(t_astree *astree, char **env, t_exec *exec)
+{
+	int newfds[2];
+	t_process *new;
+
+	pipe_routine_astree_left(astree, env, exec, new);
+	if (pipe(exec->newfds) == -1)
+		return (pipe_err_pipe());
+	if ((exec->pid = fork()) == -1)
+		return (pipe_err_fork());
+	else if (exec->pid == 0)
+	{
 		new = t_process_new(getpid());
 		t_process_add(&(exec->process_pid), new);	
 		dup2_routine(exec->oldfds[0], 0, exec->oldfds[1]);
 		if (astree->is_root_node == 0)
-			dup2_routine(newfds[1], 1, newfds[0]);
+			dup2_routine(exec->newfds[1], 1, exec->newfds[0]);
 		exec_cmd(astree->right, env);
 	}
 	else
-	{
-	//	dprintf(2, "Pere right pid = %d ppid = %d pgid = %d\n", getpid(), getppid(), getpgid(0));
-		new = t_process_new(pid2);
-		t_process_add(&(exec->process_pid), new);
-		if (astree->is_root_node == 0)
-		{
-			close(newfds[1]);
-			cpy_fd_routine(exec->oldfds, newfds);
-		}
-		else
-		{
-			close_routine(newfds);
-			while (waitpid(-1, &status, 0) > 0)
-			{
-			//	dprintf(2, "WEXITSTATUS = %d\n", WEXITSTATUS(status));
-				if (WEXITSTATUS(status) == EXIT_FAILURE)
-				{
-					close(exec->oldfds[0]);
-					close(exec->oldfds[1]);
-					while (exec->process_pid->next != NULL)
-					{
-			//			dprintf(2, "kill %d\n", exec->process_pid->pid);
-						kill((pid_t)exec->process_pid, SIGKILL);
-						exec->process_pid = exec->process_pid->next;
-					}
-					waitpid((exec->process_pid->pid), &status2, 0);
-					exit(EXIT_FAILURE);
-			//		dprintf(2, "fini de wait\n");
-					return (-1);
-				}
-			}
-			close_routine(exec->oldfds);
-		}
-	}
+		pipe_routine_astree_right_pere(astree, env, exec, new);
 	return (0);
 }
 

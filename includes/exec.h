@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 09:43:24 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:19:08 by tomlulu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ typedef struct s_node_type	t_node_type;
 
 typedef struct s_exec
 {
+	int	newfds[2];
 	int	oldfds[2];
+	pid_t	pid;
 	t_nodetype parent;
 	pid_t	pgid;
 	int		last_exec;
