@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 10:02:11 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/28 12:38:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		tkn_arr_len(t_tkn *tkn)
 	return (len);
 }
 
-char	**lst_arr(t_tkn *tkn, char **env)
+char	**lst_arr(t_tkn *tkn)
 {
 	char	**args;
 	int		len;
@@ -73,7 +73,7 @@ int		exec_cmd(t_astree *astree, char **env)
 	i = 0;
 	if (astree)
 	{
-		args = lst_arr(astree->arg, env);
+		args = lst_arr(astree->arg);
 		cmd_path = path_find_in_path(args[0], env);
 		redirect_cmd(astree->arg);
 		execve(cmd_path, args, env);

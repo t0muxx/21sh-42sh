@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 10:42:16 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/28 12:18:21 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int		child_process(t_astree *astree, char **env)
 				i++;
 			}
 		}
+		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{

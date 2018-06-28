@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 09:43:24 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/28 12:23:25 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ struct	s_node_type
 
 extern t_node_type	node_fun[]; 
 
+int		strdigit(char *str);
 void	greatand_redir(t_tkn *tkn);
 void	lessand_redir(t_tkn *tkn);
 void	dless_redir(t_tkn *tkn);
@@ -57,7 +58,7 @@ int		node_and_if(t_astree *astree, char **env, t_exec *exec);
 int		is_redirected(t_tkn **tkn);
 int		exec_cmd(t_astree *astree, char **env);
 int		tkn_arr_len(t_tkn *tkn);
-char	**lst_arr(t_tkn *tkn, char **env);
+char	**lst_arr(t_tkn *tkn);
 int		exec_node(t_astree *astree, char **env, t_exec *exec);
 int		child_process(t_astree *astree, char **env);
 char	*path_find_in_path(char *name, char **myenv);
