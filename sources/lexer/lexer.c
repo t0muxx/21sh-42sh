@@ -6,14 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 13:37:41 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/06/28 13:09:02 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include <unistd.h>
 
-static void		print_tkn_struct(t_tkn *tkn)
+/*static void		print_tkn_struct(t_tkn *tkn)
 {
 	tkn = tkn->next;
 	while (tkn->next)
@@ -28,7 +28,7 @@ static void		print_tkn_struct(t_tkn *tkn)
 	ft_putstr(" -> ");
 	ft_putnbr(tkn->type);
 	ft_putstr("\n");
-}
+}*/
 
 static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 {
