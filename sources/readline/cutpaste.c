@@ -27,7 +27,8 @@ void	input_select_left(t_buffer *tbuffer, char *read_buf)
 {
 	char cur_char;
 
-	if (ft_memcmp(read_buf, FT_KEY_ALT_LEFT, ft_strlen(FT_KEY_ALT_LEFT)) == 0)
+	if (ft_memcmp(read_buf, FT_KEY_ALT_LEFT, 
+	ft_strlen(FT_KEY_ALT_LEFT)) == 0)
 	{
 		if (tbuffer->cutend == 0)
 			tbuffer->cutend = tbuffer->cnt;
@@ -50,7 +51,8 @@ void	input_select_right(t_buffer *tbuffer, char *read_buf)
 {
 	char cur_char;
 
-	if (ft_memcmp(read_buf, FT_KEY_ALT_RIGHT, ft_strlen(FT_KEY_ALT_RIGHT)) == 0)
+	if (ft_memcmp(read_buf, FT_KEY_ALT_RIGHT,
+	ft_strlen(FT_KEY_ALT_RIGHT)) == 0)
 	{
 		if (tbuffer->cutend == tbuffer->cnt)
 			tbuffer->cutstart = tbuffer->cnt;
@@ -71,7 +73,8 @@ void	input_copy(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == 11)
 	{
-		ft_memcpy(tbuffer->cutbuffer, tbuffer->buffer + tbuffer->cutstart,
+		ft_memcpy(tbuffer->cutbuffer, 
+		tbuffer->buffer + tbuffer->cutstart, 
 		tbuffer->cutend - tbuffer->cutstart);
 		line_reset(tbuffer);
 	}

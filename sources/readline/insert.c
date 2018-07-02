@@ -35,7 +35,8 @@ void	insert_char(t_buffer *tbuffer, char *read_buf)
 			tbuffer->buffer[tbuffer->cnt++] = read_buf[0];
 			tbuffer->index++;
 			write(1, read_buf, 1);
-			if (tbuffer->index + tbuffer->prompt_len == tbuffer->colnbr)
+			if (tbuffer->index + tbuffer->prompt_len ==
+			tbuffer->colnbr)
 				line_go_down(tbuffer, 1);
 		}
 		else if (tbuffer->state != READ_IN_QUOTE)
