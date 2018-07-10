@@ -6,19 +6,32 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/10 09:19:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 10:18:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "t_process.h"
 # include "parser.h"
 # include "lexer.h"
 # include "astree.h"
+# include "t_process.h"
+# include <termios.h>
 
 typedef struct s_node_type	t_node_type;
+
+typedef struct	s_job
+{
+	char			*cmd;
+	t_process		*first_process;
+	pid_t			pgid;
+	char			notified;
+	struct	termios	tmodes;
+	t_astree		*astree;
+	struct s_job 	*next;
+
+}				t_job;
 
 typedef struct	s_exec
 {

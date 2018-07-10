@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/25 17:21:18 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/10 09:57:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,39 +137,44 @@ int		main(void)
 	char			**env;
 	t_tkn			*tkn;
 	t_astree		*astree;
+	int				shell_interact;
 
-	env = env_create_copy();
-	while (420)
+	shell_interact = isatty(0);
+	if (shell_interact)
 	{
-		tbuffer_init(&tbuffer, env);
-		head = history_read();
-		tbuffer.head_hist = &head;
-		line[0] = readline(&tbuffer);
-		line[1] = 0;
-		history_add(line[0]);	
-		ft_putstr("\n");
-		builtin_check_builtin(line, &env);
-		tkn = lex(&line[0]);
-		if (parse(tkn))
+		env = env_create_copy();
+		while (420)
 		{
-			while (tkn->next)
+			tbuffer_init(&tbuffer, env);
+			head = history_read();
+			tbuffer.head_hist = &head;
+			line[0] = readline(&tbuffer);
+			line[1] = 0;
+			history_add(line[0]);	
+			ft_putstr("\n");
+			builtin_check_builtin(line, &env);
+			tkn = lex(&line[0]);
+			if (parse(tkn))
 			{
-				if (tkn->next->type == CHR_NEWLINE)
-					break ;
-				tkn = tkn->next;
+				while (tkn->next)
+				{
+					if (tkn->next->type == CHR_NEWLINE)
+						break ;
+					tkn = tkn->next;
+				}
+				tkn->next = NULL;
+				astree = ast_build(tkn);
+			//	ast_debug(astree);
+				term_close();
+				free(tbuffer.termcap);
+				child_process(astree, env);
+				free_astree(astree);
 			}
-			tkn->next = NULL;
-			astree = ast_build(tkn);
-		//	ast_debug(astree);
-			term_close();
-			free(tbuffer.termcap);
-			child_process(astree, env);
-			free_astree(astree);
+			free_tkn_lst(tkn);
+			history_lst_free(head);
+			free(line[0]);
 		}
-		free_tkn_lst(tkn);
-		history_lst_free(head);
-		free(line[0]);
+		free_astree(astree);
+		free_env(env);
 	}
-	free_astree(astree);
-	free_env(env);
 }
