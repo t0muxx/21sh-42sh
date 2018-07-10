@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/15 15:15:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 09:07:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 int		builtin_check_builtin(char **cmd, char ***myenv)
 {
-	int i;
-	t_builtin builtin[BUILTINNBR];
+	int			i;
+	t_builtin	builtin[BUILTINNBR];
+
 	builtin_get_builtin(builtin);
 	i = 0;
 	while (i < BUILTINNBR)

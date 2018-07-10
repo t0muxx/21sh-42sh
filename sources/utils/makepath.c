@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/31 14:53:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 09:09:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,3 @@ char	*make_path(char *path, char *dir)
 	free(tmp);
 	return (curpath);
 }
-
-/*int		main(int argc, char **argv)
-{
-	char *path;
-	
-	path =  make_path(argv[1], argv[2]);
-	ft_printf("curpath = |%s|\n", argv[1]);
-	ft_printf("dir = |%s|\n", argv[2]);
-	ft_printf("new curpath |%s|\n", path);
-	free(path);
-	return (0);
-}*/

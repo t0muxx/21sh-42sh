@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:44:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 08:50:13 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,39 @@ void		term_get_colnbr(t_buffer *tbuffer)
 		tbuffer->colnbr = tgetnum("co") - 2;
 }
 
+void		term_init_fill_cap(t_term_cap *termcap)
+{
+	if ((termcap->up = tgetstr("up", NULL)) == NULL)
+		ft_printf("[ERR] 'up' may not work in this terminal\n");
+	if ((termcap->ce = tgetstr("ce", NULL)) == NULL)
+		ft_printf("[ERR] 'ce'  may not work in this terminal\n");
+	if ((termcap->le = tgetstr("le", NULL)) == NULL)
+		ft_printf("[ERR] 'le'  may not work in this terminal\n");
+	if ((termcap->nd = tgetstr("nd", NULL)) == NULL)
+		ft_printf("[ERR] 'nd'  may not work in this terminal\n");
+	if ((termcap->sc = tgetstr("sc", NULL)) == NULL)
+		ft_printf("[ERR] 'sc'  may not work in this terminal\n");
+	if ((termcap->rc = tgetstr("rc", NULL)) == NULL)
+		ft_printf("[ERR] 'rc'  may not work in this terminal\n");
+	if ((termcap->sf = tgetstr("sf", NULL)) == NULL)
+		ft_printf("[ERR] 'sf'  may not work in this terminal\n");
+	if ((termcap->co = tgetnum("co")) == -1)
+		ft_printf("[ERR] 'co'  may not work in this terminal\n");
+	if ((termcap->cd = tgetstr("cd", NULL)) == NULL)
+		ft_printf("[ERR] 'cd'  may not work in this terminal\n");
+	if ((termcap->so = tgetstr("so", NULL)) == NULL)
+		ft_printf("[ERR] 'so'  may not work in this terminal\n");
+	if ((termcap->se = tgetstr("se", NULL)) == NULL)
+		ft_printf("[ERR] 'se'  may not work in this terminal\n");
+}
+
 t_term_cap	*term_init_cap(void)
 {
 	t_term_cap *termcap;
 
 	if (!(termcap = malloc(sizeof(*termcap))))
 		error_malloc_err();
-	if ((termcap->up = tgetstr("up", NULL)) == NULL)
-		ft_printf("[ERR] 'up' capability may not work in this terminal\n");
-	if ((termcap->ce = tgetstr("ce", NULL)) == NULL)
-		ft_printf("[ERR] 'ce' capability may not work in this terminal\n");
-	if ((termcap->le = tgetstr("le", NULL)) == NULL)
-		ft_printf("[ERR] 'le' capability may not work in this terminal\n");
-	if ((termcap->nd = tgetstr("nd", NULL)) == NULL)
-		ft_printf("[ERR] 'nd' capability may not work in this terminal\n");
-	if ((termcap->sc = tgetstr("sc", NULL)) == NULL)
-		ft_printf("[ERR] 'sc' capability may not work in this terminal\n");
-	if ((termcap->rc = tgetstr("rc", NULL)) == NULL)
-		ft_printf("[ERR] 'rc' capability may not work in this terminal\n");
-	if ((termcap->sf = tgetstr("sf", NULL)) == NULL)
-		ft_printf("[ERR] 'sf' capability may not work in this terminal\n");
-	if ((termcap->co = tgetnum("co")) == -1)
-		ft_printf("[ERR] 'co' capability may not work in this terminal\n");
-	if ((termcap->cd = tgetstr("cd", NULL)) == NULL)
-		ft_printf("[ERR] 'cd' capability may not work in this terminal\n");
-	if ((termcap->so = tgetstr("so", NULL)) == NULL)
-		ft_printf("[ERR] 'so' capability may not work in this terminal\n");
-	if ((termcap->se = tgetstr("se", NULL)) == NULL)
-		ft_printf("[ERR] 'se' capability may not work in this terminal\n");
+	term_init_fill_cap(termcap);
 	return (termcap);
 }
 
@@ -78,7 +83,7 @@ t_term_cap	*term_init(char **env)
 	return (termcap);
 }
 
-void		term_close()
+void		term_close(void)
 {
 	tcgetattr(0, &term);
 	term.c_lflag |= (ICANON | ECHO | ECHOCTL | ISIG);

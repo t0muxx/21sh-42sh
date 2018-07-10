@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:59:22 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/24 13:00:52 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/10 08:48:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	line_reset(t_buffer *tbuffer)
 {
-
 	if (tbuffer->state == READ_NORMAL)
 	{
 		cursor_save_pos(tbuffer);
