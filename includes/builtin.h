@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/31 13:50:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 09:12:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,21 @@ typedef struct	s_builtin
 void			builtin_get_builtin(t_builtin *builtin);
 int				builtin_check_builtin(char **cmd, char ***myenv);
 int				builtin_all(char **cmd, int nbr, char **myenv);
-
 int				builtin_echo(char **cmd, char ***myenv);
-
 int				builtin_env(char **cmd, char ***myenv);
 int				builtin_env_do(char **cmd, int *i);
 char			**builtin_env_get_env(char **cmd, int *i);
 int				builtin_env_do(char **cmd, int *i);
-
 int				builtin_setenv(char **cmd, char ***myenv);
-
 int				builtin_unsetenv(char **cmd, char ***myenv);
-
 int				builtin_exit(char **cmd, char ***myenv);
-
-int		builtin_cd(char **cmd, char ***env);
-int		cd_err_chdir(char *dir);
-int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env);
-int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env);
-int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env);
+int				builtin_cd(char **cmd, char ***env);
+int				cd_err_chdir(char *dir);
+int				cd_change_dir_p(char *oldpwd, char *pwd,
+char *dir, char ***env);
+int				cd_change_dir_dash(char *oldpwd, char **dir, char ***env);
+int				cd_change_dir_gen(char *oldpwd, char **pwd,
+char *dir, char ***env);
 int				cd_parse_opt(char **cmd);
 int				cd_check_opt(char *opt);
 int				cd_skip_opt(char **cmd);

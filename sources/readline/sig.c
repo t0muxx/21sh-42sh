@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 15:02:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 08:49:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,20 @@
 
 static	t_buffer g_tbuffer2;
 
+void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
+{
+	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1)
+	{
+		free(tbuffer->buffer);
+		term_close();
+		exit(EXIT_SUCCESS);
+	}
+}
+
 void	sig_handler(int sigid)
 {
 	struct winsize w;
-	
-	//ft_printf("\n\n ekfokeofkoefoef \n\n");
+
 	ioctl(0, TIOCGWINSZ, &w);
 	if (sigid == SIGINT)
 	{
@@ -43,7 +52,6 @@ void	sig_handler(int sigid)
 
 void	sig_intercept(t_buffer *tbuffer)
 {
-
 	g_tbuffer2 = *tbuffer;
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);

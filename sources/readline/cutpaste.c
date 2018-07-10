@@ -6,28 +6,18 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/23 17:49:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 08:48:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include "utils.h"
 
-void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
-{
-	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1)
-	{
-		free(tbuffer->buffer);
-		term_close();
-		exit(EXIT_SUCCESS);
-	}
-}
-
 void	input_select_left(t_buffer *tbuffer, char *read_buf)
 {
 	char cur_char;
 
-	if (ft_memcmp(read_buf, FT_KEY_ALT_LEFT, 
+	if (ft_memcmp(read_buf, FT_KEY_ALT_LEFT,
 	ft_strlen(FT_KEY_ALT_LEFT)) == 0)
 	{
 		if (tbuffer->cutend == 0)
@@ -73,8 +63,8 @@ void	input_copy(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == 11)
 	{
-		ft_memcpy(tbuffer->cutbuffer, 
-		tbuffer->buffer + tbuffer->cutstart, 
+		ft_memcpy(tbuffer->cutbuffer,
+		tbuffer->buffer + tbuffer->cutstart,
 		tbuffer->cutend - tbuffer->cutstart);
 		line_reset(tbuffer);
 	}

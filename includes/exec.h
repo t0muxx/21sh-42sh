@@ -6,28 +6,28 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 18:19:08 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/10 09:14:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-#include "t_process.h"
-#include "parser.h"
-#include "lexer.h"
-#include "astree.h"
+# include "t_process.h"
+# include "parser.h"
+# include "lexer.h"
+# include "astree.h"
 
 typedef struct s_node_type	t_node_type;
 
-typedef struct s_exec
+typedef struct	s_exec
 {
-	int	newfds[2];
-	int	oldfds[2];
-	pid_t	pid;
-	t_nodetype parent;
-	pid_t	pgid;
-	int		last_exec;
+	int			newfds[2];
+	int			oldfds[2];
+	pid_t		pid;
+	t_nodetype	parent;
+	pid_t		pgid;
+	int			last_exec;
 	t_process	*first_pid;
 	t_process	*process_pid;
 
@@ -41,7 +41,7 @@ struct	s_node_type
 	t_node_fun		fun;
 };
 
-extern t_node_type	node_fun[]; 
+extern t_node_type	node_fun[];
 
 void	greatand_redir(t_tkn *tkn);
 void	lessand_redir(t_tkn *tkn);
@@ -67,5 +67,10 @@ int		check_exec_exception(t_exec *exec);
 void	free_env(char **env);
 void	free_astree(t_astree *astree);
 void	free_tkn_lst(t_tkn *tkn);
+int		dup2_routine(int fd_dup, int io, int fd_close);
+int		close_routine(int fd[2]);
+int		cpy_fd_routine(int dest[2], int src[2]);
+int		pipe_err_pipe(void);
+int		pipe_err_fork(void);
 
 #endif

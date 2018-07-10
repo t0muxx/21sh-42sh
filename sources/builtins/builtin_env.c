@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/30 15:24:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 09:08:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**builtin_env_get_env(char **cmd, int *i)
 
 int		builtin_env(char **cmd, char ***myenv)
 {
-	/*int		i;
+	int		i;
 
 	i = 0;
 	while (cmd[i])
@@ -93,11 +93,8 @@ int		builtin_env(char **cmd, char ***myenv)
 	if (i == 1)
 		env_print(*myenv);
 	else
-		return (builtin_env_do(cmd, &i)); */
+		return (builtin_env_do(cmd, &i));
 	if (cmd)
 		;
-	ft_printf("PWD=%s\n", env_get_var("PWD", *myenv));
-	ft_printf("OLDPWD=%s\n", env_get_var("OLDPWD", *myenv));
-	ft_printf("CDPATH=%s\n", env_get_var("CDPATH", *myenv));
 	return (0);
 }

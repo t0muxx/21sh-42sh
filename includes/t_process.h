@@ -18,14 +18,7 @@
 
 typedef struct s_process
 {
-	char **argv;
 	pid_t pid;
-	char completed;
-	char stopped;
-	t_nodetype parent;
-	int	newfds[2];
-	int	oldfds[2];
-	int status;
 	struct s_process *next;
 
 }				t_process;

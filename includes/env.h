@@ -6,12 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 08:55:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 08:57:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/10 09:10:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
-# define ENV_H 
+# define ENV_H
 
 char	**env_create_copy(void);
 char	**env_create(void);
