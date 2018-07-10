@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/06/25 02:26:25 by cormarti         ###   ########.fr        #
+#    Updated: 2018/07/04 15:31:23 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(EXEC)node.c \
 			$(EXEC)pipe.c \
 			$(EXEC)exec.c \
+			$(EXEC)executor.c \
 			$(EXEC)cmd.c \
 			$(UTILS)string.c \
 			$(UTILS)makepath.c \
