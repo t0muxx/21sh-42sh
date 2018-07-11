@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/25 17:21:18 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/11 19:40:12 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "cursor.h"
 #include "key.h"
 #include "env.h"
-#include "builtin.h"
 #include "ext_fun_type.h"
 #include "parser.h"
 #include "astree.h"
@@ -148,7 +147,6 @@ int		main(void)
 		line[1] = 0;
 		history_add(line[0]);	
 		ft_putstr("\n");
-		builtin_check_builtin(line, &env);
 		tkn = lex(&line[0]);
 		if (parse(tkn))
 		{

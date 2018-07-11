@@ -6,12 +6,12 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 09:07:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:43:18 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtin.h"
+#include "minishell.h"
 
 int		builtin_check_builtin(char **cmd, char ***myenv)
 {

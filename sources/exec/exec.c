@@ -6,13 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/10 09:20:13 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:44:40 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
+#include "builtin.h"
 
 /* voir ce quon fait pour ca pose probleme pour ctrl+d*/
 
@@ -70,11 +71,14 @@ int		child_process(t_astree *astree, char **env)
 	int		i;
 	int		last_exec;
 	t_exec exec;
-
+	char		**cmd;
 	i = 0;
 	last_exec = 0;
 
 	exec.process_pid = NULL;
+	cmd = lst_arr(astree->arg);
+	if (astree->type == NT_CMD && builtin_check_builtin(cmd, &env) == 1)
+		return (0);
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");

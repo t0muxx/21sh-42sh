@@ -6,12 +6,14 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 09:12:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:42:16 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
+# include "lexer.h"
+# include "astree.h"
 
 # define BUILTINNBR 6
 
