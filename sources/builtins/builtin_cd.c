@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/11 19:47:28 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/11 23:48:40 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int			builtin_cd(char **cmd, char ***env)
 
 	opt = cd_parse_opt(cmd);
 	dir = cmd[cd_skip_opt(cmd)];
-	if (dir == NULL || ft_strlen(dir) == 0)
+	if (dir == NULL || ft_strlen(dir) == 0 || !ft_strcmp(dir, "~/"))
 	{
 		if (cd_manage_home(env, opt) == -1)
 			return (-1);
