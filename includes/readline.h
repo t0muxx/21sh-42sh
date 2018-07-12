@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/24 12:44:57 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/12 14:17:00 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define FT_KEY_CTRL_K "^K"
 # define FT_KEY_CTRL_P "^P"
 # define FT_KEY_CTRL_D "^D"
+# define FT_KEY_CTRL_C "^C"
 
 /*
 ** The double linked list for history
