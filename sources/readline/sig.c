@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/12 14:16:41 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/12 17:11:42 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	sig_handler(int sigid)
 	{
 		cursor_move_right(&g_tbuffer2, (int)ft_strlen(g_tbuffer2.buffer));
 		ft_putstr("\n");
+		ft_bzero((void *)&g_tbuffer2, sizeof(g_tbuffer2));
 		tbuffer_init(&g_tbuffer2, env_create_copy());
 		prompt_print(&g_tbuffer2);
 	}
