@@ -17,5 +17,12 @@
 
 int		node_and(t_astree *astree, char **env, int last_exec, t_exec *exec)
 {
-	return (0);
+	if (astree->left && astree->left->type == NT_CMD)
+	       exec->last_exec = fork_and_exec(astree->left, env);
+	if (check_exec_exception(exec))
+		return (0);
+	if (exec->last_exec == 0)
+		return (0);
+	else
+		return (fork_and_exec(astree->right, env));
 }

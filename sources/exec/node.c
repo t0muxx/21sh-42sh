@@ -32,20 +32,18 @@ int		node_ret(t_astree *astree)
 int		exec_node(t_astree *astree, char **env, t_exec *exec)
 {
 	int		i;
-	int		last_exec;
 
 	i = 0;
 	if (astree->left->type != NT_CMD)
 	{
 		if (astree->left->type != NT_CMD)
 			exec->parent = astree->type;
-		last_exec = exec_node(astree->left, env, exec);
+		exec->last_exec = exec_node(astree->left, env, exec);
 	}
-	if (astree->left->type == NT_OR_IF && last_exec == 0 && exec->last_exec > 0)
+/*	if (astree->left->type == NT_OR_IF && last_exec == 0 && exec->last_exec > 0)
 		exit(EXIT_SUCCESS);
-	if (astree->left->type == NT_AND_IF && last_exec == 0
-		&& exec->last_exec == 0)
-		exit(EXIT_SUCCESS);
+	if (astree->left->type == NT_AND_IF && exec->last_exec == 0)
+		exit(EXIT_SUCCESS);*/
 	while (i < 4)
 	{
 		if (node_fun[i].type == astree->type)
