@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 08:45:29 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/17 18:15:49 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,39 @@
 ** press enter
 */
 
-void			history_print(t_buffer *tbuffer, t_cmd_hist **next)
+void			history_print_reset(t_buffer *tbuffer)
 {
-	t_cmd_hist		**head;
 	char			*cmd;
 
-	head = tbuffer->head_hist;
 	line_go_begin(tbuffer);
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
 	tputs(tbuffer->termcap->cd, 0, ft_putcc);
 	prompt_print(tbuffer);
-	if ((*head) != NULL)
+	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
+	cmd = ft_strdup("");
+	ft_memcpy(tbuffer->buffer, cmd, ft_strlen(cmd));
+	insert_tbuffer(tbuffer);
+	free(cmd);
+}
+
+void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint)
+{
+	char			*cmd;
+
+	line_go_begin(tbuffer);
+	tbuffer->cnt = 0;
+	tbuffer->index = 0;
+	tputs(tbuffer->termcap->cd, 0, ft_putcc);
+	prompt_print(tbuffer);
+	if (toprint && (*toprint) != NULL)
 	{
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
-		cmd = ft_strdup((*head)->cmd);
+		cmd = ft_strdup((*toprint)->cmd);
 		ft_memcpy(tbuffer->buffer, cmd, ft_strlen(cmd));
 		insert_tbuffer(tbuffer);
 		free(cmd);
 	}
-	if (*next != NULL)
-		tbuffer->head_hist = next;
 }
 
 /*
@@ -103,7 +115,10 @@ void			history_add(char *cmd)
 
 	if ((fd = open(HISTORY_FILE, O_WRONLY | O_APPEND)) == -1)
 		ft_putstr_fd("Can't open .history\n", 2);
-	write(fd, cmd, ft_strlen(cmd));
-	write(fd, "\n", 1);
+	if (ft_strlen(cmd) != 0)
+	{
+		write(fd, cmd, ft_strlen(cmd));
+		write(fd, "\n", 1);
+	}
 	close(fd);
 }

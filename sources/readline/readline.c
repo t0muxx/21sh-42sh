@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/17 13:56:13 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/17 18:17:23 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*readline(t_buffer *tbuffer)
 	void		(**fptr)(t_buffer *, char *);
 	int			i;
 	struct winsize w;
+	t_cmd_hist **head;
 
 	i = 0;
 	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);
@@ -94,6 +95,8 @@ char	*readline(t_buffer *tbuffer)
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
 		i = 0;
+		head = tbuffer->head_hist;
+		//ft_printf("\nhead_hist |%s|\n", (*head)->cmd);
 		sig_intercept(tbuffer);
 		ioctl(0, TIOCGWINSZ, &w);
 		tbuffer->colnbr = w.ws_col;
@@ -141,8 +144,11 @@ int		main(void)
 	while (420)
 	{
 		tbuffer_init(&tbuffer, env);
-		head = history_read();
-		tbuffer.head_hist = &head;
+		if ((head = history_read()) != NULL)
+			tbuffer.head_hist = &head;
+		else
+			tbuffer.head_hist = NULL;
+		tbuffer.cur_hist = NULL;
 		line[0] = readline(&tbuffer);
 		line[1] = 0;
 		history_add(line[0]);	

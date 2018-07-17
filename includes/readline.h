@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/12 18:42:07 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/17 17:56:52 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct	s_buffer
 	int			state;
 	t_term_cap	*termcap;
 	t_cmd_hist	**head_hist;
+	t_cmd_hist	**cur_hist;
 
 }				t_buffer;
 
@@ -139,7 +140,8 @@ void			cursor_move_right(t_buffer *tbuffer, int cnt);
 void			cursor_move_left_next_word(t_buffer *tbuffer);
 void			cursor_move_right_next_word(t_buffer *tbuffer);
 t_cmd_hist		*history_read(void);
-void			history_print(t_buffer *tbuffer, t_cmd_hist **next);
+void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint);
+void			history_print_reset(t_buffer *tbuffer);
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 void			history_add(char *cmd);
