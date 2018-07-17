@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/12 18:45:15 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/17 13:56:13 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,10 @@ char	*readline(t_buffer *tbuffer)
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
 	prompt_print(tbuffer);
-	tbuffer->reset = 0;
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
 	{
 		i = 0;
 		sig_intercept(tbuffer);
-		if (tbuffer->reset == 1)
-			ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 		ioctl(0, TIOCGWINSZ, &w);
 		tbuffer->colnbr = w.ws_col;
 		read(0, read_buf, MAX_KEYCODE_SIZE);
