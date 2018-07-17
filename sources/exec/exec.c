@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/12 17:44:41 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/17 14:09:37 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		child_process(t_astree *astree, char **env)
 
 	exec.process_pid = NULL;
 	cmd = lst_arr(astree->arg);
-	if (*cmd != NULL && astree->type == NT_CMD && builtin_check_builtin(cmd, &env) == 1)
+	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, &env) == 1)
 		return (0);
 	if ((pid = fork()) == -1)
 	{

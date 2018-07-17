@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/24 12:44:57 by tomlulu          ###   ########.fr       */
+/*   Updated: 2018/07/12 18:42:07 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define FT_KEY_CTRL_K "^K"
 # define FT_KEY_CTRL_P "^P"
 # define FT_KEY_CTRL_D "^D"
+# define FT_KEY_CTRL_C "^C"
 
 /*
 ** The double linked list for history
@@ -87,6 +88,7 @@ typedef struct	s_term_cap
 typedef struct	s_buffer
 {
 	char		*buffer;
+	char		reset;
 	char		cutbuffer[BUFFER_SIZE];
 	char		c_buf;
 	int			cnt;
@@ -123,6 +125,7 @@ void			input_copy(t_buffer *tbuffer, char *read_buf);
 void			input_enter(t_buffer *tbuffer, char *read_buf);
 void			line_go_down(t_buffer *tbuffer, int cnt);
 void			input_ctrl_d(t_buffer *tbuffer, char *read_buf);
+void			input_ctrl_c(t_buffer *tbuffer, char *read_buf);
 void			insert_char(t_buffer *tbuffer, char *read_buf);
 void			insert_tbuffer(t_buffer *tbuffer);
 void			prompt_print(t_buffer *tbuffer);
