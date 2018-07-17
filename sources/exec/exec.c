@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/17 14:09:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/17 18:26:06 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
 #include "builtin.h"
+#include "utils.h"
 
 /* voir ce quon fait pour ca pose probleme pour ctrl+d*/
 
@@ -78,7 +79,11 @@ int		child_process(t_astree *astree, char **env)
 	exec.process_pid = NULL;
 	cmd = lst_arr(astree->arg);
 	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, &env) == 1)
+	{
+		utils_free_2darray((void **)cmd);
 		return (0);
+	}
+	utils_free_2darray((void **)cmd);
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
