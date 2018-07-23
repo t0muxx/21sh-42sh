@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/17 18:17:23 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/23 15:24:16 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,35 +79,39 @@ void	*readline_get_func_array(void)
 	return (fptr);
 }
 
+void	readline_loop(t_buffer *tbuffer, char *read_buf, void (**fptr)(t_buffer *, char *))
+{
+	int i;
+	t_cmd_hist **head;
+	struct winsize w;
+
+	i = 0;
+	head = tbuffer->head_hist;
+	sig_intercept(tbuffer);
+	ioctl(0, TIOCGWINSZ, &w);
+	tbuffer->colnbr = w.ws_col;
+	read(0, read_buf, MAX_KEYCODE_SIZE);
+	while (fptr[i])
+	{
+		(fptr[i])(tbuffer, read_buf);
+		i++;
+	}
+	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
+
+}
+
 char	*readline(t_buffer *tbuffer)
 {
 	char		*read_buf;
 	void		(**fptr)(t_buffer *, char *);
-	int			i;
-	struct winsize w;
-	t_cmd_hist **head;
 
-	i = 0;
-	read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE);
+	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
+		return (NULL);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
 	prompt_print(tbuffer);
 	while (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
-	{
-		i = 0;
-		head = tbuffer->head_hist;
-		//ft_printf("\nhead_hist |%s|\n", (*head)->cmd);
-		sig_intercept(tbuffer);
-		ioctl(0, TIOCGWINSZ, &w);
-		tbuffer->colnbr = w.ws_col;
-		read(0, read_buf, MAX_KEYCODE_SIZE);
-		while (fptr[i])
-		{
-			(fptr[i])(tbuffer, read_buf);
-			i++;
-		}
-		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
-	}
+		readline_loop(tbuffer, read_buf, fptr);
 	free(fptr);
 	free(read_buf);
 	return (tbuffer->buffer);
