@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/17 17:56:52 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/23 16:21:14 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ typedef struct	s_buffer
 	int			curs_pos;
 	int			state;
 	t_term_cap	*termcap;
-	t_cmd_hist	**head_hist;
-	t_cmd_hist	**cur_hist;
+	t_cmd_hist	*head_hist;
+	t_cmd_hist	*cur_hist;
 
 }				t_buffer;
 

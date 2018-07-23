@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/23 15:24:16 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/23 17:01:02 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,9 @@ void	*readline_get_func_array(void)
 void	readline_loop(t_buffer *tbuffer, char *read_buf, void (**fptr)(t_buffer *, char *))
 {
 	int i;
-	t_cmd_hist **head;
 	struct winsize w;
 
 	i = 0;
-	head = tbuffer->head_hist;
 	sig_intercept(tbuffer);
 	ioctl(0, TIOCGWINSZ, &w);
 	tbuffer->colnbr = w.ws_col;
@@ -135,49 +133,3 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	tbuffer->termcap = cur_termcap;
 }
 
-int		main(void)
-{
-	char			*line[2];
-	t_cmd_hist		*head;
-	t_buffer		tbuffer;
-	char			**env;
-	t_tkn			*tkn;
-	t_astree		*astree;
-
-	env = env_create_copy();
-	while (420)
-	{
-		tbuffer_init(&tbuffer, env);
-		if ((head = history_read()) != NULL)
-			tbuffer.head_hist = &head;
-		else
-			tbuffer.head_hist = NULL;
-		tbuffer.cur_hist = NULL;
-		line[0] = readline(&tbuffer);
-		line[1] = 0;
-		history_add(line[0]);	
-		ft_putstr("\n");
-		tkn = lex(&line[0]);
-		if (parse(tkn))
-		{
-			while (tkn->next)
-			{
-				if (tkn->next->type == CHR_NEWLINE)
-					break ;
-				tkn = tkn->next;
-			}
-			tkn->next = NULL;
-			astree = ast_build(tkn);
-		//	ast_debug(astree);
-			term_close();
-			free(tbuffer.termcap);
-			child_process(astree, env);
-			free_astree(astree);
-		}
-		free_tkn_lst(tkn);
-		history_lst_free(head);
-		free(line[0]);
-	}
-	free_astree(astree);
-	free_env(env);
-}
