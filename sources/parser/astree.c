@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/05 17:39:03 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 12:35:26 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ static t_astree		*ast_new_node(t_tkn *token, int arg_len)
 		return (NULL);
 	node->type = node_type(token->type);
 	node->arg = (node->type == NT_CMD) ? dup_arg(token, arg_len) : NULL;
+	node->is_root_node = 0 ;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
