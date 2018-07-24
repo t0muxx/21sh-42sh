@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 14:05:53 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 17:03:41 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ void		pipe_wait_err(int status, t_exec *exec)
 		close(exec->oldfds[1]);
 		while (exec->process_pid->next != NULL)
 		{
-	//		kill((pid_t)exec->process_pid, SIGKILL);
+			kill((pid_t)exec->process_pid, SIGKILL);
 			exec->process_pid = exec->process_pid->next;
 		}
-	//	waitpid((exec->process_pid->pid), &status2, 0);
 		exec->err_pipeline = -1;
 	}
 }
@@ -73,6 +72,8 @@ void		pipe_routine_astree_right_pere(t_astree *astree, char **env,
 t_exec *exec, t_process *new)
 {
 	int status;
+	int status3;
+	pid_t pid;
 
 	new = t_process_new(exec->pid);
 	t_process_add(&(exec->process_pid), new);
@@ -84,11 +85,17 @@ t_exec *exec, t_process *new)
 	else
 	{
 		close_routine(exec->newfds);
-		while (waitpid(-1, &status, 0) > 0)
-			pipe_wait_err(status, exec);
+		close_routine(exec->oldfds);
+		while ((pid = waitpid(-1, &status3, 0)) > 0)
+		{
+			if (pid == new->pid)
+				status = status3;
+			pipe_wait_err(status3, exec);
+			if (exec->err_pipeline == -1)
+				break ;
+		}
 		exec->status = status;
 		dprintf(2, "|%d|\n", WEXITSTATUS(status));
-		close_routine(exec->oldfds);
 	}
 }
 

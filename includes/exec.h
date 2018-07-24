@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 12:57:10 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 15:08:22 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ typedef struct	s_exec
 	int			oldfds[2];
 	pid_t		pid;
 	t_nodetype	parent;
-	pid_t		pgid;
 	int			last_exec;
 	int			prec_exec;
 	t_process	*first_pid;
 	t_process	*process_pid;
+	pid_t		last_pid;
 	int		status;
 	int		err_pipeline;
 
