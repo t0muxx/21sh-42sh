@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 13:58:58 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 19:55:19 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int		child_process(t_astree *astree, char **env)
 	last_exec = 0;
 	exec.process_pid = NULL;
 	exec.err_pipeline = 0;
+	exec.pipeline = NULL;
+	exec.parent = 0;
 	astree->is_root_node = 0;
 	exec.prec_exec = 0;
 	if (astree->type == NT_CMD)

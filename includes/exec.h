@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 15:08:22 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 18:39:37 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,19 @@
 
 typedef struct s_node_type	t_node_type;
 
+typedef	struct	s_pipeline
+{
+	t_astree *node;
+	char **cmd;
+	struct s_pipeline *next;
+
+}		t_pipeline;
+
 typedef struct	s_exec
 {
 	int			newfds[2];
 	int			oldfds[2];
+	t_pipeline		*pipeline;
 	pid_t		pid;
 	t_nodetype	parent;
 	int			last_exec;
@@ -71,11 +80,10 @@ int		check_exec_exception(t_exec *exec);
 void		free_env(char **env);
 void		free_astree(t_astree *astree);
 void		free_tkn_lst(t_tkn *tkn);
-int		dup2_routine(int fd_dup, int io, int fd_close);
-int		close_routine(int fd[2]);
-int		cpy_fd_routine(int dest[2], int src[2]);
-int		pipe_err_pipe(void);
-int		pipe_err_fork(void);
+void		pipeline_add(t_pipeline **last, t_pipeline *new);
+t_pipeline	*pipeline_new(t_astree *astree);
+void		pipeline_print(t_pipeline *head);
+
 void		sig_child(void);
 void		sig_father(void);
 

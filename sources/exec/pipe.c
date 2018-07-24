@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 17:03:41 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/24 19:55:18 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,116 +19,92 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-int			pipe_routine_astree_left(t_astree *astree, char **env,
-t_exec *exec, t_process *new)
+int	pipeline_exec_cmd(char **cmd, char **env)
 {
-	t_astree	*cmd;
-	pid_t		pid;
+	char *cmd_path;
 
-	if (astree->left->type != NT_PIPE && (cmd = astree->left))
+	if (cmd)
 	{
-		if (astree->left->type == NT_OR_IF || astree->left->type == NT_AND_IF)
-			cmd = astree->left->right;
-		if (pipe(exec->newfds) == -1)
-			return (pipe_err_pipe());
-		if ((pid = fork()) == -1)
-			return (pipe_err_fork());
-		else if (pid == 0)
-		{
-			sig_child();
-			dup2_routine(exec->newfds[1], 1, exec->newfds[0]);
-			exec_cmd(cmd, env);
-		}
-		else
-		{
-			sig_father();
-			new = t_process_new(pid);
-			t_process_add(&(exec->process_pid), new);
-			close(exec->newfds[1]);
-			cpy_fd_routine(exec->oldfds, exec->newfds);
-		}
+		cmd_path = path_find_in_path(cmd[0], env);
+		execve(cmd_path, cmd, env);
+		error_print(CMDNOTFOUND, cmd[0], "");
 	}
-	return (0);
+	exit(EXIT_FAILURE);
+	return (1);
 }
 
-void		pipe_wait_err(int status, t_exec *exec)
+void	pipeline_exec(t_pipeline *pipeline, t_exec *exec, int read_pipe, char **env)
 {
-	int status2;
-
-	if (WEXITSTATUS(status) == EXIT_FAILURE)
-	{
-		close(exec->oldfds[0]);
-		close(exec->oldfds[1]);
-		while (exec->process_pid->next != NULL)
-		{
-			kill((pid_t)exec->process_pid, SIGKILL);
-			exec->process_pid = exec->process_pid->next;
-		}
-		exec->err_pipeline = -1;
-	}
-}
-
-void		pipe_routine_astree_right_pere(t_astree *astree, char **env,
-t_exec *exec, t_process *new)
-{
-	int status;
-	int status3;
+	int pipefd[2];
 	pid_t pid;
+	int status;
 
-	new = t_process_new(exec->pid);
-	t_process_add(&(exec->process_pid), new);
-	if (astree->is_root_node == 0)
-	{
-		close(exec->newfds[1]);
-		cpy_fd_routine(exec->oldfds, exec->newfds);
-	}
-	else
-	{
-		close_routine(exec->newfds);
-		close_routine(exec->oldfds);
-		while ((pid = waitpid(-1, &status3, 0)) > 0)
-		{
-			if (pid == new->pid)
-				status = status3;
-			pipe_wait_err(status3, exec);
-			if (exec->err_pipeline == -1)
-				break ;
-		}
-		exec->status = status;
-		dprintf(2, "|%d|\n", WEXITSTATUS(status));
-	}
-}
-
-int			pipe_routine(t_astree *astree, char **env, t_exec *exec)
-{
-	int			newfds[2];
-	t_process	*new;
-
-	pipe_routine_astree_left(astree, env, exec, new);
-	if (pipe(exec->newfds) == -1)
-		return (pipe_err_pipe());
-	if ((exec->pid = fork()) == -1)
-		return (pipe_err_fork());
-	else if (exec->pid == 0)
+	if (pipeline == NULL)
+		return ;
+	if (pipe(pipefd) == -1)
+		return ;
+	if ((pid = fork()) == -1)
+		return ;
+	if (pid == 0)
 	{
 		sig_child();
-		new = t_process_new(getpid());
-		t_process_add(&(exec->process_pid), new);
-		dup2_routine(exec->oldfds[0], 0, exec->oldfds[1]);
-		if (astree->is_root_node == 0)
-			dup2_routine(exec->newfds[1], 1, exec->newfds[0]);
-		exec_cmd(astree->right, env);
+		if (read_pipe != 0)
+		{
+			dup2(read_pipe, 0);
+			close(read_pipe);
+		}
+		if (pipeline->next != NULL)
+		{
+			dup2(pipefd[1], 1);
+		}
+		close(pipefd[1]);
+		close(pipefd[0]);
+		pipeline_exec_cmd(pipeline->cmd, env);
 	}
 	else
 	{
 		sig_father();
-		pipe_routine_astree_right_pere(astree, env, exec, new);
+		if (read_pipe != 0)
+			close(read_pipe);
+		close(pipefd[1]);
+		pipeline_exec(pipeline->next, exec, pipefd[0], env);
+		close(pipefd[0]);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			exec->status = WEXITSTATUS(status);
+		else
+
 	}
-	return (0);
+	return ;
+
 }
 
-int			node_pipe(t_astree *astree, char **env, t_exec *exec)
+int	node_pipe(t_astree *astree, char **env, t_exec *exec)
 {
-	pipe_routine(astree, env, exec);
+	t_pipeline *new;
+
+	if (astree->is_root_node == 0)
+	{
+		if (astree->left->type == NT_CMD)
+		{
+			new = pipeline_new(astree->left);
+			pipeline_add((&exec->pipeline), new);
+		}
+		new = pipeline_new(astree->right);
+		pipeline_add((&exec->pipeline), new);
+		return (0);
+
+	}
+	else
+	{
+		if (astree->left->type == NT_CMD)
+		{
+			new = pipeline_new(astree->left);
+			pipeline_add((&exec->pipeline), new);
+		}
+		new = pipeline_new(astree->right);
+		pipeline_add((&exec->pipeline), new);
+		pipeline_exec(exec->pipeline, exec, 0, env);
+	}
 	return (exec->status);
 }
