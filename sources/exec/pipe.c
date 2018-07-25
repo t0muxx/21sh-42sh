@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 19:55:18 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 13:32:57 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include "builtin.h"
 
 int	pipeline_exec_cmd(char **cmd, char **env)
 {
@@ -59,7 +60,9 @@ void	pipeline_exec(t_pipeline *pipeline, t_exec *exec, int read_pipe, char **env
 		}
 		close(pipefd[1]);
 		close(pipefd[0]);
-		pipeline_exec_cmd(pipeline->cmd, env);
+		if (*(pipeline->cmd) && builtin_check_builtin(pipeline->cmd, &env) == 1)
+			exit(EXIT_SUCCESS);
+		exec_cmd(pipeline->node, env);
 	}
 	else
 	{
@@ -70,9 +73,8 @@ void	pipeline_exec(t_pipeline *pipeline, t_exec *exec, int read_pipe, char **env
 		pipeline_exec(pipeline->next, exec, pipefd[0], env);
 		close(pipefd[0]);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			exec->status = WEXITSTATUS(status);
-		else
+		if (pipeline->next == NULL)
+			exec->status = status;
 
 	}
 	return ;
@@ -105,6 +107,8 @@ int	node_pipe(t_astree *astree, char **env, t_exec *exec)
 		new = pipeline_new(astree->right);
 		pipeline_add((&exec->pipeline), new);
 		pipeline_exec(exec->pipeline, exec, 0, env);
+		pipeline_free(exec->pipeline);
+		exec->pipeline = NULL;
 	}
-	return (exec->status);
+	return (exit_status(exec->status));
 }

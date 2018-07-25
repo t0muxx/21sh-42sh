@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/24 18:53:19 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 13:15:27 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,35 @@ t_pipeline	*pipeline_new(t_astree *astree)
 		return (NULL);
 	else
 	{
+		if (!(new->node = malloc(sizeof(t_astree))))
+			return (NULL);
+		new->node->type = astree->type;
+		if (!(new->node->arg = malloc(sizeof(t_tkn))))
+			return (NULL);
+		ft_memcpy(new->node->arg, astree->arg, sizeof(t_tkn));
+		new->node->left = NULL;
+		new->node->right = NULL;
 		new->cmd = lst_arr(astree->arg);
 	}
 	new->next = NULL;
 	return (new);
+}
+
+void	pipeline_free(t_pipeline *head)
+{
+	t_pipeline *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->cmd);
+		free(tmp->node->arg);
+		free(tmp->node);
+		free(tmp);
+		tmp = NULL;
+	}
+	head = NULL;
 }
 
 void	pipeline_print(t_pipeline *head)

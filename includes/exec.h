@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/24 18:39:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 13:34:29 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,11 @@ typedef	struct	s_pipeline
 
 typedef struct	s_exec
 {
-	int			newfds[2];
-	int			oldfds[2];
 	t_pipeline		*pipeline;
-	pid_t		pid;
 	t_nodetype	parent;
 	int			last_exec;
 	int			prec_exec;
-	t_process	*first_pid;
-	t_process	*process_pid;
-	pid_t		last_pid;
 	int		status;
-	int		err_pipeline;
 
 }				t_exec;
 
@@ -83,6 +76,7 @@ void		free_tkn_lst(t_tkn *tkn);
 void		pipeline_add(t_pipeline **last, t_pipeline *new);
 t_pipeline	*pipeline_new(t_astree *astree);
 void		pipeline_print(t_pipeline *head);
+void	pipeline_free(t_pipeline *head);
 
 void		sig_child(void);
 void		sig_father(void);

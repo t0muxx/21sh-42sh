@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/07/23 20:45:30 by tomux            ###   ########.fr        #
+#    Updated: 2018/07/25 13:39:18 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,6 @@ SRCS = 		$(READLINE)readline.c \
 			$(UTILS)makepath.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
-			$(UTILS)utils_t_process.c \
 		   	$(MEM)free_fun.c \
 			builtin.c \
 			path.c \
