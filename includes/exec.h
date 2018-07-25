@@ -6,14 +6,13 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 13:34:29 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 14:00:22 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "t_process.h"
 # include "parser.h"
 # include "lexer.h"
 # include "astree.h"

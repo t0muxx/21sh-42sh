@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 13:35:11 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 14:01:04 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "../../includes/exec.h"
 #include "builtin.h"
 #include "utils.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 /* voir ce quon fait pour ca pose probleme pour ctrl+d*/
 
@@ -94,6 +96,6 @@ int		child_process(t_astree *astree, char **env)
 	}
 	if (exec.last_exec == SIGINT || exec.last_exec == SIGKILL)
 		ft_putstr("\n");
-	ft_printf("last_exec |%d|\n", exec.last_exec);
+	//ft_printf("last_exec |%d|\n", exec.last_exec);
 	return (0);
 }
