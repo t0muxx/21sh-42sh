@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/23 19:40:25 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/25 23:58:34 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,69 @@
 #include "astree.h"
 #include "exec.h"
 #include "env.h"
+
+
+void		ast_set_parent(t_astree *astree)
+{
+	t_nodetype tmp;
+
+	tmp = -2;
+	while (astree)
+	{
+		astree->parent = tmp;
+		tmp = astree->type;
+		astree = astree->left;
+	}
+}
+
+void		ast_set_rootpipe(t_astree *astree)
+{
+	int rootpipe;
+
+	rootpipe = 1;
+	while (astree)
+	{
+		rootpipe = 1;
+		
+		while (astree && astree->type != NT_PIPE)
+		{
+			astree = astree->left;
+		}
+		while (astree && astree->type == NT_PIPE)
+		{
+			astree->root_pipe = rootpipe;
+			rootpipe = 0;
+			astree = astree->left;
+		}
+
+	}
+}
+
+void		print_ast(t_astree *astree)
+{
+	char **cmd;
+
+	if (astree == NULL)
+		return ;
+	print_ast(astree->left);
+	ft_printf("type = ");
+	switch(astree->type)
+	{
+		case 1: ft_printf("PIPE"); break;
+		case 2: ft_printf("SEMI"); break;
+		case 3: ft_printf("CMD"); break;
+		case 4: ft_printf("AND"); break;
+		case 5: ft_printf("OR_IF"); break;
+		case 6: ft_printf("AND_IF"); break;
+
+	}
+	ft_putstr(" ");
+	cmd = lst_arr(astree->arg);
+	ft_printf("cmd = |%s| ", cmd[0]);
+	ft_printf("parent = |%d |", astree->parent);
+	ft_printf("root_pipe = |%d|\n", astree->root_pipe);
+	print_ast(astree->right);
+}
 
 char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
@@ -43,6 +106,9 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char **env)
 	astree = ast_build(tkn);
 	term_close();
 	free(tbuffer->termcap);
+	ast_set_parent(astree);
+	ast_set_rootpipe(astree);
+	print_ast(astree);
 	child_process(astree, env);
 	free_astree(astree);
 }
@@ -59,6 +125,8 @@ void		do_ast_simple(t_tkn *tkn, char **env)
 	}
 	tkn->next = NULL;
 	astree = ast_build(tkn);
+	ast_set_parent(astree);
+	ast_set_rootpipe(astree);
 	child_process(astree, env);
 	free_astree(astree);
 }

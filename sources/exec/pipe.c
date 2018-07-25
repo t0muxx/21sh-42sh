@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 13:32:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/26 00:53:34 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,31 @@ void	pipeline_exec(t_pipeline *pipeline, t_exec *exec, int read_pipe, char **env
 
 }
 
+void	pipeline_print(t_pipeline *pipeline)
+{
+	while (pipeline)
+	{
+		ft_printf("|%s|->", pipeline->cmd[0]);
+		pipeline = pipeline->next;
+	}
+	ft_printf("\n");
+
+}
+
 int	node_pipe(t_astree *astree, char **env, t_exec *exec)
 {
 	t_pipeline *new;
 
-	if (astree->is_root_node == 0)
+	if (astree->root_pipe == 0)
 	{
 		if (astree->left->type == NT_CMD)
 		{
 			new = pipeline_new(astree->left);
+			pipeline_add((&exec->pipeline), new);
+		}
+		if (astree->left->type == NT_SEMI)
+		{
+			new = pipeline_new(astree->left->right);
 			pipeline_add((&exec->pipeline), new);
 		}
 		new = pipeline_new(astree->right);
@@ -104,8 +120,14 @@ int	node_pipe(t_astree *astree, char **env, t_exec *exec)
 			new = pipeline_new(astree->left);
 			pipeline_add((&exec->pipeline), new);
 		}
+		if (astree->left->type == NT_SEMI)
+		{
+			new = pipeline_new(astree->left->right);
+			pipeline_add((&exec->pipeline), new);
+		}
 		new = pipeline_new(astree->right);
 		pipeline_add((&exec->pipeline), new);
+	//	pipeline_print(exec->pipeline);
 		pipeline_exec(exec->pipeline, exec, 0, env);
 		pipeline_free(exec->pipeline);
 		exec->pipeline = NULL;

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 10:00:36 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/07/26 00:04:12 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 int		node_semi(t_astree *astree, char **env, t_exec *exec)
 {
-	if (astree->left && astree->left->type == NT_CMD)
-		exec->last_exec = fork_and_exec(astree->left, env);
-	if (check_exec_exception(exec))
-		return (0);
+	if (exec->prec_exec == -2 && astree->left->type == NT_CMD)
+		fork_and_exec(astree->left, env);
+	if (astree->parent == 2 || astree->parent == -2)
+		fork_and_exec(astree->right, env);
 	else
-		return (fork_and_exec(astree->right, env));
+		return (0);
 }

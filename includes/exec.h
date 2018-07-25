@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 14:00:22 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/26 00:19:51 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_exec
 	int			last_exec;
 	int			prec_exec;
 	int		status;
+	int		dont;
 
 }				t_exec;
 

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 01:40:56 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/07/25 23:31:31 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ enum	e_nodetype
 struct	s_astree
 {
 	t_nodetype	type;
+	t_nodetype	parent;
+	int		root_pipe;
 	t_tkn		*arg;
 	t_astree	*left;
 	t_astree	*right;

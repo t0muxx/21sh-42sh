@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 14:01:04 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/26 00:21:24 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int		child_process(t_astree *astree, char **env)
 	last_exec = 0;
 	exec.pipeline = NULL;
 	exec.parent = 0;
-	exec.prec_exec = 0;
+	exec.dont = 0;
+	exec.prec_exec = -2;
 	astree->is_root_node = 0;
 	if (astree->type == NT_CMD)
 		exec.last_exec = fork_and_exec(astree, env);
@@ -97,5 +98,5 @@ int		child_process(t_astree *astree, char **env)
 	if (exec.last_exec == SIGINT || exec.last_exec == SIGKILL)
 		ft_putstr("\n");
 	//ft_printf("last_exec |%d|\n", exec.last_exec);
-	return (0);
+	return (exec.last_exec);
 }
