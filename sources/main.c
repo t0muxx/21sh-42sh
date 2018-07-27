@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/25 23:58:34 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/26 00:59:57 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char **env)
 	free(tbuffer->termcap);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
-	print_ast(astree);
+//	print_ast(astree);
 	child_process(astree, env);
 	free_astree(astree);
 }
