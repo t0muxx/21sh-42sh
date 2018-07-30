@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/28 13:09:02 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:46:08 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_tkn			*lex(char **str)
 	char		*line;
 	t_tkn_state	state;
 
+	ft_printf("est-ce que je bloque ici ? lexer \n");
 	line = ft_strdup(*str);
 	tkn = tkn_init(1);
 	state = STATE_IDLE;

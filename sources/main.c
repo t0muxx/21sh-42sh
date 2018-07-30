@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/30 17:24:38 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:46:10 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
 	free(tbuffer->termcap);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
-//	print_ast(astree);
+	print_ast(astree);
 	child_process(astree, env);
 	free_astree(astree);
 }
@@ -160,9 +160,11 @@ int		main(void)
 	while (420)
 	{
 		do_read(&tbuffer, line, env);
+		ft_printf("|%s|\n", line[0]);
 		history_add(line[0]);
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
+		ft_printf("est-ce que je bloque ici ? lexer+1 main \n");
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
 		free_tkn_lst(tkn);
