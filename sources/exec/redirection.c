@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 11:37:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 12:31:18 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ static void	great_redir(t_tkn *tkn)
 {
 	int		fd;
 	int		from;
+	
+	if (access(tkn->next->data, R_OK) == -1 && access(tkn->next->data, F_OK) == 0)
+	{
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit(EXIT_FAILURE);
+	}	
 
 	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
@@ -48,15 +55,26 @@ static void	great_redir(t_tkn *tkn)
 static void	less_redir(t_tkn *tkn)
 {
 	int		fd;
-
-	if ((fd = open(tkn->data, O_RDONLY,
+	
+	if (access(tkn->next->data, R_OK) == -1 && access(tkn->next->data, F_OK) == 0)
+	{
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit(EXIT_FAILURE);
+	}	
+	if ((fd = open(tkn->next->data, O_RDONLY,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
-		ft_putstr("fail to open ");
-		ft_putendl(tkn->data);
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		close(fd);
+		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-		ft_putendl("fail dup2");
+	{
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
 }
 
@@ -64,14 +82,25 @@ static void	dgreat_redir(t_tkn *tkn)
 {
 	int		fd;
 
+	if (access(tkn->next->data, R_OK) == -1 && access(tkn->next->data, F_OK) == 0)
+	{
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit(EXIT_FAILURE);
+	}	
 	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_APPEND,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
-		ft_putstr("fail to open ");
-		ft_putendl(tkn->data);
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		close(fd);
+		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		ft_putendl("fail dup2");
+	{
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
 }
 

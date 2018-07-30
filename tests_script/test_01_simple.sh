@@ -59,7 +59,7 @@ echo "ls -la >> result/b_5.out" | bash
 echo "ls -la >> result/5.out" | ../21sh 
 dotest b_5.out 5.out
 echo "redir <"
-echo "cat < result/b_5.out" | bash > result/b6.out
+echo "cat < result/b_5.out" | bash > result/b_6.out
 echo "cat < result/5.out" | ../21sh > result/6.out
 dotest b_6.out 6.out
 #######################################################

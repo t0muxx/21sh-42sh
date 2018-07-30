@@ -55,3 +55,52 @@ echo "mkdir test && cd test ; touchc a && touch b ; ls -la | wc > out.txt || ls 
 echo "mkdir test && cd test ; touchc a && touch b ; ls -la | wc > out.txt || ls | wc > out.txt && cat out.txt ; cd .. ; rm -rf test" | ../21sh > result/20.out
 dotest b_20.out 20.out
 #######################################################
+
+##################### TEST NUM 9 ######################
+echo " --- > TEST 10 < ---"
+echo "redir hard "
+mkdir tmp
+touch tmp/no_right
+touch tmp/right
+ls -la > tmp/no_right
+ls -la > tmp/right
+echo "file doesnt exist "
+echo "cat < tmpxx" | bash > result/b_21.out
+echo "cat < tmpxx" | ../21sh > result/21.out
+dotest b_21.out 21.out
+echo "no right on file "
+chmod 000 tmp/no_right
+echo "cat < tmp/no_right" | bash > result/b_22.out
+echo "cat < tmp/no_right" | ../21sh > result/22.out
+dotest b_22.out 22.out
+echo "file exist "
+echo "cat < tmp/right" | bash > result/b_23.out
+echo "cat < tmp/right" | ../21sh > result/23.out
+dotest b_23.out 23.out
+echo "no right on file > "
+chmod 000 tmp/no_right
+echo "ls -la > tmp/no_right" | bash > result/b_23.out
+echo "ls -la > tmp/no_right" | ../21sh > result/23.out
+dotest b_23.out 23.out
+echo "no right on file >> "
+chmod 000 tmp/no_right
+echo "ls -la >> tmp/no_right" | bash > result/b_24.out
+echo "ls -la >> tmp/no_right" | ../21sh > result/24.out
+dotest b_24.out 24.out
+rm -rf tmp
+echo "multiple redir "
+mkdir tmp_b
+mkdir tmp
+echo "ceci est un test" > tmp_b/tmp4
+echo "ceci est un test" > tmp/tmp4
+echo "cat > tmp_b/tmp > tmp_b/tmp2 > tmp_b/tmp3 < tmp_b/tmp4" | bash
+echo "cat > tmp/tmp > tmp/tmp2 > tmp/tmp3 < tmp/tmp4" | ../21sh
+ls -l tmp_b/ > result/b_25.out
+ls -l tmp/ >  result/25.out
+dotest b_25.out 25.out
+echo "cat tmp_b/tmp ; cat tmp_b/tmp2 ; cat tmp_b/tmp3 ; cat tmp_b/tmp4" | bash > result/b_26.out
+echo "cat tmp/tmp ; cat tmp/tmp2 ; cat tmp/tmp3 ; cat tmp/tmp4" | ../21sh > result/26.out
+dotest b_26.out 26.out
+rm -rf tmp_b
+rm -rf tmp
+#######################################################
