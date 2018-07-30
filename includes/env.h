@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 08:55:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 09:10:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:56:46 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	env_print(char **myenv);
 char	*env_get_var(char *name, char **myenv);
 int		env_until_equal(char *var);
 int		env_delete_var(char *name, char ***myenv);
-char	**env_add_var(char *name, char *value, char **myenv);
+char	**env_add_var(char *name, char *value, char ***myenv);
 int		env_update_var(char *name, char *value, char **myenv);
 
 #endif

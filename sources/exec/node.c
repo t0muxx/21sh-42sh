@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 13:59:32 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:16:14 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		node_ret(t_astree *astree)
 		return (1);
 }
 
-int		exec_node(t_astree *astree, char **env, t_exec *exec)
+int		exec_node(t_astree *astree, char ***env, t_exec *exec)
 {
 	int		i;
 

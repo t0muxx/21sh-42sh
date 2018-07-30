@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 09:08:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:14:10 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	**builtin_env_get_env(char **cmd, int *i)
 		if ((iopt = builtin_env_check_i(cmd)) == 0)
 		{
 			if (env_update_var(var[0], var[1], newenv) == 0)
-				newenv = env_add_var(var[0], var[1], newenv);
+				newenv = env_add_var(var[0], var[1], &newenv);
 		}
 		else
-			newenv = env_add_var(var[0], var[1], newenv);
+			newenv = env_add_var(var[0], var[1], &newenv);
 		utils_free_2darray((void **)var);
 		(*i)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/05/31 14:44:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:13:02 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env)
 		return (-1);
 	}
 	if ((env_update_var("OLDPWD", oldpwd, *env)) == 0)
-		*env = env_add_var("OLDPWD", oldpwd, *env);
+		*env = env_add_var("OLDPWD", oldpwd, env);
 	pwd = getcwd(pwd, PATH_MAX);
 	env_update_var("PWD", pwd, *env);
 	free(pwd);
@@ -77,9 +77,9 @@ int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env)
 		return (-1);
 	}
 	if (env_update_var("OLDPWD", oldpwd, *env) == 0)
-		*env = env_add_var("OLDPWD", oldpwd, *env);
+		*env = env_add_var("OLDPWD", oldpwd, env);
 	if (env_update_var("PWD", dir, *env) == 0)
-		*env = env_add_var("PWD", dir, *env);
+		*env = env_add_var("PWD", dir, env);
 	free(dir);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 16:12:49 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:20:31 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 {
 	t_term_cap		*cur_termcap;
 
-	printf("here |%p|\n", env);	
 	cur_termcap = term_init(env);
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;

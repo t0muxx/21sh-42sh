@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 16:18:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:18:55 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,16 @@ int		exit_status(int status)
 	return (0);
 }
 
-int		fork_and_exec(t_astree *astree, char **env)
+int		fork_and_exec(t_astree *astree, char ***env)
 {
 	pid_t	pid;
 	int		status;
 	char		**cmd;
 
 	cmd = lst_arr(astree->arg);
-	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, &env) == 1)
+	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, env) == 1)
 	{
 		utils_free_2darray((void **)cmd);
-		printf("after myenv : |%p|\n", env);
 		return (0);
 	}
 	utils_free_2darray((void **)cmd);
@@ -63,7 +62,7 @@ int		fork_and_exec(t_astree *astree, char **env)
 	else if (pid == 0)
 	{
 		sig_child();
-		exec_cmd(astree, env);
+		exec_cmd(astree, *env);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
@@ -75,7 +74,7 @@ int		fork_and_exec(t_astree *astree, char **env)
 	return (0);
 }
 
-int		child_process(t_astree *astree, char **env)
+int		child_process(t_astree *astree, char ***env)
 {
 	pid_t	pid;
 	int		last_exec;
@@ -96,9 +95,7 @@ int		child_process(t_astree *astree, char **env)
 			astree->is_root_node = 1;
 		exec.last_exec = exec_node(astree, env, &exec);
 	}
-	printf("in child process|%p|\n", env);	
 	if (exec.last_exec == SIGINT || exec.last_exec == SIGKILL)
 		ft_putstr("\n");
-	//ft_printf("last_exec |%d|\n", exec.last_exec);
 	return (exec.last_exec);
 }
