@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 09:46:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 13:39:11 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ char	*path_find_in_path(char *name, char **myenv)
 		return (NULL);
 	patharray = ft_strsplit(path, ':');
 	free(path);
+	if ((name[0] == '.' && name[1] == '/') ||
+	(name[0] == '.' && name[1] == '.' && name[2] == '/'))
+	{
+		if (access(name, F_OK) == 0 && access(name, X_OK) == 0)
+			return (name);
+		else if (access(name, F_OK) == 0 && access(name, X_OK) == -2)
+		{
+			error_print(2, name, "");
+			exit(EXIT_FAILURE);
+		}
+		else if (access(name, F_OK) == -1)
+		{
+			error_print(3, name, "");
+			exit(EXIT_FAILURE);
+		}
+	}
 	while (patharray[i])
 	{
 		path = utils_makepath(patharray[i], name);
@@ -80,6 +96,6 @@ char	*path_find_in_path(char *name, char **myenv)
 			break ;
 		i++;
 	}
-	utils_free_2darray((void **)patharray);
+		utils_free_2darray((void **)patharray);
 	return (path);
 }
