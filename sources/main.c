@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/30 16:46:13 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:24:38 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 	return (line);
 }
 
-void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char **env)
+void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
 {
 	t_astree		*astree;
 	
@@ -127,7 +127,7 @@ void		do_ast_simple(t_tkn *tkn, char **env)
 	astree = ast_build(tkn);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
-	child_process(astree, env);
+	child_process(astree, &env);
 	free_astree(astree);
 }
 
@@ -164,7 +164,7 @@ int		main(void)
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
 		if (parse(tkn))
-			do_ast(tkn, &tbuffer, env);
+			do_ast(tkn, &tbuffer, &env);
 		free_tkn_lst(tkn);
 		history_lst_free(tbuffer.head_hist);
 		free(line[0]);

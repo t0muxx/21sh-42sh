@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/26 00:53:34 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:16:45 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	pipeline_print(t_pipeline *pipeline)
 
 }
 
-int	node_pipe(t_astree *astree, char **env, t_exec *exec)
+int	node_pipe(t_astree *astree, char ***env, t_exec *exec)
 {
 	t_pipeline *new;
 
@@ -128,7 +128,7 @@ int	node_pipe(t_astree *astree, char **env, t_exec *exec)
 		new = pipeline_new(astree->right);
 		pipeline_add((&exec->pipeline), new);
 	//	pipeline_print(exec->pipeline);
-		pipeline_exec(exec->pipeline, exec, 0, env);
+		pipeline_exec(exec->pipeline, exec, 0, *env);
 		pipeline_free(exec->pipeline);
 		exec->pipeline = NULL;
 	}

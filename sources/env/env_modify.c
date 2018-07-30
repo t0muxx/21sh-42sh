@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 09:37:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 08:57:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:19:21 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,23 @@ int		env_update_var(char *name, char *value, char **myenv)
 	return (0);
 }
 
-char	**env_add_var(char *name, char *value, char **myenv)
+char	**env_add_var(char *name, char *value, char ***myenv)
 {
 	int		i;
 	char	**newenv;
 
 	i = 0;
-	while (myenv[i])
+	while (myenv[0][i])
 		i++;
 	if (!((newenv = (char **)malloc(sizeof(char *) * (i + 2)))))
 		error_malloc_err();
 	i = -1;
-	while (myenv[++i])
-		newenv[i] = myenv[i];
+	while (myenv[0][++i])
+		newenv[i] = myenv[0][i];
 	env_update_var_cat(&newenv[i], name, value);
 	newenv[i + 1] = NULL;
-	free(myenv);
+	free(*myenv);
+	*myenv = newenv;
 	return (newenv);
 }
 

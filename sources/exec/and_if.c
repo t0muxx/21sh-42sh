@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/26 00:54:34 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 17:15:36 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
 
-int		node_and_if(t_astree *astree, char **env, t_exec *exec)
+int		node_and_if(t_astree *astree, char ***env, t_exec *exec)
 {
 //	ft_printf("prec_exec |%d|\n", exec->prec_exec);
 	if (astree->left && astree->left->type == NT_CMD)
