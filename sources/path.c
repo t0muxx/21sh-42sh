@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 13:39:11 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 14:03:30 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char	*path_find_in_path(char *name, char **myenv)
 		return (NULL);
 	patharray = ft_strsplit(path, ':');
 	free(path);
+	if (name[0] == '/')
+		return (name);
 	if ((name[0] == '.' && name[1] == '/') ||
 	(name[0] == '.' && name[1] == '.' && name[2] == '/'))
 	{
