@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 10:41:00 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/07/30 11:37:37 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	dgreat_redir(t_tkn *tkn)
 {
 	int		fd;
 
-	if ((fd = open(tkn->data, O_WRONLY | O_CREAT | O_APPEND,
+	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_APPEND,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
 		ft_putstr("fail to open ");
