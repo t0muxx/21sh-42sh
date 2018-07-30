@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/26 00:59:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 16:46:13 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ int		main(void)
 	//	ft_putendl_fd("not connected to a terminal", 2);
 		get_next_line(0, &line[0]);
 		line[1] = 0;
+		if (ft_strlen(line[0]) > BUFFER_SIZE)
+		{
+			ft_putstr_fd("error : command too long\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		tkn = lex(&line[0]);
 		if (parse(tkn))
 			do_ast_simple(tkn, env);
