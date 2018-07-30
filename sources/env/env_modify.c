@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 09:37:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 08:57:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:05:12 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ char	**env_add_var(char *name, char *value, char **myenv)
 		newenv[i] = myenv[i];
 	env_update_var_cat(&newenv[i], name, value);
 	newenv[i + 1] = NULL;
+	printf("before free : |%p|\n", myenv);
 	free(myenv);
+	printf("newenv : |%p|\n", newenv);
+	myenv = newenv;
 	return (newenv);
 }
 

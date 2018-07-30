@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/26 00:59:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/07/30 16:16:47 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char **env)
 	ast_set_rootpipe(astree);
 //	print_ast(astree);
 	child_process(astree, env);
+	printf("after child process|%p|\n", env);	
 	free_astree(astree);
 }
 
@@ -139,6 +140,7 @@ int		main(void)
 	t_tkn			*tkn;
 
 	env = env_create_copy();
+	printf("after init |%p|\n", env);
 	if (isatty(0) == 0)
 	{
 	//	ft_putendl_fd("not connected to a terminal", 2);

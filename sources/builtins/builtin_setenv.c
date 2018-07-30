@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 12:14:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 09:20:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:07:18 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ void	builtin_setenv_do(char **cmd, char ***myenv)
 		if (cmd[2] != NULL)
 		{
 			if (env_update_var(cmd[1], cmd[2], *myenv) == 0)
-				*myenv = env_add_var(cmd[1], cmd[2], *myenv);
+				myenv[0] = env_add_var(cmd[1], cmd[2], *myenv);
+			printf("myenv : |%p|\n", *myenv);
 		}
 		else
 		{
 			if (env_update_var(cmd[1], "\0", *myenv) == 0)
-				*myenv = env_add_var(cmd[1], "\0", *myenv);
+				myenv[0] = env_add_var(cmd[1], "\0", *myenv);
+			printf("myenv : |%p|\n", *myenv);
 		}
 	}
 }
