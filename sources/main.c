@@ -3,55 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/23 16:34:50 by tomux             #+#    #+#             */
-/*   Updated: 2018/07/30 17:24:38 by tomux            ###   ########.fr       */
+/*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/08/14 10:20:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline.h" 
+#include "readline.h"
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"
 #include "env.h"
-
-
-void		ast_set_parent(t_astree *astree)
-{
-	t_nodetype tmp;
-
-	tmp = -2;
-	while (astree)
-	{
-		astree->parent = tmp;
-		tmp = astree->type;
-		astree = astree->left;
-	}
-}
-
-void		ast_set_rootpipe(t_astree *astree)
-{
-	int rootpipe;
-
-	rootpipe = 1;
-	while (astree)
-	{
-		rootpipe = 1;
-		
-		while (astree && astree->type != NT_PIPE)
-		{
-			astree = astree->left;
-		}
-		while (astree && astree->type == NT_PIPE)
-		{
-			astree->root_pipe = rootpipe;
-			rootpipe = 0;
-			astree = astree->left;
-		}
-
-	}
-}
 
 void		print_ast(t_astree *astree)
 {
@@ -61,8 +24,9 @@ void		print_ast(t_astree *astree)
 		return ;
 	print_ast(astree->left);
 	ft_printf("type = ");
-	switch(astree->type)
+	switch (astree->type)
 	{
+		case -2: ft_printf("NT_ROOT"); break;
 		case 1: ft_printf("PIPE"); break;
 		case 2: ft_printf("SEMI"); break;
 		case 3: ft_printf("CMD"); break;
@@ -81,9 +45,6 @@ void		print_ast(t_astree *astree)
 
 char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
-	t_cmd_hist		*head;
-
-	
 	tbuffer->head_hist = history_read();
 	tbuffer->cur_hist = NULL;
 	tbuffer_init(tbuffer, env);
@@ -92,43 +53,23 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 	return (line);
 }
 
-void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
+void		do_read_simple(t_buffer *tbuffer, char *line[2],
+char **env, t_tkn *tkn)
 {
-	t_astree		*astree;
-	
-	while (tkn->next)
+	get_next_line(0, &line[0]);
+	line[1] = 0;
+	if (ft_strlen(line[0]) > BUFFER_SIZE)
 	{
-		if (tkn->next->type == CHR_NEWLINE)
-			break ;
-		tkn = tkn->next;
+		ft_putstr_fd("error : command too long\n", 2);
+		exit(EXIT_FAILURE);
 	}
-	tkn->next = NULL;
-	astree = ast_build(tkn);
-	term_close();
-	free(tbuffer->termcap);
-	ast_set_parent(astree);
-	ast_set_rootpipe(astree);
-//	print_ast(astree);
-	child_process(astree, env);
-	free_astree(astree);
-}
-
-void		do_ast_simple(t_tkn *tkn, char **env)
-{
-	t_astree		*astree;
-	
-	while (tkn->next)
-	{
-		if (tkn->next->type == CHR_NEWLINE)
-			break ;
-		tkn = tkn->next;
-	}
-	tkn->next = NULL;
-	astree = ast_build(tkn);
-	ast_set_parent(astree);
-	ast_set_rootpipe(astree);
-	child_process(astree, &env);
-	free_astree(astree);
+	tkn = lex(&line[0]);
+	if (parse(tkn))
+		do_ast_simple(tkn, env);
+	free_tkn_lst(tkn);
+	free(line[0]);
+	free_env(env);
+	exit(EXIT_SUCCESS);
 }
 
 int		main(void)
@@ -140,23 +81,7 @@ int		main(void)
 
 	env = env_create_copy();
 	if (isatty(0) == 0)
-	{
-	//	ft_putendl_fd("not connected to a terminal", 2);
-		get_next_line(0, &line[0]);
-		line[1] = 0;
-		if (ft_strlen(line[0]) > BUFFER_SIZE)
-		{
-			ft_putstr_fd("error : command too long\n", 2);
-			exit(EXIT_FAILURE);
-		}
-		tkn = lex(&line[0]);
-		if (parse(tkn))
-			do_ast_simple(tkn, env);
-		free_tkn_lst(tkn);
-		free(line[0]);
-		free_env(env);
-		exit(-1);
-	}
+		do_read_simple(&tbuffer, line, env, tkn);
 	while (420)
 	{
 		do_read(&tbuffer, line, env);

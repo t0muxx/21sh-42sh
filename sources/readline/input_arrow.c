@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/23 16:23:10 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:30:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	input_arrow_down(t_buffer *tbuffer, char *read_buf)
 	t_cmd_hist *cur_hist;
 
 	if (ft_memcmp(read_buf, FT_KEY_DOWN, ft_strlen(FT_KEY_DOWN)) == 0
-	&& tbuffer->head_hist !=  NULL)
+	&& tbuffer->head_hist != NULL)
 	{
 		cur_hist = tbuffer->cur_hist;
 		if (cur_hist->newest == NULL)
@@ -70,7 +70,6 @@ void	input_arrow_down(t_buffer *tbuffer, char *read_buf)
 			tbuffer->head_hist = cur_hist;
 			tbuffer->cur_hist = cur_hist;
 		}
-
 	}
 }
 

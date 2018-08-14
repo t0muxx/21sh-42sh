@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 17:18:55 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 09:33:13 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-/* voir ce quon fait pour ca pose probleme pour ctrl+d*/
-
-/* EXIT STATUS 0 (EXIT_SUCCESS) si aucun probleme
- * 1 (EXIT_FAILURE) si erreur
- * > 1 si signaux 
- * */
+/* 
+** EXIT STATUS 0 (EXIT_SUCCESS) si aucun probleme
+** 1 (EXIT_FAILURE) si erreur
+** > 1 si signaux
+**
+*/
 
 int		exit_status(int status)
 {
@@ -41,19 +41,27 @@ int		exit_status(int status)
 	return (0);
 }
 
-int		fork_and_exec(t_astree *astree, char ***env)
+int		check_builtin(t_astree *astree, char ***env)
 {
-	pid_t	pid;
-	int		status;
-	char		**cmd;
+	char	**cmd;
 
 	cmd = lst_arr(astree->arg);
 	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, env) == 1)
 	{
 		utils_free_2darray((void **)cmd);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	utils_free_2darray((void **)cmd);
+	return (EXIT_FAILURE);
+}
+
+int		fork_and_exec(t_astree *astree, char ***env)
+{
+	pid_t	pid;
+	int		status;
+
+	if (check_builtin(astree, env) == EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
@@ -76,10 +84,8 @@ int		fork_and_exec(t_astree *astree, char ***env)
 
 int		child_process(t_astree *astree, char ***env)
 {
-	pid_t	pid;
 	int		last_exec;
-	t_exec exec;
-	int		status;
+	t_exec	exec;
 
 	last_exec = 0;
 	exec.pipeline = NULL;

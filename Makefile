@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/07/30 13:00:54 by tomux            ###   ########.fr        #
+#    Updated: 2018/08/14 10:10:03 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(PARSER)separator.c \
 			$(PARSER)parser.c \
 			$(PARSER)astree.c \
+			$(PARSER)astree_utils.c \
 			$(EXEC)redirection.c \
 			$(EXEC)dless_redir.c \
 			$(EXEC)aggregators.c \

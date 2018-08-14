@@ -1,5 +1,3 @@
-#!/usr/bin/bash
-
 PATH_TO_21SH="../21sh"
 CDIR=${PWD}
 RESETCOLOR="$(tput sgr0)"

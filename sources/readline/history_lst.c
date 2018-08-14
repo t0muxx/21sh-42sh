@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/23 16:27:52 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:30:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		history_lst_free(t_cmd_hist *head)
 {
 	t_cmd_hist *tmp;
-	
+
 	while (head)
 	{
 		tmp = head;

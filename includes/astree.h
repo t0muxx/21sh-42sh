@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/25 23:31:31 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:16:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct s_astree		t_astree;
 
 enum	e_nodetype
 {
+	NT_ROOT = -2,
 	NT_PIPE = 1,
 	NT_SEMI,
 	NT_CMD,
@@ -39,5 +40,8 @@ struct	s_astree
 
 void		ast_debug(t_astree *astree);
 t_astree	*ast_build(t_tkn *tkn);
-
+void		ast_set_parent(t_astree *astree);
+void		ast_set_rootpipe(t_astree *astree);
+void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env);
+void		do_ast_simple(t_tkn *tkn, char **env);
 #endif

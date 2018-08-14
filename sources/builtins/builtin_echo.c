@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/25 15:36:44 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 09:17:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int		builtin_echo_write(char *towrite, char **myenv)
 	{
 		if (write(1, towrite, ft_strlen(towrite)) == -1)
 			return (-1);
-		//if (write(1, " ", 1) == -1)
-		//	return (-1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 17:24:46 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:29:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ void	*readline_get_func_array(void)
 	return (fptr);
 }
 
-void	readline_loop(t_buffer *tbuffer, char *read_buf, void (**fptr)(t_buffer *, char *))
+void	readline_loop(t_buffer *tbuffer,
+char *read_buf, void (**fptr)(t_buffer *, char *))
 {
-	int i;
-	struct winsize w;
+	int				i;
+	struct winsize	w;
 
 	i = 0;
 	sig_intercept(tbuffer);
@@ -95,7 +96,6 @@ void	readline_loop(t_buffer *tbuffer, char *read_buf, void (**fptr)(t_buffer *, 
 		i++;
 	}
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
-
 }
 
 char	*readline(t_buffer *tbuffer)
@@ -108,7 +108,8 @@ char	*readline(t_buffer *tbuffer)
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
 	prompt_print(tbuffer);
-	while (tbuffer->cnt <= BUFFER_SIZE && tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE)
+	while (tbuffer->cnt <= BUFFER_SIZE
+	&& (tbuffer->state == READ_NORMAL || tbuffer->state == READ_IN_QUOTE))
 		readline_loop(tbuffer, read_buf, fptr);
 	free(fptr);
 	free(read_buf);
@@ -132,4 +133,3 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
 	tbuffer->termcap = cur_termcap;
 }
-
