@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 15:40:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 15:53:40 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,5 @@ int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env)
 		*env = env_add_var("OLDPWD", oldpwd, env);
 	if (env_update_var("PWD", dir, *env) == 0)
 		*env = env_add_var("PWD", dir, env);
-	free(dir);
 	return (0);
 }
