@@ -1,3 +1,4 @@
+#/bin/bash
 cmpdiff()
 {
 	diff -U 3 result/$1 result/$2 > result/diff.txt
@@ -103,7 +104,7 @@ dotest b_13.out 13.out
 #######################################################
 
 ##################### TEST NUM 5 ######################
-echo " ---> TEST BASIQUE 4 < ---"
+echo " ---> TEST BASIQUE 5 < ---"
 echo "|| simple (1)"
 echo "echo qwertyuiop[] || wc" | bash > result/b_14.out
 echo "echo qwertyuiop[] || wc" | ../21sh > result/14.out
@@ -115,7 +116,7 @@ dotest b_15.out 15.out
 #######################################################
 
 ##################### TEST NUM 6 ######################
-echo " ---> TEST BASIQUE 4 < ---"
+echo " ---> TEST BASIQUE 6 < ---"
 echo "&& simple (1)"
 echo "echo qwertyuiop[] && wc" | bash > result/b_16.out
 echo "echo qwertyuiop[] && wc" | ../21sh > result/16.out

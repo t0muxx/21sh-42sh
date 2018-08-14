@@ -1,3 +1,4 @@
+#/bin/bash
 cmpdiff()
 {
 	diff -U 3 result/$1 result/$2 > result/diff.txt

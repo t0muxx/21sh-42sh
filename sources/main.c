@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 14:35:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 17:36:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char **env, t_tkn *tkn)
 		do_ast_simple(tkn, env);
 	free_tkn_lst(tkn);
 	free(line[0]);
-	free_env(env);
 	exit(EXIT_SUCCESS);
 }
 
