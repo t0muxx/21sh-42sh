@@ -6,14 +6,15 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:26:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 11:56:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
+#include "readline.h"
+#include "utils.h"
 
-int		path_exec(char *cmd, char **arg, char **env)
+/*int		path_exec(char *cmd, char **arg, char **env)
 {
 	pid_t	pid;
 	int		status;
@@ -39,9 +40,9 @@ int		path_exec(char *cmd, char **arg, char **env)
 			waitpid(pid, &status, 0);
 	}
 	return (0);
-}
+}*/
 
-int		path_exec_in(char *cmd, char **arg, char **env)
+/*int		path_exec_in(char *cmd, char **arg, char **env)
 {
 	char	*execute;
 	int		ret;
@@ -58,9 +59,9 @@ int		path_exec_in(char *cmd, char **arg, char **env)
 	}
 	else
 		return (EXISTERR);
-}
+}*/
 
-char	*path_find_in_path(char *name, char **myenv)
+/*char	*path_find_in_path(char *name, char **myenv)
 {
 	char	**patharray;
 	char	*path;
@@ -76,18 +77,6 @@ char	*path_find_in_path(char *name, char **myenv)
 	if ((name[0] == '.' && name[1] == '/') ||
 	(name[0] == '.' && name[1] == '.' && name[2] == '/'))
 	{
-		if (access(name, F_OK) == 0 && access(name, X_OK) == 0)
-			return (name);
-		else if (access(name, F_OK) == 0 && access(name, X_OK) == -2)
-		{
-			error_print(2, name, "");
-			exit(EXIT_FAILURE);
-		}
-		else if (access(name, F_OK) == -1)
-		{
-			error_print(3, name, "");
-			exit(EXIT_FAILURE);
-		}
 	}
 	while (patharray[i])
 	{
@@ -99,5 +88,40 @@ char	*path_find_in_path(char *name, char **myenv)
 		i++;
 	}
 		utils_free_2darray((void **)patharray);
+	return (path);
+}*/
+
+char	*path_find_in_path(char *name, char **env)
+{
+	char **patharray;
+	char *path;
+	int i;
+
+	i = 0;
+	if (!(path = env_get_var("PATH", env)))
+		return (NULL);
+	patharray = ft_strsplit(path, ':');
+	free(path);
+	if (name[0] == '/' || (!ft_strncmp(name, "./", 2))
+	|| (!ft_strncmp(name, "../", 3)))
+	{
+		if (access(name, F_OK) == 0 && access(name, X_OK) == 0)
+			return (name);
+		else if (access(name, F_OK) == 0 && access(name, X_OK) == -1)
+			error_print(2, name, "");
+		else if (access(name, F_OK) == -1)
+			error_print(3, name, "");
+		exit(EXIT_FAILURE);
+	}
+	while (patharray[i])
+	{
+		path = make_path(patharray[i], name);
+		if (access(path, F_OK) == -1)
+			ft_strdel(&path);
+		else
+			break ;
+		i++;
+	}
+	utils_free_2darray((void **)patharray);
 	return (path);
 }

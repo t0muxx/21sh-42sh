@@ -6,11 +6,10 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 07:36:24 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/06/02 15:43:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 10:49:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "readline.h"
 
 void	utils_free_cmd_hist(t_cmd_hist **head)

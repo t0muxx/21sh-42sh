@@ -6,13 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:58:51 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/04/23 09:18:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 11:57:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
 #include "builtin.h"
+#include "utils.h"
 
 int		builtin_env_do_builtin(char **cmd, char **env)
 {
@@ -57,7 +57,6 @@ int		builtin_env_do(char **cmd, int *i)
 		utils_free_2darray((void **)newenv);
 		return (0);
 	}
-	ret = path_exec_in(cmd[*i], cmd + (*i), newenv);
 	utils_free_2darray((void **)newenv);
 	return (builtin_env_do_ret(ret, cmd[*i]));
 }

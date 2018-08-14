@@ -6,11 +6,12 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 09:37:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 17:19:21 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:40:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "readline.h"
+#include "utils.h"
 
 void	env_update_var_cat(char **newvalue, char *name, char *value)
 {

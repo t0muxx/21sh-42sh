@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 17:16:09 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:44:33 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		pipeline_add(t_pipeline **last, t_pipeline *new);
 t_pipeline	*pipeline_new(t_astree *astree);
 void		pipeline_print(t_pipeline *head);
 void	pipeline_free(t_pipeline *head);
-
+int		path_exec_in(char *cmd, char **arg, char **env);
 void		sig_child(void);
 void		sig_father(void);
 

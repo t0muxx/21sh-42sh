@@ -6,13 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 17:14:10 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:45:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
 #include "builtin.h"
+#include "utils.h"
 
 int		builtin_env_err(char **cmd)
 {

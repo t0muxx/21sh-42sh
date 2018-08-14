@@ -6,12 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 09:17:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 10:45:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
+#include "readline.h"
+#include "utils.h"
 
 int		builtin_echo_write(char *towrite, char **myenv)
 {

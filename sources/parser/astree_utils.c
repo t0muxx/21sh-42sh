@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:11:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 11:53:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,42 @@ void		ast_set_rootpipe(t_astree *astree)
 		}
 
 	}
+}
+
+void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
+{
+	t_astree		*astree;
+
+	while (tkn->next)
+	{
+		if (tkn->next->type == CHR_NEWLINE)
+			break ;
+		tkn = tkn->next;
+	}
+	tkn->next = NULL;
+	astree = ast_build(tkn);
+	term_close();
+	free(tbuffer->termcap);
+	ast_set_parent(astree);
+	ast_set_rootpipe(astree);
+	child_process(astree, env);
+	free_astree(astree);
+}
+
+void		do_ast_simple(t_tkn *tkn, char **env)
+{
+	t_astree		*astree;
+
+	while (tkn->next)
+	{
+		if (tkn->next->type == CHR_NEWLINE)
+			break ;
+		tkn = tkn->next;
+	}
+	tkn->next = NULL;
+	astree = ast_build(tkn);
+	ast_set_parent(astree);
+	ast_set_rootpipe(astree);
+	child_process(astree, &env);
+	free_astree(astree);
 }

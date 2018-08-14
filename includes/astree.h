@@ -6,13 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 10:16:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 10:38:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASTREE_H
 # define ASTREE_H
 
+#include "readline.h"
 typedef enum e_nodetype		t_nodetype;
 typedef struct s_astree		t_astree;
 

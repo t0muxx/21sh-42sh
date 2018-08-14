@@ -6,11 +6,10 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 12:14:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/30 17:19:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/14 10:46:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "env.h"
 #include "builtin.h"
 

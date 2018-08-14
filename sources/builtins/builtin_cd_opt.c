@@ -6,11 +6,10 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/05/31 14:43:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 10:41:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtin.h"
 
 int		cd_skip_opt(char **cmd)
