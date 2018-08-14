@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 09:33:13 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 14:21:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		fork_and_exec(t_astree *astree, char ***env)
 	if ((pid = fork()) == -1)
 	{
 		ft_putendl("failed to fork");
-		exit(0);
+		return (0);
 	}
 	else if (pid == 0)
 	{

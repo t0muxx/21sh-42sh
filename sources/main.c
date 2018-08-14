@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:20:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 14:35:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 	return (line);
 }
 
-void		do_read_simple(t_buffer *tbuffer, char *line[2],
+void		do_read_simple(char *line[2],
 char **env, t_tkn *tkn)
 {
 	get_next_line(0, &line[0]);
@@ -79,9 +79,10 @@ int		main(void)
 	char			**env;
 	t_tkn			*tkn;
 
+	tkn = NULL;
 	env = env_create_copy();
 	if (isatty(0) == 0)
-		do_read_simple(&tbuffer, line, env, tkn);
+		do_read_simple(line, env, tkn);
 	while (420)
 	{
 		do_read(&tbuffer, line, env);

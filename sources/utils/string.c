@@ -6,11 +6,12 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/03/16 13:19:19 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 12:04:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "readline.h"
 
 /*
 ** string_shift_right shift a string from pos
@@ -18,6 +19,25 @@
 ** like : before : [t][e][s][t]
 ** 	   after  : [t][ ][e][s][t]
 */
+
+char	*string_concat_array(char **array)
+{
+	int		i;
+	char	*ret;
+	char	*tmp;
+
+	i = 0;
+	ret = ft_strdup(array[i]);
+	i++;
+	while (array[i])
+	{
+		tmp = ret;
+		ret = ft_strjoin(ret, array[i]);
+		free(tmp);
+		i++;	
+	}
+	return (ret);
+}
 
 void	string_shift_right(char **str, int pos)
 {

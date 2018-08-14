@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:41:19 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 12:05:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	utils_free_2darray(void **array);
 char	*make_path(char *curpath, char *dir);
 void	string_shift_right(char **str, int pos);
 void	utils_free_cmd_hist(t_cmd_hist **head);
+char	*string_concat_array(char **array);
 #endif

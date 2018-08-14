@@ -6,13 +6,15 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:58:51 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 11:57:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/14 14:53:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "builtin.h"
 #include "utils.h"
+#include "exec.h"
+#include <sys/wait.h>
 
 int		builtin_env_do_builtin(char **cmd, char **env)
 {
@@ -39,11 +41,33 @@ int		builtin_env_do_ret(int ret, char *cmd)
 	return (0);
 }
 
+int		builtin_env_exec(char **cmd, char **env)
+{
+	pid_t 	pid;
+	int		status;
+	char	*cmd_path;
+
+	if ((pid = fork()) == -1)
+		error_fork_err();
+	else if (pid == 0)
+	{
+		cmd_path = path_find_in_path(cmd[0], env);
+		execve(cmd_path, cmd, env);
+		error_print(CMDNOTFOUND, cmd[0], "");
+		exit(EXIT_FAILURE);
+	}
+	else
+		waitpid(pid, &status, 0);
+	return (0);
+}
+
+
 int		builtin_env_do(char **cmd, int *i)
 {
 	char	**newenv;
 	int		ret;
 
+	ret = 0;
 	if ((newenv = builtin_env_get_env(cmd, i)) == NULL)
 		return (125);
 	if (cmd[*i] == NULL)
@@ -57,6 +81,7 @@ int		builtin_env_do(char **cmd, int *i)
 		utils_free_2darray((void **)newenv);
 		return (0);
 	}
+	builtin_env_exec(cmd, newenv);
 	utils_free_2darray((void **)newenv);
 	return (builtin_env_do_ret(ret, cmd[*i]));
 }
