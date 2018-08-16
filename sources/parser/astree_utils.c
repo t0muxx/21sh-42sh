@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 11:53:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/16 10:48:13 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
 	free(tbuffer->termcap);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
+	print_ast(astree);
 	child_process(astree, env);
 	free_astree(astree);
 }

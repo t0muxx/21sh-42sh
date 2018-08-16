@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 15:53:40 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/16 10:41:09 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env)
 
 int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 {
-	char *tmp;
-
 	if (!ft_strcmp("-", *dir))
 	{
-		tmp = *dir;
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
 		{
 			free(oldpwd);
