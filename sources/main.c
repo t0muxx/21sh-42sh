@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:18:36 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 10:21:17 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void		create_base_path(t_buffer *tbuffer)
 	ft_bzero(tbuffer->base_path, 1024);
 	getcwd(tbuffer->base_path, 1024);
 	ft_strcat(tbuffer->base_path, "/.history");
-	ft_printf("base_path = |%s|\n", tbuffer->base_path);
 }
 
 int		main(void)
