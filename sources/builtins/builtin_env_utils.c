@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:58:51 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 15:20:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/17 08:44:24 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		builtin_env_do_builtin(char **cmd, char **env)
 	t_builtin	bltin[6];
 
 	builtin_get_builtin(bltin);
-	if (builtin_check_builtin(cmd, &env) == 1)
+	if (builtin_check_builtin(NULL, cmd, &env) == 1)
 		return (1);
 	return (0);
 }

@@ -39,3 +39,4 @@ echo "${VERT}#################################################${RESETCOLOR}"
 initdir
 ./test_01_simple.sh
 ./test_02.sh
+./test_builtin.sh

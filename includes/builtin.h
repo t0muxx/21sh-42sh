@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/11 19:42:16 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 08:33:47 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_builtin
 }				t_builtin;
 
 void			builtin_get_builtin(t_builtin *builtin);
-int				builtin_check_builtin(char **cmd, char ***myenv);
+int				builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv);
 int				builtin_all(char **cmd, int nbr, char **myenv);
 int				builtin_echo(char **cmd, char ***myenv);
 int				builtin_env(char **cmd, char ***myenv);

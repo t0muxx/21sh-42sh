@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 09:55:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/17 08:44:20 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int read_pipe, char **env)
 		dup2(pipefd[1], 1);
 	close(pipefd[1]);
 	close(pipefd[0]);
-	if (*(pipeline->cmd) && builtin_check_builtin(pipeline->cmd, &env) == 1)
+	if (*(pipeline->cmd) && builtin_check_builtin(pipeline->node, pipeline->cmd, &env) == 1)
 		exit(EXIT_SUCCESS);
 	exec_cmd(pipeline->node, env);
 }

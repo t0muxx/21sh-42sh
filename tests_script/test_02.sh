@@ -56,7 +56,7 @@ echo "mkdir test && cd test ; touchc a && touch b ; ls -la | wc > out.txt || ls 
 dotest b_20.out 20.out
 #######################################################
 
-##################### TEST NUM 9 ######################
+##################### TEST NUM 10 #####################
 echo " --- > TEST 10 < ---"
 echo "redir hard "
 mkdir tmp
@@ -104,3 +104,4 @@ dotest b_26.out 26.out
 rm -rf tmp_b
 rm -rf tmp
 #######################################################
+

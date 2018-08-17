@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 15:40:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/17 08:39:34 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		check_builtin(t_astree *astree, char ***env)
 	char	**cmd;
 
 	cmd = lst_arr(astree->arg);
-	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(cmd, env) == 1)
+	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(astree, cmd, env) == 1)
 	{
 		utils_free_2darray((void **)cmd);
 		return (EXIT_SUCCESS);
