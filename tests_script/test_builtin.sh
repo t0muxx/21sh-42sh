@@ -43,8 +43,8 @@ echo "cd testd" | ../21sh > result/28.out
 dotest b_28.out 28.out
 echo " --- > TEST builtin cd 2 < ---"
 echo "builtin cd error"
-echo "mkdir test/a/b/c/d/e/f ; cd test/a/b/c/d/e/f ; pwd ; rm -rf test" | bash > result/b_29.out
-echo "mkdir test/a/b/c/d/e/f ; cd test/a/b/c/d/e/f ; pwd ; rm -rf test" | ../21sh > result/29.out
+echo "mkdir -p test/a/b/c/d/e/f ; cd test/a/b/c/d/e/f ; pwd ; rm -rf test" | bash > result/b_29.out
+echo "mkdir -p test/a/b/c/d/e/f ; cd test/a/b/c/d/e/f ; pwd ; rm -rf test" | ../21sh > result/29.out
 dotest b_29.out 29.out
 echo " --- > TEST builtin cd home and - < ---"
 echo "cd ; pwd ; cd - ; pwd" | bash > result/b_30.out

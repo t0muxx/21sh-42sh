@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:35:54 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 11:04:00 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,22 @@ void		create_base_path(t_buffer *tbuffer)
 	ft_strcat(tbuffer->base_path, "/.history");
 }
 
+void		increment_shlvl(char ***env)
+{
+	char	*shlvl;
+	int 	i_shlvl;
+
+	i_shlvl = 0;
+	if ((shlvl = env_get_var("SHLVL", *env)) == NULL)
+		return ;
+	i_shlvl = ft_atoi(shlvl);
+	i_shlvl++;
+	free(shlvl);
+	shlvl = ft_itoa(i_shlvl);
+	env_update_var("SHLVL", shlvl, *env);
+	free(shlvl);
+}
+
 int		main(void)
 {
 	char			*line[2];
@@ -87,6 +103,7 @@ int		main(void)
 
 	tkn = NULL;
 	env = env_create_copy();
+	increment_shlvl(&env);
 	create_base_path(&tbuffer);	
 	if (isatty(0) == 0)
 		do_read_simple(line, env, tkn);
