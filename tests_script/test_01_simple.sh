@@ -35,6 +35,7 @@ dotest()
 
 ##################### TEST NUM 1 ######################
 echo " --- > TEST BASIQUE 1 < ---"
+echo "" | ../21sh
 echo "ls" | bash > result/b_1.out
 echo "ls" | ../21sh > result/1.out
 echo "ls -la" | bash > result/b_2.out
