@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 10:38:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/17 10:41:04 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ static t_tkn		*dup_arg(t_tkn *token, int arg_len)
 	i = 0;
 	if (!token)
 		return (NULL);
-	if ((arg = (t_tkn*)malloc(sizeof(t_tkn) * (arg_len + 1))) == NULL)
-		return (NULL);
+	/*if ((arg = (t_tkn*)malloc(sizeof(t_tkn) * (arg_len + 1))) == NULL)
+		return (NULL); */
 	arg = token;
 	arg->prev = NULL;
 	while (token && node_type(token->type) == NT_CMD)
