@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/23 16:21:14 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 10:18:17 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct	s_term_cap
 typedef struct	s_buffer
 {
 	char		*buffer;
+	char		base_path[1024];
 	char		reset;
 	char		cutbuffer[BUFFER_SIZE];
 	char		c_buf;
@@ -139,12 +140,12 @@ void			cursor_reload_pos(t_buffer *tbuffer);
 void			cursor_move_right(t_buffer *tbuffer, int cnt);
 void			cursor_move_left_next_word(t_buffer *tbuffer);
 void			cursor_move_right_next_word(t_buffer *tbuffer);
-t_cmd_hist		*history_read(void);
+t_cmd_hist		*history_read(char *base_path);
 void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint);
 void			history_print_reset(t_buffer *tbuffer);
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
-void			history_add(char *cmd);
+void			history_add(char *base_path, char *cmd);
 void		history_lst_free(t_cmd_hist *head);
 
 char			*env_get_var(char *name, char **myenv);

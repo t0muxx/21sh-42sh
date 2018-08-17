@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 17:36:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/17 10:18:36 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		print_ast(t_astree *astree)
 
 char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
-	tbuffer->head_hist = history_read();
+	tbuffer->head_hist = history_read(tbuffer->base_path);
 	tbuffer->cur_hist = NULL;
 	tbuffer_init(tbuffer, env);
 	line[0] = readline(tbuffer);
@@ -71,6 +71,14 @@ char **env, t_tkn *tkn)
 	exit(EXIT_SUCCESS);
 }
 
+void		create_base_path(t_buffer *tbuffer)
+{
+	ft_bzero(tbuffer->base_path, 1024);
+	getcwd(tbuffer->base_path, 1024);
+	ft_strcat(tbuffer->base_path, "/.history");
+	ft_printf("base_path = |%s|\n", tbuffer->base_path);
+}
+
 int		main(void)
 {
 	char			*line[2];
@@ -80,12 +88,13 @@ int		main(void)
 
 	tkn = NULL;
 	env = env_create_copy();
+	create_base_path(&tbuffer);	
 	if (isatty(0) == 0)
 		do_read_simple(line, env, tkn);
 	while (420)
 	{
 		do_read(&tbuffer, line, env);
-		history_add(line[0]);
+		history_add(tbuffer.base_path, line[0]);
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
 		if (parse(tkn))

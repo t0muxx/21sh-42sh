@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/23 16:23:21 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 10:17:29 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,15 @@ t_cmd_hist		*history_read_line(int fd)
 ** of the file .history
 */
 
-t_cmd_hist		*history_read(void)
+t_cmd_hist		*history_read(char *base_path)
 {
 	int			fd;
 	t_cmd_hist	*head;
 
 	head = NULL;
-	if (access(HISTORY_FILE, F_OK) != 1)
+	if (access(base_path, F_OK) != 1)
 	{
-		if ((fd = open(HISTORY_FILE, O_WRONLY | O_CREAT)) == -1)
+		if ((fd = open(base_path, O_WRONLY | O_CREAT)) == -1)
 		{
 			ft_putstr_fd("Can't create .history check perm\n", 2);
 			close(fd);
@@ -98,7 +98,7 @@ t_cmd_hist		*history_read(void)
 		}
 		close(fd);
 	}
-	if ((fd = open(HISTORY_FILE, O_RDONLY)) == -1)
+	if ((fd = open(base_path, O_RDONLY)) == -1)
 	{
 		ft_putstr_fd("Can't open .history\n", 2);
 		close(fd);
@@ -109,11 +109,11 @@ t_cmd_hist		*history_read(void)
 	return (head);
 }
 
-void			history_add(char *cmd)
+void			history_add(char *base_path, char *cmd)
 {
 	int	fd;
 
-	if ((fd = open(HISTORY_FILE, O_WRONLY | O_APPEND)) == -1)
+	if ((fd = open(base_path, O_WRONLY | O_APPEND)) == -1)
 		ft_putstr_fd("Can't open .history\n", 2);
 	if (ft_strlen(cmd) != 0)
 	{
