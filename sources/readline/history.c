@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:17:29 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/17 13:37:10 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_cmd_hist		*history_read(char *base_path)
 	head = NULL;
 	if (access(base_path, F_OK) != 1)
 	{
-		if ((fd = open(base_path, O_WRONLY | O_CREAT)) == -1)
+		if ((fd = open(base_path, O_WRONLY | O_CREAT, 0644)) == -1)
 		{
 			ft_putstr_fd("Can't create .history check perm\n", 2);
 			close(fd);
@@ -98,7 +98,7 @@ t_cmd_hist		*history_read(char *base_path)
 		}
 		close(fd);
 	}
-	if ((fd = open(base_path, O_RDONLY)) == -1)
+	if ((fd = open(base_path, O_RDONLY, 0644)) == -1)
 	{
 		ft_putstr_fd("Can't open .history\n", 2);
 		close(fd);
@@ -113,7 +113,7 @@ void			history_add(char *base_path, char *cmd)
 {
 	int	fd;
 
-	if ((fd = open(base_path, O_WRONLY | O_APPEND)) == -1)
+	if ((fd = open(base_path, O_WRONLY | O_APPEND, 0644)) == -1)
 		ft_putstr_fd("Can't open .history\n", 2);
 	if (ft_strlen(cmd) != 0)
 	{
