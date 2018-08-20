@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 11:00:52 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/08/20 10:59:26 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int			is_word_type(int c)
 		return (1);
 	while (tkn_fun[i].type)
 	{
-		if (tkn_fun[i].type == c)
+		if (tkn_fun[i].type == (enum e_tkn_type)c)
 			return (0);
 		i++;
 	}

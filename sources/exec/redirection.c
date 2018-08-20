@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 10:04:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/20 11:01:42 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,9 @@ static void	dgreat_redir(t_tkn *tkn)
 
 void		redirect_cmd(t_tkn *tkn)
 {
-	int		i;
 	t_tkn	*tmp;
 
 	tmp = tkn;
-	i = 0;
 	while (tmp != NULL)
 	{
 		if (tmp->type == CHR_LESS)

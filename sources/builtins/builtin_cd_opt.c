@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/08/14 10:41:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/20 10:51:52 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		cd_skip_opt(char **cmd)
 		else if (cmd[i][0] != '-')
 			return (i);
 		else
-			;
+			NULL;
 		i++;
 	}
 	return (i);
@@ -42,9 +42,9 @@ int		cd_check_opt(char *opt)
 	else if (!ft_strcmp(opt, "-L"))
 		ret = CD_L;
 	else if (!ft_strcmp(opt, "--"))
-		;
+		NULL ;
 	else if (!ft_strcmp(opt, "-"))
-		;
+		NULL ;
 	else
 	{
 		write(2, "cd : ", 5);

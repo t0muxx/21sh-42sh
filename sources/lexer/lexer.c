@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/28 13:09:02 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/08/20 10:58:51 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 			tkn_push_back(head, tkn_word(&line));
 			break ;
 		}
-		else if (tkn_fun[i].type == *line)
+		else if (tkn_fun[i].type == (enum e_tkn_type)*line)
 		{
 			if (*line == '"')
 				*state = STATE_DQUOTED;

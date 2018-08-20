@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:45:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/20 10:52:15 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ int		builtin_env(char **cmd, char ***myenv)
 	else
 		return (builtin_env_do(cmd, &i));
 	if (cmd)
-		;
+		NULL ;
 	return (0);
 }

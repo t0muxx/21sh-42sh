@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/08/14 15:49:28 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/08/20 11:08:16 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,7 @@ all: printmess $(NAME)
 
 $(NAME): $(OBJ)
 	@+$(MAKE) -C libft/
-	@gcc $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a -ltermcap -o $(NAME)
+	@gcc $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a -lncurses -o $(NAME)
 	@echo "\033[92m21sh created\033[0m"
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
@@ -127,7 +127,7 @@ $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 
 debug: $(OBJ)
 	@+$(MAKE) -C libft/
-	@gcc -fsanitize=address -I$(INC_PATH) $(OBJ) libft/libft.a -ltermcap -o $(NAME)
+	@gcc -fsanitize=address -I$(INC_PATH) $(OBJ) libft/libft.a -lncurses -o $(NAME)
 	@echo "\033[92m21sh created\033[0m"
 
 clean:

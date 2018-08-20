@@ -34,6 +34,7 @@ dotest()
 #######################################################
 
 ##################### TEST NUM 7 ######################
+rm -rf test
 echo " --- > TEST 7 < ---"
 echo "combinaison of ; | || && > "
 echo "mkdir test && cd test ; touch a && touch b ; ls -la | wc > out.txt || ls | wc > out.txt && cd .. ; pwd ; cat test/out.txt ; rm -rf test" | bash > result/b_18.out
