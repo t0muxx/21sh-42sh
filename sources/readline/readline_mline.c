@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 08:33:21 by tomux             #+#    #+#             */
-/*   Updated: 2018/08/21 11:05:08 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/21 13:44:03 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,9 @@ char	*readline_mline(t_buffer *tbuffer)
 		mlbuffer.state = READ_NORMAL;
 		ft_strcat(tbuffer->buffer, mlbuffer.buffer);
 		ft_bzero(mlbuffer.buffer, BUFFER_SIZE);
-
+		free(mlbuffer.buffer);
 	}
 	tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
-	free(mlbuffer.buffer);
 	free(fptr);
 	free(read_buf);
 	return (tbuffer->buffer);
