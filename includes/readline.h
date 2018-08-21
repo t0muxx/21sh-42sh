@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:18:17 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/21 11:03:57 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ enum e_readline_state
 	READ_NORMAL,
 	READ_ERROR,
 	READ_PROCESS,
+	READ_MULTI,
 
 };
 
@@ -101,6 +102,7 @@ typedef struct	s_buffer
 	int			cutend;
 	int			curs_pos;
 	int			state;
+	int			mline;
 	t_term_cap	*termcap;
 	t_cmd_hist	*head_hist;
 	t_cmd_hist	*cur_hist;
@@ -108,6 +110,7 @@ typedef struct	s_buffer
 }				t_buffer;
 
 void			sig_intercept(t_buffer *tbuffer);
+void		sig_intercept_ml(t_buffer *tbuffer, t_buffer *mlbuffer);
 
 void			input_arrow_left(t_buffer *tbuffer, char *read_buf);
 void			input_arrow_right(t_buffer *tbuffer, char *read_buf);
@@ -146,13 +149,12 @@ void			history_print_reset(t_buffer *tbuffer);
 t_cmd_hist		*history_lst_new(char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
 void			history_add(char *base_path, char *cmd);
-void		history_lst_free(t_cmd_hist *head);
-
+void			history_lst_free(t_cmd_hist *head);
 char			*env_get_var(char *name, char **myenv);
-
 char			*readline(t_buffer *tbuffer);
 void			tbuffer_init(t_buffer *tbuffer, char **env);
-
+char			*readline_mline(t_buffer *tbuffer);
+void			input_enter_mline(t_buffer *tbuffer, char *read_buf);
 t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);
 t_term_cap		*term_init(char **env);

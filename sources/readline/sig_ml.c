@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/20 15:38:48 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/21 11:02:57 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,9 @@
 #include "env.h"
 
 t_buffer *g_tbuffer2;
+t_buffer *g_mlbuffer2;
 
-void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
-{
-	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1 && tbuffer->cnt == 0)
-	{
-		free(tbuffer->buffer);
-		term_close();
-		exit(EXIT_SUCCESS);
-	}
-}
-
-void	sig_handler(int sigid)
+void	sig_handler_ml(int sigid)
 {
 	struct winsize w;
 
@@ -39,6 +30,7 @@ void	sig_handler(int sigid)
 		tbuffer_init(g_tbuffer2, env_create_copy());
 		prompt_print(g_tbuffer2);
 		ft_bzero(g_tbuffer2->buffer, (int)ft_strlen(g_tbuffer2->buffer));
+		ft_bzero(g_mlbuffer2->buffer, (int)ft_strlen(g_mlbuffer2->buffer));
 	}
 	if (sigid == SIGWINCH)
 	{
@@ -47,11 +39,13 @@ void	sig_handler(int sigid)
 	}
 }
 
-void	sig_intercept(t_buffer *tbuffer)
+void	sig_intercept_ml(t_buffer *tbuffer, t_buffer *mlbuffer)
 {
 	g_tbuffer2 = tbuffer;
-	signal(SIGINT, sig_handler);
+	g_mlbuffer2 = mlbuffer;
+	signal(SIGINT, sig_handler_ml);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGWINCH, sig_handler);
+	signal(SIGWINCH, sig_handler_ml);
 	tbuffer = g_tbuffer2;
+	mlbuffer = g_mlbuffer2;
 }

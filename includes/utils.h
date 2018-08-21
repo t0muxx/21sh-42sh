@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:36:22 by tomux            ###   ########.fr       */
+/*   Updated: 2018/08/20 14:28:54 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ char	*make_path(char *curpath, char *dir);
 void	string_shift_right(char **str, int pos);
 void	utils_free_cmd_hist(t_cmd_hist **head);
 char	*string_concat_array(char **array);
+int	utils_in_quotes(char *str);
 #endif

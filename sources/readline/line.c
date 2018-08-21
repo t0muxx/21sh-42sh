@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:59:22 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/07/10 08:48:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/21 10:36:13 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	line_go_begin(t_buffer *tbuffer)
 			tputs(tbuffer->termcap->le, 0, ft_putcc);
 			j--;
 		}
-		tbuffer->prompt_len = 3;
+		if (tbuffer->mline == 0)
+			tbuffer->prompt_len = 3;
+		if (tbuffer->mline == 1)
+			tbuffer->prompt_len = 2;
 	}
 }
 

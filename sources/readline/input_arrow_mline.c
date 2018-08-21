@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   input_arrow_mline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/29 17:55:46 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/21 10:22:34 by tomux            ###   ########.fr       */
+/*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/08/21 10:30:50 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "utils.h"
 
-void	prompt_print(t_buffer *tbuffer)
+void	input_enter_mline(t_buffer *tbuffer, char *read_buf)
 {
-	if (tbuffer->state == READ_NORMAL && tbuffer->line == 1 && tbuffer->mline == 0)
+	char *line;
+
+	if (read_buf[0] == '\n')
 	{
-		write(1, "$> ", 3);
-		tbuffer->prompt_len = 3;
-	}
-	if (tbuffer->state == READ_NORMAL && tbuffer->line == 1 && tbuffer->mline == 1)
-	{
-		write(1, "> ", 2);
-		tbuffer->prompt_len = 2;
+		ft_strcat(tbuffer->buffer, "\n");
+		cursor_move_right(tbuffer, (int)ft_strlen(tbuffer->buffer));
+		tbuffer->state = READ_PROCESS;
 	}
 }

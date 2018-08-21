@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:28:09 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/25 13:44:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/21 10:44:09 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,18 @@ void	input_delete(t_buffer *tbuffer, char *read_buf)
 
 void	input_home(t_buffer *tbuffer, char *read_buf)
 {
+	int i;
+
+	i = 0;
 	if (ft_memcmp(read_buf, FT_KEY_HOME, ft_strlen(FT_KEY_HOME)) == 0)
 	{
 		line_reset(tbuffer);
 		line_go_begin(tbuffer);
-		tputs(tbuffer->termcap->nd, 0, ft_putcc);
-		tputs(tbuffer->termcap->nd, 0, ft_putcc);
-		tputs(tbuffer->termcap->nd, 0, ft_putcc);
+		while (i < tbuffer->prompt_len)
+		{
+			tputs(tbuffer->termcap->nd, 0, ft_putcc);
+			i++;
+		}
 		tbuffer->index = 0;
 		tbuffer->cnt = 0;
 	}

@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/08/20 11:08:16 by tomux            ###   ########.fr        #
+#    Updated: 2018/08/21 11:05:05 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ PARSER   = parser/
 EXEC	 = exec/
 MEM	 	 = memory/
 
-SRCS = 		$(READLINE)readline.c \
+SRCS = 			$(READLINE)readline.c \
+ 			$(READLINE)readline_mline.c \
+ 			$(READLINE)input_arrow_mline.c \
 			$(READLINE)input_arrow.c \
 			$(READLINE)insert.c \
 			$(READLINE)term.c \
@@ -47,6 +49,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(READLINE)input_key.c \
 			$(READLINE)cutpaste.c \
 			$(READLINE)sig.c \
+			$(READLINE)sig_ml.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
 			$(BUILTINS)builtin_cd.c \
@@ -106,6 +109,7 @@ SRCS = 		$(READLINE)readline.c \
 			$(UTILS)makepath.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
+			$(UTILS)in_quotes.c \
 		   	$(MEM)free_fun.c \
 			builtin.c \
 			path.c \

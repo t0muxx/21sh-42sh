@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:29:06 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/08/21 10:59:34 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	tbuffer->index = 0;
 	tbuffer->line = 1;
 	tbuffer->cutstart = 0;
+	tbuffer->mline = 0;
 	tbuffer->colnbr = tgetnum("co");
 	tbuffer->cutend = 0;
 	tbuffer->state = READ_NORMAL;
