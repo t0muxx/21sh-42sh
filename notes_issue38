@@ -1,0 +1,14 @@
+completion with tab :
+	Si on est dans le premier mot:
+		-> si le word commence par . on fait un une recherche par dir (style ls)
+		-> sinon on cherche dans les variable du path
+	Si on est pas dans le premier mot:
+		-> on va rechercher dans le directory correspondant
+
+Condition d'affichage : si il ya plusieurs resultat possible pour la completion on afiche la list des result possible puis on recopie le prompt avec la commande
+						sinon on complete
+
+Fonction qui retourne un tableau de *char en fonction d'un result de lstat & readdir
+
+
+
