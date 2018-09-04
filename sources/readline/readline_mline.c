@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 08:33:21 by tomux             #+#    #+#             */
-/*   Updated: 2018/08/21 13:44:03 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/04 09:30:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	*readline_mline_get_func_array(void)
 
 void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 {
-	t_term_cap		*cur_termcap;
-
 	tbuffer->cnt = 0;
 	tbuffer->prompt_len = 2;
 	tbuffer->index = 0;
@@ -52,7 +50,7 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 	tbuffer->termcap = termcap;
 }
 
-void	*readline_mline_loop(t_buffer *mlbuffer, char *read_buf,
+void	readline_mline_loop(t_buffer *mlbuffer, char *read_buf,
 void (**fptr)(t_buffer *, char *))
 {
 	int	i;

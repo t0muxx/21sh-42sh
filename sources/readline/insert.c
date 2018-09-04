@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:45:57 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/21 10:10:23 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/04 09:30:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	insert_char(t_buffer *tbuffer, char *read_buf)
 
 void	input_enter(t_buffer *tbuffer, char *read_buf)
 {
-	char *line;
-
 	if (read_buf[0] == '\n')
 	{
 		if (utils_in_quotes(tbuffer->buffer) == 0)
