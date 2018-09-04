@@ -1,7 +1,7 @@
 #/bin/bash
 cmpdiff()
 {
-	diff -U 3 result/$1 result/$2 > result/diff.txt
+	diff -I '.result' -U 3 result/$1 result/$2 > result/diff.txt
 	if [ $? -ne 0 ]; then
 	    echo "${ROUGE}[KO]${RESETCOLOR} DIFF KO";
 	else
