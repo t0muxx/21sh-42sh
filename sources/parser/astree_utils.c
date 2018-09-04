@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:38:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/04 17:36:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
 	while (tkn->next)
 	{
 		if (tkn->next->type == CHR_NEWLINE)
+		{
+			free(tkn->next->data);
+			free(tkn->next);
+			tkn->next = NULL;
 			break ;
+		}
 		tkn = tkn->next;
 	}
-	tkn->next = NULL;
 	astree = ast_build(tkn);
 	term_close();
 	free(tbuffer->termcap);
