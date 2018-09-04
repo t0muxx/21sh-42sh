@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/04 09:54:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/04 19:01:24 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ int		fork_and_exec(t_astree *astree, char ***env)
 
 int		child_process(t_astree *astree, char ***env)
 {
-	int		last_exec;
 	t_exec	exec;
 
-	last_exec = 0;
 	exec.pipeline = NULL;
 	exec.parent = 0;
 	exec.dont = 0;
