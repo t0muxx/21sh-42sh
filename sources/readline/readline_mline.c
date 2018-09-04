@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline_mline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/21 08:33:21 by tomux             #+#    #+#             */
-/*   Updated: 2018/09/04 09:30:11 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/09/04 09:42:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	*readline_mline_get_func_array(void)
 {
 	void	(**fptr)(t_buffer *, char *);
-	
+
 	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 10);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
@@ -29,7 +29,6 @@ void	*readline_mline_get_func_array(void)
 	fptr[7] = input_end;
 	fptr[8] = input_ctrl_d;
 	fptr[9] = NULL;
-
 	return (fptr);
 }
 
@@ -53,8 +52,8 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 void	readline_mline_loop(t_buffer *mlbuffer, char *read_buf,
 void (**fptr)(t_buffer *, char *))
 {
-	int	i;
-	struct winsize w;
+	int		i;
+	struct	winsize w;
 
 	while (mlbuffer->state != READ_PROCESS)
 	{
@@ -73,9 +72,9 @@ void (**fptr)(t_buffer *, char *))
 
 char	*readline_mline(t_buffer *tbuffer)
 {
-	char *read_buf;
-	void (**fptr)(t_buffer *, char *);
-	t_buffer mlbuffer;
+	char 		*read_buf;
+	void 		(**fptr)(t_buffer *, char *);
+	t_buffer	mlbuffer;
 
 	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
 		return (NULL);
@@ -86,8 +85,7 @@ char	*readline_mline(t_buffer *tbuffer)
 	{
 		sig_intercept_ml(tbuffer, &mlbuffer);
 		mlbuffer_init(&mlbuffer, tbuffer->termcap); 
-		ft_putstr("\n");
-		ft_putstr("> ");
+		ft_putstr("\n> ");
 		readline_mline_loop(&mlbuffer, read_buf, fptr);
 		mlbuffer.state = READ_NORMAL;
 		ft_strcat(tbuffer->buffer, mlbuffer.buffer);

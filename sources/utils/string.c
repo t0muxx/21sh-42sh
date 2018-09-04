@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 12:04:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/04 09:56:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*string_concat_array(char **array)
 		tmp = ret;
 		ret = ft_strjoin(ret, array[i]);
 		free(tmp);
-		i++;	
+		i++;
 	}
 	return (ret);
 }

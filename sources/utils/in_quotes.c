@@ -3,21 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   in_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/20 13:43:25 by tomux             #+#    #+#             */
-/*   Updated: 2018/08/20 14:28:11 by tomux            ###   ########.fr       */
+/*   Created: 2018/09/04 09:52:48 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/09/04 09:57:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline.h>
 
-int	utils_in_quotes(char *str)
+void	proceed_in_loop(char chr, int *quote, int *dquote, char *last)
 {
-	int i;
-	int quote;
-	int dquote;
-	char last;
+	if (chr == '"' && *dquote == 0 && *quote == 0)
+	{
+		*dquote = 1;
+		*last = '"';
+	}
+	else if (chr == '"' && *dquote == 1 && *last == '"')
+	{
+		*dquote = 0;
+		*last = 0;
+	}
+	if (chr == '\'' && *quote == 0 && *dquote == 0)
+	{
+		*quote = 1;
+		*last = '\'';
+	}
+	else if (chr == '\'' && *quote == 1 && *last == '\'')
+	{
+		*quote = 0;
+		*last = 0;
+	}
+}
+
+int		utils_in_quotes(char *str)
+{
+	int		i;
+	int		quote;
+	int		dquote;
+	char	last;
 
 	quote = 0;
 	dquote = 0;
@@ -25,26 +49,7 @@ int	utils_in_quotes(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' && dquote == 0 && quote == 0)
-		{
-			dquote = 1;
-			last = '"';
-		}
-		else if (str[i] == '"' && dquote == 1 && last == '"')
-		{
-			dquote = 0;
-			last = 0;
-		}
-		if (str[i] == '\'' && quote == 0 && dquote == 0)
-		{
-			quote = 1;
-			last = '\'';
-		}
-		else if (str[i] == '\'' && quote == 1 && last == '\'')
-		{
-			quote = 0;
-			last = 0;
-		}
+		proceed_in_loop(str[i], &quote, &dquote, &last);
 		i++;
 	}
 	return (dquote == 0 && quote == 0);

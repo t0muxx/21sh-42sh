@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 10:36:06 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/04 09:38:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void		ast_set_rootpipe(t_astree *astree)
 			rootpipe = 0;
 			astree = astree->left;
 		}
-
 	}
 }
 

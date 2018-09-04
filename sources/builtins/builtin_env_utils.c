@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:58:51 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 08:44:24 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/04 09:53:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		builtin_env_do_ret(int ret, char *cmd)
 
 int		builtin_env_exec(char **cmd, char **env)
 {
-	pid_t 	pid;
+	pid_t	pid;
 	int		status;
 	char	*cmd_path;
 
@@ -60,7 +60,6 @@ int		builtin_env_exec(char **cmd, char **env)
 		waitpid(pid, &status, 0);
 	return (0);
 }
-
 
 int		builtin_env_do(char **cmd, int *i)
 {

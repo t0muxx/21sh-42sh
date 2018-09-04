@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/17 08:39:34 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/04 09:54:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-/* 
+/*
 ** EXIT STATUS 0 (EXIT_SUCCESS) si aucun probleme
 ** 1 (EXIT_FAILURE) si erreur
 ** > 1 si signaux
@@ -46,7 +46,8 @@ int		check_builtin(t_astree *astree, char ***env)
 	char	**cmd;
 
 	cmd = lst_arr(astree->arg);
-	if (*cmd && astree->type == NT_CMD && builtin_check_builtin(astree, cmd, env) == 1)
+	if (*cmd && astree->type == NT_CMD
+	&& builtin_check_builtin(astree, cmd, env) == 1)
 	{
 		utils_free_2darray((void **)cmd);
 		return (EXIT_SUCCESS);
