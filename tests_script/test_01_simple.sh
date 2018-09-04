@@ -128,3 +128,4 @@ echo "echoo qwertyuiop[] && wc" | bash > result/b_17.out
 echo "echoo qwertyuiop[] && wc" | ../21sh > result/17.out
 dotest b_17.out 17.out
 #######################################################
+
