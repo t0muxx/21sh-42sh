@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 19:32:55 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/05 13:58:19 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include "../../includes/libft.h"
+#include <unistd.h>
+
+int		completion_in_first_word(char *userinput, int pos)
+{
+	int i;
+
+	i = 0;
+	while (userinput[i])
+	{
+		if (userinput[i] == ' ')
+			break ;
+		i++;
+	}
+	if (i > pos - 1 || i == (int)ft_strlen(userinput))
+		return (1);
+	return (0);
+}
 
 void	completion_read_from_dirs(char **dirs, t_list **filelist)
 {
@@ -21,7 +38,7 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 	DIR		*pdir;
 	struct 	dirent	*dir;
 	t_list		*new;
-	
+				
 	i = 0;
 	while (dirs[i])
 	{
@@ -35,13 +52,13 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 		}
 		closedir(pdir);
 		i++;
-	}
+		}
 }
 
 t_list *completion_read(char **dirs)
 {
 	t_list *filelist;
-	
+			
 	filelist = NULL;
 	completion_read_from_dirs(dirs, &filelist);
 	return (filelist);

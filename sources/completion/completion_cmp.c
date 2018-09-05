@@ -6,27 +6,60 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 15:22:37 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 20:37:44 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/05 15:54:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char **completion_cmp_userinput_filelist(char *userinput, char **filelist)
+#include <sys/types.h>
+#include <dirent.h>
+#include <stdlib.h>
+#include "../../includes/libft.h"
+
+t_list *completion_cmp_userinput_filelist(char *userinput, t_list *filelist)
 {
-	char **ret;
-	int  i;
-	int j;
+	t_list	*ret;
+	t_list	*new;
+	int		i;
+	char	*str;
 
-	i = 0;
-	while (filelist[i])
+	ret = NULL;
+	while (filelist)
 	{
-		j = 0;
-		while (filelist[i][j] == userinput[j] && filelist[i][j] && userinput[i][j])
-			j++;
-		if (j > 0)
+		i = 0;
+		str = (char *)filelist->content;
+		while (str[i] == userinput[i] && userinput[i] && str[i])
+			i++;
+		if (i > 0 && !(i < (int)ft_strlen(userinput)))
 		{
-
+			new = ft_lstnew(filelist->content, ft_strlen(filelist->content));
+			ft_lstadd(&ret, new);
 		}
-		i++;
+		filelist = filelist->next;
 	}
 	return (ret);
 }
+
+/*int		main(int argc, char **argv)
+{
+	t_list list1;
+	t_list list2;
+	t_list list3;
+	t_list list4;
+	t_list *ret;
+
+	list1.content = "abcd";
+	list1.next = &list2;
+	list2.content = "accd";
+	list2.next = &list3;
+	list3.content = "abcz";
+	list3.next = &list4;
+	list4.content = "zbcd";
+	list4.next = NULL;
+	ret = completion_cmp_userinput_filelist(argv[1], &list1);
+	while (ret)
+	{
+		ft_putendl((char *)ret->content);
+		ret = ret->next;
+	}
+	return (0);
+}*/

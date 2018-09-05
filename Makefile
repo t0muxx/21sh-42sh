@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/08/21 11:07:56 by tomux            ###   ########.fr        #
+#    Updated: 2018/09/05 15:14:31 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ LEXER	 = lexer/
 PARSER   = parser/
 EXEC	 = exec/
 MEM	 	 = memory/
+COMPLETION = completion/
 
 SRCS = 			$(READLINE)readline.c \
  			$(READLINE)readline_mline.c \
@@ -47,9 +48,12 @@ SRCS = 			$(READLINE)readline.c \
 			$(READLINE)history.c \
 			$(READLINE)history_lst.c \
 			$(READLINE)input_key.c \
+			$(READLINE)input_key2.c \
 			$(READLINE)cutpaste.c \
 			$(READLINE)sig.c \
 			$(READLINE)sig_ml.c \
+			$(COMPLETION)completion_utils.c \
+			$(COMPLETION)completion_cmp.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
 			$(BUILTINS)builtin_cd.c \

@@ -10,5 +10,28 @@ Condition d'affichage : si il ya plusieurs resultat possible pour la completion 
 
 Fonction qui retourne un tableau de *char en fonction d'un result de lstat & readdir
 
+completion_trim_path(char *userinput)
+{
 
+}
+
+cd /
+cd ./
+cd ../
+cd /xxx
+cd /xxx/aaa
+cd ./xxx
+cd ./xxx/aaa
+cd ../xxx
+cd ../xxx/aaa
+cd xxx/aaa
+
+Si userinput commence pas par / || ./ || ../
+	=> on cherche si contient un /
+		=> si oui -> on copie juskau slash et on ret ce dir
+		=> si non -> repertoire courant
+Si userinput commence par / || ./ || ../
+	=> On cherche si contient un / 
+		=> si oui -> on copie juskau slash et on ret ce dir
+		sinon reportoir / ou ./ ou ../	
 
