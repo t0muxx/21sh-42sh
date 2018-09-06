@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 10:36:27 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 20:37:45 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/06 08:47:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct		s_list
 }					t_list;
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
+t_list				*ft_lstnew2(char *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);

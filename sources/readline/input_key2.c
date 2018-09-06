@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:28:15 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 15:54:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 10:02:13 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ void	completion_search_in_path(char *userinput, char **env)
 	filelist = completion_read(patharray);
 	corresponding_filelist = completion_cmp_userinput_filelist(userinput, filelist);
 	ft_putendl("");
-	while (corresponding_filelist)
-	{
-		ft_printf("%s\n", corresponding_filelist->content);
-		corresponding_filelist = corresponding_filelist->next;
-	}
-
+	completion_print(corresponding_filelist);
 }
 
 void	input_tab(t_buffer *tbuffer, char *read_buf)

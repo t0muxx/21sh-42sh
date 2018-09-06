@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 13:58:19 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 09:29:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 	DIR		*pdir;
 	struct 	dirent	*dir;
 	t_list		*new;
-				
+
 	i = 0;
 	while (dirs[i])
 	{
