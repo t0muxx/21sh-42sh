@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 14:09:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 15:44:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 	substring = (char *)(filelist->content + i);
 	string_insert_substring(&tbuffer->buffer,  substring, tbuffer->cnt);
 	free(word);
+	line_reset(tbuffer);
+	cursor_move_right(tbuffer, ft_strlen(substring));
 }
 
 void	completion_print_several(t_list *filelist)

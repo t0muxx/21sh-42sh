@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 14:19:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 15:35:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	input_select_left(t_buffer *tbuffer, char *read_buf)
 	if (ft_memcmp(read_buf, FT_KEY_ALT_LEFT,
 	ft_strlen(FT_KEY_ALT_LEFT)) == 0)
 	{
-		if (tbuffer->cutend == 0)
+		if (tbuffer->cutend == -1)
 			tbuffer->cutend = tbuffer->cnt;
 		if (tbuffer->cnt > 0)
 		{
@@ -44,7 +44,7 @@ void	input_select_right(t_buffer *tbuffer, char *read_buf)
 	if (ft_memcmp(read_buf, FT_KEY_ALT_RIGHT,
 	ft_strlen(FT_KEY_ALT_RIGHT)) == 0)
 	{
-		if (tbuffer->cutend == tbuffer->cnt)
+		if (tbuffer->cutstart == -1)
 			tbuffer->cutstart = tbuffer->cnt;
 		if (tbuffer->cnt < (int)ft_strlen(tbuffer->buffer))
 		{
@@ -66,6 +66,8 @@ void	input_copy(t_buffer *tbuffer, char *read_buf)
 		ft_memcpy(tbuffer->cutbuffer,
 		tbuffer->buffer + tbuffer->cutstart,
 		tbuffer->cutend - tbuffer->cutstart);
+//		ft_printf("\ncutstar |%d|\n", tbuffer->cutstart);
+//		ft_printf("\ncutend |%d|\n", tbuffer->cutend);
 		line_reset(tbuffer);
 	}
 }
@@ -92,11 +94,7 @@ void	input_paste(t_buffer *tbuffer, char *read_buf)
 	i = 0;
 	if (read_buf[0] == 16)
 	{
-		while (i++ < (int)ft_strlen(tbuffer->cutbuffer) - 1)
-			string_shift_right(&tbuffer->buffer, i + tbuffer->cnt);
-		ft_memcpy(tbuffer->buffer,
-		tbuffer->cutbuffer + tbuffer->cnt, ft_strlen(tbuffer->cutbuffer));
-	//	string_insert_substring(&tbuffer->buffer, tbuffer->cutbuffer, tbuffer->cnt);
+		string_insert_substring(&(tbuffer->buffer), tbuffer->cutbuffer, tbuffer->cnt);
 		line_reset(tbuffer);
 	}
 }
