@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 14:52:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 12:06:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define PATH_REM_SLASH 2
 
 void	string_delete_char(char **str, int pos);
+void	string_insert_substring(char **string, char *substring, int offset);
 void	utils_delete_in_2darray(char **tabb, int index);
 void	utils_free_2darray(void **array);
 char	*make_path(char *curpath, char *dir);

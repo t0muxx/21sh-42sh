@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   completion.h                                       :+:      :+:    :+:   */
+/*   string2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/05 09:23:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 10:38:46 by tmaraval         ###   ########.fr       */
+/*   Created: 2018/09/06 11:52:45 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/09/06 12:06:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMPLETION_H
-# define COMPLETION_H 
-int		completion_in_first_word(char *userinput, int pos);
-t_list *completion_read(char **dirs);
-t_list *completion_cmp_userinput_filelist(char *userinput, t_list *filelist);
-void	completion_print(t_buffer *tbuffer, t_list *filelist);
+#include "libft.h"
+#include "utils.h"
 
-#endif
+void	string_insert_substring(char **string, char *substring, int offset)
+{
+	int i;
+
+	i = 0;
+	if (string[offset] == 0)
+	{
+		ft_printf("here ??\n");
+		ft_strncpy(string[0], substring, ft_strlen(substring));
+	}
+	else
+	{
+		while (substring[i])
+		{
+			string_shift_right(string, offset + i);
+			string[0][offset + i] = substring[i];
+			i++;
+		}
+	}
+}
