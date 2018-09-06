@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:04:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 10:19:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "exec.h"
 #include "astree.h"
 #include "lexer.h"
+#include "utils.h"
 
 void		pipeline_add(t_pipeline **last, t_pipeline *new)
 {
@@ -60,9 +61,10 @@ void		pipeline_free(t_pipeline *head)
 
 	while (head)
 	{
+		ft_printf(" freeing \n");
 		tmp = head;
 		head = head->next;
-		free(tmp->cmd);
+		utils_free_2darray((void **)tmp->cmd);
 		free(tmp->node->arg);
 		free(tmp->node);
 		free(tmp);
