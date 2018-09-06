@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:30:54 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:32:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	input_arrow_up(t_buffer *tbuffer, char *read_buf)
 	{
 		cur_hist = tbuffer->cur_hist;
 		head_hist = tbuffer->head_hist;
-		if (cur_hist == NULL)
-			cur_hist = head_hist;
+		printf("|%s|\n", cur_hist->cmd);
+		if (cur_hist->cmd == NULL)
+			cur_hist = head_hist->oldest;
 		else
 		{
 			if (cur_hist != NULL && cur_hist->oldest)
