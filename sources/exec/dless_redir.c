@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/20 11:05:49 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/06 15:03:01 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int		write_input(t_tkn *tkn, char *line, int fd)
 {
-	ft_putstr("> ");
+	ft_putstr_fd("> ", 2);
 	if (get_next_line(0, &line) == 1 && line)
 	{
 		if (ft_strcmp(line, tkn->next->data) == 0)

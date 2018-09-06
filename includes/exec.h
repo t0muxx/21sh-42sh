@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/17 08:38:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/06 18:16:06 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ struct	s_node_type
 extern t_node_type	node_fun[];
 
 int		strdigit(char *str);
+void		and_redir(t_tkn *tkn);
 void		greatand_redir(t_tkn *tkn);
 void		lessand_redir(t_tkn *tkn);
 void		dless_redir(t_tkn *tkn);

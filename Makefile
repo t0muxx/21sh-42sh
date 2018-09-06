@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/08/21 11:07:56 by tomux            ###   ########.fr        #
+#    Updated: 2018/09/06 18:16:40 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(EXEC)exec.c \
 			$(EXEC)cmd.c \
 			$(EXEC)sig_routine.c \
+			$(EXEC)std_redir.c \
 			$(UTILS)string.c \
 			$(UTILS)makepath.c \
 			$(UTILS)utils.c \

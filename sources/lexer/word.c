@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/04 14:33:33 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/06 14:05:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char			*esc_strncpy(char *dst, char *src, int len)
 {
+	// SET states for quotes copy
+
 	int		i;
 	int		j;
 
@@ -39,17 +41,21 @@ static char			*esc_strncpy(char *dst, char *src, int len)
 	return (dst);
 }
 
-static int			is_word_type(int c)
+static int			is_word_type(int c, int escaped)
 {
 	int		i;
 
 	i = 0;
-	if (c == '\\')
+	if (escaped || c == '\\')
 		return (1);
 	while (tkn_fun[i].type)
 	{
 		if (tkn_fun[i].type == (enum e_tkn_type)c)
+		{
+			if (c == '\'' || c == '"')
+				return (1);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -91,7 +97,7 @@ t_tkn				*tkn_word(char **str)
 	line = *str;
 	len = 0;
 	i = 0;
-	while (line[i] != '\0' && is_word_type(line[i]))
+	while (line[i] != '\0' && is_word_type(line[i], is_esc))
 	{
 		if (line[i] == '\\' && !is_esc)
 			is_esc = 1;
@@ -99,6 +105,7 @@ t_tkn				*tkn_word(char **str)
 			is_esc = (len++) ? 0 : 0;
 		i++;
 	}
+	// len = esc_strlen(*str); *with states for quotes*
 	tkn = tkn_init(len);
 	tkn->data = esc_strncpy(tkn->data, line, len);
 	line += i;
