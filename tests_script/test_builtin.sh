@@ -57,7 +57,7 @@ dotest b_31.out 31.out
 #######################################################
 
 ##################### TEST NUM 12 #####################
-echo " --- > TEST builtin cd 1 < ---"
+echo " --- > TEST builtin harder < ---"
 echo "builtin env error"
 echo "env XXX" | bash > result/b_33.out
 echo "env XXX" | ../21sh > result/33.out
@@ -75,6 +75,26 @@ echo "env TEST=BBBB ls" | bash > result/b_36.out
 echo "env TEST=BBBB ls" | ../21sh > result/36.out
 dotest b_36.out 36.out
 #######################################################
+
+##################### TEST NUM 11 #####################
+echo " --- > TEST builtin cd hard < ---"
+echo "builtin cd hard1"
+echo "cd ../tests_script/result ; env | grep --color=never PWD" | bash > result/b_27.out
+echo "cd ../tests_script/result ; env | grep --color=never PWD" | ../21sh > result/27.out
+dotest b_27.out 27.out
+echo " --- > TEST builtin cd hard 2 < ---"
+echo "builtin cd hard 2"
+echo "cd ../../../../../../../../../../../ ; env | grep --color=never PWD" | bash > result/b_28.out
+echo "cd ../../../../../../../../../../../ ; env | grep  --color=never PWD" | ../21sh > result/28.out
+dotest b_28.out 28.out
+echo " --- > TEST builtin cd hard 3 < ---"
+echo "builtin cd hard 3"
+echo "cd /./Users ; env | grep  --color=never PWD" | bash > result/b_29.out
+echo "cd /./Users ; env | grep  --color=never PWD" | ../21sh > result/29.out
+dotest b_29.out 29.out
+#######################################################
+
+##################### TEST NUM 12 #####################
 
 ##################### TEST NUM 12 #####################
 echo " --- > TEST setenv && unsetenv < ---"
