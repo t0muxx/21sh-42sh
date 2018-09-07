@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/21 11:03:57 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/07 08:23:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ enum e_readline_state
 typedef struct	s_cmd_hist
 {
 	char					*cmd;
+	int						enddown;
 	struct s_cmd_hist		*oldest;
 	struct s_cmd_hist		*newest;
 

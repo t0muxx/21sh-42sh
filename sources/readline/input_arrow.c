@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 16:32:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 08:45:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,43 +33,43 @@ void	input_arrow_right(t_buffer *tbuffer, char *read_buf)
 void	input_arrow_up(t_buffer *tbuffer, char *read_buf)
 {
 	t_cmd_hist *head_hist;
-	t_cmd_hist *cur_hist;
 
 	if (ft_memcmp(read_buf, FT_KEY_UP, ft_strlen(FT_KEY_UP)) == 0
 	&& tbuffer->head_hist != NULL)
 	{
-		cur_hist = tbuffer->cur_hist;
 		head_hist = tbuffer->head_hist;
-		printf("|%s|\n", cur_hist->cmd);
-		if (cur_hist->cmd == NULL)
-			cur_hist = head_hist->oldest;
+		if (head_hist->oldest->cmd == NULL && head_hist->oldest->enddown == -1)
+			;
 		else
 		{
-			if (cur_hist != NULL && cur_hist->oldest)
-				cur_hist = cur_hist->oldest;
+			head_hist = head_hist->oldest;
+			history_print(tbuffer, &head_hist);
+			tbuffer->head_hist = head_hist;
 		}
-		history_print(tbuffer, &cur_hist);
-		tbuffer->head_hist = head_hist;
-		tbuffer->cur_hist = cur_hist;
 	}
 }
 
 void	input_arrow_down(t_buffer *tbuffer, char *read_buf)
 {
-	t_cmd_hist *cur_hist;
+	t_cmd_hist *head_hist;
 
 	if (ft_memcmp(read_buf, FT_KEY_DOWN, ft_strlen(FT_KEY_DOWN)) == 0
 	&& tbuffer->head_hist != NULL)
 	{
-		cur_hist = tbuffer->cur_hist;
-		if (cur_hist->newest == NULL)
+		head_hist = tbuffer->head_hist;
+		if (head_hist->newest && head_hist->newest->cmd == NULL && head_hist->newest->enddown == 1)
+		{
 			history_print_reset(tbuffer);
+			head_hist = head_hist->newest;
+			tbuffer->head_hist = head_hist;
+		}
+		else if (!head_hist->newest && head_hist->enddown == 1)
+			;
 		else
 		{
-			cur_hist = cur_hist->newest;
-			history_print(tbuffer, &cur_hist);
-			tbuffer->head_hist = cur_hist;
-			tbuffer->cur_hist = cur_hist;
+			head_hist = head_hist->newest;
+			history_print(tbuffer, &head_hist);
+			tbuffer->head_hist = head_hist;
 		}
 	}
 }
