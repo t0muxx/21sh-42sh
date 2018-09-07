@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 09:08:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:31:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 		{
 			while ((dir = readdir(pdir)) != NULL)
 			{
-				new = ft_lstnew(dir->d_name, ft_strlen(dir->d_name) + 1);
-				ft_lstadd(filelist, new);
+				if (ft_strcmp(dir->d_name, ".") && ft_strcmp(dir->d_name, ".."))
+				{
+					printf("file = |%s|\n", dir->d_name);
+					new = ft_lstnew(dir->d_name, ft_strlen(dir->d_name) + 1);
+					ft_lst_sortedinsert(filelist, new);
+				}
 			}
 		}
 		closedir(pdir);
@@ -60,6 +64,7 @@ t_list *completion_read(char **dirs)
 	t_list *filelist;
 			
 	filelist = NULL;
+	printf("dir = |%s|\n", dirs[0]);
 	completion_read_from_dirs(dirs, &filelist);
 	return (filelist);
 }

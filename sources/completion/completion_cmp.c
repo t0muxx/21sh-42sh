@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 15:22:37 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 09:09:07 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:29:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list *completion_cmp_userinput_filelist(char *userinput, t_list *filelist)
 		if (i > 0 && !(i < (int)ft_strlen(userinput)))
 		{
 			new = ft_lstnew(filelist->content, ft_strlen(filelist->content) + 1);
-			ft_lst_sortedinsert(&ret, new);
+			ft_lstadd(&ret, new);
 		}
 		filelist = filelist->next;
 	}

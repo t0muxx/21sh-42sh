@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 10:36:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 10:38:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:21:54 by tmaraval         ###   ########.fr       */
 
 /*                                                                            */
 /* ************************************************************************** */
@@ -31,15 +31,15 @@ void	completion_trim_append_slash(t_list *filelist, char *searchdir)
 	make_path_manage_last_slash(&searchdir, PATH_REM_SLASH);
 	while (filelist)
 	{
-		ft_printf("searchdir = |%s|\n", searchdir);
+//		ft_printf("searchdir = |%s|\n", searchdir);
 		file = make_path(searchdir, filelist->content);
-		ft_printf("file = |%s|\n", file);
 		if (stat(file, &buf) != -1)
 		{
-			ft_printf("stat ???");
+//			ft_printf("stat ???");
 			if (S_ISDIR(buf.st_mode))
 			{
-				newcontent = ft_memalloc(ft_strlen(filelist->content + 2));
+			//	ft_printf("file = |%s|\n", filelist->content);
+				newcontent = ft_memalloc(ft_strlen((char *)filelist->content) + 3);
 				ft_strcat(newcontent, filelist->content);
 				ft_strcat(newcontent, "/");
 				newcontent[ft_strlen(newcontent) + 1] = 0;
@@ -56,14 +56,13 @@ void	completion_trim_get_searchdir_fill_ret(char *userinput, char **ret)
 	int last_slash;
 
 	last_slash = 0;
-//	printf("userinput = |%s|\n", userinput);
+	printf("userinput = |%s|\n", userinput);
 	last_slash = make_path_find_last_slash(userinput);
-//	printf("last slash |%d|\n", last_slash);
+	printf("last slash |%d|\n", last_slash);
 	ret[0] = malloc(sizeof(char) * (last_slash + 2));
+	ft_bzero(ret[0], last_slash + 2);
 	ft_strncpy(ret[0], userinput, (size_t)(last_slash + 1));
-//	printf("|%s|\n", ret[0]);
-	ret[0][last_slash + 2] = '\0';
-	
+	printf("|%s|\n", ret[0]);
 }
 
 char	*completion_trim_get_searchdir(char *userinput)

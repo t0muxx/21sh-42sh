@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 15:44:37 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:08:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ void	completion_print(t_buffer *tbuffer, t_list *filelist)
 		completion_print_several(filelist);
 	else if (completion_get_filelist_nbr(filelist) == 1)
 		completion_insert_char(tbuffer, filelist);
+	line_reset(tbuffer);
 }
