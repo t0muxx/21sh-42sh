@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/23 17:58:13 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/06 17:16:52 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ enum	e_tkn_type
 	CHR_HTAB,
 	CHR_ASTERISK,
 	CHR_ASSIGNMENT_WORD,
+	CHR_ANDGREAT,
+	CHR_ANDDGREAT,
 	CHR_NULL,
 };
 
@@ -116,5 +118,6 @@ t_tkn	*lex(char **str);
 t_tkn	*tkn_newline(char **str);
 t_tkn	*tkn_init_nl(void);
 t_tkn	*tkn_dash(char **str);
+t_tkn	*tkn_and(char **str);
 
 #endif

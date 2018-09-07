@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/20 11:01:42 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/06 18:14:05 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int			is_redir(t_tkn_type type)
 		|| type == CHR_LESS
 		|| type == CHR_DLESS
 		|| type == CHR_LESSAND
-		|| type == CHR_GREATAND)
+		|| type == CHR_GREATAND
+		|| type == CHR_ANDGREAT
+		|| type == CHR_ANDDGREAT)
 		return (1);
 	return (0);
 }
@@ -42,13 +44,19 @@ static void	great_redir(t_tkn *tkn)
 	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
-		ft_putstr("fail to open ");
-		ft_putendl(tkn->next->data);
+		ft_putstr_fd(tkn->next->data, 2);
+		ft_putstr_fd("cannot be opened\n", 2);
+		close(fd);
+		exit(EXIT_FAILURE);
 	}
 	from = (tkn->prev->type == CHR_IO_NUMBER) ?
 		ft_atoi(tkn->prev->data) : STDOUT_FILENO;
 	if (dup2(fd, from) == -1)
-		ft_putendl("fail to dup2");
+	{
+		ft_putstr_fd("fail to redirect output\n", 2);
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
 }
 
@@ -73,6 +81,7 @@ static void	less_redir(t_tkn *tkn)
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
+		ft_putstr_fd("fail to redirect input\n", 2);
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
@@ -125,6 +134,8 @@ void		redirect_cmd(t_tkn *tkn)
 			dless_redir(tmp);
 		else if (tmp->type == CHR_LESSAND)
 			lessand_redir(tmp);
+		else if (tmp->type == CHR_ANDGREAT || tmp->type == CHR_ANDDGREAT)
+			and_redir(tmp);
 		if (!tmp->next)
 			break ;
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:05:20 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/25 10:52:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/06 18:51:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		lessand_redir(t_tkn *tkn)
 		word = ft_atoi(tkn->next->data);
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
-		if (dup2(fd, word) == -1)
+		if (dup2(word, fd) == -1)
 		{
 			ft_putstr("-bash: ");
 			ft_putnbr(fd);
@@ -55,11 +55,11 @@ void		greatand_redir(t_tkn *tkn)
 		word = ft_atoi(tkn->next->data);
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
-		if (dup2(fd, word) == -1)
+		if (dup2(word, fd) == -1)
 		{
-			ft_putstr("-bash: ");
-			ft_putnbr(fd);
-			ft_putendl(": Bad file descriptor");
+			ft_putstr_fd("-bash: ", 2);
+			ft_putnbr_fd(fd, 2);
+			ft_putstr_fd(": Bad file descriptor\n", 2);
 		}
 	}
 	else if (tkn->next->type == CHR_DASH)
@@ -69,5 +69,5 @@ void		greatand_redir(t_tkn *tkn)
 		close(fd);
 	}
 	else
-		ft_putendl("ERROR");
+		and_redir(tkn);
 }

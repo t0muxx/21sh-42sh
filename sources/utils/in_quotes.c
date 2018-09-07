@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:52:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:58:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/05 13:41:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int		utils_in_quotes(char *str)
 	i = 0;
 	while (str[i])
 	{
-		proceed_in_loop(str[i], &quote, &dquote, &last);
+		if (str[i] == '\\')
+			i++;
+		else
+			proceed_in_loop(str[i], &quote, &dquote, &last);
 		i++;
 	}
 	return (dquote == 0 && quote == 0);

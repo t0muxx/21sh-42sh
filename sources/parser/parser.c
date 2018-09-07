@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/06/25 10:35:12 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/06 17:38:23 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ enum e_tkn_type		type[][8] =
 	{ CHR_NULL },
 	{ CHR_NULL }, // WSPACE
 	{ CHR_NULL },
+	{ CHR_GREAT, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
@@ -49,9 +50,8 @@ enum e_tkn_type		type[][8] =
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
+	{ CHR_WORD, CHR_NULL },
+	{ CHR_WORD, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
@@ -113,7 +113,6 @@ static int			parse_idle(t_tkn *tkn)
 	if (!valid_tkn_type(tkn))
 	{
 		parse_err = 1;
-		ft_putnbr(tkn->type);
 		ft_putstr("Syntax error : unexpected token ");
 		ft_putendl(tkn->next->data);
 	}
