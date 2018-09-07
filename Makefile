@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/09/06 12:03:37 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/09/07 09:42:25 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(COMPLETION)completion_utils.c \
 			$(COMPLETION)completion_cmp.c \
 			$(COMPLETION)completion_print.c \
+			$(COMPLETION)completion_trim.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
 			$(BUILTINS)builtin_cd.c \

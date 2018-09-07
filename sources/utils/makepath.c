@@ -6,12 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 12:28:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 11:01:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "utils.h"
+#include <unistd.h>
 
 int		make_path_find_last_slash(char *path)
 {
@@ -103,4 +104,15 @@ char	*make_path(char *path, char *dir)
 	curpath = ft_strjoin(curpath, dir);
 	free(tmp);
 	return (curpath);
+}
+
+int	main(int argc, char **argv)
+{
+	char *ret;
+	char buf[PATH_MAX];
+
+	getcwd(buf, PATH_MAX);
+	ret = make_path(buf, argv[1]);
+	ft_printf("buf = |%s|\n", buf); 
+	ft_printf("ret = |%s|\n", ret); 
 }

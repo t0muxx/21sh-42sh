@@ -6,13 +6,50 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 10:36:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 13:26:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/07 10:38:59 by tmaraval         ###   ########.fr       */
 
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 #include "unistd.h"
+#include <sys/stat.h>
+
+void	completion_trim_append_slash(t_list *filelist, char *searchdir)
+{
+	struct stat buf;
+	char *file;
+	char *newcontent;
+	char currentwdir[PATH_MAX];
+
+	if (!ft_strcmp(searchdir, "."))
+	{
+		free(searchdir);
+		getcwd(currentwdir, PATH_MAX);
+		searchdir = ft_strdup(currentwdir);
+	}
+	make_path_manage_last_slash(&searchdir, PATH_REM_SLASH);
+	while (filelist)
+	{
+		ft_printf("searchdir = |%s|\n", searchdir);
+		file = make_path(searchdir, filelist->content);
+		ft_printf("file = |%s|\n", file);
+		if (stat(file, &buf) != -1)
+		{
+			ft_printf("stat ???");
+			if (S_ISDIR(buf.st_mode))
+			{
+				newcontent = ft_memalloc(ft_strlen(filelist->content + 2));
+				ft_strcat(newcontent, filelist->content);
+				ft_strcat(newcontent, "/");
+				newcontent[ft_strlen(newcontent) + 1] = 0;
+				free(filelist->content);
+				filelist->content = newcontent;
+			}
+		}
+		filelist = filelist->next;
+	}	
+}
 
 void	completion_trim_get_searchdir_fill_ret(char *userinput, char **ret)
 {
@@ -53,7 +90,9 @@ char	*completion_trim_get_str_to_complete(char *userinput)
 	char *ret;
 	
 	last_slash = make_path_find_last_slash(userinput);
-	if (last_slash < ft_strlen(userinput))
+	if (last_slash == 0 && userinput[0] != '/')
+		ret = ft_strsub(userinput, last_slash , ft_strlen(userinput));
+	else if (last_slash < (int )ft_strlen(userinput))
 		ret = ft_strsub(userinput, last_slash + 1, ft_strlen(userinput));
 	else
 		ret = ft_strdup("");
