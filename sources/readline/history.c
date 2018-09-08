@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 13:39:48 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/07 08:45:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,27 @@ t_cmd_hist		*history_read_line(int fd)
 	char		*line;
 
 	head = NULL;
+	if ((new = malloc(sizeof(t_cmd_hist))) != NULL)
+	{
+		new->newest = NULL;
+		new->oldest = NULL;
+		new->cmd = NULL;
+		new->enddown = -1;
+		history_lst_add(&head, new);
+	}
 	while (get_next_line(fd, &line) > 0)
 	{
 		new = history_lst_new(line);
 		history_lst_add(&head, new);
 		free(line);
+	}
+	if ((new = malloc(sizeof(t_cmd_hist))) != NULL)
+	{
+		new->newest = NULL;
+		new->oldest = NULL;
+		new->cmd = NULL;
+		new->enddown = 1;
+		history_lst_add(&head, new);
 	}
 	return (head);
 }
