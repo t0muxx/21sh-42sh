@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 16:31:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/08 11:28:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int		completion_in_first_word(char *userinput, int pos)
 
 void	completion_read_from_dirs(char **dirs, t_list **filelist)
 {
-	int		i;
-	DIR		*pdir;
-	struct 	dirent	*dir;
-	t_list		*new;
+	int				i;
+	DIR				*pdir;
+	struct dirent	*dir;
+	t_list			*new;
 
 	i = 0;
 	while (dirs[i])
@@ -48,7 +48,6 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 			{
 				if (ft_strcmp(dir->d_name, ".") && ft_strcmp(dir->d_name, ".."))
 				{
-					printf("file = |%s|\n", dir->d_name);
 					new = ft_lstnew(dir->d_name, ft_strlen(dir->d_name) + 1);
 					ft_lst_sortedinsert(filelist, new);
 				}
@@ -56,15 +55,14 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 		}
 		closedir(pdir);
 		i++;
-		}
+	}
 }
 
-t_list *completion_read(char **dirs)
+t_list	*completion_read(char **dirs)
 {
 	t_list *filelist;
-			
+
 	filelist = NULL;
-	printf("dir = |%s|\n", dirs[0]);
 	completion_read_from_dirs(dirs, &filelist);
 	return (filelist);
 }

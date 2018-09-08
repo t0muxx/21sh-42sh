@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 10:24:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/08 11:44:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	utils_free_cmd_hist(t_cmd_hist **head);
 char	*string_concat_array(char **array);
 int		utils_in_quotes(char *str);
 char	*extract_current_word(char *str, int pos);
+int		make_path_cnt_slash(char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 15:22:37 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 16:29:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/08 11:14:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "../../includes/libft.h"
 
-t_list *completion_cmp_userinput_filelist(char *userinput, t_list *filelist)
+t_list	*completion_cmp_userinput_filelist(char *userinput, t_list *filelist)
 {
 	t_list	*ret;
 	t_list	*new;
@@ -31,7 +31,8 @@ t_list *completion_cmp_userinput_filelist(char *userinput, t_list *filelist)
 			i++;
 		if (i > 0 && !(i < (int)ft_strlen(userinput)))
 		{
-			new = ft_lstnew(filelist->content, ft_strlen(filelist->content) + 1);
+			new = ft_lstnew(filelist->content,
+			ft_strlen(filelist->content) + 1);
 			ft_lstadd(&ret, new);
 		}
 		filelist = filelist->next;

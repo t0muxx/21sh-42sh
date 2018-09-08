@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/09/07 09:42:25 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/09/08 11:48:29 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,10 @@ SRCS = 			$(READLINE)readline.c \
 			$(READLINE)sig.c \
 			$(READLINE)sig_ml.c \
 			$(COMPLETION)completion_utils.c \
+			$(COMPLETION)completion.c \
 			$(COMPLETION)completion_cmp.c \
 			$(COMPLETION)completion_print.c \
+			$(COMPLETION)completion_print_utils.c \
 			$(COMPLETION)completion_trim.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
@@ -114,6 +116,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(UTILS)string.c \
 			$(UTILS)string2.c \
 			$(UTILS)makepath.c \
+			$(UTILS)makepath_utils.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
 			$(UTILS)in_quotes.c \

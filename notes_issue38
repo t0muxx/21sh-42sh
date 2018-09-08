@@ -35,3 +35,4 @@ Si userinput commence par / || ./ || ../
 		=> si oui -> on copie juskau slash et on ret ce dir
 		sinon reportoir / ou ./ ou ../	
 
+

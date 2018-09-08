@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 16:08:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/08 11:25:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,7 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include "readline.h"
-
-int		completion_print_get_max_len(t_list *filelist)
-{
-	int max;
-
-	max = 0;
-	while (filelist)
-	{
-		if (max < (int )ft_strlen(filelist->content))
-			max = ft_strlen(filelist->content);
-		filelist = filelist->next;
-	}
-	return (max);
-}
-
-/*
- * tant que ((maxlen + 2) * x) - colnbr) > 3
- * x++
- *
-*/
-int		completion_print_get_word_by_cols(int maxlen)
-{
-	int	wordbycol;
-	int colnbr;
-	struct winsize w;
-
-	ioctl(0, TIOCGWINSZ, &w);	
-	colnbr = w.ws_col;
-//	ft_printf("colnbr = |%d|\n", colnbr);
-//	ft_printf("maxlen = |%d|\n", maxlen);
-	wordbycol = 1;
-	while (((colnbr - 2) - ((maxlen + 2) * wordbycol)) > 2)
-		wordbycol++;
-	if (((colnbr - 2) - ((maxlen + 2) * wordbycol)) < 0)
-		wordbycol--;
-//	ft_printf("ordbycol = |%d|\n", wordbycol);
-	return (wordbycol);
-}
-
-void	completion_print_space(int maxlen, int len)
-{
-	while (len < maxlen)
-	{
-		ft_putstr(" ");
-		len++;
-	}
-}
+#include "completion.h"
 
 int		completion_get_filelist_nbr(t_list *filelist)
 {
@@ -77,14 +31,23 @@ int		completion_get_filelist_nbr(t_list *filelist)
 
 void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 {
-	char *word;
-	int i;
-	char *substring;
+	char	*word;
+	int		i;
+	char	*substring;
+	int		last_slash;
+	int		slash_cnt;
 
 	word = extract_current_word(tbuffer->buffer, tbuffer->cnt);
-	i = ft_strlen(word);
+	slash_cnt = make_path_cnt_slash(word);
+	last_slash = make_path_find_last_slash(word);
+	if (word[0] != '/' && slash_cnt != 0)
+		i = ft_strlen(word) - last_slash - 1;
+	else if (word[0] == '/' && slash_cnt == 1)
+		i = ft_strlen(word) - 1;
+	else
+		i = ft_strlen(word);
 	substring = (char *)(filelist->content + i);
-	string_insert_substring(&tbuffer->buffer,  substring, tbuffer->cnt);
+	string_insert_substring(&tbuffer->buffer, substring, tbuffer->cnt);
 	free(word);
 	line_reset(tbuffer);
 	cursor_move_right(tbuffer, ft_strlen(substring));
@@ -96,7 +59,6 @@ void	completion_print_several(t_list *filelist)
 	int	maxlen;
 	int i;
 
-	i = 0;
 	maxlen = completion_print_get_max_len(filelist);
 	wordbycol = completion_print_get_word_by_cols(maxlen);
 	ft_putendl("");
@@ -106,7 +68,7 @@ void	completion_print_several(t_list *filelist)
 		while (filelist && i < wordbycol - 1)
 		{
 			ft_printf("%s", filelist->content);
-			completion_print_space(maxlen , (int)ft_strlen(filelist->content));
+			completion_print_space(maxlen, (int)ft_strlen(filelist->content));
 			ft_putstr("  ");
 			i++;
 			filelist = filelist->next;
