@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:26:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 09:33:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 14:46:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	completion_search_in_path(t_buffer *tbuffer, char **env)
 	t_list *filelist;
 	t_list *corresponding_filelist;
 
-	path = env_get_var("PATH", env);
+	if ((path = env_get_var("PATH", env)) == NULL)
+			return ;
 	patharray = ft_strsplit(path, ':');
 	free(path);
 	filelist = completion_read(patharray);

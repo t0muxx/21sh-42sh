@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 11:42:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 15:01:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	completion_read_from_dirs(char **dirs, t_list **filelist)
 					ft_lst_sortedinsert(filelist, new);
 				}
 			}
+			closedir(pdir);
 		}
-		closedir(pdir);
 		i++;
 	}
 }
