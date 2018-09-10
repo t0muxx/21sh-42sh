@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/08 11:28:07 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 11:42:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		completion_in_first_word(char *userinput, int pos)
 	int i;
 
 	i = 0;
+//	ft_printf("userinput2 = |%s|\n", userinput);
 	while (userinput[i])
 	{
 		if (userinput[i] == ' ')
@@ -30,6 +31,25 @@ int		completion_in_first_word(char *userinput, int pos)
 	if (i > pos - 1 || i == (int)ft_strlen(userinput))
 		return (1);
 	return (0);
+}
+
+int		completion_find_lastcmd(char *userinput, int pos)
+{
+	int i;
+
+	i = pos;
+	if (ft_strlen(userinput) == 0)
+		return (0);
+//	ft_printf("userinput = |%s|\n", userinput);
+	while (i > 0 && 
+	(userinput[i] != '|' && userinput[i] != ';' && userinput[i] != '&' ))
+		i--;
+	if (userinput[i] == '|' || userinput[i] == ';' || userinput[i] == '&')
+		i++;
+	while (userinput[i] == ' ')
+		i++;
+//	ft_printf("i = |%d|\n", i);
+	return (i);
 }
 
 void	completion_read_from_dirs(char **dirs, t_list **filelist)

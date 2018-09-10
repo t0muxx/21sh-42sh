@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 11:28:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/08 11:39:40 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 09:33:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,30 @@ void	completion_trim_append_slash_do(char **newcontent, t_list *filelist)
 	filelist->content = newcontent[0];
 }
 
-void	completion_trim_append_slash(t_list *filelist, char *searchdir)
+void	completion_trim_append_slash(t_list *filelist, char **searchdir)
 {
 	struct stat		buf;
 	char			*file;
 	char			*newcontent;
 	char			currentwdir[PATH_MAX];
 
-	if (!ft_strcmp(searchdir, "."))
+	if (!ft_strcmp(searchdir[0], "."))
 	{
-		free(searchdir);
+		free(searchdir[0]);
 		getcwd(currentwdir, PATH_MAX);
-		searchdir = ft_strdup(currentwdir);
+		searchdir[0] = ft_strdup(currentwdir);
 	}
-	if (!(searchdir[0] == '/' && ft_strlen(searchdir) == 1))
-		make_path_manage_last_slash(&searchdir, PATH_REM_SLASH);
+	if (!(searchdir[0][0] == '/' && ft_strlen(searchdir[0]) == 1))
+		make_path_manage_last_slash(searchdir, PATH_REM_SLASH);
 	while (filelist)
 	{
-		file = make_path(searchdir, filelist->content);
+		file = make_path(searchdir[0], filelist->content);
 		if (stat(file, &buf) != -1)
 		{
 			if (S_ISDIR(buf.st_mode))
 				completion_trim_append_slash_do(&newcontent, filelist);
 		}
+		free(file);
 		filelist = filelist->next;
 	}
 }
