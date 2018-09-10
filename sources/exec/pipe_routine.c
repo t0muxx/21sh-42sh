@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 10:19:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 12:10:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void		pipeline_free(t_pipeline *head)
 
 	while (head)
 	{
-		ft_printf(" freeing \n");
 		tmp = head;
 		head = head->next;
 		utils_free_2darray((void **)tmp->cmd);
