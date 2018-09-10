@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 08:23:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/10 12:07:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_term_cap
 typedef struct	s_buffer
 {
 	char		*buffer;
+	char		**env;
 	char		base_path[1024];
 	char		reset;
 	char		cutbuffer[BUFFER_SIZE];
@@ -129,6 +130,7 @@ void			input_cut(t_buffer *tbuffer, char *read_buf);
 void			input_paste(t_buffer *tbuffer, char *read_buf);
 void			input_copy(t_buffer *tbuffer, char *read_buf);
 void			input_enter(t_buffer *tbuffer, char *read_buf);
+void			input_tab(t_buffer *tbuffer, char *read_buf);
 void			line_go_down(t_buffer *tbuffer, int cnt);
 void			input_ctrl_d(t_buffer *tbuffer, char *read_buf);
 void			input_ctrl_c(t_buffer *tbuffer, char *read_buf);

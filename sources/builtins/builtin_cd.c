@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:41:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/08 11:09:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,29 @@ int			cd_change_dir(char *dir, char ***env, int opt)
 {
 	char *oldpwd;
 	char *pwd;
+	char *tochdir;
 
 	pwd = NULL;
 	if ((oldpwd = env_get_var("PWD", *env)) == NULL)
 		oldpwd = ft_strdup("");
 	if (opt == CD_P)
 	{
-		if (cd_change_dir_p(oldpwd, pwd, dir, env) == -1)
+		tochdir = make_path(oldpwd, dir);
+		if (cd_change_dir_p(oldpwd, pwd, tochdir, env) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (cd_change_dir_dash(oldpwd, &dir, env) == -1)
-			return (-1);
-		if (cd_change_dir_gen(oldpwd, &pwd, dir, env) == -1)
+		if (!ft_strcmp(dir, "-"))
+		{
+			if (cd_change_dir_dash(oldpwd, &dir, env) == -1)
+				return (-1);
+		}
+//		ft_printf("oldpwd = |%s|\n", oldpwd);
+//		ft_printf("dir = |%s|\n", dir);
+		tochdir = make_path(oldpwd, dir);
+//		ft_printf("tochdir = |%s|\n", tochdir);
+		if (ft_strcmp(dir, "-") != 0 && cd_change_dir_gen(oldpwd, &pwd, tochdir, env) == -1)
 			return (-1);
 	}
 	free(oldpwd);

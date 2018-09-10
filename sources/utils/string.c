@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:56:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/05 14:58:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@
 ** like : before : [t][e][s][t]
 ** 	   after  : [t][ ][e][s][t]
 */
+
+char	*extract_current_word(char *str, int pos)
+{
+	int start;
+	int len;
+	int i;
+	char *ret;
+
+	start = pos;
+	len = 0;
+	while (start >= 0 && str[start] != ' ')
+		start--;
+	i = start + 1;
+	while (str[i] && str[i] != ' ')
+	{
+		len++;
+		i++;
+	}
+	ret = ft_strsub(str, start + 1, len);
+	return (ret);
+}
 
 char	*string_concat_array(char **array)
 {
