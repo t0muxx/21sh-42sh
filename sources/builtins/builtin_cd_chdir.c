@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 08:54:32 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/11 15:43:42 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		cd_err_chdir(char *dir)
 	{
 		if (access(dir, F_OK) == -1)
 			error_print(EXISTERR, "cd", dir);
+		else if (utils_is_dir(dir) != 1)
+			error_print(NOTADIR, "cd", dir);
 		else if (access(dir, X_OK) == -1)
 			error_print(PERMERR, "cd", dir);
 		else
