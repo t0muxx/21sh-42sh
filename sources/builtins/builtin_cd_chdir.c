@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 15:47:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/11 08:54:32 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 int		cd_change_dir_gen(char *oldpwd, char **pwd, char *dir, char ***env)
 {
 	if (pwd)
-		;
+		NULL ;
 	if (cd_err_chdir(dir) == -1)
 	{
 		free(oldpwd);

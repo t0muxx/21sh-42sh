@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 15:35:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/11 08:53:25 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,6 @@ void	input_cut(t_buffer *tbuffer, char *read_buf)
 
 void	input_paste(t_buffer *tbuffer, char *read_buf)
 {
-	int i;
-
-	i = 0;
 	if (read_buf[0] == 16)
 	{
 		string_insert_substring(&(tbuffer->buffer), tbuffer->cutbuffer, tbuffer->cnt);
