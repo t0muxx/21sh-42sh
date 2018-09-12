@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:30:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 14:10:25 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 
 void	input_enter_mline(t_buffer *tbuffer, char *read_buf)
 {
+	int last;
+
 	if (read_buf[0] == '\n')
 	{
-		ft_strcat(tbuffer->buffer, "\n");
+		if ((last = ft_strlen(tbuffer->buffer)) > 0)
+		{
+			if (tbuffer->buffer[last - 1] != '\\')
+				ft_strcat(tbuffer->buffer, "\n");
+		}
 		cursor_move_right(tbuffer, (int)ft_strlen(tbuffer->buffer));
 		tbuffer->state = READ_PROCESS;
 	}
