@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 14:05:47 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/11 15:31:52 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,11 @@ int		main(void)
 		history_add(tbuffer.base_path, line[0]);
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
+		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
 		free_tkn_lst(tkn);
 		history_lst_free(tbuffer.head_hist);
-		free(line[0]);
 	}
 	free_env(env);
 }

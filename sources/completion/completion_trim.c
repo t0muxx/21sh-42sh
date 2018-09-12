@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 11:28:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 09:33:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 10:15:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	completion_trim_append_slash_do(char **newcontent, t_list *filelist)
 
 void	completion_trim_append_slash(t_list *filelist, char **searchdir)
 {
-	struct stat		buf;
 	char			*file;
 	char			*newcontent;
 	char			currentwdir[PATH_MAX];
@@ -43,11 +42,8 @@ void	completion_trim_append_slash(t_list *filelist, char **searchdir)
 	while (filelist)
 	{
 		file = make_path(searchdir[0], filelist->content);
-		if (stat(file, &buf) != -1)
-		{
-			if (S_ISDIR(buf.st_mode))
+		if (utils_is_dir(file) == 1)
 				completion_trim_append_slash_do(&newcontent, filelist);
-		}
 		free(file);
 		filelist = filelist->next;
 	}

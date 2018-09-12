@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:35:26 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:48:07 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/11 15:37:04 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	error_print(int errnbr, char *func, char *arg)
 	str = errnbr == 8 ? "too few arguments" : str;
 	str = errnbr == 9 ? "Error during execve" : str;
 	str = errnbr == 10 ? "OLDPWD not set" : str;
+	str = errnbr == 11 ? "Not a directory" : str;
 	write(2, str, ft_strlen(str));
 	if (ft_strlen(arg) != 0)
 		write(2, ": ", 2);
