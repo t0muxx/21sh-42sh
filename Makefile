@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/09/06 18:16:40 by cormarti         ###   ########.fr        #
+#    Updated: 2018/09/08 12:07:51 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(BUILTINS)builtin_setenv.c \
 			$(BUILTINS)builtin_unsetenv.c \
 			$(ERROR)error.c \
+			$(LEXER)quotes_in_word.c \
 			$(LEXER)init.c \
 			$(LEXER)ampersand.c \
 			$(LEXER)asterisk.c \

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/06 17:16:52 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/08 15:14:55 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ enum	e_tkn_type
 
 enum	e_tkn_state
 {
+	STATE_BRACKETED = 1,
 	STATE_QUOTED,
 	STATE_DQUOTED,
-	STATE_BRACKETED,
 	STATE_ESCAPED,
 	STATE_HOOKED,
 	STATE_IDLE,
@@ -112,6 +112,10 @@ t_tkn	*tkn_less(char **str);
 t_tkn	*tkn_great(char **str);
 t_tkn	*tkn_eol(char **str);
 t_tkn	*tkn_word(char **str);
+t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc);
+int		is_quote(int chr, t_tkn_state state);
+int		esc_strlen(char *line);
+int		is_word_type(int c, int escaped, t_tkn_state state);
 void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
 t_tkn	*lex(char **str);

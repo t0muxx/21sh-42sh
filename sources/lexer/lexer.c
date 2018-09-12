@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/06 14:06:12 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/12 14:27:33 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 
 	line = *str;
 	i = 0;
+	(void)state;
 	while (tkn_fun[i].type)
 	{
 		if (!tkn_fun[i + 1].type)
@@ -46,11 +47,11 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 		}
 		else if (tkn_fun[i].type == (enum e_tkn_type)*line)
 		{
-			if (*line == '"')
+			/*if (*line == '"')
 				*state = STATE_DQUOTED;
 			else if (*line == '\'')
 				*state = STATE_QUOTED;
-			tkn_push_back(head, tkn_fun[i].fun(&line));
+			*/tkn_push_back(head, tkn_fun[i].fun(&line));
 			break ;
 		}
 		i++;
@@ -106,20 +107,20 @@ t_tkn			*lex(char **str)
 	char		*line;
 	t_tkn_state	state;
 
-	line = ft_strdup(*str);
+	line = *str;
 	tkn = tkn_init(1);
 	state = STATE_IDLE;
 	if (line == 0 || line == NULL)
 		return (NULL);
 	while (line[0] != '\0')
 	{
-		if (state == STATE_IDLE)
+		//if (state == STATE_IDLE)
 			state_idle(&tkn, &line, &state);
-		else if (state == STATE_DQUOTED)
+		/*else if (state == STATE_DQUOTED)
 			state_dquoted(&tkn, &line, &state);
 		else if (state == STATE_QUOTED)
 			state_quoted(&tkn, &line, &state);
-	}
+	*/}
 	tkn_push_back(&tkn, tkn_init_nl());
 	tkn = tkn->next;
 	free(tkn->prev->data);

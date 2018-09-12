@@ -6,47 +6,51 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/06 14:05:34 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/08 15:19:23 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 
-static char			*esc_strncpy(char *dst, char *src, int len)
+char				*esc_strncpy(char *dst, char **line, int len)
 {
-	// SET states for quotes copy
+	t_tkn_state		state;
+	int				i;
+	int				j;
+	int				is_esc;
+	char			*src;
 
-	int		i;
-	int		j;
-
-	j = 0;
+	src = *line;
 	i = 0;
-	while (j < len && src[i])
+	j = 0;
+	is_esc = 0;
+	state = STATE_IDLE;
+	while (j < len && src[i] != '\0')
 	{
-		if ((src[i] != '\\') || (i != 0 && src[i - 1] == '\\'))
+		state = set_state(state, src[i], is_esc);
+		if (src[i] == '\\' && state == STATE_IDLE)
+			is_esc = 1;
+		else
+			is_esc = 0;
+		if (!is_esc && !is_quote(src[i], state))
 		{
 			dst[j] = src[i];
-			if ((dst[j] = src[i]) == 0)
-			{
-				while (i < len)
-				{
-					dst[j] = '\0';
-					i++;
-				}
-			}
 			j++;
 		}
 		i++;
 	}
+	dst[len] = '\0';
+	src += (state == STATE_IDLE) ? i : i + 1;
+	*line = src;
 	return (dst);
 }
 
-static int			is_word_type(int c, int escaped)
+int					is_word_type(int c, int escaped, t_tkn_state state)
 {
 	int		i;
 
 	i = 0;
-	if (escaped || c == '\\')
+	if (escaped || c == '\\' || state != STATE_IDLE)
 		return (1);
 	while (tkn_fun[i].type)
 	{
@@ -89,26 +93,13 @@ t_tkn				*tkn_word(char **str)
 {
 	t_tkn	*tkn;
 	int		len;
-	int		i;
 	char	*line;
-	int		is_esc;
 
-	is_esc = 0;
 	line = *str;
-	len = 0;
-	i = 0;
-	while (line[i] != '\0' && is_word_type(line[i], is_esc))
-	{
-		if (line[i] == '\\' && !is_esc)
-			is_esc = 1;
-		else
-			is_esc = (len++) ? 0 : 0;
-		i++;
-	}
-	// len = esc_strlen(*str); *with states for quotes*
+	len = esc_strlen(line);
 	tkn = tkn_init(len);
-	tkn->data = esc_strncpy(tkn->data, line, len);
-	line += i;
+	tkn->data = esc_strncpy(tkn->data, &line, len);
+	ft_putendl(tkn->data);
 	*str = line;
 	tkn->type = extra_tkn_type(tkn, str);
 	return (tkn);
