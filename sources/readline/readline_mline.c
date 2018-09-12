@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 11:55:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 12:05:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ char	*readline_mline(t_buffer *tbuffer)
 		ft_bzero(mlbuffer.buffer, BUFFER_SIZE);
 		free(mlbuffer.buffer);
 	}
-	tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
+	if (ft_strlen(tbuffer->buffer) != 0)
+		tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
 	free(fptr);
 	free(read_buf);
 	//ft_printf("mlbuffer ret |%s|\n", tbuffer->buffer);
