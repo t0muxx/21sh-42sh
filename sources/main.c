@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 14:05:47 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/12 11:56:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "astree.h"
 #include "exec.h"
 #include "env.h"
+#include "utils.h"
 
 void		print_ast(t_astree *astree)
 {
@@ -50,6 +51,8 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 	tbuffer_init(tbuffer, env);
 	line[0] = readline(tbuffer);
 	line[1] = 0;
+	if (utils_in_quotes(tbuffer->buffer) == 0)
+		line[0] = readline_mline(tbuffer);
 	return (line);
 }
 
@@ -113,11 +116,11 @@ int		main(void)
 		history_add(tbuffer.base_path, line[0]);
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
+		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
 		free_tkn_lst(tkn);
 		history_lst_free(tbuffer.head_hist);
-		free(line[0]);
 	}
 	free_env(env);
 }

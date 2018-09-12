@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/21 10:59:34 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/12 11:24:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	*readline_get_func_array(void)
 	fptr[15] = input_copy;
 	fptr[16] = input_enter;
 	fptr[17] = input_ctrl_d;
-	fptr[18] = NULL;
+	fptr[18] = input_tab;
+	fptr[19] = NULL;
 	return (fptr);
 }
 
@@ -124,13 +125,19 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	tbuffer->cnt = 0;
 	tbuffer->index = 0;
 	tbuffer->line = 1;
-	tbuffer->cutstart = 0;
+	tbuffer->cutstart = -1;
 	tbuffer->mline = 0;
+	tbuffer->ctrlc = 0;
 	tbuffer->colnbr = tgetnum("co");
-	tbuffer->cutend = 0;
+	tbuffer->cutend = -1;
 	tbuffer->state = READ_NORMAL;
-	tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	if ((tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE)) == NULL)
+	{
+		ft_putendl_fd("Can't allocate buffer memory\n exiting ...", 2);
+		exit(EXIT_FAILURE);
+	}
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
 	tbuffer->termcap = cur_termcap;
+	tbuffer->env = env; 
 }

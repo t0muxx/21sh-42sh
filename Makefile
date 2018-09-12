@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/09/08 12:07:51 by cormarti         ###   ########.fr        #
+#    Updated: 2018/09/12 14:32:16 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ LEXER	 = lexer/
 PARSER   = parser/
 EXEC	 = exec/
 MEM	 	 = memory/
+COMPLETION = completion/
 
 SRCS = 			$(READLINE)readline.c \
  			$(READLINE)readline_mline.c \
@@ -47,9 +48,16 @@ SRCS = 			$(READLINE)readline.c \
 			$(READLINE)history.c \
 			$(READLINE)history_lst.c \
 			$(READLINE)input_key.c \
+			$(READLINE)input_key2.c \
 			$(READLINE)cutpaste.c \
 			$(READLINE)sig.c \
 			$(READLINE)sig_ml.c \
+			$(COMPLETION)completion_utils.c \
+			$(COMPLETION)completion.c \
+			$(COMPLETION)completion_cmp.c \
+			$(COMPLETION)completion_print.c \
+			$(COMPLETION)completion_print_utils.c \
+			$(COMPLETION)completion_trim.c \
 			$(ENV)env.c \
 			$(ENV)env_modify.c \
 			$(BUILTINS)builtin_cd.c \
@@ -108,7 +116,9 @@ SRCS = 			$(READLINE)readline.c \
 			$(EXEC)sig_routine.c \
 			$(EXEC)std_redir.c \
 			$(UTILS)string.c \
+			$(UTILS)string2.c \
 			$(UTILS)makepath.c \
+			$(UTILS)makepath_utils.c \
 			$(UTILS)utils.c \
 			$(UTILS)utils_array.c \
 			$(UTILS)in_quotes.c \

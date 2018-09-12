@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/20 15:38:48 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/11 10:05:53 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
 
 void	sig_handler(int sigid)
 {
-	struct winsize w;
-
+	struct winsize 	w;
+	
 	ioctl(0, TIOCGWINSZ, &w);
 	if (sigid == SIGINT)
 	{
 		cursor_move_right(g_tbuffer2, (int)ft_strlen(g_tbuffer2->buffer));
 		ft_putstr("\n");
+		free(g_tbuffer2->buffer);
+		free(g_tbuffer2->termcap);
 		tbuffer_init(g_tbuffer2, env_create_copy());
 		prompt_print(g_tbuffer2);
 		ft_bzero(g_tbuffer2->buffer, (int)ft_strlen(g_tbuffer2->buffer));

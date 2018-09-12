@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   makepath_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/24 18:02:52 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/09/11 15:41:09 by tomux            ###   ########.fr       */
+/*   Created: 2018/09/08 11:44:12 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/09/08 11:45:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline.h"
-#include "unistd.h"
-#include <sys/stat.h>
+#include "libft.h"
+#include "utils.h"
+#include <unistd.h>
 
-int	utils_is_dir(char *path)
+int		make_path_find_last_slash(char *path)
 {
-	struct stat buf;
+	int i;
 
-	if (stat(path, &buf) != -1)
+	i = ft_strlen(path);
+	while (i >= 0)
 	{
-		if (S_ISDIR(buf.st_mode))
-			return (1);
+		if (path[i] == '/')
+			return (i);
+		i--;
 	}
 	return (0);
 }

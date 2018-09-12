@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:42:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 12:05:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*readline_mline_get_func_array(void)
 {
 	void	(**fptr)(t_buffer *, char *);
 
-	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 10);
+	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 11);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
 	fptr[2] = insert_char;
@@ -28,7 +28,8 @@ void	*readline_mline_get_func_array(void)
 	fptr[6] = input_home;
 	fptr[7] = input_end;
 	fptr[8] = input_ctrl_d;
-	fptr[9] = NULL;
+	fptr[9] = input_tab;
+	fptr[10] = NULL;
 	return (fptr);
 }
 
@@ -42,6 +43,7 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 	tbuffer->colnbr = tgetnum("co");
 	tbuffer->cutend = 0;
 	tbuffer->mline = 1;
+	tbuffer->ctrlc = 0;
 	tbuffer->state = READ_NORMAL;
 	tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
@@ -54,12 +56,16 @@ void (**fptr)(t_buffer *, char *))
 {
 	int		i;
 	struct	winsize w;
+	int		fd;
 
-	while (mlbuffer->state != READ_PROCESS)
+	fd = 0;
+	while (mlbuffer->state != READ_PROCESS && mlbuffer->ctrlc != 1)
 	{
 		i = 0;
 		ioctl(0, TIOCGWINSZ, &w);
 		mlbuffer->colnbr = w.ws_col;
+		dup2(0, fd);
+		mlbuffer->saved_in = dup(0);
 		read(0, read_buf, MAX_KEYCODE_SIZE);
 		while (fptr[i])
 		{
@@ -68,6 +74,8 @@ void (**fptr)(t_buffer *, char *))
 		}
 		ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	}
+	if (mlbuffer->ctrlc == 1)
+		dup2(mlbuffer->saved_in, 0);
 }
 
 char	*readline_mline(t_buffer *tbuffer)
@@ -81,7 +89,8 @@ char	*readline_mline(t_buffer *tbuffer)
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	ft_strncat(tbuffer->buffer, "\n", 1);
 	fptr = readline_mline_get_func_array();
-	while (tbuffer->cnt <= BUFFER_SIZE && utils_in_quotes(tbuffer->buffer) == 0)
+	mlbuffer.env = tbuffer->env;
+	while (tbuffer->cnt <= BUFFER_SIZE && utils_in_quotes(tbuffer->buffer) == 0 && tbuffer->ctrlc != 1)
 	{
 		sig_intercept_ml(tbuffer, &mlbuffer);
 		mlbuffer_init(&mlbuffer, tbuffer->termcap); 
@@ -92,9 +101,11 @@ char	*readline_mline(t_buffer *tbuffer)
 		ft_bzero(mlbuffer.buffer, BUFFER_SIZE);
 		free(mlbuffer.buffer);
 	}
-	tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
+	if (ft_strlen(tbuffer->buffer) != 0)
+		tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
 	free(fptr);
 	free(read_buf);
+	//ft_printf("mlbuffer ret |%s|\n", tbuffer->buffer);
 	return (tbuffer->buffer);
 		
 }
