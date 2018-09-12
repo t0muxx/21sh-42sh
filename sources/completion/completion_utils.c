@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 15:22:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 10:12:13 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 int		completion_in_first_word(char *userinput, int pos)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
-//	ft_printf("userinput2 = |%s|\n", userinput);
 	while (userinput[i])
 	{
 		if (userinput[i] == ' ')
@@ -40,7 +41,6 @@ int		completion_find_lastcmd(char *userinput, int pos)
 	i = pos;
 	if (ft_strlen(userinput) == 0)
 		return (0);
-//	ft_printf("userinput = |%s|\n", userinput);
 	while (i > 0 && 
 	(userinput[i] != '|' && userinput[i] != ';' && userinput[i] != '&' ))
 		i--;
@@ -48,7 +48,6 @@ int		completion_find_lastcmd(char *userinput, int pos)
 		i++;
 	while (userinput[i] == ' ')
 		i++;
-//	ft_printf("i = |%d|\n", i);
 	return (i);
 }
 

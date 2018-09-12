@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 14:44:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 09:32:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 	int		slash_cnt;
 
 	word = extract_current_word(tbuffer->buffer, tbuffer->cnt);
-	ft_printf("word = |%s|\n", word);
 	slash_cnt = make_path_cnt_slash(word);
 	last_slash = make_path_find_last_slash(word);
 	if (word[0] != '/' && slash_cnt != 0)

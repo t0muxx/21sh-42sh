@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:42:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 09:30:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*readline_mline_get_func_array(void)
 {
 	void	(**fptr)(t_buffer *, char *);
 
-	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 10);
+	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 11);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
 	fptr[2] = insert_char;
@@ -28,7 +28,8 @@ void	*readline_mline_get_func_array(void)
 	fptr[6] = input_home;
 	fptr[7] = input_end;
 	fptr[8] = input_ctrl_d;
-	fptr[9] = NULL;
+	fptr[9] = input_tab;
+	fptr[10] = NULL;
 	return (fptr);
 }
 
@@ -81,6 +82,7 @@ char	*readline_mline(t_buffer *tbuffer)
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	ft_strncat(tbuffer->buffer, "\n", 1);
 	fptr = readline_mline_get_func_array();
+	mlbuffer.env = tbuffer->env;
 	while (tbuffer->cnt <= BUFFER_SIZE && utils_in_quotes(tbuffer->buffer) == 0)
 	{
 		sig_intercept_ml(tbuffer, &mlbuffer);
