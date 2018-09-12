@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 12:05:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 15:22:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,25 @@ char	*readline_mline(t_buffer *tbuffer)
 	char 		*read_buf;
 	void 		(**fptr)(t_buffer *, char *);
 	t_buffer	mlbuffer;
+	int last;
 
 	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
 		return (NULL);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
-	ft_strncat(tbuffer->buffer, "\n", 1);
+	if ((last = ft_strlen(tbuffer->buffer)) > 0)
+	{
+		if (tbuffer->buffer[last - 1] != '\\')
+			ft_strncat(tbuffer->buffer, "\n", 1);
+	}
 	fptr = readline_mline_get_func_array();
 	mlbuffer.env = tbuffer->env;
 	while (tbuffer->cnt <= BUFFER_SIZE && utils_in_quotes(tbuffer->buffer) == 0 && tbuffer->ctrlc != 1)
 	{
+		if ((last = ft_strlen(tbuffer->buffer)) > 0)
+		{
+			if (tbuffer->buffer[last - 1] == '\\')
+				tbuffer->buffer[last - 1] = ' ';
+		}
 		sig_intercept_ml(tbuffer, &mlbuffer);
 		mlbuffer_init(&mlbuffer, tbuffer->termcap); 
 		ft_putstr("\n> ");
