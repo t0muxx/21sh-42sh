@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:45:57 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 11:29:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/12 11:18:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	input_enter(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == '\n')
 	{
-		if (utils_in_quotes(tbuffer->buffer) == 0)
-			readline_mline(tbuffer);
 		cursor_move_right(tbuffer, (int)ft_strlen(tbuffer->buffer));
 		tbuffer->state = READ_PROCESS;
 	}
