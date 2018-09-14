@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 10:12:13 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 09:41:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int		completion_find_lastcmd(char *userinput, int pos)
 	i = pos;
 	if (ft_strlen(userinput) == 0)
 		return (0);
-	while (i > 0 && 
-	(userinput[i] != '|' && userinput[i] != ';' && userinput[i] != '&' ))
+	while (i > 0 &&
+	(userinput[i] != '|' && userinput[i] != ';' && userinput[i] != '&'))
 		i--;
 	if (userinput[i] == '|' || userinput[i] == ';' || userinput[i] == '&')
 		i++;

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 11:24:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 10:26:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,5 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
 	tbuffer->termcap = cur_termcap;
-	tbuffer->env = env; 
+	tbuffer->env = env;
 }

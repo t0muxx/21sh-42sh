@@ -92,6 +92,11 @@ echo "builtin cd hard 3"
 echo "cd /./Users ; env | grep  --color=never PWD" | bash > result/b_29.out
 echo "cd /./Users ; env | grep  --color=never PWD" | ../21sh > result/29.out
 dotest b_29.out 29.out
+echo " --- > TEST builtin cd hard 4 < ---"
+echo "builtin cd hard 4"
+echo "cd -P /tmp/ ; pwd" | bash > result/b_29.out
+echo "cd -P /tmp/ ; pwd" | ../21sh > result/29.out
+dotest b_29.out 29.out
 #######################################################
 
 ##################### TEST NUM 12 #####################

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 15:57:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/07 08:45:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 10:23:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	input_arrow_down(t_buffer *tbuffer, char *read_buf)
 	&& tbuffer->head_hist != NULL)
 	{
 		head_hist = tbuffer->head_hist;
-		if (head_hist->newest && head_hist->newest->cmd == NULL && head_hist->newest->enddown == 1)
+		if (head_hist->newest && head_hist->newest->cmd == NULL
+		&& head_hist->newest->enddown == 1)
 		{
 			history_print_reset(tbuffer);
 			head_hist = head_hist->newest;

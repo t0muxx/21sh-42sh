@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 12:07:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 10:23:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint)
 ** the linkedt list with history
 */
 
+void			history_lst_createnull(t_cmd_hist **new,
+t_cmd_hist **head, int enddown)
+{
+	(*new)->newest = NULL;
+	(*new)->oldest = NULL;
+	(*new)->cmd = NULL;
+	(*new)->enddown = enddown;
+	history_lst_add(head, *new);
+}
+
 t_cmd_hist		*history_read_line(int fd)
 {
 	t_cmd_hist	*head;
@@ -69,13 +79,7 @@ t_cmd_hist		*history_read_line(int fd)
 
 	head = NULL;
 	if ((new = malloc(sizeof(t_cmd_hist))) != NULL)
-	{
-		new->newest = NULL;
-		new->oldest = NULL;
-		new->cmd = NULL;
-		new->enddown = -1;
-		history_lst_add(&head, new);
-	}
+		history_lst_createnull(&new, &head, -1);
 	while (get_next_line(fd, &line) > 0)
 	{
 		new = history_lst_new(line);
@@ -83,13 +87,7 @@ t_cmd_hist		*history_read_line(int fd)
 		free(line);
 	}
 	if ((new = malloc(sizeof(t_cmd_hist))) != NULL)
-	{
-		new->newest = NULL;
-		new->oldest = NULL;
-		new->cmd = NULL;
-		new->enddown = 1;
-		history_lst_add(&head, new);
-	}
+		history_lst_createnull(&new, &head, 1);
 	return (head);
 }
 

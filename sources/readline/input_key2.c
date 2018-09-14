@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:28:15 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 10:14:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 10:24:40 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	input_tab(t_buffer *tbuffer, char *read_buf)
 	{
 		tocomplete = extract_current_word(tbuffer->buffer, tbuffer->cnt - 1);
 		i = completion_find_lastcmd(tbuffer->buffer, tbuffer->cnt);
-		if ((first_word = completion_in_first_word(tbuffer->buffer + i, tbuffer->cnt)) == 1
-		&& ft_strncmp(tocomplete, "./", 2) != 0 && ft_strncmp(tocomplete, "../", 3)
+		if ((first_word = completion_in_first_word(
+		tbuffer->buffer + i, tbuffer->cnt)) == 1
+		&& ft_strncmp(tocomplete, "./", 2) != 0
+		&& ft_strncmp(tocomplete, "../", 3)
 		&& tbuffer->mline != 1
 		&& tocomplete[0] != '/')
 			completion_search_in_path(tbuffer, tbuffer->env);
