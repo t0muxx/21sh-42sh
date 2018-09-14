@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 08:54:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 08:53:25 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/14 10:17:38 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	input_copy(t_buffer *tbuffer, char *read_buf)
 		ft_memcpy(tbuffer->cutbuffer,
 		tbuffer->buffer + tbuffer->cutstart,
 		tbuffer->cutend - tbuffer->cutstart);
-//		ft_printf("\ncutstar |%d|\n", tbuffer->cutstart);
-//		ft_printf("\ncutend |%d|\n", tbuffer->cutend);
 		line_reset(tbuffer);
 	}
 }
@@ -91,7 +89,8 @@ void	input_paste(t_buffer *tbuffer, char *read_buf)
 {
 	if (read_buf[0] == 16)
 	{
-		string_insert_substring(&(tbuffer->buffer), tbuffer->cutbuffer, tbuffer->cnt);
+		string_insert_substring(&(tbuffer->buffer),
+		tbuffer->cutbuffer, tbuffer->cnt);
 		line_reset(tbuffer);
 	}
 }

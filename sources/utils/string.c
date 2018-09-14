@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:07:01 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/05 14:58:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 09:54:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 char	*extract_current_word(char *str, int pos)
 {
-	int start;
-	int len;
-	int i;
-	char *ret;
+	int		start;
+	int		len;
+	int		i;
+	char	*ret;
 
 	start = pos;
 	len = 0;

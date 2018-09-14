@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 15:22:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 11:58:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 void	readline_mline_loop(t_buffer *mlbuffer, char *read_buf,
 void (**fptr)(t_buffer *, char *))
 {
-	int		i;
-	struct	winsize w;
-	int		fd;
+	int				i;
+	struct winsize	w;
+	int				fd;
 
 	fd = 0;
 	while (mlbuffer->state != READ_PROCESS && mlbuffer->ctrlc != 1)
@@ -78,9 +78,22 @@ void (**fptr)(t_buffer *, char *))
 		dup2(mlbuffer->saved_in, 0);
 }
 
+void	readline_mline_do(t_buffer *tbuffer, t_buffer *mlbuffer,
+void (**fptr)(t_buffer *, char *), char *read_buf)
+{
+	sig_intercept_ml(tbuffer, mlbuffer);
+	mlbuffer_init(mlbuffer, tbuffer->termcap);
+	ft_putstr("\n> ");
+	readline_mline_loop(mlbuffer, read_buf, fptr);
+	mlbuffer->state = READ_NORMAL;
+	ft_strcat(tbuffer->buffer, mlbuffer->buffer);
+	ft_bzero(mlbuffer->buffer, BUFFER_SIZE);
+	free(mlbuffer->buffer);
+}
+
 char	*readline_mline(t_buffer *tbuffer)
 {
-	char 		*read_buf;
+	char		*read_buf;
 	void 		(**fptr)(t_buffer *, char *);
 	t_buffer	mlbuffer;
 	int last;
@@ -95,27 +108,12 @@ char	*readline_mline(t_buffer *tbuffer)
 	}
 	fptr = readline_mline_get_func_array();
 	mlbuffer.env = tbuffer->env;
-	while (tbuffer->cnt <= BUFFER_SIZE && utils_in_quotes(tbuffer->buffer) == 0 && tbuffer->ctrlc != 1)
-	{
-		if ((last = ft_strlen(tbuffer->buffer)) > 0)
-		{
-			if (tbuffer->buffer[last - 1] == '\\')
-				tbuffer->buffer[last - 1] = ' ';
-		}
-		sig_intercept_ml(tbuffer, &mlbuffer);
-		mlbuffer_init(&mlbuffer, tbuffer->termcap); 
-		ft_putstr("\n> ");
-		readline_mline_loop(&mlbuffer, read_buf, fptr);
-		mlbuffer.state = READ_NORMAL;
-		ft_strcat(tbuffer->buffer, mlbuffer.buffer);
-		ft_bzero(mlbuffer.buffer, BUFFER_SIZE);
-		free(mlbuffer.buffer);
-	}
+	while (tbuffer->cnt <= BUFFER_SIZE &&
+	utils_in_quotes(tbuffer->buffer) == 0 && tbuffer->ctrlc != 1)
+		readline_mline_do(tbuffer, &mlbuffer, fptr, read_buf);
 	if (ft_strlen(tbuffer->buffer) != 0)
 		tbuffer->buffer[ft_strlen(tbuffer->buffer) - 1] = '\0';
 	free(fptr);
 	free(read_buf);
-	//ft_printf("mlbuffer ret |%s|\n", tbuffer->buffer);
 	return (tbuffer->buffer);
-		
 }

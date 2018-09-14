@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 10:14:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 09:40:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 		i = ft_strlen(word) - last_slash - 1;
 	else
 		i = ft_strlen(word);
-//	ft_printf("i = |%d|\n", i);
 	substring = (char *)(filelist->content + i);
-//	ft_printf("substring = |%s|\n", substring);
 	string_insert_substring(&tbuffer->buffer, substring, tbuffer->cnt);
-//	ft_printf("tbuffer = |%s|\n", tbuffer->buffer);
 	free(word);
 	line_reset(tbuffer);
 	cursor_move_right(tbuffer, ft_strlen(substring));

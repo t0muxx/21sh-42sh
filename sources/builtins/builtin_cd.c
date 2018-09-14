@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 10:02:38 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/14 09:18:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,13 @@ int			cd_change_dir(char *dir, char ***env, int opt)
 	}
 	else
 	{
-		if (!ft_strcmp(dir, "-"))
-		{
-			if (cd_change_dir_dash(oldpwd, &dir, env) == -1)
-				return (-1);
-		}
-		tochdir = make_path(oldpwd, dir);
-		if (ft_strcmp(dir, "-") != 0 && cd_change_dir_gen(oldpwd, &pwd, tochdir, env) == -1)
-		{
-			free(tochdir);
+		if (!ft_strcmp(dir, "-") && cd_change_dir_dash(oldpwd, &dir, env) == -1)
 			return (-1);
-		}
-		free(tochdir);
+		tochdir = make_path(oldpwd, dir);
+		if (ft_strcmp(dir, "-") != 0
+		&& cd_change_dir_gen(oldpwd, &pwd, tochdir, env) == -1)
+			return (-1);
 	}
-	free(oldpwd);
-	free(pwd);
 	return (0);
 }
 

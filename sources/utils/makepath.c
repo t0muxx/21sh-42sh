@@ -6,37 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 09:43:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/14 09:54:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "utils.h"
 #include <unistd.h>
-
-void	make_path_manage_last_slash(char **path, int flg)
-{
-	char *tmp;
-
-	if (flg == PATH_ADD_SLASH)
-	{
-		if (path[0][ft_strlen(*path) - 1] == '/')
-			return ;
-		else
-		{
-			tmp = path[0];
-			path[0] = ft_strjoin(path[0], "/");
-			free(tmp);
-		}
-	}
-	if (flg == PATH_REM_SLASH)
-	{
-		if (path[0][ft_strlen(path[0]) - 1] != '/')
-			return ;
-		else
-			path[0][ft_strlen(path[0]) - 1] = '\0';
-	}
-}
 
 int		make_path_cnt_slash(char *str)
 {
@@ -71,7 +47,8 @@ void	make_path_concat(char **retpath, char **dir)
 {
 	char *tmp;
 
-	if (ft_strlen(retpath[0]) != 0 && retpath[0][ft_strlen(retpath[0]) - 1] != '/')
+	if (ft_strlen(retpath[0]) != 0
+	&& retpath[0][ft_strlen(retpath[0]) - 1] != '/')
 		make_path_manage_last_slash(retpath, PATH_ADD_SLASH);
 	if (dir[0][0] == '/')
 		make_path_manage_last_slash(dir, PATH_REM_SLASH);
@@ -80,11 +57,21 @@ void	make_path_concat(char **retpath, char **dir)
 	free(tmp);
 }
 
+void	make_path_do(char **spliteddir, char **retpath)
+{
+	if (!ft_strcmp(spliteddir[0], "."))
+		NULL;
+	else if (!ft_strcmp(spliteddir[0], ".."))
+		make_path_dotdot(retpath);
+	else
+		make_path_concat(retpath, &spliteddir[0]);
+}
+
 char	*make_path(char *path, char *dir)
 {
-	char **spliteddir;
-	char *retpath;
-	int i;
+	char	**spliteddir;
+	char	*retpath;
+	int		i;
 
 	i = 0;
 	if (dir == NULL || ft_strlen(dir) == 0)
@@ -100,16 +87,11 @@ char	*make_path(char *path, char *dir)
 	spliteddir = ft_strsplit(dir, '/');
 	while (spliteddir[i])
 	{
-		if (!ft_strcmp(spliteddir[i], "."))
-			NULL ;
-		else if (!ft_strcmp(spliteddir[i], ".."))
-			make_path_dotdot(&retpath);
-		else
-			make_path_concat(&retpath, &spliteddir[i]);
+		make_path_do(&spliteddir[i], &retpath);
 		i++;
 	}
 	utils_free_2darray((void **)spliteddir);
-	return (retpath);	
+	return (retpath);
 }
 
 /*int	main(int argc, char **argv)
