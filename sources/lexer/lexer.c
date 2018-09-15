@@ -6,33 +6,12 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/09/12 14:27:33 by cormarti         ###   ########.fr       */
-=======
-/*   Updated: 2018/09/10 13:40:32 by tmaraval         ###   ########.fr       */
->>>>>>> e5ff518b6828b59be671f5e96e2df5da1ca448d6
+/*   Updated: 2018/09/15 18:04:25 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include <unistd.h>
-
-/*static void		print_tkn_struct(t_tkn *tkn)
-{
-	tkn = tkn->next;
-	while (tkn->next)
-	{
-		ft_putstr(tkn->data);
-		ft_putstr(" -> ");
-		ft_putnbr(tkn->type);
-		ft_putstr("\n");
-		tkn = tkn->next;
-	}
-	ft_putstr(tkn->data);
-	ft_putstr(" -> ");
-	ft_putnbr(tkn->type);
-	ft_putstr("\n");
-}*/
 
 static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 {
@@ -63,7 +42,7 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 	*str = line;
 }
 
-static void		state_quoted(t_tkn **head, char **str, t_tkn_state *state)
+/*static void		state_quoted(t_tkn **head, char **str, t_tkn_state *state)
 {
 	char		*line;
 	int			len;
@@ -103,7 +82,7 @@ static void		state_dquoted(t_tkn **head, char **str, t_tkn_state *state)
 		tkn_push_back(head, tkn_dquote(&line));
 	*state = STATE_IDLE;
 	*str = line;
-}
+}*/
 
 t_tkn			*lex(char **str)
 {
@@ -117,14 +96,7 @@ t_tkn			*lex(char **str)
 	if (line == 0 || line == NULL)
 		return (NULL);
 	while (line[0] != '\0')
-	{
-		//if (state == STATE_IDLE)
-			state_idle(&tkn, &line, &state);
-		/*else if (state == STATE_DQUOTED)
-			state_dquoted(&tkn, &line, &state);
-		else if (state == STATE_QUOTED)
-			state_quoted(&tkn, &line, &state);
-	*/}
+		state_idle(&tkn, &line, &state);
 	tkn_push_back(&tkn, tkn_init_nl());
 	tkn = tkn->next;
 	free(tkn->prev->data);

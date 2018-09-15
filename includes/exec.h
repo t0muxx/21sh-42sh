@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/06 18:16:06 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/15 18:05:25 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char		*path_find_in_path(char *name, char **myenv);
 int		check_exec_exception(t_exec *exec);
 void		free_env(char **env);
 void		free_astree(t_astree *astree);
-void		free_tkn_lst(t_tkn *tkn);
 void		pipeline_add(t_pipeline **last, t_pipeline *new);
 t_pipeline	*pipeline_new(t_astree *astree);
 void		pipeline_print(t_pipeline *head);

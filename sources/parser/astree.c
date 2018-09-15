@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/11 09:40:04 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/15 18:10:21 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,23 @@
 
 static void			lst_cut_tkn(t_tkn **head)
 {
+	t_tkn	*tmp;
+
+	tmp = *head;
 	if (!head || !(*head))
 		return ;
-	if ((*head)->prev)
+	if (tmp->prev)
 	{
 		*head = (*head)->prev;
+		free(tmp->data);
+		free(tmp);
+		tmp = NULL;
 		(*head)->next = NULL;
-	}
+	
 	else
+	{
 		*head = NULL;
+	}
 }
 
 static t_nodetype	node_type(t_tkn_type tkn_type)
