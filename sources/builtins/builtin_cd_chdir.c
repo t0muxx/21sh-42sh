@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 13:35:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 09:16:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/16 11:52:14 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 		tmp = *dir;
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
 		{
-			free(tmp);
 			free(oldpwd);
 			error_print(10, "cd", "");
 			return (-1);
 		}
 		ft_printf("%s\n", *dir);
+		return (1);
 	}
 	return (0);
 }

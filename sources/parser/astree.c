@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 18:10:21 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/16 11:35:31 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void			lst_cut_tkn(t_tkn **head)
 		tmp = NULL;
 		(*head)->next = NULL;
 	
+	}
 	else
 	{
 		*head = NULL;

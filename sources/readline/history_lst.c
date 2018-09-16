@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 16:18:07 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/16 12:03:20 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void		history_lst_free(t_cmd_hist *head)
 {
 	t_cmd_hist *tmp;
-
+	
+	while (head->enddown != -1)
+		head = head->oldest;
 	while (head)
 	{
 		tmp = head;
-		head = head->oldest;
+		head = head->newest;
 		free(tmp->cmd);
 		free(tmp);
 		tmp = NULL;
@@ -51,6 +53,7 @@ t_cmd_hist	*history_lst_new(char *cmd)
 		ft_bzero(new->cmd, ft_strlen(cmd) + 1);
 		ft_memcpy(new->cmd, cmd, ft_strlen(cmd));
 	}
+	new->enddown = 0;
 	new->oldest = NULL;
 	new->newest = NULL;
 	return (new);
