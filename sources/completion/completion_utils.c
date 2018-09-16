@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 09:41:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/16 11:34:47 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 int		completion_in_first_word(char *userinput, int pos)
 {
 	int i;
-	int j;
 
-	j = 0;
 	i = 0;
 	while (userinput[i])
 	{

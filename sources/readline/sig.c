@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 10:34:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/16 11:42:37 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <sys/ioctl.h>
 #include "env.h"
+#include "utils.h"
 
 t_buffer *g_tbuffer2;
 
@@ -38,7 +39,7 @@ void	sig_handler(int sigid)
 		ft_putstr("\n");
 		free(g_tbuffer2->buffer);
 		free(g_tbuffer2->termcap);
-		tbuffer_init(g_tbuffer2, env_create_copy());
+		tbuffer_init(g_tbuffer2, g_tbuffer2->env);
 		prompt_print(g_tbuffer2);
 		ft_bzero(g_tbuffer2->buffer, (int)ft_strlen(g_tbuffer2->buffer));
 	}

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/15 18:10:10 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/16 12:01:20 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		print_ast(t_astree *astree)
 char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
 	tbuffer->head_hist = history_read(tbuffer->base_path);
-	tbuffer->cur_hist = NULL;
+	tbuffer->free_hist = tbuffer->head_hist;
 	tbuffer_init(tbuffer, env);
 	line[0] = readline(tbuffer);
 	line[1] = 0;
@@ -118,7 +118,7 @@ int		main(void)
 		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
-		history_lst_free(tbuffer.head_hist);
+		history_lst_free(tbuffer.free_hist);
 	}
 	free_env(env);
 }

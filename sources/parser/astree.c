@@ -6,71 +6,13 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 19:28:04 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/16 19:19:46 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
 #include "astree.h"
-
-/*void				ast_debug(t_astree *astree)
-{
-	int		i;
-
-	i = 0;
-	if (!astree)
-		return ;
-	ft_putstr("root node type : ");
-	ft_putnbr(astree->type);
-	ft_putstr("\n");
-	if (astree->type == NT_CMD)
-		ft_putendl(astree->arg[0]->data);
-	while (astree)
-	{
-		if (astree->left)
-		{
-		ft_putstr("left : ");
-		ft_putnbr(astree->left->type);
-		ft_putstr("\n");
-		ft_putstr("first data = ");
-		if (astree->left->type == NT_CMD)
-		{
-			i = 0;
-			while (astree->left->arg[i])
-			{
-				ft_putstr(astree->left->arg[i]->data);
-				ft_putstr(" ");
-				i++;
-			}
-			ft_putstr("\n");
-		}
-		else
-			ft_putendl("NULL");
-		}
-		if (astree->right)
-		{
-			ft_putstr("right : ");
-			ft_putnbr(astree->right->type);
-			ft_putstr("\n");
-			ft_putstr("first data = ");
-			if (astree->right->type == NT_CMD)
-			{
-				i = 0;
-				while (astree->right->arg[i])
-				{
-					ft_putstr(astree->right->arg[i]->data);
-					ft_putstr(" ");
-					i++;
-				}
-				ft_putstr("\n");
-			}
-			else
-				ft_putendl("NULL");
-		}
-		astree = astree->left;
-	}
-}*/
 
 static void			lst_cut_tkn(t_tkn **head)
 {
@@ -86,11 +28,9 @@ static void			lst_cut_tkn(t_tkn **head)
 		free(tmp);
 		tmp = NULL;
 		(*head)->next = NULL;
-	}	
-	else
-	{
-		*head = NULL;
 	}
+	else
+		*head = NULL;
 }
 
 static t_nodetype	node_type(t_tkn_type tkn_type)
