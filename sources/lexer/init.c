@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 01:52:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/06/01 01:58:27 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/16 00:49:10 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_tkn	*tkn_init(int len)
 	t_tkn	*tkn;
 
 	tkn = NULL;
-	if (len == 0)
-		return (NULL);
 	if (!(tkn = (t_tkn*)malloc(sizeof(t_tkn)))
 			|| !(tkn->data = (char*)malloc(sizeof(char) * (len + 1))))
 		return (NULL);

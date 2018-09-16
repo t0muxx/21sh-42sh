@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 10:34:58 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/08 15:19:43 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/15 22:48:19 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,30 @@ int				is_quote(int chr, t_tkn_state state)
 		return 0;
 }
 
+void			esc_push_pointer(char **str)
+{
+	t_tkn_state		state;
+	char			*line;
+	int				is_esc;
+	int				i;
+
+	line = *str;
+	i = 0;
+	is_esc = 0;
+	state = STATE_IDLE;
+	while (line[i] != '\0' && is_word_type(line[i], is_esc, state))
+	{
+		state = set_state(state, line[i], is_esc);
+		if (line[i] == '\\' && state == STATE_IDLE)
+			is_esc = 1;
+		else
+			is_esc = 0;
+		i++;
+	}
+	line += i;
+	*str = line;
+}
+
 int				esc_strlen(char *line)
 {
 	int				len;
@@ -53,7 +77,11 @@ int				esc_strlen(char *line)
 		if (line[i] == '\\' && state == STATE_IDLE)
 			is_esc = 1;
 		else
+		{
+			if (is_esc && (line[i] == '\'' || line[i] == '"'))
+				len++;
 			is_esc = 0;
+		}
 		len = (!is_esc && !is_quote(line[i], state)) ? len + 1 : len;	
 		i++;
 	}

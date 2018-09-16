@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/08 15:19:23 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/15 23:34:05 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char				*esc_strncpy(char *dst, char **line, int len)
 		if (src[i] == '\\' && state == STATE_IDLE)
 			is_esc = 1;
 		else
-			is_esc = 0;
-		if (!is_esc && !is_quote(src[i], state))
 		{
-			dst[j] = src[i];
-			j++;
+			if (is_esc && (src[i] == '\'' || src[i] == '"'))
+				dst[j++] = src[i];
+			is_esc = 0;
 		}
+		if (!is_esc && !is_quote(src[i], state))
+			dst[j++] = src[i];
 		i++;
 	}
 	dst[len] = '\0';
@@ -98,9 +99,16 @@ t_tkn				*tkn_word(char **str)
 	line = *str;
 	len = esc_strlen(line);
 	tkn = tkn_init(len);
-	tkn->data = esc_strncpy(tkn->data, &line, len);
-	ft_putendl(tkn->data);
+	if (len > 0)
+	{
+		tkn->data = esc_strncpy(tkn->data, &line, len);	
+		tkn->type = extra_tkn_type(tkn, str);
+	}
+	else
+	{
+		tkn->type = CHR_WORD;
+		esc_push_pointer(&line);
+	}
 	*str = line;
-	tkn->type = extra_tkn_type(tkn, str);
 	return (tkn);
 }

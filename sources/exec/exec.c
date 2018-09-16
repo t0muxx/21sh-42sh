@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/04 19:01:24 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/16 00:30:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		check_builtin(t_astree *astree, char ***env)
 {
 	char	**cmd;
 
-	cmd = lst_arr(astree->arg);
+	cmd = lst_arr(astree->arg);	
 	if (*cmd && astree->type == NT_CMD
 	&& builtin_check_builtin(astree, cmd, env) == 1)
 	{
