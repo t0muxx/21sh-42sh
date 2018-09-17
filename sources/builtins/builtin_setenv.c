@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 12:14:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:46:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:07:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	builtin_setenv_do(char **cmd, char ***myenv)
 	}
 }
 
-int		builtin_setenv(char **cmd, char ***myenv)
+int		builtin_setenv(char **cmd, char ***myenv, t_buffer *tbuffer)
 {
+	if (tbuffer)
+		NULL;
 	if (cmd[1] == NULL)
 		env_print(*myenv);
 	else

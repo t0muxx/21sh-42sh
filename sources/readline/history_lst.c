@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:03:20 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/17 11:40:33 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,39 @@ void		history_lst_free(t_cmd_hist *head)
 		tmp = NULL;
 	}
 	head = NULL;
+}
+
+t_cmd_hist 	*history_lst_get_lastnode(t_cmd_hist **head)
+{
+	t_cmd_hist *tmphead;
+
+	tmphead = *head;
+	while (tmphead && tmphead->enddown != -1)
+		tmphead = tmphead->oldest;
+	while (tmphead && tmphead->newest->enddown != 1)
+		tmphead = tmphead->newest;
+	return (tmphead);	
+}
+
+void		history_lst_addcmd_to_lst(t_cmd_hist **head, t_cmd_hist *lastnode, t_cmd_hist *new)
+{
+	if (head)
+		NULL;
+	lastnode->newest->oldest = new;
+	new->newest = lastnode->newest;
+	new->oldest = lastnode;
+	lastnode->newest = new;
+}
+
+void		history_lst_addcmd(t_cmd_hist **head, char *cmd)
+{
+	t_cmd_hist *new;
+	t_cmd_hist *cpy;
+
+	new = history_lst_new(cmd);
+	history_lst_addcmd_to_lst(head,
+	history_lst_get_lastnode(head), new);
+	cpy = *head;
 }
 
 void		history_lst_add(t_cmd_hist **head, t_cmd_hist *new)

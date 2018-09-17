@@ -6,19 +6,23 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 12:00:15 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/08/14 10:47:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:07:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "error.h"
+#include <unistd.h>
+#include "readline.h"
 
-int		builtin_unsetenv(char **cmd, char ***myenv)
+int		builtin_unsetenv(char **cmd, char ***myenv, t_buffer *tbuffer)
 {
 	int i;
 	int ret;
 
 	i = 0;
+	if (tbuffer)
+		NULL;
 	while (cmd[i])
 		i++;
 	if (i < 2)

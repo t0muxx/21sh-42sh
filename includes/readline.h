@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:00:31 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/17 10:09:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,9 @@ t_cmd_hist		*history_read(char *base_path);
 void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint);
 void			history_print_reset(t_buffer *tbuffer);
 t_cmd_hist		*history_lst_new(char *cmd);
+void		history_lst_addcmd(t_cmd_hist **head, char *cmd);
 void			history_lst_add(t_cmd_hist **head, t_cmd_hist *new);
-void			history_add(char *base_path, char *cmd);
+void			history_add(char *base_path, t_buffer *tbuffer);
 void			history_lst_free(t_cmd_hist *head);
 char			*env_get_var(char *name, char **myenv);
 char			*readline(t_buffer *tbuffer);

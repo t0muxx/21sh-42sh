@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/16 00:30:34 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:01:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int		exit_status(int status)
 	return (0);
 }
 
-int		check_builtin(t_astree *astree, char ***env)
+int		check_builtin(t_astree *astree, char ***env, t_buffer *tbuffer)
 {
 	char	**cmd;
 
 	cmd = lst_arr(astree->arg);	
 	if (*cmd && astree->type == NT_CMD
-	&& builtin_check_builtin(astree, cmd, env) == 1)
+	&& builtin_check_builtin(astree, cmd, env, tbuffer) == 1)
 	{
 		utils_free_2darray((void **)cmd);
 		return (EXIT_SUCCESS);
@@ -56,12 +56,12 @@ int		check_builtin(t_astree *astree, char ***env)
 	return (EXIT_FAILURE);
 }
 
-int		fork_and_exec(t_astree *astree, char ***env)
+int		fork_and_exec(t_astree *astree, char ***env, t_buffer *tbuffer)
 {
 	pid_t	pid;
 	int		status;
 
-	if (check_builtin(astree, env) == EXIT_SUCCESS)
+	if (check_builtin(astree, env, tbuffer) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
 	if ((pid = fork()) == -1)
 	{
@@ -83,7 +83,7 @@ int		fork_and_exec(t_astree *astree, char ***env)
 	return (0);
 }
 
-int		child_process(t_astree *astree, char ***env)
+int		child_process(t_astree *astree, char ***env, t_buffer *tbuffer)
 {
 	t_exec	exec;
 
@@ -92,8 +92,9 @@ int		child_process(t_astree *astree, char ***env)
 	exec.dont = 0;
 	exec.prec_exec = -2;
 	astree->is_root_node = 0;
+	exec.tbuffer = tbuffer;
 	if (astree->type == NT_CMD)
-		exec.last_exec = fork_and_exec(astree, env);
+		exec.last_exec = fork_and_exec(astree, env, tbuffer);
 	else
 	{
 		if (astree->type == NT_PIPE)

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/10 12:37:37 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:11:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		pipeline_exec_cmd(char **cmd, char **env)
 void	pipeline_exec_child(t_pipeline *pipeline, int pipefd[2],
 int read_pipe, char **env)
 {
+	t_buffer *tbuffer;
+
+	tbuffer = NULL;
 	sig_child();
 	if (read_pipe != 0)
 	{
@@ -48,7 +51,7 @@ int read_pipe, char **env)
 	close(pipefd[1]);
 	close(pipefd[0]);
 	if (*(pipeline->cmd) && 
-	builtin_check_builtin(pipeline->node, pipeline->cmd, &env) == 1)
+	builtin_check_builtin(pipeline->node, pipeline->cmd, &env, tbuffer) == 1)
 		exit(EXIT_SUCCESS);
 	exec_cmd(pipeline->node, env);
 }

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:01:20 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/17 11:35:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void		print_ast(t_astree *astree)
 
 char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
-	tbuffer->head_hist = history_read(tbuffer->base_path);
-	tbuffer->free_hist = tbuffer->head_hist;
 	tbuffer_init(tbuffer, env);
 	line[0] = readline(tbuffer);
 	line[1] = 0;
@@ -59,6 +57,9 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 void		do_read_simple(char *line[2],
 char **env, t_tkn *tkn)
 {
+	t_buffer *tbuffer;
+
+	tbuffer = NULL;
 	get_next_line(0, &line[0]);
 	line[1] = 0;
 	if (ft_strlen(line[0]) > BUFFER_SIZE)
@@ -68,7 +69,7 @@ char **env, t_tkn *tkn)
 	}
 	tkn = lex(&line[0]);
 	if (parse(tkn))
-		do_ast_simple(tkn, env);
+		do_ast_simple(tkn, env, tbuffer);
 	free(line[0]);
 	exit(EXIT_SUCCESS);
 }
@@ -107,18 +108,20 @@ int		main(void)
 	env = env_create_copy();
 	increment_shlvl(&env);
 	create_base_path(&tbuffer);	
+	tbuffer.head_hist = history_read(tbuffer.base_path);
+	tbuffer.free_hist = tbuffer.head_hist;
 	if (isatty(0) == 0)
 		do_read_simple(line, env, tkn);
 	while (420)
 	{
 		do_read(&tbuffer, line, env);
-		history_add(tbuffer.base_path, line[0]);
+		history_lst_addcmd(&(tbuffer.free_hist), line[0]);
+		tbuffer.head_hist = tbuffer.free_hist;
 		ft_putstr("\n");
 		tkn = lex(&line[0]);
 		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
-		history_lst_free(tbuffer.free_hist);
 	}
 	free_env(env);
 }

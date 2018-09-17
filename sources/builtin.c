@@ -6,14 +6,14 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 00:51:20 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/17 10:59:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "exec.h"
 
-int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv)
+int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv, t_buffer *tbuffer)
 {
 	int			i;
 	t_builtin	builtin[BUILTINNBR];
@@ -29,7 +29,7 @@ int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv)
 			saved_stdout = dup(STDOUT_FILENO);
 			if (astree)
 				redirect_cmd(astree->arg);
-			builtin[i].addr(cmd, myenv);
+			builtin[i].addr(cmd, myenv, tbuffer);
 			dup2(saved_stdout, STDOUT_FILENO);
 			return (1);
 		}

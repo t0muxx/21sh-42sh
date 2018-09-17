@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/15 19:29:31 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:06:42 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ int		builtin_echo_write(char *towrite, char **myenv)
 	return (0);
 }
 
-int		builtin_echo(char **cmd, char ***myenv)
+int		builtin_echo(char **cmd, char ***myenv, t_buffer *tbuffer)
 {
 	int		nopt;
 	int		i;
 
+	if (tbuffer)
+		NULL; 
 	i = 1;
 	nopt = 0;
 	if (ft_2darraylen(cmd) == 1)

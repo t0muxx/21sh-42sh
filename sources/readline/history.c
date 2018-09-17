@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 09:15:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 10:23:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:02:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,60 @@ t_cmd_hist		*history_read(char *base_path)
 	return (head);
 }
 
-void			history_add(char *base_path, char *cmd)
+int				histfile_get_linenbr(char *base_path)
+{
+	int fd;
+	int nbr;
+	char *line;
+
+	nbr = 0;
+	if (access(base_path, F_OK) != 1)
+	{
+		if ((fd = open(base_path, O_WRONLY | O_CREAT, 0644)) == -1)
+		{
+			ft_putstr_fd("Can't create .history check perm\n", 2);
+			close(fd);
+			return (0);
+		}
+		close(fd);
+	}
+	if ((fd = open(base_path, O_RDONLY, 0644)) == -1)
+	{
+		ft_putstr_fd("Can't open .history\n", 2);
+		close(fd);
+		return (0);
+	}
+	while (get_next_line(fd, &line) > 0)
+	{
+		free(line);
+		nbr++;
+	}
+	return (nbr);	
+}
+
+void			history_add(char *base_path, t_buffer *tbuffer)
 {
 	int	fd;
+	int i;
 
+	i = 0;
 	if ((fd = open(base_path, O_WRONLY | O_APPEND, 0644)) == -1)
 		ft_putstr_fd("Can't open .history\n", 2);
-	if (ft_strlen(cmd) != 0)
+	while (tbuffer->head_hist->enddown != -1)
+		tbuffer->head_hist = tbuffer->head_hist->oldest;
+	while (i <= histfile_get_linenbr(tbuffer->base_path))
 	{
-		write(fd, cmd, ft_strlen(cmd));
-		write(fd, "\n", 1);
+		tbuffer->head_hist = tbuffer->head_hist->newest;
+		i++;
+	}
+	while (tbuffer->head_hist->enddown != 1)
+	{
+		if (ft_strlen(tbuffer->head_hist->cmd) != 0)
+		{
+			write(fd, tbuffer->head_hist->cmd, ft_strlen(tbuffer->head_hist->cmd));
+			write(fd, "\n", 1);
+		}
+		tbuffer->head_hist = tbuffer->head_hist->newest;
 	}
 	close(fd);
 }

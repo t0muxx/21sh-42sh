@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 05:23:36 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 10:38:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 10:53:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ t_astree	*ast_build(t_tkn *tkn);
 void		ast_set_parent(t_astree *astree);
 void		ast_set_rootpipe(t_astree *astree);
 void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env);
-void		do_ast_simple(t_tkn *tkn, char **env);
+void		do_ast_simple(t_tkn *tkn, char **env, t_buffer *tbuffer);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 18:05:25 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/17 11:01:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_exec
 	int			prec_exec;
 	int		status;
 	int		dont;
+	t_buffer *tbuffer;
 
 }				t_exec;
 
@@ -57,7 +58,7 @@ int		is_redir(t_tkn_type type);
 void		redirect_cmd(t_tkn *tkn);
 int		node_ret(t_astree *astree);
 int		exit_status(int status);
-int		fork_and_exec(t_astree *astree, char ***env);
+int		fork_and_exec(t_astree *astree, char ***env, t_buffer *tbuffer);
 int		node_or_if(t_astree *astree, char ***env, t_exec *exec);
 int		node_and(t_astree *astree, char ***env, int last_exec, t_exec *exec);
 int		node_pipe(t_astree *astree, char ***env, t_exec *exec);
@@ -68,7 +69,7 @@ int		exec_cmd(t_astree *astree, char **env);
 int		tkn_arr_len(t_tkn *tkn);
 char		**lst_arr(t_tkn *tkn);
 int		exec_node(t_astree *astree, char ***env, t_exec *exec);
-int		child_process(t_astree *astree, char ***env);
+int		child_process(t_astree *astree, char ***env, t_buffer *tbuffer);
 char		*path_find_in_path(char *name, char **myenv);
 int		check_exec_exception(t_exec *exec);
 void		free_env(char **env);

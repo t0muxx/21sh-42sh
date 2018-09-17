@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 15:34:14 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/17 10:54:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void		do_ast(t_tkn *tkn, t_buffer *tbuffer, char ***env)
 	free(tbuffer->termcap);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
-	child_process(astree, env);
+	child_process(astree, env, tbuffer);
 	free_astree(astree);
 }
 
-void		do_ast_simple(t_tkn *tkn, char **env)
+void		do_ast_simple(t_tkn *tkn, char **env, t_buffer *tbuffer)
 {
 	t_astree		*astree;
 
@@ -88,6 +88,6 @@ void		do_ast_simple(t_tkn *tkn, char **env)
 	astree = ast_build(tkn);
 	ast_set_parent(astree);
 	ast_set_rootpipe(astree);
-	child_process(astree, &env);
+	child_process(astree, &env, tbuffer);
 	free_astree(astree);
 }
