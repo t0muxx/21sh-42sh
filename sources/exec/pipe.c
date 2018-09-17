@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/10 12:37:37 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/17 18:05:13 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int read_pipe, char **env)
 		sig_father();
 		if (read_pipe != 0)
 			close(read_pipe);
+		pids_add(exec, pid);
 		close(pipefd[1]);
 		pipeline_exec(pipeline->next, exec, pipefd[0], env);
 		close(pipefd[0]);

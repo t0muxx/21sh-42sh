@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 18:05:25 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/17 18:29:40 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_exec
 {
 	t_pipeline		*pipeline;
 	t_nodetype	parent;
+	t_list		*pids;
 	int			last_exec;
 	int			prec_exec;
 	int		status;
@@ -57,7 +58,7 @@ int		is_redir(t_tkn_type type);
 void		redirect_cmd(t_tkn *tkn);
 int		node_ret(t_astree *astree);
 int		exit_status(int status);
-int		fork_and_exec(t_astree *astree, char ***env);
+int		fork_and_exec(t_astree *astree, char ***env, t_exec *exec);
 int		node_or_if(t_astree *astree, char ***env, t_exec *exec);
 int		node_and(t_astree *astree, char ***env, int last_exec, t_exec *exec);
 int		node_pipe(t_astree *astree, char ***env, t_exec *exec);
@@ -80,5 +81,7 @@ void	pipeline_free(t_pipeline *head);
 int		path_exec_in(char *cmd, char **arg, char **env);
 void		sig_child(void);
 void		sig_father(void);
+void		pids_add(t_exec *exec, pid_t pid);
+void		sig_intercept_exec(t_exec *exec);
 
 #endif
