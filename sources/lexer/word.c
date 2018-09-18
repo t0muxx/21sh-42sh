@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/17 15:36:09 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:22:38 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int					strdigit(char *str)
 
 static t_tkn_type	extra_tkn_type(t_tkn *tkn, char **str)
 {
-	ft_putendl(tkn->data);
+//	ft_putendl(tkn->data);
 	if (*str[0] == '>' && strdigit(tkn->data))
 		return (CHR_IO_NUMBER);
 	else if (ft_strchr(tkn->data, '='))

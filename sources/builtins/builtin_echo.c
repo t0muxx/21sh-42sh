@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:05:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:25:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		builtin_echo(char **cmd, char ***myenv)
 	}
 	while (cmd[i])
 	{
-		if (i > 1)
+		if ((nopt == 0 && i > 1) || (nopt == 1 && i > 3))
 			write(1, " ", 1);
 		if (builtin_echo_write(cmd[i], *myenv) == -1)
 			return (-1);
