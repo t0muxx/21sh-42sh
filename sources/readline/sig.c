@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/17 18:29:39 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 08:18:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	sig_intercept(t_buffer *tbuffer)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGWINCH, sig_handler);
+	signal(SIGKILL, sig_handler);
+	signal(SIGTERM, sig_handler);
 	tbuffer = g_tbuffer2;
 }
 
