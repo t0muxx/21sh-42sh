@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:03:20 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 09:47:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		history_lst_free(t_cmd_hist *head)
 {
 	t_cmd_hist *tmp;
-	
+
 	while (head->enddown != -1)
 		head = head->oldest;
 	while (head)

@@ -6,12 +6,12 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/17 15:34:11 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/18 10:14:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXT_FUN_TYPE_H
-# define EXT_FUN_TYPE_H
+#ifndef EXT_NODE_FUN_H
+# define EXT_NODE_FUN_H
 
 # include "lexer.h"
 

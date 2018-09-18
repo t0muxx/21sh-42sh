@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 08:36:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 10:01:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct	s_builtin
 }				t_builtin;
 
 void			builtin_get_builtin(t_builtin *builtin);
-int				builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv);
+int				builtin_check_builtin(t_astree *astree, char **cmd,
+char ***myenv);
 int				builtin_all(char **cmd, int nbr, char **myenv);
 int				builtin_echo(char **cmd, char ***myenv);
 int				builtin_env(char **cmd, char ***myenv);
@@ -42,7 +43,8 @@ int				builtin_unsetenv(char **cmd, char ***myenv);
 int				builtin_exit(char **cmd, char ***myenv);
 int				builtin_cd(char **cmd, char ***env);
 int				cd_err_chdir(char *dir);
-int				cd_change_dir_dash_or_dir(char **dir, char **oldpwd, char **pwd, char ***env);
+int				cd_change_dir_dash_or_dir(char **dir, char **oldpwd,
+char **pwd, char ***env);
 int				cd_change_dir_p(char *oldpwd, char *pwd,
 char *dir, char ***env);
 int				cd_change_dir_dash(char *oldpwd, char **dir, char ***env);

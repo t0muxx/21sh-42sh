@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/06 18:14:05 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:41:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ static void	great_redir(t_tkn *tkn)
 	if (access(tkn->next->data, R_OK) == -1
 	&& access(tkn->next->data, F_OK) == 0)
 	{
-		ft_putstr_fd(tkn->next->data, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		error_print(PERMERR, tkn->next->data, "");
 		exit(EXIT_FAILURE);
 	}
 	if ((fd = open(tkn->next->data, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
-		ft_putstr_fd(tkn->next->data, 2);
-		ft_putstr_fd("cannot be opened\n", 2);
+		error_print(CANTOPEN, tkn->next->data, "");
 		close(fd);
 		exit(EXIT_FAILURE);
 	}

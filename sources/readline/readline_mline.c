@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 11:58:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:52:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void (**fptr)(t_buffer *, char *), char *read_buf)
 char	*readline_mline(t_buffer *tbuffer)
 {
 	char		*read_buf;
-	void 		(**fptr)(t_buffer *, char *);
+	void		(**fptr)(t_buffer *, char *);
 	t_buffer	mlbuffer;
-	int last;
+	int			last;
 
 	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
 		return (NULL);

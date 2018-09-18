@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:38:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 15:36:39 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 10:03:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define EXECVERR	  9
 # define OLDPWDNSET	  10
 # define NOTADIR	  11
-
+# define CANTOPEN	  12
 
 void	error_malloc_err(void);
 void	error_print(int errnbr, char *func, char *arg);

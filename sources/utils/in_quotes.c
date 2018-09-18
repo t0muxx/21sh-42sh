@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:52:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 15:21:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:55:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ void	proceed_in_loop(char chr, int *quote, int *dquote, char *last)
 	}
 }
 
+int		utils_in_quotes_ret(int quote, int dquote, int i, char *str)
+{
+	if ((dquote == 0 && quote == 0) == 1)
+	{
+		if ((i = ft_strlen(str)) > 0)
+		{
+			if (str[i - 1] == '\\')
+				return (0);
+		}
+		return (1);
+	}
+	else
+		return (0);
+}
+
 int		utils_in_quotes(char *str)
 {
 	int		i;
@@ -55,17 +70,7 @@ int		utils_in_quotes(char *str)
 			proceed_in_loop(str[i], &quote, &dquote, &last);
 		i++;
 	}
-	if ((dquote == 0 && quote == 0) == 1)
-	{
-		if ((i = ft_strlen(str)) > 0)
-		{
-			if (str[i - 1] == '\\')
-				return (0);
-		}
-		return (1);
-	}
-	else
-		return (0);
+	return (utils_in_quotes_ret(quote, dquote, i, str));
 }
 
 /*int	main(int argc, char **argv)

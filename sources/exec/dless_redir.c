@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/17 14:49:18 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:33:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		write_input(t_tkn *tkn, char *line, int fd)
 			free(line);
 		}
 	}
-	else	
+	else
 		return (0);
 	return (1);
 }

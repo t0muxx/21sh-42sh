@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:35:26 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 15:37:04 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 09:37:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	error_print(int errnbr, char *func, char *arg)
 	str = errnbr == 9 ? "Error during execve" : str;
 	str = errnbr == 10 ? "OLDPWD not set" : str;
 	str = errnbr == 11 ? "Not a directory" : str;
+	str = errnbr == 12 ? "Cannot be opened" : str;
 	write(2, str, ft_strlen(str));
 	if (ft_strlen(arg) != 0)
 		write(2, ": ", 2);

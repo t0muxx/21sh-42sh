@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:01:20 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 09:57:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "env.h"
 #include "utils.h"
 
-void		print_ast(t_astree *astree)
+/*void		print_ast(t_astree *astree)
 {
 	char **cmd;
 
@@ -42,9 +42,9 @@ void		print_ast(t_astree *astree)
 	ft_printf("parent = |%d |", astree->parent);
 	ft_printf("root_pipe = |%d|\n", astree->root_pipe);
 	print_ast(astree->right);
-}
+}*/
 
-char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
+char	**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {
 	tbuffer->head_hist = history_read(tbuffer->base_path);
 	tbuffer->free_hist = tbuffer->head_hist;
@@ -56,7 +56,7 @@ char		**do_read(t_buffer *tbuffer, char *line[2], char **env)
 	return (line);
 }
 
-void		do_read_simple(char *line[2],
+void	do_read_simple(char *line[2],
 char **env, t_tkn *tkn)
 {
 	get_next_line(0, &line[0]);
@@ -73,17 +73,17 @@ char **env, t_tkn *tkn)
 	exit(EXIT_SUCCESS);
 }
 
-void		create_base_path(t_buffer *tbuffer)
+void	create_base_path(t_buffer *tbuffer)
 {
 	ft_bzero(tbuffer->base_path, 1024);
 	getcwd(tbuffer->base_path, 1024);
 	ft_strcat(tbuffer->base_path, "/.history");
 }
 
-void		increment_shlvl(char ***env)
+void	increment_shlvl(char ***env)
 {
 	char	*shlvl;
-	int 	i_shlvl;
+	int		i_shlvl;
 
 	i_shlvl = 0;
 	if ((shlvl = env_get_var("SHLVL", *env)) == NULL)
@@ -106,7 +106,7 @@ int		main(void)
 	tkn = NULL;
 	env = env_create_copy();
 	increment_shlvl(&env);
-	create_base_path(&tbuffer);	
+	create_base_path(&tbuffer);
 	if (isatty(0) == 0)
 		do_read_simple(line, env, tkn);
 	while (420)
