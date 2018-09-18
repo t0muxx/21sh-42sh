@@ -107,3 +107,37 @@ rm -rf tmp_b
 rm -rf tmp
 #######################################################
 
+#######################################################
+echo " --- > TEST XX < ---"
+echo "agregator"
+
+echo "Redirecting stderr"
+echo "lsls 2> result/b_out" | bash
+echo "lsls 2> result/out" | ../21sh
+dotest b_out out
+echo "lsls 2> result/b_out" | bash > result/b_out1
+echo "lsls 2> result/out" | ../21sh > result/out1
+dotest b_out1 out1
+echo "Redirecting stdout to stderr"
+echo "echo "Error" 1>&2" | bash 2> result/b_out
+echo "echo "Error" 1>&2" | ../21sh 2> result/out
+dotest b_out out
+echo "Closing Stdout"
+echo "ls 1>&- ; ls" | bash > result/b_out
+echo "ls 1>&- ; ls" | ../21sh > result/out
+dotest b_out out
+echo "ls >&- ; ls" | bash > result/b_out
+echo "ls >&- ; ls" | ../21sh > result/out
+dotest b_out out
+echo "closing stderr"
+echo "lss 2>&- " | bash 2> result/b_out
+echo "lss 2>&- " | ../21sh 2> result/out
+dotest b_out out
+echo "lss 2>&- && ls" | bash > result/b_out
+echo "lss 2>&- && ls" | ../21sh > result/out
+dotest b_out out
+echo "lss 2>&- || ls" | bash > result/b_out
+echo "lss 2>&- || ls" | ../21sh > result/out
+dotest b_out out
+######################################################
+

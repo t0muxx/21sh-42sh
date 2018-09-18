@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 10:14:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 13:24:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ struct s_tkn_fun	tkn_fun[] =
 	{'$', &tkn_dollar},
 	{'\t', &tkn_htab},
 	{'\\', &tkn_escape},
-	{'-', &tkn_dash},
+//	{'-', &tkn_dash},
 	{'|', &tkn_pipe},
 	{'&', &tkn_and},
 	{'`', &tkn_bquote},

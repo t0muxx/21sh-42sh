@@ -120,7 +120,7 @@ echo "setenv TEST oooo ; env | grep TEST ; setenv TEST bbbb ; env | grep TEST" |
 echo "${ROUGE}plz check if the env var TEST is present with value first value ooo and second value bbbb and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin setenv test simple 4"
-echo "setenv env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh"
+echo "setenv" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
 echo "${ROUGE}plz check if the setenv with no argument print the current env and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin unsetenv test simple 1"
