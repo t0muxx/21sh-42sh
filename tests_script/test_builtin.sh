@@ -104,11 +104,11 @@ dotest b_29.out 29.out
 ##################### TEST NUM 12 #####################
 echo " --- > TEST setenv && unsetenv < ---"
 echo "builtin setenv test simple"
-echo "setenv TEST abcd ; env" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
+echo "setenv TEST abcd ; env | grep TEST" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
 echo "${ROUGE}plz check if the env var TEST is present with value = abcd and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin setenv test simple 2"
-echo "setenv TEST ; env" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
+echo "setenv TEST ; env | grep TEST" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
 echo "${ROUGE}plz check if the env var TEST is present with value empty and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin setenv test simple error"
@@ -124,11 +124,11 @@ echo "setenv env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh"
 echo "${ROUGE}plz check if the setenv with no argument print the current env and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin unsetenv test simple 1"
-echo "setenv TEST oooo ; env; unsetenv TEST ; env" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
+echo "setenv TEST oooo ; env | grep TEST ; unsetenv TEST ; echo second : ;  env | grep TEST" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
 echo "${ROUGE}plz check if the env var TEST is present with value first value ooo and secondly if it has been removed and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin unsetenv test simple 2 two unsetenv"
-echo "setenv TEST1 oooo ; setenv TEST2 bbbb ; env; unsetenv TEST1 TEST2 ; env" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
+echo "setenv TEST1 oooo ; setenv TEST2 bbbb ; env | grep TEST ; echo second : unsetenv TEST1 TEST2 ; env | grep TEST" | env ROUGE= CYAN= VERT= JAUNE= BLEU= ../21sh
 echo "${ROUGE}plz check if the env var TEST1 and TEST2 are present secondly if they hav been removed and press key to continue${RESETCOLOR}"
 read -n1 -s
 echo "builtin unsetenv test simple error"
