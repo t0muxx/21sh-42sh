@@ -6,11 +6,12 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/09/04 09:35:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/18 08:38:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "utils.h"
 
 int		cd_skip_opt(char **cmd)
 {
@@ -30,6 +31,25 @@ int		cd_skip_opt(char **cmd)
 		i++;
 	}
 	return (i);
+}
+
+int		cd_change_dir_dash_or_dir(char **dir, char **oldpwd,
+char **pwd, char ***env)
+{
+	int		ret;
+	char	*tochdir;
+
+	ret = 0;
+	if (!ft_strcmp(dir[0], "-") &&
+	(ret = cd_change_dir_dash(oldpwd[0], dir, env)) == -1)
+		return (-1);
+	tochdir = make_path(oldpwd[0], dir[0]);
+	if (ret == 1)
+		free(dir[0]);
+	if (ft_strcmp(dir[0], "-") != 0
+	&& cd_change_dir_gen(oldpwd[0], pwd, tochdir, env) == -1)
+		return (-1);
+	return (0);
 }
 
 int		cd_check_opt(char *opt)

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/17 08:33:47 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/18 08:36:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int				builtin_unsetenv(char **cmd, char ***myenv);
 int				builtin_exit(char **cmd, char ***myenv);
 int				builtin_cd(char **cmd, char ***env);
 int				cd_err_chdir(char *dir);
+int				cd_change_dir_dash_or_dir(char **dir, char **oldpwd, char **pwd, char ***env);
 int				cd_change_dir_p(char *oldpwd, char *pwd,
 char *dir, char ***env);
 int				cd_change_dir_dash(char *oldpwd, char **dir, char ***env);

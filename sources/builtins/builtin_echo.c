@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/15 19:29:31 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/18 09:05:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ int		builtin_echo(char **cmd, char ***myenv)
 
 	i = 1;
 	nopt = 0;
-	if (ft_2darraylen(cmd) == 1)
-	{
-		write(1, "\n", 1);
+	if (ft_2darraylen(cmd) == 1 && write(1, "\n", 1))
 		return (0);
-	}
-	if (**cmd && ft_strcmp(cmd[i], "-n") == 0)
+	if (**cmd && cmd[1][0] == '-' && cmd[2][0] == 'n')
 	{
-		i++;
+		i = i + 2;
 		nopt = 1;
 	}
 	while (cmd[i])
