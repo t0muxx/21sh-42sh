@@ -27,7 +27,10 @@ dotest()
 {
 	cmpdiff $1 $2
 	printdebug
+	rm result/$1 result/$2
 	echo " =========================== "
+	read -n1 -s
+
 }
 
 ##################### TEST NUM 1 ######################
@@ -148,8 +151,8 @@ echo "../../../../../../../../../bin/ls /" | ../21sh > result/out
 dotest b_out out
 echo "exec without PATH"
 echo "unset PATH ; ls -la /" | bash > result/b_out
-echo "unsetenv PATH ; ls -la /" | ../21sh > result/out
-dotest b_out out
+echo "unsetenv PATH ; ls -la /" | ../21sh > result/out666
+dotest b_out out666
 echo "exec without PATH var but full path precised"
 echo "unset PATH ; /bin/ls -la /" | bash > result/b_out
 echo "unsetenv PATH ; /bin/ls -la /" | ../21sh > result/out

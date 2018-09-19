@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 08:23:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 18:30:27 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/ioctl.h>
 #include "env.h"
 #include "utils.h"
+#include <sys/wait.h>
 
 t_buffer *g_tbuffer2;
 

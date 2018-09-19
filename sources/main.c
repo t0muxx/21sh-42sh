@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:57:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 19:55:38 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**do_read(t_buffer *tbuffer, char *line[2], char **env)
 }
 
 void	do_read_simple(char *line[2],
-char **env, t_tkn *tkn)
+char ***env, t_tkn *tkn)
 {
 	get_next_line(0, &line[0]);
 	line[1] = 0;
@@ -70,6 +70,7 @@ char **env, t_tkn *tkn)
 	if (parse(tkn))
 		do_ast_simple(tkn, env);
 	free(line[0]);
+	free_env(*env);
 	exit(EXIT_SUCCESS);
 }
 
@@ -108,7 +109,7 @@ int		main(void)
 	increment_shlvl(&env);
 	create_base_path(&tbuffer);
 	if (isatty(0) == 0)
-		do_read_simple(line, env, tkn);
+		do_read_simple(line, &env, tkn);
 	while (420)
 	{
 		do_read(&tbuffer, line, env);

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 09:37:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 08:58:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 19:58:26 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,26 @@ int		env_update_var(char *name, char *value, char **myenv)
 
 char	**env_add_var(char *name, char *value, char ***myenv)
 {
-	int		i;
-	char	**newenv;
+	int i;
+	char **newenv;
+	char *tmp;
+	char **tmp2;
 
+	tmp2 = myenv[0];
 	i = 0;
 	while (myenv[0][i])
 		i++;
 	if (!((newenv = (char **)malloc(sizeof(char *) * (i + 2)))))
 		error_malloc_err(0);
-	i = -1;
-	while (myenv[0][++i])
-		newenv[i] = myenv[0][i];
-	env_update_var_cat(&newenv[i], name, value);
-	newenv[i + 1] = NULL;
-	free(*myenv);
-	*myenv = newenv;
-	return (newenv);
-}
+	ft_memcpy(newenv, myenv[0], sizeof(char*) * i);
+	tmp = ft_strjoin(name, "=");
+	newenv[i] = ft_strjoin(tmp, value);
+	free(tmp);
+     	newenv[i + 1] = 0;
+	myenv[0] = newenv;
+	free(tmp2);
+	return (newenv);	
+}	
 
 int		env_delete_var(char *name, char ***myenv)
 {

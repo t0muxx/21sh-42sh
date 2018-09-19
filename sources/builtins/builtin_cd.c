@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 13:57:04 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 08:37:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 19:02:18 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ int			cd_manage_home(char ***env, int opt)
 		return (-1);
 	}
 	if (cd_change_dir(tmp, env, opt) == -1)
+	{
+		free(tmp);
 		return (-1);
+	}
+	free(tmp);
 	return (0);
 }
 
