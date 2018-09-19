@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:20:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:47:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 09:02:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ t_cmd_hist	*history_lst_new(char *cmd)
 	t_cmd_hist *new;
 
 	if (!(new = malloc(sizeof(t_cmd_hist))))
-		error_malloc_err();
+		error_malloc_err(0);
 	if (cmd == NULL)
 		new->cmd = NULL;
 	else
 	{
 		if (!(new->cmd = malloc(sizeof(char) * (ft_strlen(cmd) + 1))))
-			error_malloc_err();
+			error_malloc_err(0);
 		ft_bzero(new->cmd, ft_strlen(cmd) + 1);
 		ft_memcpy(new->cmd, cmd, ft_strlen(cmd));
 	}

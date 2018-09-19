@@ -6,11 +6,12 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:35:26 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:37:55 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 08:41:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "stdarg.h"
 
 void	error_invalid_opt(char *opt)
 {
@@ -64,8 +65,21 @@ void	error_print(int errnbr, char *func, char *arg)
 	write(2, "\n", 1);
 }
 
-void	error_malloc_err(void)
+void	error_malloc_err(int nbarg, ...)
 {
+	int		i;
+	va_list	ap;
+	void	*ptr;
+
+	i = 0;
+	va_start(ap, nbarg);
 	write(2, "malloc error \n", 14);
+	while (i < nbarg)
+	{
+		ptr = va_arg(ap, void *);
+		free(ptr);
+		i++;
+	}
+	va_end(ap);
 	exit(EXIT_FAILURE);
 }

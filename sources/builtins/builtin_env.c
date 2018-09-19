@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:36:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 08:47:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**builtin_env_malloc_env(char **cmd, int *i)
 	{
 		(*i)++;
 		if (!(newenv = (char **)malloc(sizeof(char *) * 1)))
-			error_malloc_err();
+			error_malloc_err(1, (void **)cmd);
 		newenv[0] = 0;
 	}
 	else
@@ -64,7 +64,8 @@ char	**builtin_env_get_env(char **cmd, int *i)
 	char	**newenv;
 
 	*i = 1;
-	newenv = builtin_env_malloc_env(cmd, i);
+	if ((newenv = builtin_env_malloc_env(cmd, i)) == NULL)
+		error_malloc_err(1, (void **)cmd);
 	while (cmd[*i] && ft_strchr(cmd[*i], '='))
 	{
 		var = ft_strsplit(cmd[*i], '=');

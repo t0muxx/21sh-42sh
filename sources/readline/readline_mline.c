@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:52:10 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 09:06:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	*readline_mline_get_func_array(void)
 {
 	void	(**fptr)(t_buffer *, char *);
 
-	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 11);
+	if ((fptr = malloc(sizeof(void (*)
+	(t_buffer *, char *)) * 11)) == NULL)
+		error_malloc_err(0);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
 	fptr[2] = insert_char;
@@ -45,7 +47,9 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 	tbuffer->mline = 1;
 	tbuffer->ctrlc = 0;
 	tbuffer->state = READ_NORMAL;
-	tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	if ((tbuffer->buffer = 
+	malloc(sizeof(char) * BUFFER_SIZE)) == NULL)
+		error_malloc_err(0);
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
 	tbuffer->termcap = termcap;
@@ -99,7 +103,7 @@ char	*readline_mline(t_buffer *tbuffer)
 	int			last;
 
 	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
-		return (NULL);
+		error_malloc_err(0);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	if ((last = ft_strlen(tbuffer->buffer)) > 0)
 	{

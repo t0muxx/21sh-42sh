@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 11:28:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 09:40:13 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 08:51:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 
 void	completion_trim_append_slash_do(char **newcontent, t_list *filelist)
 {
-	newcontent[0] = ft_memalloc(
-	ft_strlen((char *)filelist->content) + 3);
+	if ((newcontent[0] = ft_memalloc(
+	ft_strlen((char *)filelist->content) + 3)) == NULL)
+		error_malloc_err(1, (void *)filelist);
 	ft_strcat(newcontent[0], filelist->content);
 	ft_strcat(newcontent[0], "/");
 	newcontent[0][ft_strlen(newcontent[0]) + 1] = 0;
@@ -55,7 +56,8 @@ void	completion_trim_get_searchdir_fill_ret(char *userinput, char **ret)
 
 	last_slash = 0;
 	last_slash = make_path_find_last_slash(userinput);
-	ret[0] = malloc(sizeof(char) * (last_slash + 2));
+	if ((ret[0] = malloc(sizeof(char) * (last_slash + 2))) == NULL)
+		error_malloc_err(1, (void *)userinput);
 	ft_bzero(ret[0], last_slash + 2);
 	ft_strncpy(ret[0], userinput, (size_t)(last_slash + 1));
 }

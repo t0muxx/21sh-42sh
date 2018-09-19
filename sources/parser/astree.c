@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 04:23:59 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 09:16:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 09:01:52 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static t_astree		*ast_new_node(t_tkn *token, int arg_len)
 	t_astree	*node;
 
 	if ((node = (t_astree*)malloc(sizeof(t_astree))) == NULL)
-		return (NULL);
+		error_malloc_err(0);
 	node->type = node_type(token->type);
 	node->arg = (node->type == NT_CMD) ? dup_arg(token, arg_len) : NULL;
 	node->is_root_node = 0;

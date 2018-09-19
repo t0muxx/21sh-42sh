@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 10:17:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/11 09:39:39 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/19 09:06:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_term_cap	*term_init_cap(void)
 	t_term_cap *termcap;
 
 	if (!(termcap = malloc(sizeof(*termcap))))
-		error_malloc_err();
+		error_malloc_err(0);
 	term_init_fill_cap(termcap);
 	return (termcap);
 }

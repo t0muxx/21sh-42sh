@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 11:41:10 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 10:26:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 09:04:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	*readline_get_func_array(void)
 {
 	void (**fptr)(t_buffer *, char *);
 
-	fptr = malloc(sizeof(void (*)(t_buffer *, char *)) * 20);
+	if ((fptr = malloc(sizeof(void (*)
+	(t_buffer *, char *)) * 20)) == NULL)
+		error_malloc_err(0);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
 	fptr[2] = insert_char;
@@ -105,7 +107,7 @@ char	*readline(t_buffer *tbuffer)
 	void		(**fptr)(t_buffer *, char *);
 
 	if (!(read_buf = malloc(sizeof(char) * MAX_KEYCODE_SIZE)))
-		return (NULL);
+		error_malloc_err(0);
 	ft_bzero(read_buf, MAX_KEYCODE_SIZE);
 	fptr = readline_get_func_array();
 	prompt_print(tbuffer);
@@ -132,10 +134,7 @@ void	tbuffer_init(t_buffer *tbuffer, char **env)
 	tbuffer->cutend = -1;
 	tbuffer->state = READ_NORMAL;
 	if ((tbuffer->buffer = malloc(sizeof(char) * BUFFER_SIZE)) == NULL)
-	{
-		ft_putendl_fd("Can't allocate buffer memory\n exiting ...", 2);
-		exit(EXIT_FAILURE);
-	}
+		error_malloc_err(0);
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 	ft_bzero(tbuffer->cutbuffer, BUFFER_SIZE);
 	tbuffer->termcap = cur_termcap;

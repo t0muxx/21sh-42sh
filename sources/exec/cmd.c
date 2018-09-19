@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 09:33:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 08:58:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**lst_arr(t_tkn *tkn)
 	args = NULL;
 	len = tkn_arr_len(tkn);
 	if (!(args = (char**)malloc(sizeof(char*) * (len + 1))))
-		return (NULL);
+		error_malloc_err(0);
 	args[len] = NULL;
 	len = 0;
 	while (tmp && tmp->data && tmp->type != CHR_NEWLINE)

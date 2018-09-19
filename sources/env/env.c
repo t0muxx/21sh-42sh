@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:16:58 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/08/14 10:40:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 08:52:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**env_create(void)
 	char		pwd[PATH_MAX];
 
 	if (!(myenv = (char **)malloc(sizeof(char *) * 7)))
-		error_malloc_err();
+		error_malloc_err(0);
 	myenv[0] = ft_strdup("PWD=");
 	myenv[1] = ft_strdup("SHELL=");
 	myenv[2] = ft_strdup("PATH=");
@@ -98,13 +98,13 @@ char	**env_create_copy(void)
 	if (i == 0)
 		return (env_create());
 	if (!((myenv = (char **)malloc(sizeof(char *) * (i + 1)))))
-		error_malloc_err();
+		error_malloc_err(0);
 	i = 0;
 	while (environ[i])
 	{
 		if (!(myenv[i] = (char *)malloc(sizeof(char) *
 		ft_strlen(environ[i]) + 1)))
-			error_malloc_err();
+			error_malloc_err(1, (void **)myenv);
 		ft_strcpy(myenv[i], environ[i]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 12:10:06 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/19 09:00:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_pipeline	*pipeline_new(t_astree *astree)
 	else
 	{
 		if (!(new->node = malloc(sizeof(t_astree))))
-			return (NULL);
+			error_malloc_err(0);
 		new->node->type = astree->type;
 		if (!(new->node->arg = malloc(sizeof(t_tkn))))
-			return (NULL);
+			error_malloc_err(0);
 		ft_memcpy(new->node->arg, astree->arg, sizeof(t_tkn));
 		new->node->left = NULL;
 		new->node->right = NULL;
