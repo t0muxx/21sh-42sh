@@ -108,9 +108,8 @@ rm -rf tmp
 #######################################################
 
 #######################################################
-echo " --- > TEST XX < ---"
+echo " --- > TEST AGGREGATOR < ---"
 echo "agregator"
-
 echo "Redirecting stderr"
 echo "lsls 2> result/b_out" | bash
 echo "lsls 2> result/out" | ../21sh
@@ -141,3 +140,28 @@ echo "lss 2>&- || ls" | ../21sh > result/out
 dotest b_out out
 ######################################################
 
+#######################################################
+echo " --- > TEST EXEC < ---"
+echo "exec hard"
+echo "../../../../../../../../../bin/ls /" | bash > result/b_out
+echo "../../../../../../../../../bin/ls /" | ../21sh > result/out
+dotest b_out out
+echo "exec without PATH"
+echo "unset PATH ; ls -la /" | bash > result/b_out
+echo "unsetenv PATH ; ls -la /" | ../21sh > result/out
+dotest b_out out
+echo "exec without PATH var but full path precised"
+echo "unset PATH ; /bin/ls -la /" | bash > result/b_out
+echo "unsetenv PATH ; /bin/ls -la /" | ../21sh > result/out
+dotest b_out out
+echo "exec without PATH var but full path precised (2)"
+echo "unset PATH ; ../../../../../../../../../bin/ls -la /" | bash > result/b_out
+echo "unsetenv PATH ; ../../../../../../../../../bin/ls -la /" | ../21sh > result/out
+dotest b_out out
+echo "exec local bin"
+cp /bin/ls $PWD/
+echo "./ls -la /" | bash > result/b_out
+echo "./ls -la /" | ../21sh > result/out
+rm ls
+dotest b_out out
+#######################################################
