@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 11:42:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/19 08:23:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	sig_handler(int sigid)
 		g_tbuffer2->colnbr = w.ws_col;
 		line_reset(g_tbuffer2);
 	}
+	if (sigid == SIGKILL || sigid == SIGTERM)
+	{
+		if (waitpid(0, NULL, WNOHANG) == -1)
+			exit(0);
+	}
 }
 
 void	sig_intercept(t_buffer *tbuffer)
@@ -56,5 +61,7 @@ void	sig_intercept(t_buffer *tbuffer)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGWINCH, sig_handler);
+	signal(SIGKILL, sig_handler);
+	signal(SIGTERM, sig_handler);
 	tbuffer = g_tbuffer2;
 }
