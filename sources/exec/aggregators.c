@@ -62,7 +62,7 @@ void		greatand_redir(t_tkn *tkn)
 			ft_putstr_fd(": Bad file descriptor\n", 2);
 		}
 	}
-	else if (tkn->next->type == CHR_DASH)
+	else if (tkn->next->data && tkn->next->data[0] == '-') 
 	{
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);
