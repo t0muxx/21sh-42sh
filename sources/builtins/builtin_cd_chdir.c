@@ -51,9 +51,6 @@ int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env)
 
 int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 {
-	char *tmp;
-
-	tmp = *dir;
 	if (!ft_strcmp("-", *dir))
 	{
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
@@ -62,7 +59,7 @@ int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 			error_print(10, "cd", "");
 			return (-1);
 		}
-		ft_printf("%s\n", tmp);
+		ft_printf("%s\n", *dir);
 		return (1);
 	}
 	return (0);
