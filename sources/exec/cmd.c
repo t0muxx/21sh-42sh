@@ -68,9 +68,7 @@ int		exec_cmd(t_astree *astree, char **env)
 {
 	char	**args;
 	char	*cmd_path;
-	int		i;
 
-	i = 0;
 	if (astree)
 	{
 		args = lst_arr(astree->arg);

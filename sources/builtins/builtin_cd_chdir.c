@@ -53,16 +53,16 @@ int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 {
 	char *tmp;
 
+	tmp = *dir;
 	if (!ft_strcmp("-", *dir))
 	{
-		tmp = *dir;
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
 		{
 			free(oldpwd);
 			error_print(10, "cd", "");
 			return (-1);
 		}
-		ft_printf("%s\n", *dir);
+		ft_printf("%s\n", tmp);
 		return (1);
 	}
 	return (0);

@@ -20,9 +20,7 @@ int			cd_change_dir(char *dir, char ***env, int opt)
 	char	*oldpwd;
 	char	*pwd;
 	char	*tochdir;
-	int		ret;
 
-	ret = 0;
 	pwd = NULL;
 	if ((oldpwd = env_get_var("PWD", *env)) == NULL)
 		oldpwd = ft_strdup("");

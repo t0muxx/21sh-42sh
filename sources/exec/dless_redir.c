@@ -42,7 +42,10 @@ void	dless_redir(t_tkn *tkn)
 	int			fd;
 	char		*filename;
 
-	nb = (!nb) ? 1 : nb++;
+	if (!nb)
+		nb = 0;
+	else
+		nb++;
 	line = NULL;
 	filename = ft_strjoin("/tmp/heredoc", ft_itoa(nb));
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
