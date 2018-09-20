@@ -51,11 +51,8 @@ int		cd_change_dir_p(char *oldpwd, char *pwd, char *dir, char ***env)
 
 int		cd_change_dir_dash(char *oldpwd, char **dir, char ***env)
 {
-	char *tmp;
-
 	if (!ft_strcmp("-", *dir))
 	{
-		tmp = *dir;
 		if ((*dir = env_get_var("OLDPWD", *env)) == NULL)
 		{
 			free(oldpwd);
