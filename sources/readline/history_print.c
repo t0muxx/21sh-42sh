@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 09:44:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:51:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/20 11:44:35 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ void			history_print(t_buffer *tbuffer, t_cmd_hist **toprint)
 	{
 		ft_bzero(tbuffer->buffer, BUFFER_SIZE);
 		cmd = ft_strdup((*toprint)->cmd);
-		ft_memcpy(tbuffer->buffer, cmd, ft_strlen(cmd));
+		if (ft_strlen(cmd) <= BUFFER_SIZE)
+			ft_memcpy(tbuffer->buffer, cmd, ft_strlen(cmd));
+		else
+		{
+			ft_putendl_fd("\nError : history cmd too long", 2);
+			prompt_print(tbuffer);
+		}
 		insert_tbuffer(tbuffer);
 		free(cmd);
 	}
