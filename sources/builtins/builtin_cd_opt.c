@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 16:47:14 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/09/18 08:38:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/09/20 13:20:35 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ char **pwd, char ***env)
 	tochdir = make_path(oldpwd[0], dir[0]);
 	if (ret == 1)
 		free(dir[0]);
-	if (ft_strcmp(dir[0], "-") != 0
-	&& cd_change_dir_gen(oldpwd[0], pwd, tochdir, env) == -1)
+	if (cd_change_dir_gen(oldpwd[0], pwd, tochdir, env) == -1)
 		return (-1);
 	return (0);
 }

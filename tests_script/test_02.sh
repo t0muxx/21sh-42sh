@@ -59,6 +59,22 @@ echo "combinaison of ; | || && > (3) "
 echo "mkdir test && cd test ; touchc a && touch b ; ls -la | wc > out.txt || ls | wc > out.txt && cat out.txt ; cd .. ; rm -rf test" | bash > result/b_20.out
 echo "mkdir test && cd test ; touchc a && touch b ; ls -la | wc > out.txt || ls | wc > out.txt && cat out.txt ; cd .. ; rm -rf test" | ../21sh > result/20.out
 dotest b_20.out 20.out
+echo "combinaison of ; | || && > (5) "
+echo "echo toto && ls | wc" | bash > result/b_out
+echo "echo toto && ls | wc" | ../21sh > result/out
+dotest b_out out
+echo "combinaison of ; | || && > (6) "
+echo "echo toto || ls | wc" | bash > result/b_out
+echo "echo toto || ls | wc" | ../21sh > result/out
+dotest b_out out
+echo "combinaison of ; | || && > (7) "
+echo "echoq toto || ls | wc" | bash > result/b_out
+echo "echoq toto || ls | wc" | ../21sh > result/out
+dotest b_out out
+echo "combinaison of ; | || && > (8) "
+echo "echo toto ; ls | wc" | bash > result/b_out
+echo "echo toto ; ls | wc" | ../21sh > result/out
+dotest b_out out
 #######################################################
 
 ##################### TEST NUM 10 #####################

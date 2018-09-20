@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 19:55:38 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/20 12:26:14 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "env.h"
 #include "utils.h"
 
-/*void		print_ast(t_astree *astree)
+void		print_ast(t_astree *astree)
 {
 	char **cmd;
 
@@ -42,7 +42,7 @@
 	ft_printf("parent = |%d |", astree->parent);
 	ft_printf("root_pipe = |%d|\n", astree->root_pipe);
 	print_ast(astree->right);
-}*/
+}
 
 char	**do_read(t_buffer *tbuffer, char *line[2], char **env)
 {

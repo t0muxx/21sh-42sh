@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/07/30 17:16:27 by tomux            ###   ########.fr       */
+/*   Updated: 2018/09/20 12:48:51 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		node_or_if(t_astree *astree, char ***env, t_exec *exec)
 		exec->dont = 1;
 		return (EXIT_SUCCESS);
 	}
-	else
+	else if (astree->parent != NT_PIPE)
 		return (fork_and_exec(astree->right, env));
+	else
+		return (exec->prec_exec);
 }
