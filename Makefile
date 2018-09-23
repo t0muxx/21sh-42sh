@@ -113,6 +113,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(EXEC)pipe.c \
 			$(EXEC)pipe_routine.c \
 			$(EXEC)exec.c \
+			$(EXEC)global.c \
 			$(EXEC)cmd.c \
 			$(EXEC)sig_routine.c \
 			$(EXEC)std_redir.c \

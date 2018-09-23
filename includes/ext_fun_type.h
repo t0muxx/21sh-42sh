@@ -19,7 +19,7 @@ struct s_tkn_fun	tkn_fun[] =
 {
 	{'*', &tkn_asterisk},
 	{' ', &tkn_wspace},
-	{'$', &tkn_dollar},
+//	{'$', &tkn_dollar},
 	{'\t', &tkn_htab},
 	{'\\', &tkn_escape},
 //	{'-', &tkn_dash},

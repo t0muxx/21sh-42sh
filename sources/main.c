@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "readline.h"
+#include "ext_globals.h"
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"
@@ -121,5 +122,6 @@ int		main(void)
 			do_ast(tkn, &tbuffer, &env);
 		history_lst_free(tbuffer.free_hist);
 	}
+	free_globals();
 	free_env(env);
 }

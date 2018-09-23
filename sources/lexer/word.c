@@ -82,11 +82,13 @@ int					strdigit(char *str)
 
 static t_tkn_type	extra_tkn_type(t_tkn *tkn, char **str)
 {
-//	ft_putendl(tkn->data);
 	if (*str[0] == '>' && strdigit(tkn->data))
 		return (CHR_IO_NUMBER);
 	else if (ft_strchr(tkn->data, '='))
+	{
+//		ft_printf("assign = %s\n", tkn->data);
 		return (CHR_ASSIGNMENT_WORD);
+	}
 	else
 		return (CHR_WORD);
 }

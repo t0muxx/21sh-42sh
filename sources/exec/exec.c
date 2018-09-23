@@ -14,6 +14,7 @@
 #include "../../includes/astree.h"
 #include "../../includes/exec.h"
 #include "builtin.h"
+#include "global.h"
 #include "utils.h"
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -61,7 +62,8 @@ int		fork_and_exec(t_astree *astree, char ***env)
 	pid_t	pid;
 	int		status;
 
-	if (check_builtin(astree, env) == EXIT_SUCCESS)
+	if (check_builtin(astree, env) == EXIT_SUCCESS
+		|| astree->arg->type == CHR_ASSIGNMENT_WORD)
 		return (EXIT_SUCCESS);
 	if ((pid = fork()) == -1)
 	{

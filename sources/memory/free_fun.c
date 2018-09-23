@@ -10,9 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "global.h"
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"
+
+void	free_globals(void)
+{
+	int	i;
+	
+	i = 0;
+	while (globals[i].key != NULL || globals[i].value != NULL)
+	{
+		if (globals[i].value != NULL)
+			free(globals[i].value);
+		if (globals[i].key != NULL)
+			free(globals[i].key);
+		i++;
+	}
+}
 
 void	free_astree(t_astree *astree)
 {
