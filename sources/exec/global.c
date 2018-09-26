@@ -23,9 +23,9 @@ static char	*extract_assignment(char *str, int value)
 		while (str[len] != '=' && str[len] != '\0')
 			len++;
 	}
-
 	if (!(dest = (char*)malloc(sizeof(char) * (len))))
 		return (NULL);
+	dest[len] = '\0';
 	ft_strncpy(dest, str, len);
 	return (dest);
 
@@ -53,10 +53,8 @@ char	*get_global_key(char *value)
 	i = 0;
 	while (globals[i].value != NULL)
 	{
-		if (ft_strcmp(globals[i].value, value) == 0)
-		{
+		if (ft_strcmp(globals[i].value, value) == 0)	
 			return (globals[i].key);
-		}
 	}
 	return (NULL);
 }

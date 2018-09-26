@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 18:04:25 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/09/26 16:56:15 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int		parse_globals(t_tkn *tkn)
 	i = 0;
 	len = 0;
 	initial_str = ft_strdup(tkn->data);
-	while (i < ft_strlen(initial_str))
+	while (i < (int)ft_strlen(initial_str))
 	{
 		value = NULL;
 		if (initial_str[i] == '$')
@@ -168,10 +168,24 @@ t_tkn			*lex(char **str)
 	{
 		if (parse_globals(tkn) == 1)
 		{
+			if (ft_strcmp(tkn->data , "") == 0)
+			{
+			tmp = tkn;
+			tkn = tkn->next;
+			tkn->prev = tmp->prev ? tmp->prev : NULL;
+			if (tmp->prev)
+				(tkn->prev)->next = tkn;
+			if (tmp->data)
+				free(tmp->data);
+			free(tmp);
+			}
+			else
+			{
 			tmp = tkn;
 			tkn = lex(&tkn->data);
-			(tmp->prev)->next = tkn;
 			tkn->prev = tmp->prev;
+			if (tkn->prev)
+				(tkn->prev)->next = tkn;
 			while (tkn->next->type != CHR_NEWLINE)
 				tkn = tkn->next;
 			free(tkn->next->data);
@@ -180,10 +194,15 @@ t_tkn			*lex(char **str)
 			(tkn->next)->prev = tkn;
 			free(tmp->data);
 			free(tmp);
+			}
 		}
-		insert_global(tkn->data);
-		tkn = tkn->next;
-		
+		else
+		{
+			if (tkn->type == CHR_ASSIGNMENT_WORD)
+				insert_global(tkn->data);	
+			tkn = tkn->next;
+		}
+	
 	}
 	while (tkn->prev)
 		tkn = tkn->prev;
