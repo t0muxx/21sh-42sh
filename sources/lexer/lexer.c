@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/26 16:56:15 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/02 14:38:49 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int		global_strlen(char *str, int index)
 	return (len);
 }
 
-static int		parse_globals(t_tkn *tkn)
+static int		parse_globals(t_tkn *tkn, char **env)
 {
 	char	*key;
 	char	*value;
@@ -101,7 +101,7 @@ static int		parse_globals(t_tkn *tkn)
 				return (0);
 			key[len] = '\0';
 			key = ft_strncpy(key, initial_str + (i + 1), len);
-			value = get_global_value(key);
+			value = get_global_value(key, env);
 			tkn->data = global_replace(tkn->data, key, value);
 			free(key);
 			i += len > 0 ? (len - 1) : 0;
@@ -145,7 +145,7 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 	*str = line;
 }
 
-t_tkn			*lex(char **str)
+t_tkn			*lex(char **str, char ***env)
 {
 	t_tkn		*tkn;
 	char		*line;
@@ -166,7 +166,7 @@ t_tkn			*lex(char **str)
 	tkn->prev = NULL;
 	while (tkn->next)
 	{
-		if (parse_globals(tkn) == 1)
+		if (parse_globals(tkn, *env) == 1)
 		{
 			if (ft_strcmp(tkn->data , "") == 0)
 			{
@@ -182,7 +182,7 @@ t_tkn			*lex(char **str)
 			else
 			{
 			tmp = tkn;
-			tkn = lex(&tkn->data);
+			tkn = lex(&tkn->data, env);
 			tkn->prev = tmp->prev;
 			if (tkn->prev)
 				(tkn->prev)->next = tkn;
@@ -199,7 +199,7 @@ t_tkn			*lex(char **str)
 		else
 		{
 			if (tkn->type == CHR_ASSIGNMENT_WORD)
-				insert_global(tkn->data);	
+				insert_global(tkn->data, env);	
 			tkn = tkn->next;
 		}
 	

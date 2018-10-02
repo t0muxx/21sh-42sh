@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/20 12:26:14 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/02 13:59:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char ***env, t_tkn *tkn)
 		ft_putstr_fd("error : command too long\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	tkn = lex(&line[0]);
+	tkn = lex(&line[0], env);
 	if (parse(tkn))
 		do_ast_simple(tkn, env);
 	free(line[0]);
@@ -116,7 +116,7 @@ int		main(void)
 		do_read(&tbuffer, line, env);
 		history_add(tbuffer.base_path, line[0]);
 		ft_putstr("\n");
-		tkn = lex(&line[0]);
+		tkn = lex(&line[0], &env);
 		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);

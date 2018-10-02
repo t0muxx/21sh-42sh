@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 22:51:05 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/02 11:59:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	esc_push_pointer(char **str);
 int		is_word_type(int c, int escaped, t_tkn_state state);
 void	tkn_push_back(t_tkn **head, t_tkn *new);
 t_tkn	*tkn_init(int len);
-t_tkn	*lex(char **str);
+t_tkn	*lex(char **str, char ***env);
 t_tkn	*tkn_newline(char **str);
 t_tkn	*tkn_init_nl(void);
 t_tkn	*tkn_dash(char **str);

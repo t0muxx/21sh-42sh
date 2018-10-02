@@ -6,15 +6,19 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 12:14:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 19:05:45 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/02 15:03:28 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "global.h"
 #include "env.h"
 #include "builtin.h"
 
 void	builtin_setenv_do(char **cmd, char ***myenv)
 {
+	char	*value;
+
+	value = NULL;
 	if (cmd[1] != NULL)
 	{
 		if (cmd[2] != NULL)
@@ -24,8 +28,9 @@ void	builtin_setenv_do(char **cmd, char ***myenv)
 		}
 		else
 		{
-			if (env_update_var(cmd[1], "\0", *myenv) == 0)
-				env_add_var(cmd[1], "\0", myenv);
+			value = get_global_value(cmd[1], *myenv);
+			if (env_update_var(cmd[1], value ? value : "\0", *myenv) == 0)
+				env_add_var(cmd[1], value ? value : "\0", myenv);
 		}
 	}
 }

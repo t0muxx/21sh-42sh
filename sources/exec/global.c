@@ -1,5 +1,16 @@
-// include header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   global.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/02 13:44:11 by cormarti          #+#    #+#             */
+/*   Updated: 2018/10/02 14:56:25 by cormarti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "builtin.h"
 #include "global.h"
 #include "lexer.h"
 #include "exec.h"
@@ -23,7 +34,7 @@ static char	*extract_assignment(char *str, int value)
 		while (str[len] != '=' && str[len] != '\0')
 			len++;
 	}
-	if (!(dest = (char*)malloc(sizeof(char) * (len))))
+	if (!(dest = (char*)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	dest[len] = '\0';
 	ft_strncpy(dest, str, len);
@@ -32,11 +43,15 @@ static char	*extract_assignment(char *str, int value)
 
 }
 
-char	*get_global_value(char *key)
+char	*get_global_value(char *key, char **env)
 {
-	int	i;
+	int		i;
+	char	*value;
 
 	i = 0;
+	value = "";
+	if ((value = env_get_var(key, env)) != NULL)
+		return (value);	
 	while (globals[i].key != NULL)
 	{
 		if (ft_strcmp(globals[i].key, key) == 0)
@@ -59,7 +74,24 @@ char	*get_global_key(char *value)
 	return (NULL);
 }
 
-void		insert_global(char *str)
+void		remove_global(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (globals[i].key)
+	{
+		if (ft_strcmp(globals[i].key, str) == 0)
+		{
+			free(globals[i].value);
+			globals[i].value = ft_strdup("");
+			break ;
+		}
+		i++;
+	}
+}
+
+void		insert_global(char *str, char ***env)
 {
 	int		i;
 	t_global	new;
@@ -67,19 +99,28 @@ void		insert_global(char *str)
 	i = 0;
 	new.key = extract_assignment(str, 0);
 	new.value = extract_assignment(str, 1);
-	while (globals[i].key != NULL)
+	if (env_update_var(new.key, new.value, *env) == 0)
 	{
-		if (i >= GLOBAL_BUF)
-			ft_putendl("max buf size reached");
-			//func to realloc more on global array, and copy all globals in the new array)
-		if (ft_strcmp(new.key, globals[i].key) == 0)
+		while (globals[i].key != NULL)
 		{
-			free(globals[i].key);
-			free(globals[i].value);
-			globals[i] = new;
-			break ;
+			if (i >= GLOBAL_BUF)
+				ft_putendl("max buf size reached");
+				//func to realloc more on global array, and copy all globals in the new array)
+			if (ft_strcmp(new.key, globals[i].key) == 0)
+			{
+				free(globals[i].key);
+				free(globals[i].value);
+				globals[i] = new;
+				break ;
+			}
+			i++;
 		}
-		i++;
+		globals[i] = new;
 	}
-	globals[i] = new;
+	else
+	{
+		free(new.value);
+		free(new.key);
+	}
 }
+

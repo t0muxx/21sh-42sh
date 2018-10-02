@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 10:01:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/02 14:10:38 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ char *dir, char ***env);
 int				cd_parse_opt(char **cmd);
 int				cd_check_opt(char *opt);
 int				cd_skip_opt(char **cmd);
+int				env_update_var(char *name, char *value, char **myenv);
 #endif
