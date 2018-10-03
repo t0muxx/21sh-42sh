@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/02 14:38:49 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:05:56 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,15 @@ static int		parse_globals(t_tkn *tkn, char **env)
 		}
 		i++;
 	}
+	if (ft_strchr(initial_str, '$') == 0)
+	{
+		if (initial_str != NULL)
+			free(initial_str);
+		return (0);
+	}
 	if (initial_str != NULL)
 		free(initial_str);
-	return (ft_strchr(initial_str, '$') == 0 ? 0 : 1);
+	return  (1);
 
 }
 
