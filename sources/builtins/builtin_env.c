@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:35:38 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/02 13:32:38 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:33:26 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int		builtin_env_check_i(char **cmd)
 
 	i = 1;
 	iopt = 0;
-	if (cmd[i][0] == '-' && cmd[i][1] != 'i')
+	if (ft_strcmp(cmd[i], "-i"))
 		return (builtin_env_err(cmd));
-	else if (cmd[i][0] == '-' && cmd[i][1] == 'i')
+	else
 	{
 		iopt = 1;
 		i++;
@@ -93,7 +93,7 @@ int		builtin_env(char **cmd, char ***myenv)
 	if (i == 1)
 		env_print(*myenv);
 	else
-		return (builtin_env_do(cmd, &i));
+		return (builtin_env_do(cmd, &i, *myenv));
 	if (cmd)
 		NULL;
 	return (0);

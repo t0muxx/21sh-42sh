@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/02 14:10:38 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:29:21 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ char ***myenv);
 int				builtin_all(char **cmd, int nbr, char **myenv);
 int				builtin_echo(char **cmd, char ***myenv);
 int				builtin_env(char **cmd, char ***myenv);
-int				builtin_env_do(char **cmd, int *i);
 char			**builtin_env_get_env(char **cmd, int *i);
-int				builtin_env_do(char **cmd, int *i);
+int				builtin_env_do(char **cmd, int *i, char **env);
 int				builtin_setenv(char **cmd, char ***myenv);
 int				builtin_unsetenv(char **cmd, char ***myenv);
 int				builtin_exit(char **cmd, char ***myenv);

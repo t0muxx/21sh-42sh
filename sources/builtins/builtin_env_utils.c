@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 10:58:51 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/04 09:53:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:29:26 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		builtin_env_do_ret(int ret, char *cmd)
 	return (0);
 }
 
-int		builtin_env_exec(char **cmd, char **env)
+int		builtin_env_exec(char **cmd, char **env, char **newenv)
 {
 	pid_t	pid;
 	int		status;
@@ -52,7 +52,7 @@ int		builtin_env_exec(char **cmd, char **env)
 	else if (pid == 0)
 	{
 		cmd_path = path_find_in_path(cmd[0], env);
-		execve(cmd_path, cmd, env);
+		execve(cmd_path, cmd, newenv);
 		error_print(CMDNOTFOUND, cmd[0], "");
 		exit(EXIT_FAILURE);
 	}
@@ -61,7 +61,7 @@ int		builtin_env_exec(char **cmd, char **env)
 	return (0);
 }
 
-int		builtin_env_do(char **cmd, int *i)
+int		builtin_env_do(char **cmd, int *i, char **env)
 {
 	char	**newenv;
 	int		ret;
@@ -80,7 +80,7 @@ int		builtin_env_do(char **cmd, int *i)
 		utils_free_2darray((void **)newenv);
 		return (0);
 	}
-	builtin_env_exec(cmd, newenv);
+	builtin_env_exec(cmd + (*i), env, newenv);
 	utils_free_2darray((void **)newenv);
 	return (builtin_env_do_ret(ret, cmd[*i]));
 }
