@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 18:30:27 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/03 18:46:06 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,26 @@ t_buffer *g_tbuffer2;
 
 void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
 {
-	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1 && tbuffer->cnt == 0)
+	if (read_buf[0] == 4 && ft_strlen(read_buf) == 1 &&
+	ft_strlen(tbuffer->buffer) == 0)
 	{
 		free(tbuffer->buffer);
 		term_close();
 		exit(EXIT_SUCCESS);
+	}
+	else if (read_buf[0] == 4 && ft_strlen(read_buf) == 1 &&
+	tbuffer->cnt != ft_strlen(tbuffer->buffer))
+	{
+		line_reset(tbuffer);
+		string_delete_char(&(tbuffer->buffer), tbuffer->cnt);
+		cursor_save_pos(tbuffer);
+		line_go_begin(tbuffer);
+		tbuffer->cnt = 0;
+		tbuffer->index = 0;
+		tputs(tbuffer->termcap->cd, 0, ft_putcc);
+		prompt_print(tbuffer);
+		insert_tbuffer(tbuffer);
+		cursor_reload_pos(tbuffer);
 	}
 }
 
