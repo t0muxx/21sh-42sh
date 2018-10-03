@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/02 11:59:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:10:29 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ enum	e_tkn_type
 	CHR_ASSIGNMENT_WORD,
 	CHR_ANDGREAT,
 	CHR_ANDDGREAT,
+	CHR_EMPTY,
 	CHR_NULL,
 };
 

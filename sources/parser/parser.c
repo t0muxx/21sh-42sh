@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/26 16:56:29 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:38:44 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum e_tkn_type		type[][8] =
 	{ CHR_NULL },
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NEWLINE, CHR_NULL }, // SEMI
 	{ CHR_NULL },
-	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
+	{ CHR_EMPTY, CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_EMPTY, CHR_NULL },
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
 	{ CHR_NULL },
@@ -53,13 +53,6 @@ enum e_tkn_type		type[][8] =
 	{ CHR_WORD, CHR_NULL },
 	{ CHR_WORD, CHR_NULL },
 	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL },
-	{ CHR_NULL }
 };
 
 static int			valid_tkn_type(t_tkn *tkn)
@@ -67,6 +60,8 @@ static int			valid_tkn_type(t_tkn *tkn)
 	int		i;
 
 	i = 0;
+	if (tkn->type == CHR_EMPTY || tkn->next->type == CHR_EMPTY)
+		return (1);
 	while (type[tkn->type][i] != CHR_NULL)
 	{
 		if (tkn->next->type == type[tkn->type][i])

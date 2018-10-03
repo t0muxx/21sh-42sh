@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/09/18 09:45:11 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/10/03 18:45:36 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,8 @@ SRCS = 			$(READLINE)readline.c \
 			$(PARSER)io.c \
 			$(PARSER)list.c \
 			$(PARSER)pipeline.c \
+			$(PARSER)global.c \
+			$(PARSER)global_utils.c \
 			$(PARSER)separator.c \
 			$(PARSER)parser.c \
 			$(PARSER)astree.c \

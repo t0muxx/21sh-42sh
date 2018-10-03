@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 13:44:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/02 14:56:25 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:28:42 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,6 @@ static char	*extract_assignment(char *str, int value)
 
 }
 
-char	*get_global_value(char *key, char **env)
-{
-	int		i;
-	char	*value;
-
-	i = 0;
-	value = "";
-	if ((value = env_get_var(key, env)) != NULL)
-		return (value);	
-	while (globals[i].key != NULL)
-	{
-		if (ft_strcmp(globals[i].key, key) == 0)
-			return (globals[i].value);
-		i++;
-	}
-	return ("");
-}
-
-char	*get_global_key(char *value)
-{
-	int	i;
-	
-	i = 0;
-	while (globals[i].value != NULL)
-	{
-		if (ft_strcmp(globals[i].value, value) == 0)	
-			return (globals[i].key);
-	}
-	return (NULL);
-}
-
 void		remove_global(char *str)
 {
 	int		i;
@@ -91,31 +60,39 @@ void		remove_global(char *str)
 	}
 }
 
-void		insert_global(char *str, char ***env)
+static int	free_on_exists(t_global new)
 {
 	int		i;
-	t_global	new;
 
 	i = 0;
+	while (globals[i].key != NULL)
+	{
+		if (i >= GLOBAL_BUF)
+			ft_putendl("max buf size reached"); // realloc more
+		if (ft_strcmp(new.key, globals[i].key) == 0)
+		{
+			free(globals[i].key);
+			free(globals[i].value);
+			globals[i] = new;
+			break ;
+		}
+		i++;
+	}
+	return (i);
+}
+
+void		insert_global(char *str, char ***env)
+{
+	int		index;
+	t_global	new;
+
+	index = 0;
 	new.key = extract_assignment(str, 0);
 	new.value = extract_assignment(str, 1);
 	if (env_update_var(new.key, new.value, *env) == 0)
 	{
-		while (globals[i].key != NULL)
-		{
-			if (i >= GLOBAL_BUF)
-				ft_putendl("max buf size reached");
-				//func to realloc more on global array, and copy all globals in the new array)
-			if (ft_strcmp(new.key, globals[i].key) == 0)
-			{
-				free(globals[i].key);
-				free(globals[i].value);
-				globals[i] = new;
-				break ;
-			}
-			i++;
-		}
-		globals[i] = new;
+		index = free_on_exists(new);
+		globals[index] = new;
 	}
 	else
 	{
@@ -123,4 +100,3 @@ void		insert_global(char *str, char ***env)
 		free(new.key);
 	}
 }
-
