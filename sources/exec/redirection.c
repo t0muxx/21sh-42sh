@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 09:41:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/04 09:46:15 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	great_redir(t_tkn *tkn)
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
 		error_print(CANTOPEN, tkn->next->data, "");
-		close(fd);
 		exit(EXIT_FAILURE);
 	}
 	from = (tkn->prev->type == CHR_IO_NUMBER) ?
