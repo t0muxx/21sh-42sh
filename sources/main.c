@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/02 13:59:34 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/04 09:37:04 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int		main(void)
 		free(line[0]);
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
+		else
+			free(tbuffer.termcap);
 		history_lst_free(tbuffer.free_hist);
 	}
 	free_globals();
