@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/05 15:37:10 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:33:26 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv)
 				exit(EXIT_SUCCESS);
 			builtin[i].addr(cmd, myenv);
 			dup2(saved_stdout, STDOUT_FILENO);
+			close(saved_stdout);
 			return (1);
 		}
 		i++;
