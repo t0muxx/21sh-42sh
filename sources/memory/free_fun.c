@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 02:08:46 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 18:02:16 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/05 14:54:03 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"
+
+void	free_lst(t_tkn *tkn)
+{
+	t_tkn	*tmp;
+
+	while(tkn)
+	{
+		tmp = tkn;
+		tkn = tkn->next;
+		if (tmp->data)
+			free(tmp->data);
+		free(tmp);
+		tmp = NULL;
+	}
+}
 
 void	free_globals(void)
 {

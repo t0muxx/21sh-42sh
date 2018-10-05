@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:36:48 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/03 18:51:35 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/05 15:13:35 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*get_global_value(char *key, char **env)
 	char	*value;
 
 	i = 0;
-	value = "";
+	value = NULL;
 	if ((value = env_get_var(key, env)) != NULL)
-		return ("");
+		return (value);
 	while (globals[i].key != NULL)
 	{
 		if (ft_strcmp(globals[i].key, key) == 0)
-			return (globals[i].value);
+			return (ft_strdup(globals[i].value));
 		i++;
 	}
 	return ("");

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/04 09:37:04 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/05 14:55:37 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**do_read(t_buffer *tbuffer, char *line[2], char **env)
 }
 
 void	do_read_simple(char *line[2],
-char ***env, t_tkn *tkn)
+		char ***env, t_tkn *tkn)
 {
 	get_next_line(0, &line[0]);
 	line[1] = 0;
@@ -121,7 +121,10 @@ int		main(void)
 		if (parse(tkn))
 			do_ast(tkn, &tbuffer, &env);
 		else
+		{
+			free_lst(tkn);
 			free(tbuffer.termcap);
+		}
 		history_lst_free(tbuffer.free_hist);
 	}
 	free_globals();

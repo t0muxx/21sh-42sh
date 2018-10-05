@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:26:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/03 20:18:44 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/05 14:22:30 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,17 @@ static void		dup_value(char *src, char *dest, char *key, char *value)
 	int		i;
 	int		j;
 	int		len;
-	int		replaced;
 
 	i = 0;
 	j = 0;
 	len = (ft_strlen(src) - 1) + ft_strlen(value) - ft_strlen(key);
-	replaced = 0;
 	while (j < len && src[i])
 	{
-		if (src[i] == '$' && !replaced)
+		if (src[i] == '$' && !ft_strncmp(src + (i + 1), key, ft_strlen(key)))
 		{
 			dest = global_concat(dest, value, i, len);
 			i += (ft_strlen(key) + 1);
 			j += ft_strlen(value);
-			replaced = 1;
 		}
 		else
 			dest[j++] = src[i++];
@@ -59,21 +56,26 @@ static int		parse_globals(t_tkn *tkn, char **env)
 	int		len;
 	int		i;
 	char	*initial_str;
+	char	*tmp;
+	int		is_global;
 
 	i = 0;
+	is_global = 0;
 	initial_str = ft_strdup(tkn->data);
 	len = ft_strlen(initial_str);
 	while (i < len)
 		i = replace_var(&tkn, initial_str, i, env) + 1;
-	if (ft_strchr(initial_str, '$') == 0)
+	tmp = ft_strchr(initial_str, '$');
+	i = 0;
+	while (initial_str[i + 1])
 	{
-		if (initial_str != NULL)
-			free(initial_str);
-		return (0);
+		if (initial_str[i] == '$' && ft_isalpha(initial_str[i + 1]))
+			is_global = 1;
+		i++;
 	}
 	if (initial_str != NULL)
 		free(initial_str);
-	return (1);
+	return (is_global);
 }
 
 static void		link_tkn_lst(t_tkn **head, char ***env)

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:07:47 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/20 12:39:12 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/05 13:44:33 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,6 @@ void		do_ast_simple(t_tkn *tkn, char ***env)
 		}
 		tkn = tkn->next;
 	}
-	/*while (tkn->next)
-	{
-		if (tkn->next->type == CHR_NEWLINE)
-			break ;
-		tkn = tkn->next;
-	}*/
 	tkn->next = NULL;
 	astree = ast_build(tkn);
 	ast_set_parent(astree);

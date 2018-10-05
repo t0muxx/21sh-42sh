@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:11 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 09:25:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/05 14:24:47 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,8 @@ int		builtin_echo_write(char *towrite, char **myenv)
 	char	*var;
 	char	*temp;
 
-	if (towrite[0] == '$')
-	{
-		temp = ft_strsub(towrite, 1, ft_strlen(towrite));
-		var = env_get_var(temp, myenv);
-		if (var != NULL && write(1, var, ft_strlen(var)) == -1)
-			return (-1);
-		free(temp);
-		free(var);
-	}
-	else
-	{
-		if (write(1, towrite, ft_strlen(towrite)) == -1)
-			return (-1);
-	}
+	if (write(1, towrite, ft_strlen(towrite)) == -1)
+		return (-1);
 	return (0);
 }
 

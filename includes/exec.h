@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 10:11:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/05 14:54:49 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int						exec_node(t_astree *astree, char ***env, t_exec *exec);
 int						child_process(t_astree *astree, char ***env);
 char					*path_find_in_path(char *name, char **myenv);
 int						check_exec_exception(t_exec *exec);
+void					free_lst(t_tkn *tkn);
 void					free_env(char **env);
 void					free_globals(void);
 void					free_astree(t_astree *astree);

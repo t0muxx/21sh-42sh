@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/03 19:53:53 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/05 15:13:19 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int				replace_var(t_tkn **head, char *str, int index, char **env)
 	key = NULL;
 	value = NULL;
 	tkn = *head;
-	if (str[index] == '$')
+	if (str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
 	{
 		len = global_strlen(str, index);
 		if (!(key = (char*)malloc(sizeof(char) * (len + 1))))
@@ -36,10 +36,11 @@ int				replace_var(t_tkn **head, char *str, int index, char **env)
 		value = get_global_value(key, env);
 		tkn->data = global_replace(tkn->data, key, value);
 		free(key);
-		index += len > 0 ? (len - 1) : 0;
+		free(value);
+		index += len > 0 ? (len) : 0;
 	}
 	*head = tkn;
-	return (index);
+	return (str[index] ? index : index - 1);
 }
 
 static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
