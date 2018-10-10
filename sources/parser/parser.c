@@ -81,7 +81,7 @@ static int			parse_quote(t_tkn *tkn)
 		|| !tkn->next->next || tkn->next->next->type != CHR_QUOTE)
 	{
 		parse_err = 1;
-		ft_putendl("Syntax error : unexpected token newline");
+		ft_putendl_fd("syntax error near unexpected token newline", 2);
 	}
 	return (parse_err);
 }
@@ -95,7 +95,7 @@ static int			parse_dquote(t_tkn *tkn)
 		|| !tkn->next->next || tkn->next->next->type != CHR_DQUOTE)
 	{
 		parse_err = 1;
-		ft_putendl("Syntax error : unexpected token newline");
+		ft_putendl_fd("syntax error near unexpected token newline", 2);
 	}
 	return (parse_err);
 }
@@ -108,8 +108,11 @@ static int			parse_idle(t_tkn *tkn)
 	if (!valid_tkn_type(tkn))
 	{
 		parse_err = 1;
-		ft_putstr("Syntax error : unexpected token ");
-		ft_putendl(tkn->next->data);
+		ft_putstr_fd("syntax error near unexpected token ", 2);
+		if (ft_strcmp(tkn->next->data, "\n") == 0)
+			ft_putendl_fd("newline", 2);
+		else
+			ft_putendl_fd(tkn->next->data, 2);
 	}
 	return (parse_err);
 }

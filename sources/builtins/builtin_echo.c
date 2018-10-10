@@ -14,17 +14,14 @@
 #include "readline.h"
 #include "utils.h"
 
-int		builtin_echo_write(char *towrite, char **myenv)
+int		builtin_echo_write(char *towrite)
 {
-	char	*var;
-	char	*temp;
-
 	if (write(1, towrite, ft_strlen(towrite)) == -1)
 		return (-1);
 	return (0);
 }
 
-int		builtin_echo(char **cmd, char ***myenv)
+int		builtin_echo(char **cmd)
 {
 	int		nopt;
 	int		i;
@@ -42,7 +39,7 @@ int		builtin_echo(char **cmd, char ***myenv)
 	{
 		if ((nopt == 0 && i > 1) || (nopt == 1 && i > 3))
 			write(1, " ", 1);
-		if (builtin_echo_write(cmd[i], *myenv) == -1)
+		if (builtin_echo_write(cmd[i]) == -1)
 			return (-1);
 		i++;
 	}

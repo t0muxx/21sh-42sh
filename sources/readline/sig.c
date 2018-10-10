@@ -29,7 +29,7 @@ void	input_ctrl_d(t_buffer *tbuffer, char *read_buf)
 		exit(EXIT_SUCCESS);
 	}
 	else if (read_buf[0] == 4 && ft_strlen(read_buf) == 1 &&
-	tbuffer->cnt != ft_strlen(tbuffer->buffer))
+	tbuffer->cnt != (int)ft_strlen(tbuffer->buffer))
 	{
 		line_reset(tbuffer);
 		string_delete_char(&(tbuffer->buffer), tbuffer->cnt);

@@ -46,7 +46,7 @@ static void	great_redir(t_tkn *tkn)
 		error_print(CANTOPEN, tkn->next->data, "");
 		exit(EXIT_FAILURE);
 	}
-	from = (tkn->prev->type == CHR_IO_NUMBER) ?
+	from = (tkn->prev && tkn->prev->type == CHR_IO_NUMBER) ?
 		ft_atoi(tkn->prev->data) : STDOUT_FILENO;
 	if (dup2(fd, from) == -1)
 	{

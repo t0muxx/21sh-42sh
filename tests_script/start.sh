@@ -1,5 +1,7 @@
 #/bin/bash
 PATH_TO_21SH="../21sh"
+BIN_42SH="../.././21sh"
+INDEX="1"
 CDIR=${PWD}
 RESETCOLOR="$(tput sgr0)"
 # Couleurs (gras)
@@ -9,6 +11,7 @@ JAUNE="$(tput bold ; tput setaf 3)"
 BLEU="$(tput bold ; tput setaf 4)"
 CYAN="$(tput bold ; tput setaf 6)"
 PRINTDEBUG=1
+INDEX=1
 
 export PATH_TO_21SH
 export ROUGE
@@ -21,11 +24,58 @@ export PRINTDEBUG
 
 initdir()
 {
-	if [ -e result ]
+	if [ ! -e output ]
 	then
-		rm -rf result
+		mkdir output
+		mkdir output/21sh_out
+		mkdir output/bash_out
 	fi
-	mkdir result
+}
+
+cmpdiff()
+{
+	diff "$1" "$2" > diff.txt
+	if [ $? -ne 0 ]; then
+		echo "$INDEX${ROUGE}[KO]$3 ${RESETCOLOR}";
+	else
+		echo "$INDEX${VERT}[OK]$3 ${RESETCOLOR}"
+	fi
+}
+
+printdebug()
+{
+	if [ $PRINTDEBUG -eq 1 ]
+	then
+		if [ -s diff.txt ]
+		then
+			echo "${ROUGE}********************* DIFF_$INDEX.TXT *************************${RESETCOLOR}"			
+			cat diff.txt
+			echo "${ROUGE}********************* DIFF_$INDEX.TXT *************************${RESETCOLOR}"
+		fi
+	fi
+}
+
+quickdiff()
+{
+	cmpdiff "$1" "$2" "$3"
+	printdebug
+	rm -rf bash_out/* 21sh_out/*
+	INDEX=$((INDEX+1))
+	read -n1 -s
+}
+
+dotest()
+{
+	cd bash_out
+	echo "$1" | bash > "bash.out"
+	cd ../21sh_out
+	echo "$1" | "../../.././21sh" > "21sh.out"
+	cd ..
+	cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
+	printdebug
+	rm -rf bash_out/* 21sh_out/*
+	INDEX=$((INDEX+1))
+	read -n1 -s
 }
 
 echo "${VERT}#################################################${RESETCOLOR}"
@@ -37,6 +87,11 @@ echo "${VERT}#                                               #${RESETCOLOR}"
 echo "${VERT}#################################################${RESETCOLOR}"
 
 initdir
-./test_01_simple.sh
-./test_02.sh
-./test_builtin.sh
+cd output
+. .././builtin.sh
+. .././permission.sh
+. .././redirection.sh
+. .././operator.sh
+cd ..
+rm -rf output
+

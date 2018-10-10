@@ -56,7 +56,6 @@ static int		parse_globals(t_tkn *tkn, char **env)
 	int		len;
 	int		i;
 	char	*initial_str;
-	char	*tmp;
 	int		is_global;
 
 	i = 0;
@@ -65,7 +64,6 @@ static int		parse_globals(t_tkn *tkn, char **env)
 	len = ft_strlen(initial_str);
 	while (i < len)
 		i = replace_var(&tkn, initial_str, i, env) + 1;
-	tmp = ft_strchr(initial_str, '$');
 	i = 0;
 	while (initial_str[i + 1])
 	{
@@ -102,11 +100,9 @@ static void		link_tkn_lst(t_tkn **head, char ***env)
 
 void			global_parsing(t_tkn **head, char ***env)
 {
-	t_tkn	*tmp;
 	t_tkn	*tkn;
 
 	tkn = *head;
-	tmp = NULL;
 	while (tkn->next)
 	{
 		if (parse_globals(tkn, *env) == 1)

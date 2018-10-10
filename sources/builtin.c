@@ -29,8 +29,6 @@ int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv)
 			saved_stdout = dup(STDOUT_FILENO);
 			if (astree)
 				redirect_cmd(astree->arg);
-			if (args=NULL || args[0] == NULL)
-				exit(EXIT_SUCCESS);
 			builtin[i].addr(cmd, myenv);
 			dup2(saved_stdout, STDOUT_FILENO);
 			close(saved_stdout);
