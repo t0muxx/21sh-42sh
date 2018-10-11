@@ -57,7 +57,12 @@ printdebug()
 
 quickdiff()
 {
-	cmpdiff "$1" "$2" "$3"
+	cd bash_out
+	echo "$1" | bash > "bash.out"
+	cd ../21sh_out
+	echo "$2" | "../../.././21sh" > "21sh.out"
+	cd ..
+	cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
 	printdebug
 	rm -rf bash_out/* 21sh_out/*
 	INDEX=$((INDEX+1))
@@ -69,9 +74,14 @@ dotest()
 	cd bash_out
 	echo "$1" | bash > "bash.out"
 	cd ../21sh_out
-	echo "$1" | "../../.././21sh" > "21sh.out"
-	cd ..
-	cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
+	if [ -z $2] then
+		echo "$1" | "../../.././21sh" > "21sh.out"
+		cd ..
+		cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
+	else
+		echo "$2" | "../../.././21sh" > "21sh.out"
+		cd ..
+		cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$2"
 	printdebug
 	rm -rf bash_out/* 21sh_out/*
 	INDEX=$((INDEX+1))
