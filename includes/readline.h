@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:27:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 12:00:31 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/11 12:02:48 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 ** next = oldest and prev = newest
 */
 
-enum e_readline_state
+enum			e_readline_state
 {
 	READ_IN_QUOTE,
 	READ_NORMAL,
@@ -115,7 +115,7 @@ typedef struct	s_buffer
 }				t_buffer;
 
 void			sig_intercept(t_buffer *tbuffer);
-void		sig_intercept_ml(t_buffer *tbuffer, t_buffer *mlbuffer);
+void			sig_intercept_ml(t_buffer *tbuffer, t_buffer *mlbuffer);
 
 void			input_arrow_left(t_buffer *tbuffer, char *read_buf);
 void			input_arrow_right(t_buffer *tbuffer, char *read_buf);
@@ -165,5 +165,7 @@ t_term_cap		*term_init_cap();
 void			term_get_colnbr(t_buffer *tbuffer);
 t_term_cap		*term_init(char **env);
 void			term_close();
-int		ft_putcc(int c);
+int				ft_putcc(int c);
+void			create_base_path(t_buffer *tbuffer);
+void			increment_shlvl(char ***env);
 #endif

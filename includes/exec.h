@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 14:54:49 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:28:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ struct					s_node_type
 	t_node_fun			fun;
 };
 
-extern t_node_type	node_fun[];
+extern t_node_type	g_node_fun[];
 
 int						strdigit(char *str);
 void					and_redir(t_tkn *tkn);

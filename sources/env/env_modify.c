@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 09:37:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 19:58:26 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/11 11:46:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int		env_update_var(char *name, char *value, char **myenv)
 
 char	**env_add_var(char *name, char *value, char ***myenv)
 {
-	int i;
-	char **newenv;
-	char *tmp;
-	char **tmp2;
+	int		i;
+	char	**newenv;
+	char	*tmp;
+	char	**tmp2;
 
 	tmp2 = myenv[0];
 	i = 0;
@@ -69,11 +69,11 @@ char	**env_add_var(char *name, char *value, char ***myenv)
 	tmp = ft_strjoin(name, "=");
 	newenv[i] = ft_strjoin(tmp, value);
 	free(tmp);
-     	newenv[i + 1] = 0;
+	newenv[i + 1] = 0;
 	myenv[0] = newenv;
 	free(tmp2);
-	return (newenv);	
-}	
+	return (newenv);
+}
 
 int		env_delete_var(char *name, char ***myenv)
 {

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:36:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/08/14 09:29:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:32:18 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int		exec_node(t_astree *astree, char ***env, t_exec *exec)
 		exec->dont = 0;
 	while (i < 4)
 	{
-		if (node_fun[i].type == astree->type)
-			return (node_fun[i].fun(astree, env, exec));
+		if (g_node_fun[i].type == astree->type)
+			return (g_node_fun[i].fun(astree, env, exec));
 		i++;
 	}
 	return (1);

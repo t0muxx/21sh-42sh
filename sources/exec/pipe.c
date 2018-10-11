@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 03:20:55 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/20 12:49:15 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/11 11:51:24 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int		node_pipe(t_astree *astree, char ***env, t_exec *exec)
 	else
 	{
 		pipeline_create(astree, exec);
-	//	pipeline_print(exec->pipeline);
 		pipeline_exec(exec->pipeline, exec, 0, *env);
 		pipeline_free(exec->pipeline);
 		exec->pipeline = NULL;

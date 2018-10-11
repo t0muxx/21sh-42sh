@@ -1,27 +1,37 @@
-//insert header
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   global.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/11 11:25:35 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/10/11 11:33:59 by tmaraval         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GLOBAL_H
 # define GLOBAL_H
 # define GLOBAL_BUF 128
 
-#include "exec.h"
+# include "exec.h"
 
-typedef struct	s_global {
+typedef struct	s_global
+{
 	char	*key;
 	char	*value;
-}		t_global;
+}				t_global;
 
-extern struct s_global	globals[128];
+extern struct s_global	g_globals[128];
 
-char	*global_replace(char *src, char *key, char *value);
-void	insert_global(char *str, char ***env);
-int		replace_var(t_tkn **head, char *str, int index, char **env);
-void	remove_global(char *str);
-char	*get_global_key(char *value);
-char	*get_global_value(char *key, char **env);
-int		global_strlen(char *str, int index);
-char	*global_concat(char *dest, char *value, int index, int len);
-void	global_parsing(t_tkn **head, char ***env);
+char			*global_replace(char *src, char *key, char *value);
+void			insert_global(char *str, char ***env);
+int				replace_var(t_tkn **head, char *str, int index, char **env);
+void			remove_global(char *str);
+char			*get_global_key(char *value);
+char			*get_global_value(char *key, char **env);
+int				global_strlen(char *str, int index);
+char			*global_concat(char *dest, char *value, int index, int len);
+void			global_parsing(t_tkn **head, char ***env);
 
 #endif

@@ -1,11 +1,21 @@
-// insert header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ext_globals.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/11 10:12:20 by tmaraval          #+#    #+#             */
+/*   Updated: 2018/10/11 11:26:51 by tmaraval         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef EXT_GLOBALS_H
 # define EXT_GLOBALS_H
 
 # include "global.h"
 
-t_global	globals[128] = 
+t_global	g_globals[128] =
 {
 	{NULL, NULL},
 };

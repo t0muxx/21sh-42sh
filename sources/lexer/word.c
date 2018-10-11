@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 09:22:38 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:39:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int					is_word_type(int c, int escaped, t_tkn_state state)
 	i = 0;
 	if (escaped || c == '\\' || state != STATE_IDLE)
 		return (1);
-	while (tkn_fun[i].type)
+	while (g_tkn_fun[i].type)
 	{
-		if (tkn_fun[i].type == (enum e_tkn_type)c)
+		if (g_tkn_fun[i].type == (enum e_tkn_type)c)
 		{
 			if (c == '\'' || c == '"')
 				return (1);

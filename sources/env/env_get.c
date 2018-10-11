@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:24:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/05 15:09:12 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:51:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ char	*env_get_var(char *name, char **myenv)
 	int			i;
 	char		*temp;
 
-	i = 0;
+	i = -1;
 	if (name == NULL)
 		return (NULL);
-	while (myenv[i])
+	while (myenv[i++])
 	{
 		temp = ft_strsub(myenv[i], 0, env_until_equal(myenv[i]));
-		if (temp && ft_strcmp(temp, name) == 0 && ft_strlen(temp) == ft_strlen(name))
+		if (temp && ft_strcmp(temp, name) == 0 
+		&& ft_strlen(temp) == ft_strlen(name))
 		{
 			free(temp);
 			temp = ft_strsub(myenv[i], ft_strlen(name) + 1,
@@ -46,7 +47,6 @@ char	*env_get_var(char *name, char **myenv)
 			return (temp);
 		}
 		free(temp);
-		i++;
 	}
 	return (NULL);
 }

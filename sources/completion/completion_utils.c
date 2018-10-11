@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 13:58:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/16 11:34:47 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/11 11:44:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,3 @@ t_list	*completion_read(char **dirs)
 	completion_read_from_dirs(dirs, &filelist);
 	return (filelist);
 }
-
-/*int		main(int argc, char **argv)
-{
-	char	*dirs[2];
-	char	**ret;
-	t_list  *list;
-
-	dirs[0] = argv[1];
-	dirs[1] = 0;
-	ft_putendl(dirs[0]);
-	list = completion_read(dirs);
-	while (list)
-	{
-		ft_putendl(list->content);
-		list = list->next;
-	}
-	return (0);
-}*/

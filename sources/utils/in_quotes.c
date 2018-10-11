@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:52:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 09:06:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:57:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,35 +72,3 @@ int		utils_in_quotes(char *str)
 	}
 	return (utils_in_quotes_ret(quote, dquote, i, str));
 }
-
-/*int	main(int argc, char **argv)
-{
-	char **test;
-	int i;
-
-	i = 0;
-	test = (char **)malloc(sizeof(char *) * 10);
-
-	test[0] = strdup("\"12345678\"");
-	test[1] = strdup("\"1234'5'8\"");
-	test[2] = strdup("\"1\"2\"567\"");
-	test[3] = strdup("'123\"4\"78'");
-	test[4] = strdup("'123\"4\"78'\"");
-	test[5] = strdup("'123\"4'\"78'");
-	test[6] = strdup("'1'\"2\"3\"4\"7'8'\"");
-	test[7] = strdup("'1\"23'4\"7\"8");
-	test[8] = strdup("'12\"3\"4\"7'\"8");
-	test[9] = strdup("'\"123\"4\"7'\"8'");
-	while (i < 10)
-	{
-		puts("testing :");
-		puts(test[i]);
-		puts("\n");
-		if (utils_in_quotes(test[i]) == 1)
-			puts("OK\n");
-		else
-			puts("KO\n");
-		i++;
-	}
-	return (0);
-}*/

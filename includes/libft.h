@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 10:36:27 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/10 08:56:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:31:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lst_append(t_list **head, t_list *new);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-void 				ft_lstfree(t_list *head);
+void				ft_lstfree(t_list *head);
 void				ft_strrpl(char *s, char f, char r);
 char				*ft_strupcase(char *string);
 char				*ft_strlowcase(char *string);

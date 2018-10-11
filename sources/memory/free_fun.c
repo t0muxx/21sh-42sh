@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 02:08:46 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 14:54:03 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:53:22 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_lst(t_tkn *tkn)
 {
 	t_tkn	*tmp;
 
-	while(tkn)
+	while (tkn)
 	{
 		tmp = tkn;
 		tkn = tkn->next;
@@ -33,14 +33,14 @@ void	free_lst(t_tkn *tkn)
 void	free_globals(void)
 {
 	int	i;
-	
+
 	i = 0;
-	while (globals[i].key != NULL || globals[i].value != NULL)
+	while (g_globals[i].key != NULL || g_globals[i].value != NULL)
 	{
-		if (globals[i].value != NULL)
-			free(globals[i].value);
-		if (globals[i].key != NULL)
-			free(globals[i].key);
+		if (g_globals[i].value != NULL)
+			free(g_globals[i].value);
+		if (g_globals[i].key != NULL)
+			free(g_globals[i].key);
 		i++;
 	}
 }

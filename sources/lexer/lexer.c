@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 15:13:19 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:38:42 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 	line = *str;
 	i = 0;
 	(void)state;
-	while (tkn_fun[i].type)
+	while (g_tkn_fun[i].type)
 	{
-		if (!tkn_fun[i + 1].type)
+		if (!g_tkn_fun[i + 1].type)
 		{
 			tkn_push_back(head, tkn_word(&line));
 			break ;
 		}
-		else if (tkn_fun[i].type == (enum e_tkn_type)*line)
+		else if (g_tkn_fun[i].type == (enum e_tkn_type)*line)
 		{
-			tkn_push_back(head, tkn_fun[i].fun(&line));
+			tkn_push_back(head, g_tkn_fun[i].fun(&line));
 			break ;
 		}
 		i++;

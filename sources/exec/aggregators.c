@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:05:20 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/17 15:35:54 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:46:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		greatand_redir(t_tkn *tkn)
 			ft_putstr_fd(": Bad file descriptor\n", 2);
 		}
 	}
-	else if (tkn->next->data && tkn->next->data[0] == '-') 
+	else if (tkn->next->data && tkn->next->data[0] == '-')
 	{
 		if (tkn->prev->type == CHR_IO_NUMBER)
 			fd = ft_atoi(tkn->prev->data);

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 10:34:58 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/15 22:48:19 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:52:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int				is_quote(int chr, t_tkn_state state)
 	else if (chr == '\'')
 		return (state == STATE_DQUOTED ? 0 : 1);
 	else
-		return 0;
+		return (0);
 }
 
 void			esc_push_pointer(char **str)
@@ -82,7 +82,7 @@ int				esc_strlen(char *line)
 				len++;
 			is_esc = 0;
 		}
-		len = (!is_esc && !is_quote(line[i], state)) ? len + 1 : len;	
+		len = (!is_esc && !is_quote(line[i], state)) ? len + 1 : len;
 		i++;
 	}
 	return (len);

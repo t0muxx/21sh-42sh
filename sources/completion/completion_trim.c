@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 11:28:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 08:51:54 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:45:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,3 @@ char	*completion_trim_get_str_to_complete(char *userinput)
 		ret = ft_strdup("");
 	return (ret);
 }
-
-/*int		main(int argc, char **argv)
-{
-	char *ret;
-	char *ret2;
-
-	ret = completion_trim_get_searchdir(argv[1]);
-	ret2 = completion_trim_get_str_to_complete(argv[1]);
-	printf("The corresponding searchdir : |%s|\n", ret);
-	printf("The corresponding str to complete : |%s|\n", ret2);
-}*/

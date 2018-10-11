@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 11:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 12:10:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:54:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	path_find_in_path_loop(char **patharray, char *name, char **path)
 
 char	*path_find_in_path(char *name, char **env)
 {
-	char 	**patharray;
-	char 	*path;
+	char	**patharray;
+	char	*path;
 
 	if (name[0] == '/' || (!ft_strncmp(name, "./", 2))
 	|| (!ft_strncmp(name, "../", 3)))

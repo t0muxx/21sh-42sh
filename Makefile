@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/10/03 18:45:36 by cormarti         ###   ########.fr        #
+#    Updated: 2018/10/11 12:03:05 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,6 +129,7 @@ SRCS = 			$(READLINE)readline.c \
 		   	$(MEM)free_fun.c \
 			builtin.c \
 			path.c \
+			main_utils.c \
 			main.c
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)

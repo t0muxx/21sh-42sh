@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 12:13:18 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 09:54:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:57:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,88 +93,3 @@ char	*make_path(char *path, char *dir)
 	utils_free_2darray((void **)spliteddir);
 	return (retpath);
 }
-
-/*int	main(int argc, char **argv)
-{
-	char *ret;
-	char *buf2;
-	char **test;
-	char *input;
-
-	printf("test main for make_path()\n");
-	printf("dir & subdir organisation :\n");
-	printf("$> printdir()\n");
-	printf("/\n");
-	printf("/dir1\n");
-	printf("/dir1/dir1-2\n");
-	printf("/dir2\n");
-	printf("/dir2/dir2-2\n");
-	printf("/dir3\n");
-	printf("/dir3/file1\n\n");
-	
-	buf2 = ft_strdup("/");
-	printf("input = |dir1|\n");
-	ret = make_path(buf2, "dir1");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir1|\n\n", ret);
-	
-	buf2 = ft_strdup("/");
-	printf("input = |dir1/dir1-2|\n");
-	ret = make_path(buf2, "dir1/dir1-2");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir1/dir1-2|\n\n", ret);
-
-	buf2 = ft_strdup("/dir1");
-	printf("input = |../dir2|\n");
-	ret = make_path(buf2, "../dir2");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir2|\n\n", ret);
-	
-	buf2 = ft_strdup("/dir1");
-	printf("input = |../dir1/dir1-2/../../dir2|\n");
-	ret = make_path(buf2, "../dir1/dir1-2/../../dir2");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir2|\n\n", ret);
-	
-	buf2 = ft_strdup("/dir1/");
-	printf("input = |../dir1/dir1-2/../../dir2|\n");
-	ret = make_path(buf2, "../dir1/dir1-2/../../dir2");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir2|\n\n", ret);
-	
-	buf2 = ft_strdup("/dir1/");
-	printf("input = |../|\n");
-	ret = make_path(buf2, "../");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/|\n\n", ret);
-	
-	buf2 = ft_strdup("/dir2/");
-	printf("input = |./dir2-2|\n");
-	ret = make_path(buf2, "./dir2-2");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir2/dir2-2|\n\n", ret);
-	
-	buf2 = ft_strdup("/dir2");
-	printf("input = |/./dir1|\n");
-	ret = make_path(buf2, "/./dir1");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/dir1|\n\n", ret);
-	
-	buf2 = ft_strdup("/Users/tmaraval/work/21sh/test_scripts");
-	printf("input = |/./Users|\n");
-	ret = make_path(buf2, "/./Users");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/Users|\n\n", ret);
-	
-	buf2 = ft_strdup("/Users/tmaraval/work/21sh/test_scripts");
-	printf("input = |../../../../../|\n");
-	ret = make_path(buf2, "../../../../../");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/|\n\n", ret);
-	
-	buf2 = ft_strdup("/Users/tmaraval/work/21sh/test_scripts");
-	printf("input = |/|\n");
-	ret = make_path(buf2, "/");
-	printf("wdir = |%s|\n", buf2); 
-	printf("ret = |%s| attendu : |/|\n\n", ret);
-}*/

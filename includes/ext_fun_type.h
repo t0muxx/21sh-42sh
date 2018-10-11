@@ -6,23 +6,21 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/09/18 13:24:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:27:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXT_NODE_FUN_H
-# define EXT_NODE_FUN_H
+#ifndef EXT_FUN_TYPE_H
+# define EXT_FUN_TYPE_H
 
 # include "lexer.h"
 
-struct s_tkn_fun	tkn_fun[] =
+struct s_tkn_fun	g_tkn_fun[] =
 {
 	{'*', &tkn_asterisk},
 	{' ', &tkn_wspace},
-//	{'$', &tkn_dollar},
 	{'\t', &tkn_htab},
 	{'\\', &tkn_escape},
-//	{'-', &tkn_dash},
 	{'|', &tkn_pipe},
 	{'&', &tkn_and},
 	{'`', &tkn_bquote},

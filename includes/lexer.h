@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/03 17:10:29 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:37:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-enum	e_tkn_type
+enum			e_tkn_type
 {
 	CHR_GREAT,
 	CHR_CLOBBER,
@@ -60,7 +60,7 @@ enum	e_tkn_type
 	CHR_NULL,
 };
 
-enum	e_tkn_state
+enum			e_tkn_state
 {
 	STATE_BRACKETED = 1,
 	STATE_QUOTED,
@@ -76,7 +76,7 @@ typedef struct s_tkn		t_tkn;
 typedef struct s_fun_tkn	t_fun_tkn;
 typedef t_tkn *(*t_type_fun)(char**);
 
-struct	s_tkn
+struct			s_tkn
 {
 	char		*data;
 	t_tkn_type	type;
@@ -84,46 +84,46 @@ struct	s_tkn
 	t_tkn		*prev;
 };
 
-struct	s_tkn_fun
+struct			s_tkn_fun
 {
 	t_tkn_type		type;
 	t_type_fun		fun;
 };
 
-extern struct s_tkn_fun		tkn_fun[];
+extern struct s_tkn_fun		g_tkn_fun[];
 
-t_tkn	*tkn_dollar(char **str);
-t_tkn	*tkn_htab(char **str);
-t_tkn	*tkn_asterisk(char **str);
-t_tkn	*tkn_escape(char **str);
-t_tkn	*tkn_pipe(char **str);
-t_tkn	*tkn_bquote(char **str);
-t_tkn	*tkn_dquote(char **str);
-t_tkn	*tkn_quote(char **str);
-t_tkn	*tkn_and(char **str);
-t_tkn	*tkn_semi(char **str);
-t_tkn	*tkn_bang(char **str);
-t_tkn	*tkn_hashtag(char **str);
-t_tkn	*tkn_rbrace(char **str);
-t_tkn	*tkn_lbrace(char **str);
-t_tkn	*tkn_rbracket(char **str);
-t_tkn	*tkn_lbracket(char **str);
-t_tkn	*tkn_wspace(char **str);
-t_tkn	*tkn_less(char **str);
-t_tkn	*tkn_great(char **str);
-t_tkn	*tkn_eol(char **str);
-t_tkn	*tkn_word(char **str);
+t_tkn			*tkn_dollar(char **str);
+t_tkn			*tkn_htab(char **str);
+t_tkn			*tkn_asterisk(char **str);
+t_tkn			*tkn_escape(char **str);
+t_tkn			*tkn_pipe(char **str);
+t_tkn			*tkn_bquote(char **str);
+t_tkn			*tkn_dquote(char **str);
+t_tkn			*tkn_quote(char **str);
+t_tkn			*tkn_and(char **str);
+t_tkn			*tkn_semi(char **str);
+t_tkn			*tkn_bang(char **str);
+t_tkn			*tkn_hashtag(char **str);
+t_tkn			*tkn_rbrace(char **str);
+t_tkn			*tkn_lbrace(char **str);
+t_tkn			*tkn_rbracket(char **str);
+t_tkn			*tkn_lbracket(char **str);
+t_tkn			*tkn_wspace(char **str);
+t_tkn			*tkn_less(char **str);
+t_tkn			*tkn_great(char **str);
+t_tkn			*tkn_eol(char **str);
+t_tkn			*tkn_word(char **str);
 t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc);
-int		is_quote(int chr, t_tkn_state state);
-int		esc_strlen(char *line);
-void	esc_push_pointer(char **str);
-int		is_word_type(int c, int escaped, t_tkn_state state);
-void	tkn_push_back(t_tkn **head, t_tkn *new);
-t_tkn	*tkn_init(int len);
-t_tkn	*lex(char **str, char ***env);
-t_tkn	*tkn_newline(char **str);
-t_tkn	*tkn_init_nl(void);
-t_tkn	*tkn_dash(char **str);
-t_tkn	*tkn_and(char **str);
+int				is_quote(int chr, t_tkn_state state);
+int				esc_strlen(char *line);
+void			esc_push_pointer(char **str);
+int				is_word_type(int c, int escaped, t_tkn_state state);
+void			tkn_push_back(t_tkn **head, t_tkn *new);
+t_tkn			*tkn_init(int len);
+t_tkn			*lex(char **str, char ***env);
+t_tkn			*tkn_newline(char **str);
+t_tkn			*tkn_init_nl(void);
+t_tkn			*tkn_dash(char **str);
+t_tkn			*tkn_and(char **str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 13:37:24 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:46:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 #include "utils.h"
 #include <sys/types.h>
 #include <sys/wait.h>
-
-/*
-** EXIT STATUS 0 (EXIT_SUCCESS) si aucun probleme
-** 1 (EXIT_FAILURE) si erreur
-** > 1 si signaux
-**
-*/
 
 int		exit_status(int status)
 {

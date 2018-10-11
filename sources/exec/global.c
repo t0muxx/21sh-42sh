@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 13:44:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/03 19:28:42 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:47:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 #include "lexer.h"
 #include "exec.h"
 
-
 static char	*extract_assignment(char *str, int value)
 {
 	char	*dest;
-	int	len;
+	int		len;
 
 	len = 0;
 	if (value)
@@ -39,8 +38,6 @@ static char	*extract_assignment(char *str, int value)
 	dest[len] = '\0';
 	ft_strncpy(dest, str, len);
 	return (dest);
-
-
 }
 
 void		remove_global(char *str)
@@ -48,12 +45,12 @@ void		remove_global(char *str)
 	int		i;
 
 	i = 0;
-	while (globals[i].key)
+	while (g_globals[i].key)
 	{
-		if (ft_strcmp(globals[i].key, str) == 0)
+		if (ft_strcmp(g_globals[i].key, str) == 0)
 		{
-			free(globals[i].value);
-			globals[i].value = ft_strdup("");
+			free(g_globals[i].value);
+			g_globals[i].value = ft_strdup("");
 			break ;
 		}
 		i++;
@@ -65,15 +62,15 @@ static int	free_on_exists(t_global new)
 	int		i;
 
 	i = 0;
-	while (globals[i].key != NULL)
+	while (g_globals[i].key != NULL)
 	{
 		if (i >= GLOBAL_BUF)
-			ft_putendl("max buf size reached"); // realloc more
-		if (ft_strcmp(new.key, globals[i].key) == 0)
+			ft_putendl("max buf size reached");
+		if (ft_strcmp(new.key, g_globals[i].key) == 0)
 		{
-			free(globals[i].key);
-			free(globals[i].value);
-			globals[i] = new;
+			free(g_globals[i].key);
+			free(g_globals[i].value);
+			g_globals[i] = new;
 			break ;
 		}
 		i++;
@@ -83,7 +80,7 @@ static int	free_on_exists(t_global new)
 
 void		insert_global(char *str, char ***env)
 {
-	int		index;
+	int			index;
 	t_global	new;
 
 	index = 0;
@@ -92,7 +89,7 @@ void		insert_global(char *str, char ***env)
 	if (env_update_var(new.key, new.value, *env) == 0)
 	{
 		index = free_on_exists(new);
-		globals[index] = new;
+		g_globals[index] = new;
 	}
 	else
 	{
