@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 08:24:25 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/11 11:51:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/15 11:11:55 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*env_get_var(char *name, char **myenv)
 	while (myenv[i++])
 	{
 		temp = ft_strsub(myenv[i], 0, env_until_equal(myenv[i]));
-		if (temp && ft_strcmp(temp, name) == 0 
+		if (temp && ft_strcmp(temp, name) == 0
 		&& ft_strlen(temp) == ft_strlen(name))
 		{
 			free(temp);

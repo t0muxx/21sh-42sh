@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:00:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/05 14:55:03 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/15 11:11:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ enum e_tkn_type		type[][8] =
 	{ CHR_IO_NUMBER, CHR_WORD, CHR_NULL },
 	{ CHR_IO_NUMBER, CHR_WORD, CHR_DASH, CHR_NULL },
 	{ CHR_IO_NUMBER, CHR_WORD, CHR_NULL },
-	{ CHR_IO_NUMBER, CHR_WORD, CHR_DASH, CHR_NULL }, // GREATAND
+	{ CHR_IO_NUMBER, CHR_WORD, CHR_DASH, CHR_NULL },
 	{ CHR_IO_NUMBER, CHR_WORD, CHR_NULL },
 	{ CHR_GREAT, CHR_CLOBBER, CHR_LESS, CHR_LESSAND, CHR_DGREAT, CHR_GREATAND,
 		CHR_LESSGREAT, CHR_NULL },
 	{ CHR_WORD, CHR_NEWLINE, CHR_DASH, CHR_ASSIGNMENT_WORD, CHR_NULL },
-	{ CHR_IO_NUMBER, CHR_WORD, CHR_NULL },  // DLESS
+	{ CHR_IO_NUMBER, CHR_WORD, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
@@ -33,14 +33,14 @@ enum e_tkn_type		type[][8] =
 	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
-	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NEWLINE, CHR_NULL }, // SEMI
+	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NEWLINE, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_EMPTY, CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_EMPTY, CHR_NULL },
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
 	{ CHR_WORD, CHR_ASSIGNMENT_WORD, CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_NULL },
-	{ CHR_NULL }, // WSPACE
+	{ CHR_NULL },
 	{ CHR_NULL },
 	{ CHR_GREAT, CHR_NULL },
 	{ CHR_NULL },

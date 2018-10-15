@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/03 18:47:03 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/15 11:12:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	mlbuffer_init(t_buffer *tbuffer, t_term_cap *termcap)
 	tbuffer->mline = 1;
 	tbuffer->ctrlc = 0;
 	tbuffer->state = READ_NORMAL;
-	if ((tbuffer->buffer = 
+	if ((tbuffer->buffer =
 	malloc(sizeof(char) * BUFFER_SIZE)) == NULL)
 		error_malloc_err(0);
 	ft_bzero(tbuffer->buffer, BUFFER_SIZE);
