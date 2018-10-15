@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/12 11:55:54 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/15 12:13:28 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	sig_handler_ml(int sigid)
 	if (sigid == SIGINT)
 	{
 		cursor_move_right(g_tbuffer2, (int)ft_strlen(g_tbuffer2->buffer));
+		free(g_mlbuffer2->termcap);
+		free(g_mlbuffer2->env);
+		free(g_tbuffer2->buffer);
 		tbuffer_init(g_tbuffer2, env_create_copy());
 		g_tbuffer2->ctrlc = 1;
 		g_mlbuffer2->ctrlc = 1;
