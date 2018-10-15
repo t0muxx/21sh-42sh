@@ -1,5 +1,8 @@
 #/bin/bash
 
+dotest "echo 123456789 ; echo -n 987654321"
+dotest "echo -yn -n 123456789 ; echo -n"
+dotest "echo -nooooooooooooooo"
 dotest "mkdir test && cd test ; touch a && touch b ; ls -la ; cd .. ; rm -rf test"
 dotest "cd testd"
 dotest "mkdir -p test/a/b/c/d/e/f ; cd test/a/b/c/d/e/f ; pwd ; rm -rf test"

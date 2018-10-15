@@ -74,7 +74,7 @@ dotest()
 	cd bash_out
 	echo "$1" | bash > "bash.out"
 	cd ../21sh_out
-	if [ -z $2] then
+	if [ -z $2]; then
 		echo "$1" | "../../.././21sh" > "21sh.out"
 		cd ..
 		cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
@@ -86,6 +86,7 @@ dotest()
 	rm -rf bash_out/* 21sh_out/*
 	INDEX=$((INDEX+1))
 	read -n1 -s
+	fi
 }
 
 echo "${VERT}#################################################${RESETCOLOR}"
