@@ -37,6 +37,7 @@ cmpdiff()
 	diff "$1" "$2" > diff.txt
 	if [ $? -ne 0 ]; then
 		echo "$INDEX${ROUGE}[KO]$3 ${RESETCOLOR}";
+		cat diff.txt
 	else
 		echo "$INDEX${VERT}[OK]$3 ${RESETCOLOR}"
 	fi
@@ -103,6 +104,7 @@ cd output
 . .././permission.sh
 . .././redirection.sh
 . .././operator.sh
+. .././global.sh
 cd ..
 rm -rf output
 
