@@ -6,10 +6,11 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 15:33:49 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/16 15:24:15 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "global.h"
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"

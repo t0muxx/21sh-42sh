@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:26:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/05 14:22:30 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/16 12:17:36 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ static void		dup_value(char *src, char *dest, char *key, char *value)
 	int		i;
 	int		j;
 	int		len;
+	int		matched;
 
 	i = 0;
 	j = 0;
+	matched = 0;
 	len = (ft_strlen(src) - 1) + ft_strlen(value) - ft_strlen(key);
 	while (j < len && src[i])
 	{
-		if (src[i] == '$' && !ft_strncmp(src + (i + 1), key, ft_strlen(key)))
+		if (src[i] == '$' && !ft_strncmp(src + (i + 1), key, ft_strlen(key))
+			&& matched == 0)
 		{
+			matched = 1;
 			dest = global_concat(dest, value, i, len);
 			i += (ft_strlen(key) + 1);
 			j += ft_strlen(value);
@@ -63,7 +67,7 @@ static int		parse_globals(t_tkn *tkn, char **env)
 	initial_str = ft_strdup(tkn->data);
 	len = ft_strlen(initial_str);
 	while (i < len)
-		i = replace_var(&tkn, initial_str, i, env) + 1;
+		i = g_replace_var(&tkn, initial_str, i, env) + 1;
 	i = 0;
 	while (initial_str[i + 1])
 	{

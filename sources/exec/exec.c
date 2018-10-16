@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:46:58 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/16 15:31:37 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int		child_process(t_astree *astree, char ***env)
 	exec.dont = 0;
 	exec.prec_exec = -2;
 	astree->is_root_node = 0;
+	g_stdio = dup(STDIN_FILENO);
 	if (astree->type == NT_CMD)
 		exec.last_exec = fork_and_exec(astree, env);
 	else
