@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/16 15:39:54 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/18 16:47:29 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-int		write_input(t_tkn *tkn, char *line, int fd)
+int		write_input(t_tkn *tkn, int fd)
 {
+	char	*line;
 
+	line = NULL;
 	ft_putstr_fd("> ", 0);
 	if (get_next_line(0, &line) == 1 && line)
 	{
@@ -40,37 +42,28 @@ int		write_input(t_tkn *tkn, char *line, int fd)
 void	dless_redir(t_tkn *tkn)
 {
 	static int	nb;
-	char		*line;
 	int			fd;
 	char		*filename;
-	int		tmp_stdio;
+	int			tmp_stdio;
 
-	if (!nb || nb == 2147483647)
-		nb = 0;
-	else
-		nb++;
+	nb = (!nb || nb == 2147483647) ? 0 : nb++;
 	tmp_stdio = dup(STDIN_FILENO);
 	close(STDIN_FILENO);
 	dup2(g_stdio, STDIN_FILENO);
 	close(g_stdio);
-	line = NULL;
 	filename = ft_strjoin("/tmp/heredoc", ft_itoa(nb));
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 		ft_putendl("fail to open here");
-	while (1)
-		if (!write_input(tkn, line, fd))
-			break ;
+	while (write_input(tkn, fd))
+		continue ;
 	close(fd);
 	fd = open(filename, O_RDONLY,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-	if (!tkn->next->next || tkn->next->next->type != CHR_DLESS)
-	{
-		if (dup2(fd, STDIN_FILENO) == -1)
-			ft_putendl("fail dup2");
-	}
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+	if ((!tkn->next->next || tkn->next->next->type != CHR_DLESS)
+		&& (dup2(fd, STDIN_FILENO) == -1))
+		ft_putendl("fail dup2");
 	g_stdio = dup(STDIN_FILENO);
 	close(fd);
 	free(filename);
-	free(line);
 }

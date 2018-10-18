@@ -35,9 +35,9 @@ initdir()
 cmpdiff()
 {
 	diff "$1" "$2" > diff.txt
-	if [ $? -ne 0 ]; then
-		echo "$INDEX${ROUGE}[KO]$3 ${RESETCOLOR}";
-		cat diff.txt
+	if [ $? -ne 0 ]
+	then
+		echo "$INDEX${ROUGE}[KO]$3 ${RESETCOLOR}"
 	else
 		echo "$INDEX${VERT}[OK]$3 ${RESETCOLOR}"
 	fi
@@ -75,7 +75,8 @@ dotest()
 	cd bash_out
 	echo "$1" | bash > "bash.out"
 	cd ../21sh_out
-	if [ -z $2]; then
+	if [ -z "$2" ]
+	then
 		echo "$1" | "../../.././21sh" > "21sh.out"
 		cd ..
 		cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$1"
@@ -83,11 +84,11 @@ dotest()
 		echo "$2" | "../../.././21sh" > "21sh.out"
 		cd ..
 		cmpdiff "bash_out/bash.out" "21sh_out/21sh.out" "$2"
+	fi
 	printdebug
 	rm -rf bash_out/* 21sh_out/*
 	INDEX=$((INDEX+1))
 	read -n1 -s
-	fi
 }
 
 echo "${VERT}#################################################${RESETCOLOR}"
@@ -100,11 +101,12 @@ echo "${VERT}#################################################${RESETCOLOR}"
 
 initdir
 cd output
+. .././global.sh
+exit 1;
 . .././builtin.sh
 . .././permission.sh
 . .././redirection.sh
 . .././operator.sh
-. .././global.sh
 cd ..
 rm -rf output
 

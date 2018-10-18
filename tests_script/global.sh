@@ -74,8 +74,8 @@ dotest "echo \$USER"
 dotest "$USER"
 dotest "echo toto\$USERtoto"
 dotest "echo \$USER.toto"
-dotest "foo=bar; setenv foo; env | grep ^foo" "foo=bar; export foo; env | grep ^foo"
-dotest "foo=bar; setenv foo; echo \$foo; unsetenv foo; echo \$foo; env | grep ^foo" "foo=bar; export foo; env | unset foo; echo \$foo; env | grep ^foo"
-dotest "setenv foo foune; foo=bar; env | grep ^foo" "export foo=foune; foo=bar; env | grep ^foo"
+dotest "foo=bar; export foo; env | grep ^foo" "foo=bar; setenv foo; env | grep ^foo" 
+dotest "foo=bar; export foo; echo \$foo; unset foo; echo \$foo; env | grep ^foo" "foo=bar; setenv foo; echo \$foo; unsetenv foo; echo \$foo; env | grep ^foo"
+dotest "export foo=foune; foo=bar; env | grep ^foo" "setenv foo foune; foo=bar; env | grep ^foo"
 
 exit 1

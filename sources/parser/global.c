@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:26:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/16 12:17:36 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/18 16:33:44 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		dup_value(char *src, char *dest, char *key, char *value)
 	}
 }
 
-char		*global_replace(char *src, char *key, char *value)
+char			*global_replace(char *src, char *key, char *value)
 {
 	char	*dest;
 	int		len;

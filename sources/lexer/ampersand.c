@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 01:55:42 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:52:05 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/18 16:30:53 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static t_tkn	*tkn_and_great(char **str)
 	*str = line;
 	return (tkn);
 }
+
 static t_tkn	*tkn_and_if(char **str)
 {
 	t_tkn	*tkn;

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/16 13:32:50 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/18 16:34:58 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 {
 	int		len;
-	char 	*key;
+	char	*key;
 	char	*value;
 
 	key = NULL;
@@ -39,9 +39,11 @@ int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 
 int				g_replace_pid(t_tkn *tkn)
 {
-	char	key[2] = "$\0";
+	char	key[2];
 	char	*value;
 
+	key[0] = '$';
+	key[1] = '\0';
 	value = ft_itoa((int)getpid());
 	tkn->data = global_replace(tkn->data, key, value);
 	if (value)
@@ -70,8 +72,8 @@ int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 
 static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 {
-	int			i;
-	char		*line;
+	int		i;
+	char	*line;
 
 	line = *str;
 	i = 0;
