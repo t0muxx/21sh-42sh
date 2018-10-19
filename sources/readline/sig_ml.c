@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:30:36 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/15 12:13:28 by tomux            ###   ########.fr       */
+/*   Updated: 2018/10/19 12:46:04 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <sys/ioctl.h>
 #include "env.h"
+#include "utils.h"
 
 t_buffer *g_tbuffer2;
 t_buffer *g_mlbuffer2;
@@ -27,9 +28,8 @@ void	sig_handler_ml(int sigid)
 	{
 		cursor_move_right(g_tbuffer2, (int)ft_strlen(g_tbuffer2->buffer));
 		free(g_mlbuffer2->termcap);
-		free(g_mlbuffer2->env);
 		free(g_tbuffer2->buffer);
-		tbuffer_init(g_tbuffer2, env_create_copy());
+		tbuffer_init(g_tbuffer2, g_tbuffer2->env);
 		g_tbuffer2->ctrlc = 1;
 		g_mlbuffer2->ctrlc = 1;
 		ft_bzero(g_tbuffer2->buffer, (int)ft_strlen(g_tbuffer2->buffer));
