@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 11:52:45 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/06 15:44:38 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/19 10:43:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,18 @@ void	string_insert_substring(char **string, char *substring, int offset)
 			i++;
 		}
 	}
+}
+
+int		strdigit(char *str)
+{
+	int			i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

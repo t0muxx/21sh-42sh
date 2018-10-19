@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 09:40:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/18 10:15:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/19 10:42:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ int		utils_in_quotes(char *str);
 char	*extract_current_word(char *str, int pos);
 int		make_path_cnt_slash(char *str);
 int		utils_is_dir(char *path);
+int		strdigit(char *str);
 #endif

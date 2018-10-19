@@ -6,11 +6,12 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/18 19:16:14 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/19 10:43:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
+#include "utils.h"
 
 int					process_copy(char *src, char **dst_head,
 					t_tkn_state *state, int len)
@@ -72,20 +73,6 @@ int					is_word_type(int c, int escaped, t_tkn_state state)
 				return (1);
 			return (0);
 		}
-		i++;
-	}
-	return (1);
-}
-
-int					strdigit(char *str)
-{
-	int			i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
 		i++;
 	}
 	return (1);
