@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/18 16:34:58 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/19 11:35:25 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,8 @@ int				g_replace_pid(t_tkn *tkn)
 
 int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 {
-	char	*key;
-	char	*value;
-	int		len;
 	t_tkn	*tkn;
 
-	len = 0;
-	key = NULL;
-	value = NULL;
 	tkn = *head;
 	if (str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
 		index += g_replace_default(tkn, str, index, env);
