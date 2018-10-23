@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 09:00:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/23 13:17:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,16 @@ void		pipeline_free(t_pipeline *head)
 
 void		pipeline_print(t_pipeline *pipeline)
 {
+	int i = 0;
+
 	while (pipeline)
 	{
-		ft_printf("|%s|->", pipeline->cmd[0]);
+		i = 0;
+		while (pipeline->cmd[i])
+		{
+			ft_printf("|%s|->", pipeline->cmd[i]);
+			i++;
+		}
 		pipeline = pipeline->next;
 	}
 	ft_printf("\n");

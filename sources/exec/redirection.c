@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 00:42:28 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/16 15:24:15 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/23 15:58:57 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,22 @@ static void	less_redir(t_tkn *tkn)
 	if ((fd = open(tkn->next->data, O_RDONLY,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
 	{
+		perror("OPEN " );
 		ft_putstr_fd(tkn->next->data, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
+	close(STDIN_FILENO);
+	dup2(g_stdio, STDIN_FILENO);
+	close(g_stdio);
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		ft_putstr_fd("fail to redirect input\n", 2);
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
+	g_stdio = dup(STDIN_FILENO);
 	close(fd);
 }
 

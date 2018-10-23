@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/19 10:43:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/19 15:57:12 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ int					process_copy(char *src, char **dst_head,
 {
 	int			i;
 	int			j;
-	int			is_esc;
+	int			esc;
 	char		*dst;
 
 	i = 0;
 	j = 0;
-	is_esc = 0;
+	esc = 0;
 	dst = *dst_head;
 	while (j < len && src[i] != '\0')
 	{
-		*state = set_state(*state, src[i], is_esc);
-		if (src[i] == '\\' && *state == STATE_IDLE)
-			is_esc = 1;
+		*state = set_state(*state, src[i], esc);
+		if (!esc && src[i] == '\\' && *state == STATE_IDLE)
+			esc = 1;
 		else
 		{
-			if (is_esc && (src[i] == '\'' || src[i] == '"'))
-				dst[j++] = src[i];
-			is_esc = 0;
+			if (esc && ((src[i] == '\'' || src[i] == '"') || (src[i] == '\\')))
+				dst[j] = src[i];
+			esc = 0;
 		}
-		if (!is_esc && !is_quote(src[i], *state))
+		if (!esc && !is_quote(src[i], *state))
 			dst[j++] = src[i];
 		i++;
 	}

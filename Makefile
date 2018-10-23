@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/10/11 12:03:05 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/10/19 12:12:37 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,11 +145,6 @@ $(NAME): $(OBJ)
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@)
 	@gcc -o $@ $(CFLAGS) -I$(INC_PATH) -c $<
-
-debug: $(OBJ)
-	@+$(MAKE) -C libft/
-	@gcc -fsanitize=address -I$(INC_PATH) $(OBJ) libft/libft.a -lncurses -o $(NAME)
-	@echo "\033[92m21sh created\033[0m"
 
 clean:
 	@echo "\033[92mClean des .o...\033[0m"

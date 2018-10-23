@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 08:30:14 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/14 09:40:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/22 12:19:52 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 	int		last_slash;
 	int		slash_cnt;
 
-	word = extract_current_word(tbuffer->buffer, tbuffer->cnt);
+	word = extract_current_word(tbuffer->buffer, tbuffer->cnt - 1);
 	slash_cnt = make_path_cnt_slash(word);
 	last_slash = make_path_find_last_slash(word);
 	if (word[0] != '/' && slash_cnt != 0)
@@ -49,6 +49,9 @@ void	completion_insert_char(t_buffer *tbuffer, t_list *filelist)
 	else
 		i = ft_strlen(word);
 	substring = (char *)(filelist->content + i);
+	while (tbuffer->buffer[tbuffer->cnt] &&
+	tbuffer->buffer[tbuffer->cnt] != ' ')
+		cursor_move_right(tbuffer, 1);
 	string_insert_substring(&tbuffer->buffer, substring, tbuffer->cnt);
 	free(word);
 	line_reset(tbuffer);

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 16:35:26 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/09/19 08:41:15 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/22 14:53:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	error_print(int errnbr, char *func, char *arg)
 	str = errnbr == 5 ? "command not found" : str;
 	str = errnbr == 6 ? "too many arguments" : str;
 	str = errnbr == 7 ? "Variable name must contain \
-	alphanumeric characters" : str;
+alphanumeric characters" : str;
 	str = errnbr == 8 ? "too few arguments" : str;
 	str = errnbr == 9 ? "Error during execve" : str;
 	str = errnbr == 10 ? "OLDPWD not set" : str;

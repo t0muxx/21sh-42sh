@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 10:34:58 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:52:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/19 15:53:48 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			esc_push_pointer(char **str)
 	while (line[i] != '\0' && is_word_type(line[i], is_esc, state))
 	{
 		state = set_state(state, line[i], is_esc);
-		if (line[i] == '\\' && state == STATE_IDLE)
+		if (!is_esc && line[i] == '\\' && state == STATE_IDLE)
 			is_esc = 1;
 		else
 			is_esc = 0;
@@ -74,11 +74,12 @@ int				esc_strlen(char *line)
 	while (line[i] != '\0' && is_word_type(line[i], is_esc, state))
 	{
 		state = set_state(state, line[i], is_esc);
-		if (line[i] == '\\' && state == STATE_IDLE)
+		if (!is_esc && line[i] == '\\' && state == STATE_IDLE)
 			is_esc = 1;
 		else
 		{
-			if (is_esc && (line[i] == '\'' || line[i] == '"'))
+			if (is_esc && ((line[i] == '\'' || line[i] == '"')
+						|| line[i] == '\\'))
 				len++;
 			is_esc = 0;
 		}
