@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:27:01 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/16 15:31:37 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/10/22 15:46:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int		child_process(t_astree *astree, char ***env)
 	}
 	if (exec.last_exec == SIGINT || exec.last_exec == SIGKILL)
 		ft_putstr("\n");
+	close(g_stdio);
 	return (exec.last_exec);
 }

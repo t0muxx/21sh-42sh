@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/23 15:11:54 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/23 17:11:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		builtin_check_builtin(t_astree *astree, char **cmd, char ***myenv)
 	saved_stdout = 0;
 	builtin_get_builtin(builtin);
 	i = -1;
-	while (i++ < BUILTINNBR)
+	while (++i < BUILTINNBR)
 	{
 		if (ft_strcmp(builtin[i].name, cmd[0]) == 0)
 		{

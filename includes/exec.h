@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:25:18 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:28:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/24 09:09:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void					pipeline_free(t_pipeline *head);
 int						path_exec_in(char *cmd, char **arg, char **env);
 void					sig_child(void);
 void					sig_father(void);
+void					less_redir_err(char *file, int fd);
 
 #endif

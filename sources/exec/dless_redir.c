@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/23 13:06:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/24 09:00:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			write_input(t_tkn *tkn, int fd)
 	return (1);
 }
 
-static char *dless_redir_filename(int nb)
+static char	*dless_redir_filename(int nb)
 {
 	char *cnb;
 	char *filename;

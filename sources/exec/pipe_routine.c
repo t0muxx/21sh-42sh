@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 08:54:21 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/23 13:17:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/10/24 09:01:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ void		pipeline_free(t_pipeline *head)
 
 void		pipeline_print(t_pipeline *pipeline)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (pipeline)
 	{
 		i = 0;
