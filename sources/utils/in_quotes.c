@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:52:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/11 11:57:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/07 12:42:07 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,23 @@ void	proceed_in_loop(char chr, int *quote, int *dquote, char *last)
 
 int		utils_in_quotes_ret(int quote, int dquote, int i, char *str)
 {
+	int bslash_cnt;
+
+	bslash_cnt = 0;
 	if ((dquote == 0 && quote == 0) == 1)
 	{
 		if ((i = ft_strlen(str)) > 0)
 		{
 			if (str[i - 1] == '\\')
-				return (0);
+			{
+				while (str[i - 1] == '\\')
+				{
+					i--;
+					bslash_cnt++;
+				}
+				if (bslash_cnt % 2 != 0)
+					return (0);
+			}
 		}
 		return (1);
 	}
