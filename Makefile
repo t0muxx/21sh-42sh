@@ -6,12 +6,12 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/10/24 09:08:17 by tmaraval         ###   ########.fr        #
+#    Updated: 2018/11/07 08:38:09 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #NAME OF THE PROG#
-NAME = 		21sh
+NAME = 		42sh
 
 #FLAG AND COMPILATOR#
 CC =		gcc

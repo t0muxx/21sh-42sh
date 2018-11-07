@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/15 12:13:27 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/07 08:35:21 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*readline_mline_get_func_array(void)
 	void	(**fptr)(t_buffer *, char *);
 
 	if ((fptr = malloc(sizeof(void (*)
-	(t_buffer *, char *)) * 11)) == NULL)
+	(t_buffer *, char *)) * 13)) == NULL)
 		error_malloc_err(0);
 	fptr[0] = input_arrow_left;
 	fptr[1] = input_arrow_right;
@@ -31,7 +31,9 @@ void	*readline_mline_get_func_array(void)
 	fptr[7] = input_end;
 	fptr[8] = input_ctrl_d;
 	fptr[9] = input_tab;
-	fptr[10] = NULL;
+	fptr[10] = input_arrow_up;
+	fptr[11] = input_arrow_down;
+	fptr[12] = NULL;
 	return (fptr);
 }
 
@@ -112,6 +114,7 @@ char	*readline_mline(t_buffer *tbuffer)
 	}
 	fptr = readline_mline_get_func_array();
 	mlbuffer.env = tbuffer->env;
+	mlbuffer.head_hist = tbuffer->head_hist;
 	while (tbuffer->cnt <= BUFFER_SIZE &&
 	utils_in_quotes(tbuffer->buffer) == 0 && tbuffer->ctrlc != 1)
 		readline_mline_do(tbuffer, &mlbuffer, fptr, read_buf);
