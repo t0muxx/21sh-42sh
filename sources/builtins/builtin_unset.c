@@ -6,7 +6,7 @@
 /*   By: tomlulu <tomlulu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 12:00:15 by tomlulu           #+#    #+#             */
-/*   Updated: 2018/11/07 15:30:35 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:46:34 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int		builtin_unset(char **cmd, char ***myenv)
 {
 	int i;
-	int ret;
 
 	i = 0;
 	while (cmd[i])
@@ -28,10 +27,11 @@ int		builtin_unset(char **cmd, char ***myenv)
 		return (-1);
 	}
 	i = 0;
+	(void)myenv;
 	while (cmd[i])
 	{
 		remove_global(cmd[i]);
 		i++;
 	}
-	return (ret);
+	return (0);
 }
