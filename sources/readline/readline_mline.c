@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/07 08:35:21 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/07 09:15:33 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,18 @@ void (**fptr)(t_buffer *, char *))
 void	readline_mline_do(t_buffer *tbuffer, t_buffer *mlbuffer,
 void (**fptr)(t_buffer *, char *), char *read_buf)
 {
+	int last;
+
 	sig_intercept_ml(tbuffer, mlbuffer);
 	mlbuffer_init(mlbuffer, tbuffer->termcap);
 	ft_putstr("\n> ");
 	readline_mline_loop(mlbuffer, read_buf, fptr);
 	mlbuffer->state = READ_NORMAL;
+	if (last = ft_strlen(mlbuffer->buffer) > 0)
+	{
+		if (mlbuffer->buffer[last -1] == '\\')
+			ft_strncat(tbuffer->buffer, mlbuffer->buffer, last - 1);
+	}
 	ft_strcat(tbuffer->buffer, mlbuffer->buffer);
 	ft_bzero(mlbuffer->buffer, BUFFER_SIZE);
 	free(mlbuffer->buffer);
