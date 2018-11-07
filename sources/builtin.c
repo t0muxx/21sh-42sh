@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:13:48 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/23 17:11:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:28:46 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,8 @@ void	builtin_get_builtin(t_builtin *builtin)
 	builtin[4].addr = &builtin_env;
 	builtin[5].name = "exit";
 	builtin[5].addr = &builtin_exit;
+	builtin[6].name = "export";
+	builtin[6].addr = &builtin_export;
+	builtin[7].name = "unset";
+	builtin[7].addr = &builtin_unset;
 }

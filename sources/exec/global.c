@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 13:44:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:47:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:21:59 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "global.h"
 #include "lexer.h"
 #include "exec.h"
+#include "env.h"
 
 static char	*extract_assignment(char *str, int value)
 {
@@ -78,7 +79,7 @@ static int	free_on_exists(t_global new)
 	return (i);
 }
 
-void		insert_global(char *str, char ***env)
+void		insert_global(char *str, char ***env, int env_add)
 {
 	int			index;
 	t_global	new;
@@ -88,6 +89,8 @@ void		insert_global(char *str, char ***env)
 	new.value = extract_assignment(str, 1);
 	if (env_update_var(new.key, new.value, *env) == 0)
 	{
+		if (env_add)
+			env_add_var(new.key, new.value, env);
 		index = free_on_exists(new);
 		g_globals[index] = new;
 	}

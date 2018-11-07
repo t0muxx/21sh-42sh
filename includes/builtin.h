@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 11:19:08 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/03 18:29:21 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/07 15:28:57 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "lexer.h"
 # include "astree.h"
 
-# define BUILTINNBR 6
+# define BUILTINNBR 8
 
 # define CD_L		2
 # define CD_P		3
@@ -41,6 +41,8 @@ int				builtin_setenv(char **cmd, char ***myenv);
 int				builtin_unsetenv(char **cmd, char ***myenv);
 int				builtin_exit(char **cmd, char ***myenv);
 int				builtin_cd(char **cmd, char ***env);
+int				builtin_export(char **cmd, char ***env);
+int				builtin_unset(char **cmd, char ***env);
 int				cd_err_chdir(char *dir);
 int				cd_change_dir_dash_or_dir(char **dir, char **oldpwd,
 char **pwd, char ***env);

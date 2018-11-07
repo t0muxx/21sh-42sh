@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:26:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/18 16:33:44 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/07 15:25:15 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void			global_parsing(t_tkn **head, char ***env)
 		else
 		{
 			if (tkn->type == CHR_ASSIGNMENT_WORD)
-				insert_global(tkn->data, env);
+				insert_global(tkn->data, env, 0);
 			tkn = tkn->next;
 		}
 	}
