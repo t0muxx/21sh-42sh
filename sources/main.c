@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 10:12:29 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/07 12:50:47 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/08 11:40:21 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,19 @@ void	do_read_simple(char *line[2],
 
 void	main_loop(t_buffer *tbuffer, char *line[2], char ***env, t_tkn *tkn)
 {
+	t_tkn *tkncpy;
+
 	do_read(tbuffer, line, *env);
 	dprintf(2, "\nline[0] = ++%s++\n", line[0]);
 	history_add(tbuffer->base_path, line[0]);
 	ft_putstr("\n");
 	tkn = lex(&line[0], env);
+	tkncpy = tkn;
+	while (tkncpy != NULL)
+	{
+		dprintf(2, "tkn-data = |%s|\n", tkncpy->data);
+		tkncpy = tkncpy->next;
+	}
 	free(line[0]);
 	if (parse(tkn))
 		do_ast(tkn, tbuffer, env);

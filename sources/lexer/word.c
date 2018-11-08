@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/07 15:37:24 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/08 11:48:51 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int					process_copy(char *src, char **dst_head,
 			dst[j++] = src[i];
 		i++;
 	}
+	dst[j] = '\0';
 	return ((*dst_head = dst) ? i : i);
 }
 
