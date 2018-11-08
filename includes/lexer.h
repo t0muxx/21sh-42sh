@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/22 15:03:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/08 16:50:40 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
+
+# ifdef __linux__
+#  define HOME_ROOT "/root"
+#  define HOME_DIR  "/home/"
+# else
+#  define HOME_DIR  "/Users/"
+# endif
 
 enum			e_tkn_type
 {
@@ -57,6 +64,7 @@ enum			e_tkn_type
 	CHR_ANDGREAT,
 	CHR_ANDDGREAT,
 	CHR_EMPTY,
+	CHR_TILDE,
 	CHR_NULL,
 };
 

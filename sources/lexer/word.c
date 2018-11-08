@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 05:15:34 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/08 11:48:51 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/08 14:10:22 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int					process_copy(char *src, char **dst_head,
 	j = 0;
 	esc = 0;
 	dst = *dst_head;
+
 	while (j < len && src[i] != '\0')
 	{
 		*state = set_state(*state, src[i], esc);
