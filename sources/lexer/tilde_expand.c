@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:40:56 by tomux             #+#    #+#             */
-/*   Updated: 2018/11/08 17:47:51 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/08 18:21:19 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,13 @@
 
 char 	*tilde_expand(char **str)
 {
-	char *login;
 	char *path;
 	char *new;
 	
-	login = getenv("LOGNAME");
+	path = getenv("HOME");
 	dprintf(2, "DEBUG : str |%s|\n", *str);
-	dprintf(2, "DEBUG : login = |%s|\n", login);
-	if (!(ft_strcmp(login, "root")))
-		new = ft_strjoin(HOME_ROOT, *str + 1); 
-	else
-	{
-		path = ft_strjoin(HOME_DIR, login);
-		dprintf(2, "DEBUG : path = |%s|\n", path);
-		new = ft_strjoin(path, *str + 1);
-		free(path);
-	}
+	new = ft_strjoin(path, *str + 1);
+//	free(path);
 	free(*str);
 	dprintf(2, "DEBUG : new = |%s|\n", new);
 	return (new);
