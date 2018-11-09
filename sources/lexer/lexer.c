@@ -56,15 +56,21 @@ int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 	t_tkn	*tkn;
 
 	tkn = *head;
-	if (str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
+	if (str[index] == '\'')
+	{
+		g_quote_state = g_quote_state == 0 ? 1 : 0;
+		if (g_quote_state == 1)
+			return (index + 1);
+	}
+	if (g_quote_state == 0 && str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
 		index += g_replace_default(tkn, str, index, env);
-	else if (str[index] == '$' && str[index + 1] && str[index + 1] == '$')
+	else if (g_quote_state == 0 && str[index] == '$' && str[index + 1] && str[index + 1] == '$')
 		index += g_replace_pid(tkn);
 	*head = tkn;
 	return (str[index] ? index : index - 1);
 }
 
-static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
+static void		state_idle(t_tkn **head, char **str, t_tkn_state *state, char ***env)
 {
 	int		i;
 	char	*line;
@@ -76,7 +82,7 @@ static void		state_idle(t_tkn **head, char **str, t_tkn_state *state)
 	{
 		if (!g_tkn_fun[i + 1].type)
 		{
-			tkn_push_back(head, tkn_word(&line));
+			tkn_push_back(head, tkn_word(&line, env));
 			break ;
 		}
 		else if (g_tkn_fun[i].type == (enum e_tkn_type)*line)
@@ -101,12 +107,18 @@ t_tkn			*lex(char **str, char ***env)
 	if (line == 0 || line == NULL)
 		return (NULL);
 	while (line[0] != '\0')
-		state_idle(&tkn, &line, &state);
+		state_idle(&tkn, &line, &state, env);
 	tkn_push_back(&tkn, tkn_init_nl());
 	tkn = tkn->next;
 	free(tkn->prev->data);
 	free(tkn->prev);
 	tkn->prev = NULL;
-	global_parsing(&tkn, env);
+	tilde_exp_browse_tkn(tkn);
+while (tkn->type != CHR_NEWLINE)
+{
+	ft_putendl(tkn->data);
+	tkn = tkn->next;
+}
+	//global_parsing(&tkn, env);
 	return (tkn);
 }

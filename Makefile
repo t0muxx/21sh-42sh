@@ -74,6 +74,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(BUILTINS)builtin_unset.c \
 			$(ERROR)error.c \
 			$(LEXER)quotes_in_word.c \
+			$(LEXER)tilde_expand.c \
 			$(LEXER)init.c \
 			$(LEXER)ampersand.c \
 			$(LEXER)asterisk.c \
@@ -83,7 +84,6 @@ SRCS = 			$(READLINE)readline.c \
 			$(LEXER)bracket.c \
 			$(LEXER)dollar.c \
 			$(LEXER)eol.c \
-			$(LEXER)escape.c \
 			$(LEXER)great.c \
 			$(LEXER)hashtag.c \
 			$(LEXER)less.c \

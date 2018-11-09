@@ -107,23 +107,18 @@ void			global_parsing(t_tkn **head, char ***env)
 	t_tkn	*tkn;
 
 	tkn = *head;
-	while (tkn->next)
-	{
 		if (parse_globals(tkn, *env) == 1)
 		{
 			if (ft_strcmp(tkn->data, "") == 0)
 				tkn->type = CHR_EMPTY;
-			else
-				link_tkn_lst(&tkn, env);
+		//	else
+		//		link_tkn_lst(&tkn, env);
 		}
 		else
 		{
 			if (tkn->type == CHR_ASSIGNMENT_WORD)
 				insert_global(tkn->data, env, 0);
-			tkn = tkn->next;
 		}
-	}
-	while (tkn->prev)
-		tkn = tkn->prev;
 	*head = tkn;
+	g_quote_state = 0;
 }

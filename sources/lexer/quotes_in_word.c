@@ -60,6 +60,27 @@ void			esc_push_pointer(char **str)
 	*str = line;
 }
 
+int				tkn_strlen(char *line)
+{
+	t_tkn_state		state;
+	int				i;
+	int				is_esc;
+
+	i = 0;
+	is_esc = 0;
+	state = STATE_IDLE;
+	while (line[i] != '\0' && is_word_type(line[i], is_esc, state))
+	{
+		state = set_state(state, line[i], is_esc);
+		if (!is_esc && line[i] == '\\' && state == STATE_IDLE)
+			is_esc = 1;
+		else
+			is_esc = 0;
+		i++;
+	}
+	return (i);
+}
+
 int				esc_strlen(char *line)
 {
 	int				len;
