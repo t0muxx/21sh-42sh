@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "global.h"
 #include "lexer.h"
 
 t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc)

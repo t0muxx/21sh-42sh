@@ -22,5 +22,6 @@ t_global	g_globals[128] =
 
 int			g_stdio = 0;
 int			g_quote_state = 0;
+int			g_escape_state = 0;
 
 #endif

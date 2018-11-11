@@ -34,7 +34,8 @@ int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 		free(key);
 	if (ft_strcmp(value, "") != 0)
 		free(value);
-	return (index += len > 0 ? (len) : 0);
+	return (len == 0 ? 0 : len - 1 );
+	//return (index += len > 0 ? (len) : 0);
 }
 
 int				g_replace_pid(t_tkn *tkn)
@@ -55,19 +56,22 @@ int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 {
 	t_tkn	*tkn;
 
-	tkn = *head;
-	if (str[index] == '\'')
-	{
+	tkn = *head;	
+	if (str[index] == '\'' && g_escape_state == 0)
 		g_quote_state = g_quote_state == 0 ? 1 : 0;
-		if (g_quote_state == 1)
-			return (index + 1);
+	else if (str[index] == '\\' && g_escape_state == 0 && g_quote_state == 0)
+		g_escape_state = 1;
+	else if (g_escape_state == 0 && g_quote_state == 0)
+	{
+		if (str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
+			index += g_replace_default(tkn, str, index, env);
+		else if (str[index] == '$' && str[index + 1] && str[index + 1] == '$')
+			index += g_replace_pid(tkn);
 	}
-	if (g_quote_state == 0 && str[index] == '$' && str[index + 1] && ft_isalpha(str[index + 1]))
-		index += g_replace_default(tkn, str, index, env);
-	else if (g_quote_state == 0 && str[index] == '$' && str[index + 1] && str[index + 1] == '$')
-		index += g_replace_pid(tkn);
+	else
+		g_escape_state = 0;
 	*head = tkn;
-	return (str[index] ? index : index - 1);
+	return (index);
 }
 
 static void		state_idle(t_tkn **head, char **str, t_tkn_state *state, char ***env)
@@ -114,11 +118,6 @@ t_tkn			*lex(char **str, char ***env)
 	free(tkn->prev);
 	tkn->prev = NULL;
 	tilde_exp_browse_tkn(tkn);
-while (tkn->type != CHR_NEWLINE)
-{
-	ft_putendl(tkn->data);
-	tkn = tkn->next;
-}
 	//global_parsing(&tkn, env);
 	return (tkn);
 }

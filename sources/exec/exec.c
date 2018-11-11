@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/astree.h"
-#include "../../includes/exec.h"
+#include "lexer.h"
+#include "astree.h"
+#include "exec.h"
 #include "builtin.h"
 #include "global.h"
 #include "utils.h"

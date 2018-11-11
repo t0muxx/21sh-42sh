@@ -24,6 +24,7 @@ typedef struct	s_global
 
 extern int				g_stdio;
 extern int				g_quote_state;
+extern int				g_escape_state;
 extern struct s_global	g_globals[128];
 
 char			*global_replace(char *src, char *key, char *value);

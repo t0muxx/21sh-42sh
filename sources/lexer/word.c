@@ -19,28 +19,24 @@ int					process_copy(char *src, char **dst_head,
 {
 	int			i;
 	int			j;
-	int			esc;
 	char		*dst;
 
 	i = 0;
 	j = 0;
-	esc = 0;
 	dst = *dst_head;
 	while (j < len && src[i] != '\0')
 	{
-		*state = set_state(*state, src[i], esc);
-		if (!esc && src[i] == '\\' && *state == STATE_IDLE)
-			esc = 1;
-		else
+		*state = set_state(*state, src[i], g_escape_state);
+		if (g_escape_state == 0 && src[i] == '\\' && *state == STATE_IDLE)
+			g_escape_state = 1;
+		else if (g_escape_state == 1 && ((src[i] == '\'' || src[i] == '"') || (src[i] == '\\')))
 		{
-			if (esc && ((src[i] == '\'' || src[i] == '"') || (src[i] == '\\')))
-				dst[j] = src[i];
-			esc = 0;
+			dst[j++] = src[i];
+			g_escape_state = 0;
 		}
-		if (!esc && !is_quote(src[i], *state))
+		else if (g_escape_state == 0 && !is_quote(src[i], *state))
 			dst[j++] = src[i];
 		i++;
-		ft_putendl("ca tourne");
 	}
 	dst[j] = '\0';
 	return ((*dst_head = dst) ? i : i);
@@ -101,18 +97,15 @@ t_tkn				*tkn_word(char **str, char ***env)
 	len = tkn_strlen(line);
 	tmp_tkn = tkn_init(len);
 	ft_strncpy(tmp_tkn->data, line, len);
-	ft_printf("unscaped = {%s}\n", tmp_tkn->data);
-	tmp_tkn->type = is_tilde_type(tmp_tkn->data) ? CHR_TILDE : CHR_NULL;
+	tmp_tkn->type = is_tilde_type(tmp_tkn->data) ? CHR_TILDE : extra_tkn_type(tmp_tkn, &(tmp_tkn->data));
 	global_parsing(&tmp_tkn, env);
-	ft_printf("GLOBAL PARSED {%s}\n", tmp_tkn->data);
 	len = esc_strlen(tmp_tkn->data);
 	tkn = tkn_init(len);
 	if (len > 0)
 	{	
 		tkn->data = esc_strncpy(tkn->data, tmp_tkn->data, len);
-		ft_printf("AFTER ESCAPE = {%s}\n", tkn->data);
 		*str = line + firstlen;
-		tkn->type = tmp_tkn->type ? tmp_tkn->type : extra_tkn_type(tkn, str);
+		tkn->type = tmp_tkn->type == CHR_TILDE ? CHR_TILDE : extra_tkn_type(tkn, str);
 	}
 	else
 	{
