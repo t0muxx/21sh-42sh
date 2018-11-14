@@ -6,12 +6,13 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:40:56 by tomux             #+#    #+#             */
-/*   Updated: 2018/11/08 18:21:19 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/14 11:38:03 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+#include "env.h" 
 
 /*
  * En gros on appelera la fonction tilde_exp_browse_tkn
@@ -53,12 +54,12 @@ int		is_tilde_type(char *str)
 	return (0);
 }
 
-char 	*tilde_expand(char **str)
+char 	*tilde_expand(char **str, char ***env)
 {
 	char *path;
 	char *new;
 
-	path = getenv("HOME");
+	path = env_get_var("HOME", *env);
 	//dprintf(2, "DEBUG : str |%s|\n", *str);
 	new = ft_strjoin(path, *str + 1);
 	//	free(path);
@@ -67,7 +68,7 @@ char 	*tilde_expand(char **str)
 	return (new);
 }
 
-void	tilde_exp_browse_tkn(t_tkn *tkn)
+void	tilde_exp_browse_tkn(t_tkn *tkn, char ***env)
 {
 	t_tkn *cpy;
 
@@ -76,7 +77,7 @@ void	tilde_exp_browse_tkn(t_tkn *tkn)
 	{
 		if (cpy->type == CHR_TILDE)
 		{
-			cpy->data = tilde_expand(&cpy->data);
+			cpy->data = tilde_expand(&cpy->data, env);
 			cpy->type = CHR_WORD;
 		}
 		//dprintf(2, "DEBUG : cpy->data = |%s|\n", cpy->data);

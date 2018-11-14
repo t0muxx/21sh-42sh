@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/11/07 15:29:36 by cormarti         ###   ########.fr        #
+#    Updated: 2018/11/14 11:27:56 by tomux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -162,6 +162,6 @@ fclean: clean
 re: fclean all
 
 printmess:
-	@echo "\033[92mCompilation de 21sh...\033[0m"
+	@echo "\033[92mCompilation de 42sh...\033[0m"
 
 .PHONY: all clean fclean re

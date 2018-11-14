@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/08 16:50:40 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/14 11:37:43 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_tkn			*tkn_eol(char **str);
 t_tkn			*tkn_word(char **str, char ***env);
 t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc);
 int				is_tilde_type(char *str);
-void			tilde_exp_browse_tkn(t_tkn *tkn);
+void			tilde_exp_browse_tkn(t_tkn *tkn, char ***env);
 int				tkn_strlen(char *line);
 int				is_quote(int chr, t_tkn_state state);
 int				esc_strlen(char *line);

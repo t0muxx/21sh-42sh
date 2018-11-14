@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/19 11:35:25 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/14 11:38:11 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_tkn			*lex(char **str, char ***env)
 	free(tkn->prev->data);
 	free(tkn->prev);
 	tkn->prev = NULL;
-	tilde_exp_browse_tkn(tkn);
+	tilde_exp_browse_tkn(tkn, env);
 	//global_parsing(&tkn, env);
 	return (tkn);
 }

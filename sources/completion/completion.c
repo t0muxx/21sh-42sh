@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:26:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/10/19 15:00:48 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/14 11:34:37 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	completion_search_in_dir(t_buffer *tbuffer, char *userinput)
 	t_list	*cf;
 
 	searchdir[0] = completion_trim_get_searchdir(userinput);
+	if (!ft_strcmp(searchdir[0], "~/"))
+	{
+		free(searchdir[0]);
+		searchdir[0] = env_get_var("HOME", tbuffer->env);
+	}
 	searchdir[1] = 0;
 	tocomplete = completion_trim_get_str_to_complete(userinput);
 	filelist = completion_read(searchdir);
