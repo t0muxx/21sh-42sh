@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 02:08:46 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/11 11:53:22 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/14 11:57:11 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_lst(t_tkn *tkn)
 	{
 		tmp = tkn;
 		tkn = tkn->next;
+		dprintf(2, "free |%s|\n", tkn->data);
 		if (tmp->data)
 			free(tmp->data);
 		free(tmp);
