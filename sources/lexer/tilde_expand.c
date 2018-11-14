@@ -6,7 +6,7 @@
 /*   By: tomux </var/mail/tomux>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:40:56 by tomux             #+#    #+#             */
-/*   Updated: 2018/11/14 11:38:03 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/14 11:50:06 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char 	*tilde_expand(char **str, char ***env)
 	path = env_get_var("HOME", *env);
 	//dprintf(2, "DEBUG : str |%s|\n", *str);
 	new = ft_strjoin(path, *str + 1);
-	//	free(path);
+	free(path);
 	free(*str);
 	//dprintf(2, "DEBUG : new = |%s|\n", new);
 	return (new);

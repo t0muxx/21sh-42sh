@@ -6,13 +6,31 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:26:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/14 11:34:37 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/14 11:48:58 by tomux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline.h"
 #include "completion.h"
 #include "utils.h"
+
+void 	completion_trim_tild(char **searchdir, char ***env)
+{
+	char *path;
+	char *path2;
+
+	path = NULL;
+	path2 = NULL;
+	if (!ft_strncmp(searchdir[0], "~/", 2))
+	{
+		path = env_get_var("HOME", *env);
+		path2 = ft_strdup(searchdir[0]);
+		free(searchdir[0]);
+		searchdir[0] = ft_strjoin(path, path2 + 1);
+		free(path);
+		free(path2);
+	}
+}
 
 void	completion_search_in_path(t_buffer *tbuffer, char **env)
 {
@@ -43,11 +61,7 @@ void	completion_search_in_dir(t_buffer *tbuffer, char *userinput)
 	t_list	*cf;
 
 	searchdir[0] = completion_trim_get_searchdir(userinput);
-	if (!ft_strcmp(searchdir[0], "~/"))
-	{
-		free(searchdir[0]);
-		searchdir[0] = env_get_var("HOME", tbuffer->env);
-	}
+	completion_trim_tild(searchdir, &tbuffer->env);
 	searchdir[1] = 0;
 	tocomplete = completion_trim_get_str_to_complete(userinput);
 	filelist = completion_read(searchdir);
