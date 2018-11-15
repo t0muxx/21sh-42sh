@@ -48,7 +48,7 @@ static char	*dless_redir_filename(int nb)
 	char *filename;
 
 	cnb = ft_itoa(nb);
-	filename = ft_strjoin("/tmp/heredoc", cnb);
+	filename = ft_strjoin("/tmp/here/h3r3d0c/", cnb);
 	free(cnb);
 	return (filename);
 }
@@ -58,10 +58,11 @@ void		dless_redir(t_tkn *tkn)
 	static int	nb;
 	int			fd;
 	char		*filename;
-	int			tmp_stdio;
 
-	nb = (!nb || nb == 2147483647) ? 0 : nb++;
-	tmp_stdio = dup(STDIN_FILENO);
+	if (!nb || nb == 2147483647)
+		nb = 0;
+	else
+		nb++;
 	close(STDIN_FILENO);
 	dup2(g_stdio, STDIN_FILENO);
 	close(g_stdio);

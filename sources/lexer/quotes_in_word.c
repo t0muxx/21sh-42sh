@@ -20,6 +20,7 @@ t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc)
 	new_state = state;
 	if (is_esc)
 		return (new_state);
+	ft_printf("CHAR SET STATE = %c && is_esc = %i\n", chr, is_esc);
 	if (chr == '\'' && state != STATE_DQUOTED)
 		new_state = (state == STATE_IDLE) ? STATE_QUOTED : STATE_IDLE;
 	if (chr == '"' && state != STATE_QUOTED)

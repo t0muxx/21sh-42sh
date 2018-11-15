@@ -17,11 +17,9 @@
 void	builtin_export_do(char **cmd, char ***myenv)
 {
 	char	*value;
-	char	*key;
 	int		i;
 
 	i = 1;
-	key = NULL;
 	value = NULL;
 	while (cmd[i] != NULL)
 	{

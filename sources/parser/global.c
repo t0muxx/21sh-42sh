@@ -94,7 +94,7 @@ static int		parse_globals(t_tkn *tkn, char **env)
 	return (is_global);
 }
 
-static void		link_tkn_lst(t_tkn **head, char ***env)
+/*static void		link_tkn_lst(t_tkn **head, char ***env)
 {
 	t_tkn	*tkn;
 	t_tkn	*tmp;
@@ -114,7 +114,7 @@ static void		link_tkn_lst(t_tkn **head, char ***env)
 	free(tmp->data);
 	free(tmp);
 	*head = tkn;
-}
+}*/
 
 void			global_parsing(t_tkn **head, char ***env)
 {

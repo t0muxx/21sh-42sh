@@ -65,7 +65,8 @@ void	sig_handler(int sigid)
 		g_tbuffer2->colnbr = w.ws_col;
 		line_reset(g_tbuffer2);
 	}
-	if (sigid == SIGKILL || sigid == SIGTERM)
+	//if (sigid == SIGKILL || sigid == SIGTERM)
+	if (sigid == SIGTERM)
 	{
 		if (waitpid(0, NULL, WNOHANG) == -1)
 			exit(0);
@@ -78,7 +79,7 @@ void	sig_intercept(t_buffer *tbuffer)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGWINCH, sig_handler);
-	signal(SIGKILL, sig_handler);
+	//signal(SIGKILL, sig_handler);
 	signal(SIGTERM, sig_handler);
 	tbuffer = g_tbuffer2;
 }
