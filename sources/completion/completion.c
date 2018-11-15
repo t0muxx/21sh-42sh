@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:26:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/14 11:48:58 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/15 08:50:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "completion.h"
 #include "utils.h"
 
-void 	completion_trim_tild(char **searchdir, char ***env)
+void	completion_trim_tild(char **searchdir, char ***env)
 {
 	char *path;
 	char *path2;

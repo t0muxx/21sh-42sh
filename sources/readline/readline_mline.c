@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 09:40:52 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/07 14:29:05 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/15 08:51:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,6 @@ void (**fptr)(t_buffer *, char *), char *read_buf)
 
 	if ((last = ft_strlen(tbuffer->buffer)) > 0)
 	{
-	//	dprintf(2, "\n ++++|%s|++++\n", tbuffer->buffer);
-	//	dprintf(2, "|%d|\n", last);
-	//	dprintf(2, "chr |%c|\n", tbuffer->buffer[last - 1]);
 		if (tbuffer->buffer[last - 1] == '\\')
 			tbuffer->buffer[last - 1] = ' ';
 	}
