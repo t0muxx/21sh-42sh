@@ -111,7 +111,16 @@ t_tkn			*lex(char **str, char ***env)
 	if (line == 0 || line == NULL)
 		return (NULL);
 	while (line[0] != '\0')
+	{
 		state_idle(&tkn, &line, &state, env);
+		while (tkn->next)
+			tkn = tkn->next;
+		if (tkn->type == CHR_ASSIGNMENT_WORD
+			&& (tkn->prev->type == CHR_NULL || tkn->prev->type == CHR_SEMI))
+			insert_global(tkn->data, env, 0);
+		while (tkn->prev)
+			tkn = tkn->prev;
+	}
 	tkn_push_back(&tkn, tkn_init_nl());
 	tkn = tkn->next;
 	free(tkn->prev->data);

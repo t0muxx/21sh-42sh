@@ -128,11 +128,6 @@ void			global_parsing(t_tkn **head, char ***env)
 	//	else
 	//		link_tkn_lst(&tkn, env);
 	}
-	else
-	{
-		if (tkn->type == CHR_ASSIGNMENT_WORD)
-			insert_global(tkn->data, env, 0);
-	}
 	*head = tkn;
 	g_quote_state = 0;
 	g_quote_state = 0;

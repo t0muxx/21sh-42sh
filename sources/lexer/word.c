@@ -24,10 +24,8 @@ int					process_copy(char *src, char **dst_head,
 	i = 0;
 	j = 0;
 	dst = *dst_head;
-	ft_printf("SRC = %s\n", src);
 	while (j < len && src[i] != '\0')
 	{
-		ft_printf("SRC CHAR = %c\n", src[i]);
 		*state = set_state(*state, src[i], g_escape_state);
 		if (g_escape_state == 0 && src[i] == '\\' && *state == STATE_IDLE)
 			g_escape_state = 1;
@@ -42,7 +40,6 @@ int					process_copy(char *src, char **dst_head,
 		i++;
 	}
 	dst[j] = '\0';
-	ft_printf("DST = %s\n", dst);
 	return ((*dst_head = dst) ? i : i);
 }
 
@@ -99,10 +96,8 @@ t_tkn				*tkn_word(char **str, char ***env)
 	line = *str;
 	firstlen = tkn_strlen(line);
 	len = tkn_strlen(line);
-	ft_printf("len = %i\n", len);
 	tmp_tkn = tkn_init(len);
 	ft_strncpy(tmp_tkn->data, line, len);
-	ft_printf("data = %s\n", tmp_tkn->data);
 	tmp_tkn->type = is_tilde_type(tmp_tkn->data) ? CHR_TILDE : extra_tkn_type(tmp_tkn, &(tmp_tkn->data));
 	global_parsing(&tmp_tkn, env);
 	len = esc_strlen(tmp_tkn->data);
@@ -115,7 +110,7 @@ t_tkn				*tkn_word(char **str, char ***env)
 	}
 	else
 	{
-		tkn->type = tkn->type ? tkn->type : CHR_WORD;
+		tkn->type = tmp_tkn->type ? tmp_tkn->type : CHR_WORD;
 		esc_push_pointer(&line);
 		*str = line;
 	}
