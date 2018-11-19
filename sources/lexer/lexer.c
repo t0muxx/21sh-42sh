@@ -6,13 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/14 11:38:11 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/19 12:29:29 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "global.h"
-#include "lexer.h"
+#include "exec.h"
+#include "memory.h"
 #include <unistd.h>
 
 int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
@@ -35,7 +36,6 @@ int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 	if (ft_strcmp(value, "") != 0)
 		free(value);
 	return (len == 0 ? 0 : len - 1 );
-	//return (index += len > 0 ? (len) : 0);
 }
 
 int				g_replace_pid(t_tkn *tkn)
@@ -74,7 +74,8 @@ int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 	return (index);
 }
 
-static void		state_idle(t_tkn **head, char **str, t_tkn_state *state, char ***env)
+static void		state_idle(t_tkn **head, char **str,
+					t_tkn_state *state, char ***env)
 {
 	int		i;
 	char	*line;
@@ -122,11 +123,7 @@ t_tkn			*lex(char **str, char ***env)
 			tkn = tkn->prev;
 	}
 	tkn_push_back(&tkn, tkn_init_nl());
-	tkn = tkn->next;
-	free(tkn->prev->data);
-	free(tkn->prev);
-	tkn->prev = NULL;
+	delete_first_item(&tkn);
 	tilde_exp_browse_tkn(tkn, env);
-	//global_parsing(&tkn, env);
 	return (tkn);
 }

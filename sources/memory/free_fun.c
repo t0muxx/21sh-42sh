@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 02:08:46 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/14 11:57:11 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/19 12:24:28 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 #include "lexer.h"
 #include "astree.h"
 #include "exec.h"
+
+void	delete_first_item(t_tkn **head)
+{
+	t_tkn	*tmp;
+
+	tmp = *head;
+	if (tmp->next)
+	{
+		tmp = tmp->next;
+		free(tmp->prev->data);
+		free(tmp->prev);
+		tmp->prev = NULL;
+	}
+	else
+	{
+		free(tmp->data);
+		free(tmp);
+	}
+	*head = tmp;
+}
 
 void	free_lst(t_tkn *tkn)
 {

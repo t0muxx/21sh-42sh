@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 21:20:02 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/15 08:39:50 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/19 12:41:09 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		exec_cmd(t_astree *astree, char **env)
 		if (args == NULL || args[0] == NULL)
 			exit(EXIT_SUCCESS);
 		cmd_path = path_find_in_path(args[0], env);
+		// cmd_path cause leaks
 		execve(cmd_path, args, env);
 		if (astree->arg->type != CHR_EMPTY)
 			error_print(CMDNOTFOUND, args[0], "");

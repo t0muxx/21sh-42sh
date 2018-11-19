@@ -6,20 +6,20 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 08:50:41 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/15 08:51:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:09:06 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
-#include "env.h" 
+#include "env.h"
 
 int		is_tilde_type(char *str)
 {
 	int		len;
 
 	len = ft_strlen(str);
-	if (len > 0 && str[0] == '~' )
+	if (len > 0 && str[0] == '~')
 	{
 		if (len > 1 && str[1] != '/')
 			return (0);
@@ -29,7 +29,7 @@ int		is_tilde_type(char *str)
 	return (0);
 }
 
-char 	*tilde_expand(char **str, char ***env)
+char	*tilde_expand(char **str, char ***env)
 {
 	char *path;
 	char *new;
