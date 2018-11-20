@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/19 12:29:29 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/19 12:53:28 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 		free(key);
 	if (ft_strcmp(value, "") != 0)
 		free(value);
-	return (len == 0 ? 0 : len - 1 );
+	return (len == 0 ? 0 : len - 1);
 }
 
 int				g_replace_pid(t_tkn *tkn)

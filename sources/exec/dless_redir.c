@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/24 09:00:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/20 13:35:43 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*dless_redir_filename(int nb)
 	char *filename;
 
 	cnb = ft_itoa(nb);
-	filename = ft_strjoin("/tmp/here/h3r3d0c/", cnb);
+	filename = ft_strjoin("/tmp/heredoc", cnb);
 	free(cnb);
 	return (filename);
 }
