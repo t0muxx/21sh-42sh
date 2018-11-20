@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/19 12:53:28 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/20 14:05:20 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				g_replace_var(t_tkn **head, char *str, int index, char **env)
 {
 	t_tkn	*tkn;
 
-	tkn = *head;	
+	tkn = *head;
 	if (str[index] == '\'' && g_escape_state == 0)
 		g_quote_state = g_quote_state == 0 ? 1 : 0;
 	else if (str[index] == '\\' && g_escape_state == 0 && g_quote_state == 0)

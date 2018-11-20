@@ -6,14 +6,14 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 01:52:11 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/14 11:57:30 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/20 14:42:07 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "error.h"
 
-t_tkn	*tkn_init(int len)
+t_tkn			*tkn_init(int len)
 {
 	t_tkn	*tkn;
 
@@ -28,7 +28,7 @@ t_tkn	*tkn_init(int len)
 	return (tkn);
 }
 
-t_tkn	*tkn_init_nl(void)
+t_tkn			*tkn_init_nl(void)
 {
 	t_tkn	*tkn;
 

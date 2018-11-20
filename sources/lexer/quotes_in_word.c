@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 10:34:58 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/19 15:53:48 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/20 15:07:24 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,24 @@ t_tkn_state		set_state(t_tkn_state state, int chr, int is_esc)
 	return (new_state);
 }
 
-int				is_quote(int chr, t_tkn_state state)
+int				is_word_type(int c, int escaped, t_tkn_state state)
 {
-	if (chr == '"')
-		return (state == STATE_QUOTED ? 0 : 1);
-	else if (chr == '\'')
-		return (state == STATE_DQUOTED ? 0 : 1);
-	else
-		return (0);
+	int				i;
+
+	i = 0;
+	if (escaped || c == '\\' || state != STATE_IDLE)
+		return (1);
+	while (g_tkn_fun[i].type)
+	{
+		if (g_tkn_fun[i].type == (enum e_tkn_type)c)
+		{
+			if (c == '\'' || c == '"')
+				return (1);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 void			esc_push_pointer(char **str)

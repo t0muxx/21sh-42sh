@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2018/11/14 11:27:56 by tomux            ###   ########.fr        #
+#    Updated: 2018/11/20 15:01:45 by cormarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,7 @@ SRCS = 			$(READLINE)readline.c \
 			$(UTILS)utils_array.c \
 			$(UTILS)in_quotes.c \
 		   	$(MEM)free_fun.c \
+		   	$(MEM)free_fun2.c \
 			builtin.c \
 			path.c \
 			main_utils.c \

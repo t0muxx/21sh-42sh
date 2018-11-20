@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 02:05:19 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/14 11:37:43 by tomux            ###   ########.fr       */
+/*   Updated: 2018/11/20 15:09:03 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ extern struct s_tkn_fun		g_tkn_fun[];
 t_tkn			*tkn_dollar(char **str);
 t_tkn			*tkn_htab(char **str);
 t_tkn			*tkn_asterisk(char **str);
-//t_tkn			*tkn_escape(char **str);
 t_tkn			*tkn_pipe(char **str);
 t_tkn			*tkn_bquote(char **str);
 t_tkn			*tkn_dquote(char **str);

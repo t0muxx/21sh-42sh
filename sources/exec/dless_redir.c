@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 11:57:49 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/20 13:35:43 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/20 14:04:39 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void		dless_redir(t_tkn *tkn)
 	int			fd;
 	char		*filename;
 
-	if (!nb || nb == 2147483647)
-		nb = 0;
-	else
-		nb++;
+	nb = (!nb || nb == 2147483647) ? 0 : nb++;
 	close(STDIN_FILENO);
 	dup2(g_stdio, STDIN_FILENO);
 	close(g_stdio);

@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:50:39 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/19 12:43:58 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/20 15:08:44 by cormarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,11 @@ struct s_tkn_fun	g_tkn_fun[] =
 	{'*', &tkn_asterisk},
 	{' ', &tkn_wspace},
 	{'\t', &tkn_htab},
-//	{'\\', &tkn_escape},
 	{'|', &tkn_pipe},
 	{'&', &tkn_and},
 	{'`', &tkn_bquote},
-	//{'"', &tkn_word},
-	//{'\'', &tkn_word},
 	{';', &tkn_semi},
 	{'!', &tkn_bang},
-//	{'#', &tkn_hashtag},
 	{'{', &tkn_lbrace},
 	{'}', &tkn_rbrace},
 	{'(', &tkn_lbracket},
