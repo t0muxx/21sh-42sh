@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:36:48 by cormarti          #+#    #+#             */
-/*   Updated: 2018/10/24 09:32:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/21 13:36:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_global_value(char *key, char **env)
 			return (ft_strdup(g_globals[i].value));
 		i++;
 	}
-	return ("");
+	return (ft_strdup(""));
 }
 
 char	*get_global_key(char *value)
