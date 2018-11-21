@@ -59,7 +59,7 @@ void		dless_redir(t_tkn *tkn)
 	int			fd;
 	char		*filename;
 
-	nb = (!nb || nb == 2147483647) ? 0 : nb++;
+	nb = (!nb || nb == 2147483647) ? 0 : nb + 1;
 	close(STDIN_FILENO);
 	dup2(g_stdio, STDIN_FILENO);
 	close(g_stdio);
