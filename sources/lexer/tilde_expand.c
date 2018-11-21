@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 08:50:41 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/19 12:09:06 by cormarti         ###   ########.fr       */
+/*   Updated: 2018/11/21 09:11:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ char	*tilde_expand(char **str, char ***env)
 	char *path;
 	char *new;
 
-	path = env_get_var("HOME", *env);
+	if ((path = env_get_var("HOME", *env)) == NULL)
+	{
+		ft_putendl_fd("HOME is not defined, can't expand", 2);
+		free(path);
+		return (*str);
+	}
 	new = ft_strjoin(path, *str + 1);
 	free(path);
 	free(*str);

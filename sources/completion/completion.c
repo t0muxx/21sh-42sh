@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 13:26:53 by tmaraval          #+#    #+#             */
-/*   Updated: 2018/11/15 08:50:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/21 09:10:01 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	completion_trim_tild(char **searchdir, char ***env)
 	path2 = NULL;
 	if (!ft_strncmp(searchdir[0], "~/", 2))
 	{
-		path = env_get_var("HOME", *env);
+		if ((path = env_get_var("HOME", *env)) == NULL)
+		{
+			ft_putendl_fd("\nHome is not defined, can't expand", 2);
+			return ;
+		}
 		path2 = ft_strdup(searchdir[0]);
 		free(searchdir[0]);
 		searchdir[0] = ft_strjoin(path, path2 + 1);
