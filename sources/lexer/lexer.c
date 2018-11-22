@@ -6,7 +6,7 @@
 /*   By: cormarti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 23:49:09 by cormarti          #+#    #+#             */
-/*   Updated: 2018/11/21 13:39:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2018/11/22 09:54:25 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int				g_replace_default(t_tkn *tkn, char *str, int index, char **env)
 	tkn->data = global_replace(tkn->data, key, value);
 	if (key)
 		free(key);
-	if (value != NULL)	
+	if (value != NULL)
 		free(value);
 	return (len == 0 ? 0 : len - 1);
 }
